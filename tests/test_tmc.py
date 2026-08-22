@@ -124,3 +124,48 @@ def test_exact_columns_give_a_point_estimate():
 def test_irc_table_is_monotonic():
     for cls, (lo, hi) in IRC106.items():
         assert lo <= hi, f"{cls}: the >=10% factor must not be lower than the <=5% factor"
+
+
+# --- critical gap measurement ---------------------------------------------
+def test_critical_gap_recovers_planted_value():
+    """
+    The estimator is only trustworthy on real footage if it can recover a value we
+    planted in synthetic data. This is the gate the field measurement depends on.
+    """
+    from src.critical_gap import derive_gaps, measure, synthesise
+    events, true_tc = synthesise(n_drivers=200, true_tc_mean=4.2,
+                                 conflict_flow_vph=1800, seed=42)
+    res = measure(derive_gaps(events), "test")
+    assert res["reportable"], res.get("reason")
+    assert abs(res["mle_mean"] - true_tc) < 0.5
+
+
+def test_critical_gap_refuses_small_samples():
+    """A handful of drivers gives a confident-looking wrong answer. It must refuse."""
+    from src.critical_gap import derive_gaps, measure, synthesise
+    events, _ = synthesise(n_drivers=8, seed=5)
+    res = measure(derive_gaps(events), "tiny")
+    assert res["reportable"] is False
+
+
+def test_head_of_queue_drivers_never_reject_a_longer_gap():
+    """
+    For a driver at the head of the queue, a rejected gap must be shorter than the one
+    accepted - otherwise they would have taken it. Queued followers are exempt: gaps
+    consumed by the queue ahead were never theirs to take, which is exactly why the
+    estimator uses head-of-queue drivers only.
+    """
+    from src.critical_gap import derive_gaps, synthesise
+    events, _ = synthesise(n_drivers=150, seed=9)
+    heads = [d for d in derive_gaps(events) if d["head_of_queue"]]
+    assert heads, "no head-of-queue drivers resolved"
+    for d in heads:
+        if d["rejected"]:
+            assert max(d["rejected"]) <= d["accepted"] + 1e-6
+
+
+def test_follow_up_is_plausible():
+    from src.critical_gap import follow_up, synthesise
+    events, _ = synthesise(n_drivers=200, seed=13)
+    fu = follow_up(events)
+    assert fu is None or 0.5 < fu < 8.0
