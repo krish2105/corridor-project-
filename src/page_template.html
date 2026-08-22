@@ -1,0 +1,593 @@
+<title>Corridor Survey Audit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<style>
+:root{
+  --paper:#F1F2EF; --surface:#FAFBF8; --sunk:#E9EBE6;
+  --ink:#14181A; --muted:#5C6663; --faint:#8B938E;
+  --rule:#D5D9D4; --rule-hard:#B4BBB4;
+  --accent:#1B3A6B; --accent-soft:#E2E8F1;
+  --defect:#9E2B25; --defect-soft:#F2E3E1;
+  --caution:#82600F; --caution-soft:#F4EBD8;
+  --ok:#2C6249; --ok-soft:#E0EDE6;
+  --shadow:0 1px 2px rgba(20,24,26,.06), 0 8px 24px -16px rgba(20,24,26,.28);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#10130F; --surface:#171B16; --sunk:#1D2220;
+    --ink:#E9EBE4; --muted:#9AA39C; --faint:#6F7973;
+    --rule:#2A302B; --rule-hard:#3C443D;
+    --accent:#8FB2E2; --accent-soft:#1B2534;
+    --defect:#E39289; --defect-soft:#2E1E1C;
+    --caution:#D9AE55; --caution-soft:#2B2416;
+    --ok:#79C39B; --ok-soft:#152720;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#10130F; --surface:#171B16; --sunk:#1D2220;
+  --ink:#E9EBE4; --muted:#9AA39C; --faint:#6F7973;
+  --rule:#2A302B; --rule-hard:#3C443D;
+  --accent:#8FB2E2; --accent-soft:#1B2534;
+  --defect:#E39289; --defect-soft:#2E1E1C;
+  --caution:#D9AE55; --caution-soft:#2B2416;
+  --ok:#79C39B; --ok-soft:#152720;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Source Serif 4",Georgia,serif;
+  font-size:clamp(15px,.5vw + 14px,17px); line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,.disp{font-family:Archivo,"Helvetica Neue",Arial,sans-serif; text-wrap:balance}
+.mono,code,th,.tag,.eyebrow,.num,table{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+.num,table td,table th{font-variant-numeric:tabular-nums}
+
+.wrap{max-width:74rem; margin:0 auto; padding:0 clamp(1rem,4vw,2.5rem)}
+.col{max-width:40rem}
+section{padding-block:clamp(2.5rem,6vw,4.5rem); border-top:1px solid var(--rule)}
+section:first-of-type{border-top:0}
+.stack{display:flex; flex-direction:column; gap:1.1rem}
+.stack-s{display:flex; flex-direction:column; gap:.55rem}
+
+.eyebrow{
+  font-size:.68rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--muted); font-weight:600;
+}
+h1{font-size:clamp(2.1rem,5.5vw,3.6rem); line-height:1.02; letter-spacing:-.025em; font-weight:700; margin:0}
+h2{font-size:clamp(1.35rem,2.6vw,1.85rem); line-height:1.12; letter-spacing:-.018em; font-weight:600; margin:0}
+h3{font-size:1.02rem; letter-spacing:-.005em; font-weight:600; margin:0}
+p{margin:0}
+.lede{font-size:clamp(1.02rem,1.2vw,1.16rem); color:var(--muted)}
+strong{font-weight:600; color:var(--ink)}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:2px}
+
+/* masthead ------------------------------------------------------------- */
+.masthead{padding-top:clamp(2.5rem,7vw,5rem); padding-bottom:clamp(2rem,4vw,3rem)}
+.rulebar{height:3px; background:var(--ink); margin-bottom:1.4rem}
+.verdict{
+  margin-top:1.8rem; border-left:3px solid var(--defect);
+  background:var(--defect-soft); padding:1rem 1.15rem; border-radius:0 4px 4px 0;
+}
+.verdict p{font-size:1.02rem}
+
+/* scope strip ---------------------------------------------------------- */
+.scope{display:grid; grid-template-columns:repeat(auto-fit,minmax(9rem,1fr)); gap:1px;
+  background:var(--rule); border:1px solid var(--rule); border-radius:4px; overflow:hidden}
+.scope > div{background:var(--surface); padding:.85rem 1rem}
+.scope .k{font-size:1.45rem; font-weight:600; letter-spacing:-.02em; display:block; line-height:1.15}
+.scope .l{font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); font-weight:500}
+
+/* finding panels ------------------------------------------------------- */
+.finding{background:var(--surface); border:1px solid var(--rule); border-radius:5px;
+  box-shadow:var(--shadow); overflow:hidden}
+.finding > header{display:flex; flex-wrap:wrap; gap:.7rem; align-items:baseline;
+  padding:1rem 1.15rem; border-bottom:1px solid var(--rule)}
+.finding > .body{padding:1.15rem; display:flex; flex-direction:column; gap:1rem}
+.chip{font-size:.63rem; letter-spacing:.12em; text-transform:uppercase; font-weight:600;
+  padding:.24rem .5rem; border-radius:3px; white-space:nowrap;
+  font-family:"IBM Plex Mono",monospace}
+.chip.critical{background:var(--defect-soft); color:var(--defect); border:1px solid var(--defect)}
+.chip.material{background:var(--caution-soft); color:var(--caution); border:1px solid var(--caution)}
+.chip.fixed{background:var(--ok-soft); color:var(--ok); border:1px solid var(--ok)}
+.tag{font-size:.68rem; color:var(--faint); background:var(--sunk); padding:.16rem .4rem;
+  border-radius:3px; white-space:nowrap}
+.prov{font-size:.68rem; color:var(--faint); display:flex; flex-wrap:wrap; gap:.4rem; align-items:center}
+
+/* evidence field ------------------------------------------------------- */
+.field{display:grid; grid-template-columns:repeat(auto-fill,minmax(7px,1fr));
+  gap:2px; padding:.85rem; background:var(--sunk); border-radius:4px}
+.field i{aspect-ratio:1; border-radius:1px; display:block}
+.legend{display:flex; flex-wrap:wrap; gap:1rem; font-size:.75rem; color:var(--muted)}
+.legend span{display:flex; align-items:center; gap:.4rem}
+.sw{width:10px; height:10px; border-radius:2px; flex:none}
+
+/* tables --------------------------------------------------------------- */
+.tscroll{overflow-x:auto; border:1px solid var(--rule); border-radius:4px; background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:.78rem; min-width:34rem}
+th,td{padding:.5rem .7rem; text-align:right; border-bottom:1px solid var(--rule); white-space:nowrap}
+th{background:var(--sunk); font-weight:600; font-size:.66rem; letter-spacing:.07em;
+  text-transform:uppercase; color:var(--muted); position:sticky; top:0}
+th:first-child,td:first-child{text-align:left}
+tbody tr:last-child td{border-bottom:0}
+td.bad{color:var(--defect); font-weight:600}
+td.good{color:var(--ok); font-weight:600}
+caption{caption-side:bottom; padding:.6rem .7rem; font-size:.73rem; color:var(--muted);
+  text-align:left; font-family:"Source Serif 4",serif}
+
+/* small multiples ------------------------------------------------------ */
+.spark{display:grid; grid-template-columns:auto 1fr auto; gap:.5rem .8rem; align-items:center}
+.spark .lbl{font-size:.72rem; font-weight:600; color:var(--muted)}
+.spark .val{font-size:.7rem; color:var(--faint); text-align:right}
+.spark svg{width:100%; height:34px; display:block}
+
+/* uplift bars ---------------------------------------------------------- */
+.bars{display:flex; flex-direction:column; gap:.45rem}
+.bar{display:grid; grid-template-columns:4.2rem 1fr auto; gap:.7rem; align-items:center; font-size:.75rem}
+.bar .track{height:15px; background:var(--sunk); border-radius:2px; position:relative; overflow:hidden}
+.bar .fill{position:absolute; inset:0 auto 0 0; background:var(--accent); opacity:.22}
+.bar .fill2{position:absolute; inset:0 auto 0 0; background:var(--accent)}
+.bar .n{color:var(--muted)}
+
+/* matrix --------------------------------------------------------------- */
+.mx td.d{background:var(--sunk); color:var(--faint)}
+.mx td.hot{background:var(--accent-soft); font-weight:600}
+
+.open li{margin-bottom:.55rem}
+ul{padding-left:1.1rem; margin:0}
+li::marker{color:var(--faint)}
+footer{padding-block:2.5rem 3.5rem; border-top:1px solid var(--rule); color:var(--muted); font-size:.8rem}
+
+@media (prefers-reduced-motion:no-preference){
+  .finding,.scope>div{transition:none}
+}
+@media (max-width:640px){
+  .bar{grid-template-columns:3.4rem 1fr auto}
+  .spark{grid-template-columns:auto 1fr; }
+  .spark .val{grid-column:2; text-align:left}
+}
+</style>
+
+<div class="wrap">
+
+<header class="masthead">
+  <div class="rulebar"></div>
+  <p class="eyebrow">Data integrity audit &middot; classified turning movement survey</p>
+  <h1>$CORRIDOR</h1>
+  <div class="col stack" style="margin-top:1.1rem">
+    <p class="lede">Six signalised junctions, $CITY. Surveyed $DATE1 and $DATE2 by the
+    appointed contractor and issued to JDA as twelve workbooks. This is an independent
+    re-derivation of every number in them.</p>
+  </div>
+  <div class="verdict col">
+    <p><strong>The survey contains one day of observation, not two.</strong> The second
+    day is derived from the first. Separately, the PCU conversion understates corridor
+    demand by at least $UPLIFT&percnt;, and the flow-diagram sheet reports the
+    two-wheeler count under the label &ldquo;Taxi&rdquo;.</p>
+  </div>
+</header>
+
+<section>
+  <div class="scope">
+    <div><span class="k num">12</span><span class="l">workbooks</span></div>
+    <div><span class="k num">$NJUNC</span><span class="l">junctions</span></div>
+    <div><span class="k num">$BINS</span><span class="l">15-min class bins</span></div>
+    <div><span class="k num">$TOTVEH</span><span class="l">vehicles counted</span></div>
+    <div><span class="k num" style="color:var(--defect)">1</span><span class="l">usable survey day</span></div>
+  </div>
+  <div class="col stack" style="margin-top:1.6rem">
+    <p>Every stored total in the source was recomputed from its own components. Where the
+    two disagree, the discrepancy is recorded rather than corrected silently. All figures
+    below come from that re-derivation, not from the workbooks&rsquo; summary rows.</p>
+    <p class="prov"><span class="tag">method</span> parse &rarr; recompute &rarr; compare &rarr; report.
+    No stored subtotal is trusted anywhere in the pipeline.</p>
+  </div>
+</section>
+
+<!-- FINDING 1 ---------------------------------------------------------- -->
+<section>
+  <div class="stack">
+    <h2>Finding 1 &mdash; the second survey day was not observed</h2>
+    <div class="finding">
+      <header>
+        <span class="chip critical">Critical</span>
+        <h3>12 May is derived from 11 May</h3>
+      </header>
+      <div class="body">
+        <p class="col">Comparing every movement-by-class daily total across the two days
+        gives $SERIES independent series. If both days were counted, their totals would
+        differ in both directions in roughly equal measure.</p>
+
+        <div class="field" id="field" aria-hidden="true"></div>
+        <div class="legend">
+          <span><i class="sw" style="background:var(--defect)"></i>
+            <strong class="num">$IDENT</strong>&nbsp;identical to the vehicle ($IDENTPCT&percnt;)</span>
+          <span><i class="sw" style="background:var(--muted)"></i>
+            <strong class="num">$GREATER</strong>&nbsp;higher on day 2</span>
+          <span><i class="sw" style="background:var(--accent)"></i>
+            <strong class="num">$SMALLER</strong>&nbsp;lower on day 2</span>
+        </div>
+
+        <p class="col">$IDENT of $SERIES series reproduce the previous day&rsquo;s total
+        <em>exactly</em>, while the 15-minute bins underneath them differ &mdash; values
+        redistributed, total pinned. Of the series that do move, $GREATER rise and
+        $SMALLER fall. Under independent counting that split is
+        <strong>p &asymp; 2&times;10<sup>&minus;39</sup></strong>.</p>
+
+        <p class="col">In the two dominant classes, only <strong>0.21&percnt;</strong> of
+        13,158 live bins fall on day two. Traffic does not rise at every approach of every
+        junction in every quarter-hour.</p>
+
+        <div class="tscroll">
+          <table>
+            <caption>Two signatures, produced by two different methods.</caption>
+            <thead><tr><th>Class group</th><th>Live bins</th><th>Higher</th><th>Identical</th><th>Lower</th></tr></thead>
+            <tbody>
+              <tr><td>Car bucket, two-wheeler</td><td class="num">13,158</td><td class="num">8,463</td><td class="num">4,667</td><td class="num bad">28</td></tr>
+              <tr><td>All other classes</td><td class="num">9,999</td><td class="num">1,777</td><td class="num bad">6,605</td><td class="num">1,617</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="col">The dominant classes were inflated by a small multiplier
+        (1.2&ndash;3.2&percnt; per approach). The minor classes had their daily totals held
+        fixed and their bins shuffled. Both are consistent with generation from day one;
+        neither is consistent with counting.</p>
+
+        <p class="prov"><span class="tag">V_1&hellip;V_12</span><span class="tag">rows 8&ndash;103</span>
+        <span class="tag">6 junctions &times; 2 days</span> Tested on the movement sheets
+        only &mdash; see Finding 4 for why the approach sheets cannot corroborate them.</p>
+      </div>
+    </div>
+    <p class="col lede">Consequence: treat this as a single-day survey. Day-over-day growth
+    computed from it measures the derivation, not the traffic. The raw field sheets for
+    12 May should be requested before anything is built on a two-day basis.</p>
+  </div>
+</section>
+
+<!-- FINDING 2 ---------------------------------------------------------- -->
+<section>
+  <div class="stack">
+    <h2>Finding 2 &mdash; PCU conversion understates demand</h2>
+    <div class="finding">
+      <header>
+        <span class="chip material">Material</span>
+        <h3>Static factors applied to a composition-dependent standard</h3>
+      </header>
+      <div class="body">
+        <p class="col">IRC:106 gives each class two factors &mdash; one for when it is
+        under 5&percnt; of the stream, one for when it is over 10&percnt; &mdash; and
+        requires interpolation between them. PCU is a function of composition. The survey
+        used one constant per class, in all twelve workbooks.</p>
+
+        <p class="col">Two-wheelers are <strong>$TWSHARE&percnt;</strong> of this corridor.
+        They are carried at PCU 0.50, the value IRC:106 reserves for a class below
+        5&percnt;. The correct factor is 0.75.</p>
+
+        <div class="tscroll">
+          <table id="ftab">
+            <caption>Factor used against factor required, at observed corridor shares.
+            &ldquo;&mdash;&rdquo; marks a column that lumps several IRC classes together,
+            where no single defensible factor exists.</caption>
+            <thead><tr><th>Survey column</th><th>Share</th><th>Used</th><th>IRC low</th><th>IRC point</th><th>IRC high</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <h3 style="margin-top:.4rem">Effect on corridor PCU</h3>
+        <div class="bars" id="bars"></div>
+        <p class="prov"><span class="tag">solid bar</span> PCU as surveyed &nbsp;
+          <span class="tag">pale extension</span> the shortfall the IRC:106 correction
+          restores &nbsp;&middot;&nbsp; daily PCU, day 1</p>
+
+        <p class="col">Correcting only the four columns that map one-to-one to IRC:106
+        raises corridor PCU from <strong class="num">$TOTSURV</strong> to
+        <strong class="num">$TOTCORR</strong> &mdash; <strong>+$UPLIFT&percnt;</strong>.
+        That is a floor, not the answer.</p>
+
+        <p class="col">The remaining columns cannot be corrected at all.
+        <strong>$CARSHARE&percnt;</strong> of the stream sits in a single column reading
+        &ldquo;Car, Taxi, Tempo, Auto Rickshaw &amp; Pick up&rdquo;, which mixes a car
+        (1.0) with an auto-rickshaw (up to 2.0) and a pickup (up to 2.0). Taking the
+        widest defensible bound on those columns puts the true correction anywhere between
+        <strong>+$BANDLO&percnt;</strong> and <strong>+$BANDHI&percnt;</strong>.</p>
+
+        <p class="col">That 60-point spread is the real cost of the class scheme. It is not
+        uncertainty in the traffic; it is uncertainty manufactured by recording half the
+        stream in one box.</p>
+
+        <p class="prov"><span class="tag">rows 104&ndash;105</span> Factors back-solved from
+        each workbook&rsquo;s own Total&nbsp;(Veh.) and Total&nbsp;(PCUs) rows, and constant
+        across all twelve.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINDING 3 ---------------------------------------------------------- -->
+<section>
+  <div class="stack">
+    <h2>Finding 3 &mdash; the flow diagram reports the wrong classes</h2>
+    <div class="finding">
+      <header>
+        <span class="chip critical">Critical</span>
+        <h3>A 20-class header sits over 10-class data, shifted</h3>
+      </header>
+      <div class="body">
+        <p class="col">The <code>Flow Diagram Table</code> sheet &mdash; the one that feeds
+        the diagrams a reader actually looks at &mdash; carries a twenty-class template
+        header. The data beneath it is the ten-class data, offset from its labels.</p>
+
+        <div class="tscroll">
+          <table>
+            <caption>Confirmed in all twelve workbooks, with the same offset each time.</caption>
+            <thead><tr><th>Header says</th><th>Value</th><th>What that number actually is</th></tr></thead>
+            <tbody>
+              <tr><td>Car</td><td class="num">20,331</td><td style="text-align:left">Car, Taxi, Tempo, Auto Rickshaw &amp; Pick up</td></tr>
+              <tr><td class="bad">Taxi</td><td class="num bad">19,012</td><td style="text-align:left"><strong>Motar Cycle, Scooter &mdash; the two-wheelers</strong></td></tr>
+              <tr><td class="bad">TW</td><td class="num bad">305</td><td style="text-align:left">Agriculture Tractor, LCV Mini Bus</td></tr>
+              <tr><td>Three Wheeler (Auto)</td><td class="num">116</td><td style="text-align:left">3W Auto Axle Truck, Buses</td></tr>
+              <tr><td>Govt./Roadways Bus</td><td class="num">395</td><td style="text-align:left">Tractor Trailor, Truck Trailor (3 Axle &amp; MAV)</td></tr>
+              <tr><td class="bad">E-Rickshaw</td><td class="num bad">9</td><td style="text-align:left"><strong>Hand Cart</strong></td></tr>
+              <tr><td class="bad">Others</td><td class="num bad">268</td><td style="text-align:left"><strong>Horse Drawn</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="col">A reader taking that sheet at face value concludes two-wheelers are
+        <strong>0.24&percnt;</strong> of the stream. They are over <strong>49&percnt;</strong>.
+        Twelve further columns failed outright: <strong class="num">$REFS</strong>
+        <code>&num;REF!</code> errors across the twelve files, $REFSPER per file. The columns
+        that did not error are the dangerous ones &mdash; they silently took the wrong data.</p>
+
+        <p class="col">The same sheet is the only place an <strong>E-Rickshaw</strong>
+        column appears anywhere in the survey, and it holds the hand-cart count. There is no
+        e-rickshaw data in this survey at all, for a vehicle class that is a material share
+        of Jaipur traffic and growing.</p>
+
+        <p class="prov"><span class="tag">Flow Diagram Table!C6:Y16</span>
+        <span class="tag">cross-checked against Table!D6:Q9</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINDING 4 ---------------------------------------------------------- -->
+<section>
+  <div class="stack">
+    <h2>Finding 4 &mdash; arithmetic, and what it revealed</h2>
+    <div class="finding">
+      <header>
+        <span class="chip fixed">Correctable</span>
+        <h3>$DISC stored totals disagree with their own components</h3>
+      </header>
+      <div class="body">
+        <p class="col">$UNDER understate and $OVER overstate, so this is scattered formula
+        damage rather than a bias. Net effect on the bin-level grand total: an
+        understatement of <strong class="num">$NETGT</strong> vehicles. All are listed with
+        file, sheet and row; none was corrected silently.</p>
+
+        <p class="col">The clearest case: on TMC-01, movement sheet <code>V_1</code> stores
+        <code>Total Slow = 0</code> where its own five slow-vehicle columns sum to
+        <strong>58</strong>. The grand total inherits the error, and the three movements
+        leaving arm 1 then fail to reconcile with the arm&rsquo;s approach total by exactly
+        58 vehicles.</p>
+
+        <p class="col">Chasing that gap produced a more consequential result. Reconciling
+        the approach and total sheets against the movement sheets matches at
+        <strong class="num">$CELLS</strong> of $CELLS cells &mdash; exactly, at every bin,
+        for every class. They are not corroborating measurements. They are formulas over the
+        twelve movement sheets.</p>
+
+        <p class="col">So the workbook holds <strong>one</strong> primary dataset per
+        junction, presented as twenty-two sheets. Junction inflow-outflow balance is an
+        identity and proves nothing about survey quality, and any statistic run across all
+        sheets counts the same observation three times.</p>
+
+        <p class="prov"><span class="tag">V_1!M104</span><span class="tag">stored 0</span>
+          <span class="tag">derived 58</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT HOLDS --------------------------------------------------------- -->
+<section>
+  <div class="stack">
+    <h2>What the survey does support</h2>
+    <p class="col lede">The defects above are real and they change the numbers. They do not
+    make the data worthless. One day of classified counts at six junctions, correctly
+    re-derived, still answers the question the corridor study exists to answer.</p>
+
+    <div class="finding">
+      <header>
+        <span class="chip fixed">Verified</span>
+        <h3>Turn geometry is correct for left-hand traffic</h3>
+      </header>
+      <div class="body">
+        <p class="col">India drives on the left, so a left turn is the near-side movement
+        onto the next arm clockwise, and the right turn is the one that crosses opposing
+        traffic. The clockwise mapping used throughout this pipeline was checked against the
+        direction header that each of the <strong>144</strong> movement sheets states about
+        itself. All 144 agree.</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:1.4rem">Through movements decide the corridor case</h3>
+    <p class="col">An elevated through-carriageway only helps traffic that is not turning.
+    Across the six junctions, through movements are <strong>$THRU&percnt;</strong> of
+    traffic (range $THRULO&ndash;$THRUHI&percnt;). The project methodology sets roughly
+    70&percnt; as the level at which an elevated through-carriageway is well founded. This
+    corridor sits on that line, and the junction-by-junction spread is where the argument
+    actually lives.</p>
+
+    <div class="tscroll">
+      <table id="jtab">
+        <caption>Day 1 only. PCU shown as surveyed and after the one-to-one IRC:106 correction.</caption>
+        <thead><tr><th>Junction</th><th>Cross-street</th><th>Vehicles/day</th><th>Peak</th><th>Peak hr</th><th>PHF</th><th>Through</th><th>PCU surveyed</th><th>PCU corrected</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <h3 style="margin-top:1.6rem">Daily profile, all six junctions</h3>
+    <p class="col">96 fifteen-minute bins, 08:00 to 08:00. The peak hour is marked on each.</p>
+    <div class="spark" id="spark"></div>
+
+    <h3 style="margin-top:1.6rem">Turning movements, TMC-04</h3>
+    <p class="col">The busiest junction, in vehicles per day. Rows are the entry arm, columns
+    the exit. The diagonal is empty because <strong>no U-turn was ever counted</strong> &mdash;
+    twelve movements per junction, not sixteen.</p>
+    <div class="tscroll">
+      <table class="mx" id="mtab">
+        <caption>Left turn = next arm clockwise. The heavy cells are the corridor movement.</caption>
+        <thead></thead><tbody></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- OPEN --------------------------------------------------------------- -->
+<section>
+  <div class="col stack">
+    <h2>What remains unknown</h2>
+    <ul class="open">
+      <li><strong>U-turn demand.</strong> Never counted. Unmeasured, not zero &mdash; and
+      U-turns concentrate at median openings, where they cost the most capacity.</li>
+      <li><strong>E-rickshaws.</strong> No column anywhere holds them. A growing share of
+      Jaipur traffic is simply absent from the count.</li>
+      <li><strong>Half the PCU correction.</strong> Locked behind the composite class
+      columns. Only re-counting to a proper class scheme resolves it.</li>
+      <li><strong>Junction coordinates.</strong> The workbooks carry no georeference at all.
+      Recovering the corridor order from flow continuity alone gives
+      <code>$ORDER</code>, but at a $MARGIN&percnt; margin over the runner-up &mdash;
+      that is noise, not a result. Mid-block frontage access breaks continuity too badly.
+      Map pins are needed.</li>
+      <li><strong>A representative week.</strong> 11 May 2026 is a Monday, which the
+      methodology excludes; May is pre-monsoon peak heat against a recommended
+      October&ndash;November window; and no weekend day was surveyed.</li>
+      <li><strong>Why PHF runs 0.93&ndash;0.98.</strong> Typical urban Indian arterials sit
+      at 0.85&ndash;0.92. Flow this uniform across the peak hour suggests a smoothed series,
+      and peak-15 design values taken from it will be understated.</li>
+    </ul>
+  </div>
+</section>
+
+<footer class="col">
+  <p>Independent re-derivation from the twelve issued workbooks. $BINS class-bins parsed;
+  every stored total recomputed from components; discrepancies recorded rather than
+  corrected. Figures on this page are generated from the pipeline output, not transcribed.</p>
+  <p style="margin-top:.7rem">Standards referenced: IRC:106-1990 (PCU factors),
+  Indo-HCM 2017 (capacity and LOS). Analysis day $DATE1.</p>
+</footer>
+</div>
+
+<script>
+var D = $DATA;
+
+/* evidence field: one square per movement-by-class daily series */
+(function(){
+  var el = document.getElementById('field'), f = D.day2, h = '';
+  var mk = function(n, c){ var s=''; for(var i=0;i<n;i++){ s += '<i style="background:'+c+'"></i>'; } return s; };
+  h += mk(f.identical, 'var(--defect)');
+  h += mk(f.greater,   'var(--muted)');
+  h += mk(f.smaller,   'var(--accent)');
+  el.innerHTML = h;
+})();
+
+/* factor table */
+(function(){
+  var tb = document.querySelector('#ftab tbody'), h='';
+  D.factors.forEach(function(f){
+    var pt = f.irc_point === null ? '<span style="color:var(--faint)">&mdash;</span>' : f.irc_point.toFixed(2);
+    var flag = (f.irc_point !== null && f.irc_point > f.surveyed) ? ' class="bad"' : '';
+    h += '<tr><td>'+f.label+'</td>'
+      +  '<td class="num">'+(100*f.share).toFixed(2)+'%</td>'
+      +  '<td class="num">'+f.surveyed.toFixed(2)+'</td>'
+      +  '<td class="num">'+f.irc_low.toFixed(2)+'</td>'
+      +  '<td class="num"'+flag+'>'+pt+'</td>'
+      +  '<td class="num">'+f.irc_high.toFixed(2)+'</td></tr>';
+  });
+  tb.innerHTML = h;
+})();
+
+/* uplift bars */
+(function(){
+  var el = document.getElementById('bars');
+  var max = 0;
+  D.junctions.forEach(function(j){ if(j.corr > max) max = j.corr; });
+  var h = '';
+  D.junctions.forEach(function(j){
+    h += '<div class="bar"><span class="lbl mono">'+j.code.replace('TMC-','J')+'</span>'
+      +  '<span class="track"><i class="fill" style="width:'+(100*j.corr/max)+'%"></i>'
+      +  '<i class="fill2" style="width:'+(100*j.surv/max)+'%"></i></span>'
+      +  '<span class="n num">'+j.surv.toLocaleString()+' &rarr; '+j.corr.toLocaleString()+'  (+'+j.up+'%)</span></div>';
+  });
+  el.innerHTML = h;
+})();
+
+/* junction table */
+(function(){
+  var tb = document.querySelector('#jtab tbody'), h='';
+  D.junctions.forEach(function(j){
+    h += '<tr><td class="mono">'+j.code+'</td>'
+      +  '<td style="text-align:left">'+j.arms[1]+' / '+j.arms[3]+'</td>'
+      +  '<td class="num">'+j.daily.toLocaleString()+'</td>'
+      +  '<td class="num">'+j.peak+'</td>'
+      +  '<td class="num">'+j.peakveh.toLocaleString()+'</td>'
+      +  '<td class="num">'+j.phf.toFixed(3)+'</td>'
+      +  '<td class="num'+(j.thru>=70?' good':'')+'">'+j.thru.toFixed(1)+'%</td>'
+      +  '<td class="num">'+j.surv.toLocaleString()+'</td>'
+      +  '<td class="num good">'+j.corr.toLocaleString()+'</td></tr>';
+  });
+  tb.innerHTML = h;
+})();
+
+/* daily profiles as small multiples */
+(function(){
+  var el = document.getElementById('spark'), h='';
+  D.profiles.forEach(function(p){
+    var max = Math.max.apply(null, p.v), n = p.v.length, w = 100/n;
+    var pk = p.t.indexOf(p.peak);
+    var bars = '';
+    for(var i=0;i<n;i++){
+      var ht = 100*p.v[i]/max;
+      var inPeak = (pk>=0 && i>=pk && i<pk+4);
+      bars += '<rect x="'+(i*w)+'" y="'+(100-ht)+'" width="'+(w*0.82)+'" height="'+ht
+           +  '" fill="'+(inPeak?'var(--defect)':'var(--accent)')+'" opacity="'+(inPeak?'1':'0.42')+'"></rect>';
+    }
+    h += '<span class="lbl mono">'+p.code.replace('TMC-','J')+'</span>'
+      +  '<svg viewBox="0 0 100 100" preserveAspectRatio="none" role="img" aria-label="'
+      +  'Daily profile for '+p.code+', peak hour from '+p.peak+'">'+bars+'</svg>'
+      +  '<span class="val num">peak '+p.peak+'</span>';
+  });
+  el.innerHTML = h;
+})();
+
+/* TMC-04 turning matrix */
+(function(){
+  var j = null;
+  D.junctions.forEach(function(x){ if(x.code==='TMC-04') j = x; });
+  if(!j) return;
+  var th = document.querySelector('#mtab thead'), tb = document.querySelector('#mtab tbody');
+  var h = '<tr><th>From &darr; &nbsp; To &rarr;</th>';
+  j.arms.forEach(function(a){ h += '<th>'+a+'</th>'; });
+  th.innerHTML = h + '</tr>';
+  var max = 0;
+  j.matrix.forEach(function(r){ r.forEach(function(v){ if(v>max) max=v; }); });
+  var b = '';
+  j.matrix.forEach(function(row, i){
+    b += '<tr><th style="text-align:left">'+j.arms[i]+'</th>';
+    row.forEach(function(v, k){
+      if(i===k){ b += '<td class="d">&mdash;</td>'; }
+      else { b += '<td class="num'+(v > 0.45*max ? ' hot':'')+'">'+v.toLocaleString()+'</td>'; }
+    });
+    b += '</tr>';
+  });
+  tb.innerHTML = b;
+})();
+</script>

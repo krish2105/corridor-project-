@@ -96,8 +96,8 @@ def build():
                   note="Day 2 excluded from analysis: see audit finding F."),
         audit=dict(
             arithmetic=dict(discrepancies=int(len(mism)),
-                            net_undercount=int(-mism.delta.sum()),
-                            all_negative=bool((mism.delta <= 0).all())),
+                            understate=int((mism.delta < 0).sum()), overstate=int((mism.delta > 0).sum()),
+                            net_grand_total=int(-mism[mism.field == 'Grand Total (Nos.)'].delta.sum())),
             derived_sheets=dict(cells_checked=92160, exact=92160,
                                 conclusion="IN_/OUT_/TOTAL_ are formula views of the 12 V_ sheets"),
             day2=d2,

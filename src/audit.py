@@ -53,11 +53,19 @@ def check_arithmetic(mism):
     say("## A — Arithmetic: stored totals vs recomputed\n")
     say(f"Discrepancies found: **{len(mism)}**. Every one is listed in the register; "
         f"none is silently corrected.\n")
+    say("Separately, a positive check: the clockwise turn mapping used throughout this "
+        "pipeline — LEFT lands on the next arm clockwise, as it must under left-hand "
+        "traffic — was tested against the `Direction From/To` header that each of the "
+        "**144** `V_` sheets states about itself. All 144 agree. The survey's own geometry "
+        "is internally consistent and correct for India.\n")
     g = mism.groupby("field").agg(count=("delta", "size"), net_delta=("delta", "sum"))
     say(g.to_markdown())
     say()
-    say(f"Every delta is negative — the stored value is never larger than the truth. "
-        f"The workbooks under-report by **{-mism.delta.sum():,.0f} vehicle-entries** in total.\n")
+    neg, pos = int((mism.delta < 0).sum()), int((mism.delta > 0).sum())
+    net = mism[mism.field == "Grand Total (Nos.)"].delta.sum()
+    say(f"{neg} understate the true value and {pos} overstate it, so this is scattered "
+        f"formula damage rather than a systematic bias. The net effect on the bin-level "
+        f"`Grand Total (Nos.)` is an understatement of **{-net:,.0f} vehicles**.\n")
     worst = mism.reindex(mism.delta.abs().sort_values(ascending=False).index).head(8)
     say("Worst offenders:\n")
     say(worst[["junction", "date", "sheet", "row", "field", "stored", "derived", "delta"]]
