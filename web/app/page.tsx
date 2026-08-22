@@ -42,6 +42,8 @@ export default function Page() {
   const cp = d.capacity;
   const sc = d.scheme;
   const sen = d.sensitivity;
+  const dl = d.delay;
+  const ec = d.economics;
   const NOGAP = sc?.no_gap_vc_threshold ?? 3;
   // busier corridor approach at each junction
   const relief = cp ? Object.values(cp.relief.reduce((m, r) => {
@@ -489,6 +491,139 @@ export default function Page() {
               </div>
             </div>
           </Reveal>
+        </section>
+      )}
+
+      {/* QUEUE, DELAY AND COST */}
+      {dl && (
+        <section>
+          <Reveal><p className="eyebrow">What a v/c ratio means on the ground</p></Reveal>
+          <Reveal delay={.04}>
+            <h2 style={{ marginTop: ".5rem" }}>
+              The corridor does not queue. It locks.
+            </h2>
+          </Reveal>
+          <Reveal delay={.08}>
+            <p className="col lede" style={{ marginTop: "1rem" }}>
+              A ratio above 1.0 says an approach is over capacity. It does not say what
+              that looks like. Applying deterministic oversaturation queueing &mdash; which
+              needs no signal timings, and the survey records none &mdash; gives the queue
+              in vehicles, the length it occupies at the measured carriageway width, and
+              how long into the peak it reaches the junction behind it.
+            </p>
+          </Reveal>
+          <Reveal delay={.1}>
+            <div className="card" style={{ marginTop: "1.4rem" }}>
+              <header>
+                <h3>Peak-hour queue against available storage</h3>
+                <span className="tag">{dl.spillback_count} of {dl.n_approaches} block back</span>
+              </header>
+              <div className="body">
+                <div className="tscroll">
+                  <table>
+                    <thead><tr>
+                      <th>Junction</th><th>Approach</th><th className="num">v/c</th>
+                      <th className="num">Queue veh</th><th className="num">Queue m</th>
+                      <th className="num">Storage m</th><th className="num">Delay min</th>
+                      <th>Blocks</th>
+                    </tr></thead>
+                    <tbody>
+                      {dl.approaches.map((r, i) => (
+                        <tr key={i}>
+                          <td>{r.junction}</td>
+                          <td>{r.approach.replace("from ", "")}</td>
+                          <td className="num bad">{r.vc.toFixed(2)}</td>
+                          <td className="num">{r.queue_vehicles.toLocaleString("en-US")}</td>
+                          <td className="num">{r.queue_m.toLocaleString("en-US")}</td>
+                          <td className="num">{r.storage_m
+                            ? r.storage_m.toLocaleString("en-US") : "n/a"}</td>
+                          <td className="num">{r.mean_delay_min.toFixed(1)}</td>
+                          <td className={r.spillback ? "bad" : undefined}>
+                            {r.spillback
+                              ? `${r.upstream} at ${Math.round(r.minutes_to_spillback ?? 0)} min`
+                              : (r.storage_m ? "\u2014" : "leaves study area")}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <p className="col"><strong>{dl.spillback_count} of {dl.n_approaches}</strong>{" "}
+                queues reach the junction behind them before the peak hour is out. The
+                soonest does it in{" "}
+                <strong>{Math.min(...dl.approaches.filter(a => a.spillback)
+                  .map(a => a.minutes_to_spillback ?? 999))} minutes</strong>. Past that
+                point the approaches stop being independent and deterministic queueing
+                stops being valid &mdash; which is why no queue is reported longer than the
+                road can physically hold.</p>
+              </div>
+            </div>
+          </Reveal>
+          <Reveal delay={.12}>
+            <div className="card" style={{ marginTop: "1.2rem" }}>
+              <header>
+                <h3>Corridor journey time, {dl.corridor_km} km</h3>
+                <span className="tag">{dl.effective_kmh} km/h effective</span>
+              </header>
+              <div className="body">
+                <div className="scope">
+                  <div><span className="k num">{dl.free_flow_min}</span>
+                    <span className="l">min, free flow</span></div>
+                  <div><span className="k num" style={{ color: "var(--defect)" }}>
+                    {dl.peak_journey_min}</span>
+                    <span className="l">min at peak, {dl.worst_direction}</span></div>
+                  <div><span className="k num" style={{ color: "var(--ok)" }}>
+                    {dl.through_journey_min_after}</span>
+                    <span className="l">min, grade separated</span></div>
+                  <div><span className="k num">{dl.effective_kmh}</span>
+                    <span className="l">km/h effective</span></div>
+                </div>
+                <p className="col">Through traffic on an elevated carriageway does not
+                enter the junctions at all, so it meets none of that delay. The saving is{" "}
+                <strong>{dl.saving_min_per_trip} minutes per trip</strong>. Treat the peak
+                figure as a floor: it sums independent queues, and {dl.spillback_count} of
+                them are not independent.</p>
+              </div>
+            </div>
+          </Reveal>
+          {ec && (
+            <Reveal delay={.14}>
+              <div className="card" style={{ marginTop: "1.2rem" }}>
+                <header>
+                  <h3>What that costs, per year</h3>
+                  <span className="tag">value of time is a policy input</span>
+                </header>
+                <div className="body">
+                  <p className="col">Approaches are over capacity for a mean of{" "}
+                  <strong>{ec.mean_hours_over} hours a day</strong> &mdash; counted from
+                  the survey&rsquo;s own 96 intervals, not assumed from a nominal peak.
+                  That accumulates <strong>{ec.delay_veh_hr_day.toLocaleString("en-US")}{" "}
+                  vehicle-hours</strong> of delay every day.</p>
+                  <div className="scope">
+                    <div><span className="k num" style={{ color: "var(--defect)" }}>
+                      &#8377;{ec.annual_cost_crore[0]}&ndash;{ec.annual_cost_crore[1]}</span>
+                      <span className="l">crore/yr, do nothing</span></div>
+                    <div><span className="k num">
+                      &#8377;{ec.annual_cost_after_crore[0]}&ndash;{ec.annual_cost_after_crore[1]}</span>
+                      <span className="l">crore/yr, grade separated</span></div>
+                    <div><span className="k num" style={{ color: "var(--ok)" }}>
+                      &#8377;{ec.annual_benefit_crore[0]}&ndash;{ec.annual_benefit_crore[1]}</span>
+                      <span className="l">crore/yr benefit</span></div>
+                  </div>
+                  <p className="col" style={{
+                    borderLeft: "3px solid var(--accent)", paddingLeft: ".9rem" }}>
+                    <strong>These rupees are indicative, and deliberately banded.</strong>{" "}
+                    The delay is measured; the value of time is not ours to set. Authorities
+                    appraise against their own approved rates, so quoting a single figure
+                    off a rate JDA has not adopted would present a policy choice as an
+                    engineering result. The method is the deliverable &mdash; substituting
+                    JDA&rsquo;s rates is a one-line change. Excluded entirely:{" "}
+                    {ec.assumptions.excluded.join(", ")}, all of which would raise it.
+                  </p>
+                </div>
+              </div>
+            </Reveal>
+          )}
         </section>
       )}
 

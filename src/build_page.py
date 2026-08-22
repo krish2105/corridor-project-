@@ -50,6 +50,8 @@ def build():
     cands = (_j.loads((OUT_DATA / "junction_candidates.geojson").read_text())["features"]
              if (OUT_DATA / "junction_candidates.geojson").exists() else [])
     capd = d.get("capacity") or {}
+    dlyd = d.get("delay") or {}
+    ecod = d.get("economics") or {}
     sch = d.get("scheme") or {}
     sen = d.get("sensitivity") or {}
     chart = dict(
@@ -132,6 +134,21 @@ def build():
         CAPRATIO=f"{capd.get('observed_vs_planning_ratio', 0):.2f}",
         CAPOK=str(capd.get("approaches_ok_after_grade_separation", 0)),
         CAPN=str(len(capd.get("relief", []))),
+        QSPILL=str(dlyd.get("spillback_count", "")),
+        QN=str(dlyd.get("n_approaches", "")),
+        QSOON=str(min([a["minutes_to_spillback"] for a in dlyd.get("approaches", [])
+                        if a.get("minutes_to_spillback")] or [0])),
+        QFREE=str(dlyd.get("free_flow_min", "")),
+        QPEAK=str(dlyd.get("peak_journey_min", "")),
+        QKMH=str(dlyd.get("effective_kmh", "")),
+        QSAVE=str(dlyd.get("saving_min_per_trip", "")),
+        QKM=str(dlyd.get("corridor_km", "")),
+        ECHRS=str(ecod.get("mean_hours_over", "")),
+        ECVEH="{:,}".format(ecod.get("delay_veh_hr_day", 0)),
+        ECLO=str((ecod.get("annual_cost_crore") or [0, 0])[0]),
+        ECHI=str((ecod.get("annual_cost_crore") or [0, 0])[1]),
+        ECBLO=str((ecod.get("annual_benefit_crore") or [0, 0])[0]),
+        ECBHI=str((ecod.get("annual_benefit_crore") or [0, 0])[1]),
         DLFAIL=str(capd.get("design_life_first_failure_med", "")),
         DLYEARS=str((capd.get("design_life_first_failure_med", 0) or 0)
                     - capd.get("assumptions", {}).get("base_year", 0)),

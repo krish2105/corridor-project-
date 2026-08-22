@@ -74,6 +74,18 @@ def _capacity():
     return json.loads(p.read_text()) if p.exists() else None
 
 
+def _delay():
+    """Queue, delay and journey time, if that stage has been run."""
+    p = OUT_DATA / "delay.json"
+    return json.loads(p.read_text()) if p.exists() else None
+
+
+def _economics():
+    """Cost of delay, if that stage has been run."""
+    p = OUT_DATA / "economics.json"
+    return json.loads(p.read_text()) if p.exists() else None
+
+
 def _scheme():
     """Phase 8 scheme test, if that stage has been run."""
     p = OUT_DATA / "scheme_test.json"
@@ -139,7 +151,8 @@ def _write_web_layers(webdir):
                   OUT / "capacity_report.md", OUT / "method_statement.md",
                   OUT / "validation_report.md",
                   OUT_DATA / "median_openings.geojson", OUT_DATA / "scheme_test.json",
-                  OUT_DATA / "capacity.json", OUT_DATA / "sensitivity.json"):
+                  OUT_DATA / "capacity.json", OUT_DATA / "sensitivity.json",
+                  OUT_DATA / "delay.json", OUT_DATA / "economics.json"):
         if src_f.exists():
             _sh.copy(src_f, webdir / src_f.name)
 
@@ -262,6 +275,8 @@ def build():
         capacity=_capacity(),
         scheme=_scheme(),
         sensitivity=_sensitivity(),
+        delay=_delay(),
+        economics=_economics(),
         junctions=junctions,
         corridor=dict(
             through_pct_mean=round(float(tv.through_pct.mean()), 1),

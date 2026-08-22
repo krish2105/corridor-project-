@@ -105,7 +105,42 @@ This does not withdraw the recommendation; grade separation is still the only me
 
 The growth rates are applied to a counted flow that is already capacity-constrained. A saturated approach cannot show suppressed or diverted trips, so these dates are the optimistic end: real demand recovery would bring them forward, not push them back.
 
-## 7. Do these conclusions survive their own assumptions?
+## 7. Queue, delay, and what the congestion costs
+
+A volume-to-capacity ratio is not something anyone can act on. Deterministic oversaturation queueing converts it into quantities that are: how many vehicles are queued, how far back they reach, and how long a trip takes. That model needs no signal timings, which matters because the survey records none anywhere in the twelve workbooks — an HCM control-delay model would require inventing its own inputs.
+
+| Junction | Approach | Queue veh | Queue m | Storage m | Delay min | Blocks back |
+|---|---|---|---|---|---|---|
+| TMC-01 | Mansarover Metro | 1,051 | 1,088 | 1,884 | 8.3 | no |
+| TMC-01 | Sanganer Stadium | 1,791 | 1,853 | n/a | 11.8 | leaves study area |
+| TMC-02 | Mansarover Metro | 858 | 816 | 393 | 7.0 | TMC-03 at 29 min |
+| TMC-02 | Sanganer Stadium | 697 | 663 | 1,884 | 5.9 | no |
+| TMC-03 | Mansarover Metro | 1,690 | 1,508 | 2,332 | 10.8 | no |
+| TMC-03 | Sanganer Stadium | 1,700 | 1,516 | 393 | 10.8 | TMC-02 at 16 min |
+| TMC-04 | Mansarover Metro | 1,363 | 1,216 | 190 | 9.5 | TMC-05 at 9 min |
+| TMC-04 | Sanganer Stadium | 975 | 870 | 2,332 | 7.5 | no |
+| TMC-05 | Mansarover Metro | 4,271 | 3,964 | 539 | 17.5 | TMC-06 at 8 min |
+| TMC-05 | Sanganer Stadium | 2,132 | 1,979 | 190 | 12.4 | TMC-04 at 6 min |
+| TMC-06 | Mansarover Metro | 1,752 | 1,733 | n/a | 11.0 | leaves study area |
+| TMC-06 | Sanganer Stadium | 1,462 | 1,446 | 539 | 9.8 | TMC-05 at 22 min |
+
+**6 of 12 queues reach the junction behind them inside the peak hour.** No queue is reported longer than the road can physically hold: past the point where a queue blocks the junction upstream, the approaches stop being independent and the deterministic model has left the regime it is valid in. A metre figure beyond that would be a fiction dressed as a measurement.
+
+Over the 5.34 km corridor a through trip takes **8.0 minutes** at free flow and **72.1 minutes** at the peak in the southbound direction — an effective **4.4 km/h**. Grade-separated through traffic does not enter the junctions and so returns to the free-flow figure, a saving of **64.1 minutes per trip**. The peak figure is a floor: it sums queues as though independent, and several are not.
+
+Approaches are over capacity for a mean of **8.3 hours a day**, counted from the survey's own 96 intervals rather than assumed from a nominal peak period. That accumulates **36,804 vehicle-hours** of delay daily.
+
+| Case | Annual cost of delay |
+|---|---|
+| Do nothing | Rs 176–417 crore |
+| Grade separated | Rs 47–111 crore |
+| **Annual benefit** | **Rs 129–306 crore** |
+
+**These rupee figures are indicative and deliberately banded.** The delay is measured; the value of time is a policy input and not ours to set. Authorities appraise against their own approved rates, so quoting a single figure derived from a rate the authority has not adopted would present a policy choice as an engineering result. The method is the deliverable; substituting JDA's rates changes one table in `src/economics.py`.
+
+Excluded entirely: vehicle operating cost, fuel, emissions, accident cost, reliability. Each is real and each would raise the figure, so what is quoted is a lower bound. Queue carry-over between consecutive oversaturated hours is also not modelled, for the same reason the queue lengths are capped, and that too makes this conservative.
+
+## 8. Do these conclusions survive their own assumptions?
 
 Both were re-run across **144 combinations** of PCU uplift, lane capacity, effective lane count, critical gap and growth rate.
 
@@ -114,7 +149,7 @@ Both were re-run across **144 combinations** of PCU uplift, lane capacity, effec
 
 No single assumption dominates the outcome — the swing across the grid is negligible, so naming a most-influential parameter would overstate what the analysis shows.
 
-## 8. Limitations
+## 9. Limitations
 
 - The survey covers **one day**, not the two the workbooks present. Day two is derived from day one; see the integrity audit report.
 - Composite vehicle classes prevent a point PCU estimate. Bands are reported throughout and no band is collapsed to its midpoint.

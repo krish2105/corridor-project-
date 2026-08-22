@@ -45,6 +45,26 @@ export type Corridor = {
     design_life_last_failure_med?: number;
     design_life_survives_horizon?: number;
   } | null;
+  delay: {
+    corridor_km: number; free_flow_min: number; peak_delay_min: number;
+    peak_journey_min: number; effective_kmh: number; worst_direction: string;
+    direction_delay_min: Record<string, number>;
+    spillback_count: number; oversaturated_count: number; n_approaches: number;
+    through_journey_min_after: number; saving_min_per_trip: number;
+    approaches: { junction: string; approach: string; vc: number; queue_vehicles: number;
+                  queue_m: number; storage_m: number | null; upstream: string | null;
+                  spillback: boolean; minutes_to_spillback: number | null;
+                  mean_delay_min: number }[];
+  } | null;
+  economics: {
+    annual_cost_crore: number[]; annual_cost_after_crore: number[];
+    annual_benefit_crore: number[]; benefit_to_first_failure_crore: number[] | null;
+    years_to_first_failure: number | null; mean_hours_over: number;
+    delay_veh_hr_day: number; total_excess_pcu_day: number;
+    assumptions: { vot_status: string; working_days: number[]; excluded: string[] };
+    approaches: { junction: string; approach: string; hours_over: number;
+                  excess_pcu: number }[];
+  } | null;
   scheme: {
     no_gap_vc_threshold: number; fails_conservative: number; fails_optimistic: number;
     no_viable_gap: number; forced_uturns_per_hour: number;

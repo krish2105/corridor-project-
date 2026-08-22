@@ -312,6 +312,7 @@ def capacity_report():
     worst = max(js, key=lambda j: j["vc_pt"])
 
     dl = c["design_life"]
+    dly, eco = _opt("delay"), _opt("economics")
     align_len, ch_rows = chainage()
     align_km = align_len / 1000
     # the junction with fewest transects is the one whose width is least well supported
@@ -451,7 +452,72 @@ def capacity_report():
         "trips, so these dates are the optimistic end: real demand recovery would bring "
         "them forward, not push them back.",
         "",
-        "## 7. Do these conclusions survive their own assumptions?",
+        "## 7. Queue, delay, and what the congestion costs",
+        "",
+        "A volume-to-capacity ratio is not something anyone can act on. Deterministic "
+        "oversaturation queueing converts it into quantities that are: how many vehicles "
+        "are queued, how far back they reach, and how long a trip takes. That model needs "
+        "no signal timings, which matters because the survey records none anywhere in the "
+        "twelve workbooks — an HCM control-delay model would require inventing its "
+        "own inputs.",
+        "",
+    ] + ([] if not dly else [
+        _table(["Junction", "Approach", "Queue veh", "Queue m", "Storage m",
+                "Delay min", "Blocks back"],
+               [[r["junction"], r["approach"].replace("from ", ""),
+                 f"{r['queue_vehicles']:,}", f"{r['queue_m']:,}",
+                 f"{r['storage_m']:,}" if r["storage_m"] else "n/a",
+                 f"{r['mean_delay_min']:.1f}",
+                 (f"{r['upstream']} at {r['minutes_to_spillback']:.0f} min"
+                  if r["spillback"] else
+                  ("no" if r["storage_m"] else "leaves study area"))]
+                for r in dly["approaches"]]),
+        "",
+        f"**{dly['spillback_count']} of {dly['n_approaches']} queues reach the junction "
+        f"behind them inside the peak hour.** No queue is reported longer than the road "
+        "can physically hold: past the point where a queue blocks the junction upstream, "
+        "the approaches stop being independent and the deterministic model has left the "
+        "regime it is valid in. A metre figure beyond that would be a fiction dressed as "
+        "a measurement.",
+        "",
+        f"Over the {dly['corridor_km']} km corridor a through trip takes "
+        f"**{dly['free_flow_min']} minutes** at free flow and "
+        f"**{dly['peak_journey_min']} minutes** at the peak in the "
+        f"{dly['worst_direction']} direction — an effective "
+        f"**{dly['effective_kmh']} km/h**. Grade-separated through traffic does not enter "
+        f"the junctions and so returns to the free-flow figure, a saving of "
+        f"**{dly['saving_min_per_trip']} minutes per trip**. The peak figure is a floor: "
+        "it sums queues as though independent, and several are not.",
+        "",
+    ]) + ([] if not eco else [
+        f"Approaches are over capacity for a mean of **{eco['mean_hours_over']:.1f} hours a "
+        "day**, counted from the survey's own 96 intervals rather than assumed from a "
+        f"nominal peak period. That accumulates **{eco['delay_veh_hr_day']:,} "
+        "vehicle-hours** of delay daily.",
+        "",
+        _table(["Case", "Annual cost of delay"], [
+            ["Do nothing", f"Rs {eco['annual_cost_crore'][0]}–"
+                           f"{eco['annual_cost_crore'][1]} crore"],
+            ["Grade separated", f"Rs {eco['annual_cost_after_crore'][0]}–"
+                                f"{eco['annual_cost_after_crore'][1]} crore"],
+            ["**Annual benefit**", f"**Rs {eco['annual_benefit_crore'][0]}–"
+                                   f"{eco['annual_benefit_crore'][1]} crore**"],
+        ]),
+        "",
+        "**These rupee figures are indicative and deliberately banded.** The delay is "
+        "measured; the value of time is a policy input and not ours to set. Authorities "
+        "appraise against their own approved rates, so quoting a single figure derived "
+        "from a rate the authority has not adopted would present a policy choice as an "
+        "engineering result. The method is the deliverable; substituting JDA's rates "
+        "changes one table in `src/economics.py`.",
+        "",
+        "Excluded entirely: " + ", ".join(eco["assumptions"]["excluded"]) + ". Each is "
+        "real and each would raise the figure, so what is quoted is a lower bound. Queue "
+        "carry-over between consecutive oversaturated hours is also not modelled, for the "
+        "same reason the queue lengths are capped, and that too makes this conservative.",
+        "",
+    ]) + [
+        "## 8. Do these conclusions survive their own assumptions?",
         "",
         f"Both were re-run across **{sen['combinations']} combinations** of PCU uplift, "
         "lane capacity, effective lane count, critical gap and growth rate.",
@@ -466,7 +532,7 @@ def capacity_report():
          "analysis shows.") if not sen.get("most_influential") else
         f"Most influential assumption: {sen['most_influential']}.",
         "",
-        "## 8. Limitations",
+        "## 9. Limitations",
         "",
         "- The survey covers **one day**, not the two the workbooks present. Day two is "
         "derived from day one; see the integrity audit report.",

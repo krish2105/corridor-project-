@@ -659,6 +659,65 @@ footer{padding-block:2.5rem 3.5rem; border-top:1px solid var(--rule); color:var(
   </div>
 </section>
 
+<!-- QUEUE, DELAY AND COST ----------------------------------------------- -->
+<section>
+  <p class="eyebrow">What a v/c ratio means on the ground</p>
+  <h2>The corridor does not queue. It locks.</h2>
+  <p class="col lede">A ratio above 1.0 says an approach is over capacity. It does not say
+  what that looks like. Deterministic oversaturation queueing &mdash; which needs no signal
+  timings, and the survey records none &mdash; gives the queue in vehicles, the length it
+  occupies at the measured carriageway width, and how long into the peak it reaches the
+  junction behind it.</p>
+
+  <div class="card" style="margin-top:1.4rem">
+    <header><h3>Peak-hour queue against available storage</h3>
+    <span class="tag">$QSPILL of $QN block back</span></header>
+    <div class="body">
+      <p class="col"><strong>$QSPILL of $QN</strong> queues reach the junction behind them
+      before the peak hour is out. The soonest does it in <strong>$QSOON minutes</strong>.
+      Past that point the approaches stop being independent and deterministic queueing
+      stops being valid, which is why no queue here is reported longer than the road can
+      physically hold.</p>
+      <div class="scope">
+        <div><span class="k num">$QFREE</span><span class="l">min, free flow</span></div>
+        <div><span class="k num" style="color:var(--defect)">$QPEAK</span>
+          <span class="l">min at the peak</span></div>
+        <div><span class="k num" style="color:var(--ok)">$QFREE</span>
+          <span class="l">min, grade separated</span></div>
+        <div><span class="k num">$QKMH</span><span class="l">km/h effective</span></div>
+      </div>
+      <p class="col">Over the $QKM km corridor, through traffic on an elevated carriageway
+      does not enter the junctions at all and so meets none of that delay &mdash; a saving
+      of <strong>$QSAVE minutes per trip</strong>. Treat the peak figure as a floor: it
+      sums queues as though they were independent, and $QSPILL of them are not.</p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:1.2rem">
+    <header><h3>What that costs, per year</h3>
+    <span class="tag">value of time is a policy input</span></header>
+    <div class="body">
+      <p class="col">Approaches are over capacity for a mean of <strong>$ECHRS hours a
+      day</strong> &mdash; counted from the survey's own 96 intervals, not assumed from a
+      nominal peak. That accumulates <strong>$ECVEH vehicle-hours</strong> of delay every
+      day.</p>
+      <div class="scope">
+        <div><span class="k num" style="color:var(--defect)">&#8377;$ECLO&ndash;$ECHI</span>
+          <span class="l">crore/yr, do nothing</span></div>
+        <div><span class="k num" style="color:var(--ok)">&#8377;$ECBLO&ndash;$ECBHI</span>
+          <span class="l">crore/yr benefit</span></div>
+      </div>
+      <p class="col" style="border-left:3px solid var(--accent); padding-left:.9rem">
+      <strong>These rupees are indicative, and deliberately banded.</strong> The delay is
+      measured; the value of time is not ours to set. Authorities appraise against their own
+      approved rates, so quoting a single figure off a rate JDA has not adopted would present
+      a policy choice as an engineering result. The method is the deliverable &mdash;
+      substituting JDA's rates is a one-line change. Vehicle operating cost, fuel, emissions,
+      accident cost and reliability are excluded entirely, and all would raise it.</p>
+    </div>
+  </div>
+</section>
+
 <!-- SCHEME TEST -------------------------------------------------------- -->
 <section>
   <div class="stack">
