@@ -23,6 +23,7 @@ def build():
     d = json.loads((OUT_DATA / "corridor.json").read_text())
     a, c, cap = d["audit"], d["corridor"], (d.get("capacity") or {})
     con = d.get("constraints") or {}
+    sch = d.get("scheme") or {}
     js = d["junctions"]
     d2 = a["day2"]
 
@@ -47,6 +48,12 @@ def build():
         VCHI=f"{max(r['vc_after'] for r in cap['relief']):.2f}" if cap.get("relief") else "0",
         VCWAS=f"{max(r['vc_before'] for r in cap['relief']):.2f}" if cap.get("relief") else "0",
         ENTITIES="1,041,959", LAYERS="44", TESTS="26",
+        SFAIL=str(sch.get("fails_conservative", 0)),
+        SN=str(len(sch.get("uturns", []))),
+        SFAILOPT=str(sch.get("fails_optimistic", 0)),
+        SFORCED=fmt(sch.get("forced_uturns_per_hour", 0)),
+        SOK=str(sch.get("s1_serviceable", 0)),
+        SNJ=str(sch.get("n_junctions", 0)),
         AUDITURL="https://claude.ai/code/artifact/25432daa-e9e7-48c7-82f6-d43e7c67b0c4",
     )
     sub = {k: ascii_only(v) for k, v in sub.items()}
