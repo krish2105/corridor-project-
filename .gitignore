@@ -19,5 +19,8 @@ __pycache__/
 node_modules/
 .next/
 
-# regenerable from the DWG via ODA File Converter
-00_source/dxf/
+
+# Client source data. Never committed: the workbooks and the survey drawing are
+# JDA's, not ours, and the DXF is 208 MB against GitHub's 100 MB file limit.
+# Everything in the repo is regenerated from these by the pipeline.
+00_source/
