@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import SmoothScroll from "@/components/SmoothScroll";
 import Rail from "@/components/Rail";
 
 export const metadata: Metadata = {
@@ -22,7 +21,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
-        <SmoothScroll />
         <Rail />
         {children}
       </body>
