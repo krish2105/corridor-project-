@@ -144,6 +144,18 @@ ul{padding-left:1.1rem; margin:0}
 li::marker{color:var(--faint)}
 footer{padding-block:2.5rem 3.5rem; border-top:1px solid var(--rule); color:var(--muted); font-size:.8rem}
 
+/* theme toggle ---------------------------------------------------------- */
+.themetoggle{
+  position:fixed; top:1rem; right:1rem; z-index:60;
+  font-family:"IBM Plex Mono",monospace; font-size:.68rem;
+  letter-spacing:.08em; text-transform:uppercase;
+  padding:.42rem .7rem; border-radius:3px; cursor:pointer;
+  background:var(--surface); color:var(--muted); border:1px solid var(--rule);
+  box-shadow:var(--shadow);
+}
+.themetoggle:hover{color:var(--ink); border-color:var(--rule-hard)}
+@media print{.themetoggle{display:none}}
+
 @media (prefers-reduced-motion:no-preference){
   .finding,.scope>div{transition:none}
 }
@@ -153,6 +165,18 @@ footer{padding-block:2.5rem 3.5rem; border-top:1px solid var(--rule); color:var(
   .spark .val{grid-column:2; text-align:left}
 }
 </style>
+
+<script>
+/* Light by default. An audit gets read in meetings, screenshotted into reports and
+   printed, so light is the right default rather than the reader's OS setting.
+   Runs before paint so there is no flash of the wrong theme. */
+(function(){
+  var t = null;
+  try { t = localStorage.getItem("corridor-theme"); } catch (e) {}
+  document.documentElement.setAttribute("data-theme", t || "light");
+})();
+</script>
+<button class="themetoggle" id="themetoggle" aria-label="Switch theme"></button>
 
 <div class="wrap">
 
@@ -567,6 +591,24 @@ var D = $DATA;
       +  '<span class="val num">peak '+p.peak+'</span>';
   });
   el.innerHTML = h;
+})();
+
+/* theme toggle */
+(function(){
+  var b = document.getElementById("themetoggle");
+  var label = function(){
+    var cur = document.documentElement.getAttribute("data-theme");
+    b.textContent = cur === "light" ? "Dark" : "Light";
+    b.title = "Switch to " + (cur === "light" ? "dark" : "light") + " theme";
+  };
+  label();
+  b.addEventListener("click", function(){
+    var cur = document.documentElement.getAttribute("data-theme");
+    var next = cur === "light" ? "dark" : "light";
+    document.documentElement.setAttribute("data-theme", next);
+    try { localStorage.setItem("corridor-theme", next); } catch (e) {}
+    label();
+  });
 })();
 
 /* TMC-04 turning matrix */

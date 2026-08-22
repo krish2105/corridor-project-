@@ -137,3 +137,15 @@ footer{padding-block:2.5rem 4rem;border-top:1px solid var(--rule);color:var(--mu
   html{scroll-behavior:auto}
   *{animation-duration:.01ms !important;transition-duration:.01ms !important}
 }
+
+/* theme toggle ---------------------------------------------------------- */
+.themetoggle{
+  position:fixed; top:1rem; right:1rem; z-index:60;
+  font-family:"IBM Plex Mono",monospace; font-size:.68rem;
+  letter-spacing:.08em; text-transform:uppercase;
+  padding:.42rem .7rem; border-radius:3px; cursor:pointer;
+  background:var(--surface); color:var(--muted); border:1px solid var(--rule);
+  box-shadow:var(--shadow);
+}
+.themetoggle:hover{color:var(--ink); border-color:var(--rule-hard)}
+@media print{.themetoggle,.rail{display:none}}

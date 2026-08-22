@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Rail from "@/components/Rail";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export const metadata: Metadata = {
   title: "Corridor Survey Audit",
@@ -10,8 +11,10 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  // suppressHydrationWarning: the inline theme script sets data-theme on <html>
+  // before React hydrates, so server and client markup cannot match here.
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
@@ -21,6 +24,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "document.documentElement.setAttribute('data-theme'," +
+              "localStorage.getItem('corridor-theme')||'light');",
+          }}
+        />
+        <ThemeToggle />
         <Rail />
         {children}
       </body>
