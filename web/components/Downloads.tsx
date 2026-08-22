@@ -9,6 +9,8 @@
  * ours - but everything derived from them is.
  */
 const FILES = [
+  { f: "data_dictionary.md", label: "Data dictionary",
+    note: "Every field in every file below, with units. Read this first", kind: "MD" },
   { f: "corridor.json", label: "Full analysis dataset",
     note: "Every figure on this page, as produced by the pipeline", kind: "JSON" },
   { f: "audit_report.md", label: "Integrity audit report",

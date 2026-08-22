@@ -137,3 +137,23 @@ def test_opening_year_relief_is_labelled_as_such():
     cap = capacity_report()
     section = cap.split("## 5.")[1].split("## 6.")[0]
     assert "on opening" in section
+
+
+# --- data dictionary ---------------------------------------------------------
+def test_every_published_field_is_documented():
+    """
+    The dictionary's field list is read from the data, so this fails the moment a field
+    is added to the pipeline without a description — which is the whole point of
+    generating it rather than writing it.
+    """
+    from src.dictionary import build
+    _md, _doc, undocumented, _unused = build()
+    assert undocumented == [], f"undocumented fields: {undocumented}"
+
+
+def test_dictionary_states_the_crs_and_explains_the_bands():
+    from src.dictionary import build
+    md, *_ = build()
+    assert "EPSG:32643" in md
+    assert "false precision" in md
+    assert "policy" in md.lower()

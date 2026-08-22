@@ -1,0 +1,266 @@
+# Data dictionary
+### Every field in every published dataset
+
+Generated 2026-08-23 from the files in `out/data`. The field list is read from the data itself, so a field added to the pipeline and not described here is reported below as undocumented rather than quietly omitted.
+
+**All spatial data is EPSG:32643 (UTM zone 43N, metres).** GeoJSON is written in EPSG:4326 because the format requires it, and is converted at that boundary only.
+
+## Files
+
+| File | Contents |
+|---|---|
+| `corridor.json` | Everything the dashboard reads. Bundles the sections below. |
+| `capacity.json` | Measured widths, demand against capacity, relief, design life. |
+| `delay.json` | Queue, spillback, delay and corridor journey time. |
+| `economics.json` | Cost of delay. Every figure banded. |
+| `scheme_test.json` | Gap-acceptance test of the JDA U-turn scheme. |
+| `sensitivity.json` | Every conclusion re-run across its assumption grid. |
+| `constraint_profile.json` | Pier-siting score at 25 m stations along the alignment. |
+| `atlas_summary.json` | Constraint counts by category over the whole drawing. |
+| `atlas.geojson` | Constraint geometry: buildings, utilities, drainage, trees, medians. |
+| `median_openings.geojson` | Every median gap with width and classification. |
+| `junction_candidates.geojson` | All signal clusters considered when placing the six junctions. |
+
+## Fields
+
+| Field | Meaning |
+|---|---|
+| `alignment_km` | Length of the surveyed alignment. |
+| `analysis_date` | Survey day the figures come from. Day two is derived; see the audit. |
+| `annual_benefit_crore` | [low, high] difference between the two. |
+| `annual_cost_after_crore` | [low, high] annual cost once grade separated. |
+| `annual_cost_crore` | [low, high] annual cost of delay, crore rupees. |
+| `approach` | Which arm traffic enters from. Only the two corridor arms carry a v/c. |
+| `approaches_ok_after_grade_separation` | Approaches under capacity on opening. |
+| `arms` | Arm names, clockwise from north. |
+| `assumption_driven` | Whether any single assumption changes the conclusion. |
+| `band_high_pct` | High end of the PCU correction band, %. |
+| `band_low_pct` | Low end of the PCU correction band, %. |
+| `base_year` | Year the survey and all present-day figures refer to. |
+| `bays_planned_by_jda` | U-turn bays in the published scheme. |
+| `benefit_to_first_failure_crore` | Undiscounted benefit over the years the relief lasts. |
+| `binding_need_pcu` | What the binding approach would need by then, PCU/hour. |
+| `bins_parsed` | 15-minute class bins parsed across all workbooks. |
+| `cap_conservative` | Bay capacity at the conservative gap, veh/hour. |
+| `cap_optimistic` | Bay capacity at the optimistic gap, veh/hour. |
+| `capacity` | Approach capacity, PCU/hour, lanes x lane capacity. |
+| `capacity_pcu_hr` | That approach's capacity, PCU/hour. |
+| `capacity_pcu_per_lane_hr` | Assumed lane capacity, PCU/lane/hour. |
+| `category` | Constraint category. |
+| `cells_checked` | Cells re-derived when checking stored totals. |
+| `chainage_m` | Distance along the alignment from its start, metres. |
+| `city` | City. |
+| `classification` | Width band this opening falls in. |
+| `cls` | Vehicle class code. |
+| `cluster` | Cluster id. |
+| `code` | Junction code. |
+| `combinations` | Grid size for the capacity and scheme conclusions. |
+| `composition` | Share of each vehicle class. |
+| `conclusion` | Which conclusion this row belongs to. |
+| `conflicting_flow` | Opposing through movement the U-turn must cross, veh/hour. |
+| `conflicting_stream` | Which movement the U-turn must cross. |
+| `corridor` | Corridor-level aggregates. |
+| `corridor_km` | Length of the surveyed alignment between the end junctions. |
+| `corridor_through_pct` | Through share used for the relief calculation, %. |
+| `cost` | Mismatch between those pairs, as a fraction of flow. |
+| `critical_gap` | Which critical-gap assumption was used. |
+| `critical_gap_source` | Where the critical-gap values come from. |
+| `daily_veh` | Vehicles counted over the survey day. |
+| `delay_veh_hr_day` | Vehicle-hours of delay accumulated per day. A lower bound. |
+| `design_horizon_years` | Design horizon length, years. |
+| `design_life_first_failure_med` | Earliest of fails_med across all approaches. |
+| `design_life_last_failure_med` | Latest of fails_med. |
+| `design_life_survives_horizon` | How many approaches still hold at horizon_year. |
+| `discrepancies` | Stored totals that disagreed with their own components. |
+| `easting` | Easting, EPSG:32643, metres. |
+| `effective_kmh` | Corridor length divided by peak_journey_min. |
+| `elevated_all_pass_combinations` | Combinations where all approaches are relieved. |
+| `elevated_total_combinations` | Size of the elevated grid. |
+| `excess_pcu` | Excess ARRIVALS per day, PCU. Not PCU-hours. |
+| `excluded` | Cost components deliberately not counted. |
+| `fails` | Approaches failing under that assumption. |
+| `fails_conservative` | Approaches the bays cannot serve, conservative gap. |
+| `fails_high` | Year it returns to capacity at the high growth rate. |
+| `fails_low` | Year the approach returns to capacity at the low growth rate. |
+| `fails_med` | Year it returns to capacity at the medium growth rate. |
+| `fails_optimistic` | Approaches they cannot serve even optimistically. |
+| `features` | Geometry features extracted. |
+| `files_affected` | Workbooks containing at least one discrepancy. |
+| `follow_up_s` | Follow-up headway band, seconds. |
+| `footprint` | Footprint scale tested. |
+| `footprint_scale` | Scale applied to the vehicle footprints tested. |
+| `forced_uturns_per_hour` | Vehicles per peak hour forced across a stream with no gap. |
+| `frac` | ok divided by total. |
+| `free_flow_kmh` | Free-flow speed used for journey time, km/h. |
+| `free_flow_min` | Through journey time at the free-flow speed. |
+| `greater` | Series where day two exceeds day one. |
+| `growth_high_pct` | High growth scenario. |
+| `growth_low_pct` | Low growth scenario, % per year. |
+| `growth_med_pct` | Medium growth scenario. |
+| `growth_pct` | Growth rate applied, % per year. |
+| `hard_free` | Stations with no undivertible constraint. |
+| `hard_free_pct` | That as a percentage. |
+| `horizon_year` | End of the stated design horizon. |
+| `hours_over` | Hours per day this approach is over capacity. Counted, not assumed. |
+| `identical` | Series reproducing the previous day to the exact vehicle. |
+| `irc_high` | IRC:106 factor at or above 10% share. |
+| `irc_low` | IRC:106 factor at or below 5% share. |
+| `irc_point` | Interpolated factor at the observed share. null for composites. |
+| `jam_packing` | Packing efficiency of a jammed queue. |
+| `jda_name` | The authority's own name for the junction in its scheme documents. |
+| `jda_scheme` | The authority's scheme as described in its documents. |
+| `junction` | Survey code, TMC-01 to TMC-06. |
+| `label` | Human-readable name. |
+| `lane_cap` | Lane capacity tested, PCU per lane. |
+| `lane_capacity_pcu` | Lane capacity tested, PCU per lane. |
+| `lane_model_applicable` | Whether lane-based capacity describes this stream at all. |
+| `lane_width_m` | Assumed lane width, metres. |
+| `lanes` | Lanes per direction tested. |
+| `lanes_per_dir` | Lanes per direction from the measured width. |
+| `lanes_per_direction` | Lanes per direction tested. |
+| `lat` | Latitude, EPSG:4326, display only. |
+| `layer` | Source CAD layer. |
+| `layers` | CAD layers read. |
+| `location_confidence` | Whether the position is name-matched or inferred. |
+| `lon` | Longitude, EPSG:4326. |
+| `longest_clear_runs_m` | Longest continuous constraint-free runs, metres. |
+| `los` | Level of service. |
+| `los_after` | Level of service after relief, on opening. |
+| `los_hi` | Level of service at vc_hi. |
+| `los_pt` | Level of service at vc_pt, IRC bands. F is over capacity. |
+| `matrix_pcu` | The same matrix in PCU. |
+| `matrix_veh` | Turning-movement matrix in vehicles. |
+| `max_pcu_hr` | Highest rolling-hour demand seen on this approach. |
+| `mean_delay_min` | Mean delay per arriving vehicle, minutes. |
+| `mean_hours_over` | Mean of hours_over across approaches. |
+| `median_openings` | Median gaps found. |
+| `minutes_to_spillback` | Minutes into the peak before the upstream junction blocks. |
+| `mislabelled` | Series whose label does not match the column it reads. |
+| `model` | Which model produced the figure. |
+| `most_influential` | Assumption with the largest swing, or null when none swings. |
+| `multiple` | Demand multiple by the horizon year. |
+| `n_approaches` | Approaches assessed. |
+| `n_junctions` | Junctions surveyed. |
+| `nearest_label` | Nearest text label in the drawing. |
+| `nearest_label_m` | Distance to it, metres. |
+| `net_grand_total` | Net effect of all discrepancies on the grand total. |
+| `next` | Junction after it. |
+| `no_gap_vc_threshold` | v/c past which no capacity figure is reported. |
+| `no_viable_gap` | Approaches where gap acceptance degenerates; no number is quoted. |
+| `northbound_in` | Northbound flow arriving at the northern one. |
+| `northbound_out` | Northbound flow leaving the southern junction. |
+| `northing` | Northing, EPSG:32643. |
+| `note` | Free-text qualifier. |
+| `observed_vs_planning_ratio` | Counted flow divided by the planning-stage assumption. |
+| `of` | Approaches assessed. |
+| `ok` | Approaches under capacity in that combination. |
+| `order` | Junction order along the corridor. |
+| `order_best` | Best-scoring order from flow continuity. |
+| `order_conclusive` | Whether the margin is large enough to call. |
+| `order_cost` | Continuity cost of that order. Lower is better. |
+| `order_margin_pct` | Gap to the runner-up, %. Small means inconclusive. |
+| `oversaturated_count` | Approaches over capacity at the peak. |
+| `overstate` | Discrepancies where it was too high. |
+| `packing` | Jam packing efficiency tested. |
+| `pcu_band` | [low, high] corrected PCU. |
+| `pcu_corrected` | PCU after IRC:106 share-dependent correction. |
+| `pcu_hi` | Peak-hour demand with composite classes treated as their heaviest. |
+| `pcu_lo` | Peak-hour demand, PCU/hour, composite classes treated as their lightest. |
+| `pcu_per_vehicle` | Stream mean, used to convert PCU back to vehicles. |
+| `pcu_pt` | Point estimate. Uses the survey's own factors for composite classes. |
+| `pcu_surveyed` | PCU as the survey reported it. |
+| `pcu_uplift_pct` | PCU uplift tested, %. |
+| `peak` | Start of the peak hour, re-derived from 15-minute bins. |
+| `peak15` | Busiest 15-minute bin. |
+| `peak_delay_min` | Junction delay along the worst direction, minutes. |
+| `peak_journey_min` | Through journey time at the peak, worst direction. A floor. |
+| `peak_pcu` | Peak-hour demand, PCU/hour. |
+| `peak_start` | As `peak`. |
+| `peak_veh` | Peak-hour vehicles. |
+| `phf` | Peak hour factor: peak hour over four times the busiest 15 minutes. |
+| `phf_applied` | Whether a peak hour factor was applied. |
+| `pier_radius_m` | Half-footprint used when testing a pier position, metres. |
+| `previous` | Junction before this one along the alignment. |
+| `profile` | Pier-siting stations along the alignment. |
+| `queue_carryover` | Whether queues carrying between hours are modelled. |
+| `queue_m` | Queue length, metres, by vehicle footprint against the measured width. |
+| `queue_pcu` | Excess arrivals over the peak hour, PCU. |
+| `queue_robust` | Whether spillback survives every combination. |
+| `queue_spillback_max` | Most approaches spilling back. |
+| `queue_spillback_min` | Fewest approaches spilling back, across the queue grid. |
+| `queue_vehicles` | That queue converted to vehicles using the observed composition. |
+| `ref_errors` | #REF! errors found in the flow-diagram sheets. |
+| `residual_pcu` | What remains at grade once the through movement is elevated. |
+| `right_turn_becomes_uturn` | Whether removed right turns are re-added as U-turns. |
+| `road` | Corridor name. |
+| `s0_los` | Do-nothing level of service. |
+| `s0_vc` | Do-nothing v/c. |
+| `s1_serviceable` | Junctions the JDA scheme serves. |
+| `s1_uturn_vc_cons` | JDA scheme v/c at the conservative gap. |
+| `s1_uturn_vc_opt` | JDA scheme v/c at the optimistic gap. |
+| `s1_works` | Whether the JDA scheme serves that junction. |
+| `s2_los` | Elevated-option level of service. |
+| `s2_vc` | Elevated-option v/c. |
+| `saving_min_per_trip` | Delay avoided by a through trip on an elevated carriageway. |
+| `series` | Movement-class series compared between the two survey days. |
+| `share` | That class's share of the stream. |
+| `shy_distance_m` | Kerb and median clearance deducted, metres. |
+| `signal_cluster` | Cluster id this junction was matched to. |
+| `signal_data` | Whether the survey contains signal timings. It does not. |
+| `signal_heads` | Signal heads counted in that cluster. |
+| `smaller` | Series where it falls short. |
+| `southbound_in` | Southbound flow arriving at the southern one. |
+| `southbound_out` | Southbound flow leaving the northern junction. |
+| `spillback` | True when the queue is longer than the available storage. |
+| `spillback_count` | Approaches whose queue exceeds their storage. |
+| `station_step_m` | Spacing between stations, metres. |
+| `stations` | As `profile`. |
+| `storage_m` | Distance to the junction behind. null at a corridor end. |
+| `survey_dates` | Dates as stated in the workbooks. |
+| `survey_design` | What the survey design was against IRC:SP:19. |
+| `swing` | Size of that swing, in approaches. |
+| `t_c_hi` | Critical gap, conservative. |
+| `t_c_lo` | Critical gap, optimistic, seconds. |
+| `t_hours` | Analysis period, hours. |
+| `through_journey_min_after` | Through journey time once grade separated. |
+| `through_pct` | Share of approach traffic going straight through, %. |
+| `through_pct_mean` | Mean through share across junctions, %. |
+| `through_pct_range` | [min, max] through share, %. |
+| `to_next_m` | Distance to the next, metres. |
+| `to_previous_m` | Distance to the previous junction, metres. |
+| `total` | Approaches assessed in that combination. |
+| `total_delay_pcu_hr` | Delay accumulated over the analysis period, PCU-hours. |
+| `total_excess_pcu_day` | Corridor sum of excess_pcu. |
+| `transects` | How many cross-sections the width was measured on. Fewer is weaker. |
+| `understate` | Discrepancies where the stored total was too low. |
+| `uplift` | PCU uplift tested, %. |
+| `uplift_floor_pct` | Minimum PCU correction, %. The floor, not the estimate. |
+| `uplift_pct` | PCU correction for one junction, %. |
+| `upstream` | The junction that gets blocked. |
+| `uturn_demand` | Right-turn demand that becomes a U-turn once signals are removed. |
+| `uturn_per_km` | Those per kilometre. |
+| `uturn_possible` | Gaps wide enough to turn in. |
+| `uturn_robust` | Whether the U-turn conclusion holds across the whole grid. |
+| `vc` | Volume/capacity used for the queue calculation. |
+| `vc_after` | Volume/capacity after relief, on opening. |
+| `vc_before` | Volume/capacity today. |
+| `vc_conservative` | Demand over conservative capacity. |
+| `vc_hi` | Volume/capacity at pcu_hi. |
+| `vc_lo` | Volume/capacity at pcu_lo. |
+| `vc_optimistic` | Demand over optimistic capacity. |
+| `vc_pt` | Volume/capacity at pcu_pt. |
+| `vot_status` | That value of time is a policy input, not a measurement. |
+| `width_m` | Carriageway width, metres, ONE direction. Measured, not assumed. |
+| `working_days` | [low, high] equivalent working days per year. |
+| `worst_direction` | Which of southbound/northbound is slower. |
+| `years_to_first_failure` | Years from the base year to design_life_first_failure_med. |
+
+## Reading the bands
+
+Several quantities are published as a low/high pair rather than a single number. That is deliberate and it is not uncertainty in the measurement:
+
+- **PCU bands** exist because the survey pools car, taxi, tempo, auto-rickshaw and pickup into one column at one factor. No IRC:106 factor resolves that bucket, so a point estimate would be false precision.
+- **Cost bands** exist because value of time is a policy input. The delay is measured; the rate is the authority's to set.
+- **Critical gap bands** exist because the values are from literature rather than measured at this corridor. They are Raff-derived and so likely biased high, which makes the U-turn finding conservative.
+
+No band is collapsed to its midpoint anywhere in the outputs.

@@ -14,7 +14,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from src.analyse import (composition, corridor_order, movements, peak_hours,
                          through_vs_turning, tmc_matrix)
-from src.config import (OUT, CORRIDOR_NAME, CORRIDOR_ROAD, JDA_SCHEME, JUNCTIONS,
+from src.config import (OUT, ROOT, CORRIDOR_NAME, CORRIDOR_ROAD, JDA_SCHEME, JUNCTIONS,
                         JUNCTION_COORDS, OUT_DATA, SURVEY_DATES)
 from src.pcu import SURVEYED, convert, factor_band
 from src.tmc_parse import CLASS_LABELS, parse_all
@@ -149,7 +149,7 @@ def _write_web_layers(webdir):
     import shutil as _sh
     for src_f in (OUT / "audit_report.md", OUT / "corridor_constraint_atlas.pdf",
                   OUT / "capacity_report.md", OUT / "method_statement.md",
-                  OUT / "validation_report.md",
+                  OUT / "validation_report.md", ROOT / "docs" / "data_dictionary.md",
                   OUT_DATA / "median_openings.geojson", OUT_DATA / "scheme_test.json",
                   OUT_DATA / "capacity.json", OUT_DATA / "sensitivity.json",
                   OUT_DATA / "delay.json", OUT_DATA / "economics.json"):
