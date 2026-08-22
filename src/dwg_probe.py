@@ -6,8 +6,17 @@ in the project: every downstream metre depends on getting the CRS right. This ru
 the magnitude test on the drawing's own header extents and reports the verdict.
 
 Needs LibreDWG (`brew install libredwg`). LibreDWG recovers the header reliably but
-not the entity sections of this file — for geometry, convert with ODA File Converter
-to ASCII DXF and run the Phase 1.2 layer inventory instead.
+not the entity sections of this file. Routes already tried and rejected, so nobody
+repeats them:
+
+  dwg2dxf            -> writes header only, 12 KB, no entities
+  dwg2dxf -b         -> 4.8 MB but malformed; ezdxf raises DXFStructureError
+  dwgread -O GeoJSON -> works, 117,439 features in real UTM 43N, but GeoJSON
+                        carries no layer names, so entities cannot be filtered
+                        to centrelines/kerbs/utilities
+
+For usable geometry, convert with ODA File Converter to ASCII DXF (ACAD 2018) and
+run the Phase 1.2 layer inventory.
 
 Run:  uv run python src/dwg_probe.py
 """
