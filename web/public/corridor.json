@@ -893,6 +893,244 @@
   "s1_serviceable": 0,
   "n_junctions": 6
  },
+ "sensitivity": {
+  "axes": {
+   "pcu_uplift_pct": [
+    14.9,
+    30.0,
+    44.0,
+    74.8
+   ],
+   "lane_capacity_pcu": [
+    1200,
+    1500,
+    1800
+   ],
+   "lanes_per_direction": [
+    2,
+    3
+   ],
+   "critical_gap": [
+    "optimistic",
+    "conservative"
+   ],
+   "growth_pct": [
+    4.0,
+    6.0,
+    8.0
+   ]
+  },
+  "combinations": 144,
+  "uturn": {
+   "optimistic": {
+    "fails": 9,
+    "of": 12
+   },
+   "conservative": {
+    "fails": 11,
+    "of": 12
+   }
+  },
+  "uturn_robust": true,
+  "elevated": [
+   {
+    "uplift": 14.9,
+    "lane_cap": 1200,
+    "lanes": 2,
+    "ok": 12,
+    "total": 12,
+    "frac": 1.0
+   },
+   {
+    "uplift": 14.9,
+    "lane_cap": 1200,
+    "lanes": 3,
+    "ok": 12,
+    "total": 12,
+    "frac": 1.0
+   },
+   {
+    "uplift": 14.9,
+    "lane_cap": 1500,
+    "lanes": 2,
+    "ok": 12,
+    "total": 12,
+    "frac": 1.0
+   },
+   {
+    "uplift": 14.9,
+    "lane_cap": 1500,
+    "lanes": 3,
+    "ok": 12,
+    "total": 12,
+    "frac": 1.0
+   },
+   {
+    "uplift": 14.9,
+    "lane_cap": 1800,
+    "lanes": 2,
+    "ok": 12,
+    "total": 12,
+    "frac": 1.0
+   },
+   {
+    "uplift": 14.9,
+    "lane_cap": 1800,
+    "lanes": 3,
+    "ok": 12,
+    "total": 12,
+    "frac": 1.0
+   },
+   {
+    "uplift": 30.0,
+    "lane_cap": 1200,
+    "lanes": 2,
+    "ok": 12,
+    "total": 12,
+    "frac": 1.0
+   },
+   {
+    "uplift": 30.0,
+    "lane_cap": 1200,
+    "lanes": 3,
+    "ok": 12,
+    "total": 12,
+    "frac": 1.0
+   },
+   {
+    "uplift": 30.0,
+    "lane_cap": 1500,
+    "lanes": 2,
+    "ok": 12,
+    "total": 12,
+    "frac": 1.0
+   },
+   {
+    "uplift": 30.0,
+    "lane_cap": 1500,
+    "lanes": 3,
+    "ok": 12,
+    "total": 12,
+    "frac": 1.0
+   },
+   {
+    "uplift": 30.0,
+    "lane_cap": 1800,
+    "lanes": 2,
+    "ok": 12,
+    "total": 12,
+    "frac": 1.0
+   },
+   {
+    "uplift": 30.0,
+    "lane_cap": 1800,
+    "lanes": 3,
+    "ok": 12,
+    "total": 12,
+    "frac": 1.0
+   },
+   {
+    "uplift": 44.0,
+    "lane_cap": 1200,
+    "lanes": 2,
+    "ok": 12,
+    "total": 12,
+    "frac": 1.0
+   },
+   {
+    "uplift": 44.0,
+    "lane_cap": 1200,
+    "lanes": 3,
+    "ok": 12,
+    "total": 12,
+    "frac": 1.0
+   },
+   {
+    "uplift": 44.0,
+    "lane_cap": 1500,
+    "lanes": 2,
+    "ok": 12,
+    "total": 12,
+    "frac": 1.0
+   },
+   {
+    "uplift": 44.0,
+    "lane_cap": 1500,
+    "lanes": 3,
+    "ok": 12,
+    "total": 12,
+    "frac": 1.0
+   },
+   {
+    "uplift": 44.0,
+    "lane_cap": 1800,
+    "lanes": 2,
+    "ok": 12,
+    "total": 12,
+    "frac": 1.0
+   },
+   {
+    "uplift": 44.0,
+    "lane_cap": 1800,
+    "lanes": 3,
+    "ok": 12,
+    "total": 12,
+    "frac": 1.0
+   },
+   {
+    "uplift": 74.8,
+    "lane_cap": 1200,
+    "lanes": 2,
+    "ok": 10,
+    "total": 12,
+    "frac": 0.8333333333333334
+   },
+   {
+    "uplift": 74.8,
+    "lane_cap": 1200,
+    "lanes": 3,
+    "ok": 12,
+    "total": 12,
+    "frac": 1.0
+   },
+   {
+    "uplift": 74.8,
+    "lane_cap": 1500,
+    "lanes": 2,
+    "ok": 12,
+    "total": 12,
+    "frac": 1.0
+   },
+   {
+    "uplift": 74.8,
+    "lane_cap": 1500,
+    "lanes": 3,
+    "ok": 12,
+    "total": 12,
+    "frac": 1.0
+   },
+   {
+    "uplift": 74.8,
+    "lane_cap": 1800,
+    "lanes": 2,
+    "ok": 12,
+    "total": 12,
+    "frac": 1.0
+   },
+   {
+    "uplift": 74.8,
+    "lane_cap": 1800,
+    "lanes": 3,
+    "ok": 12,
+    "total": 12,
+    "frac": 1.0
+   }
+  ],
+  "elevated_all_pass_combinations": 23,
+  "elevated_total_combinations": 24,
+  "most_influential": "pcu_uplift_pct",
+  "swing": 0
+ },
  "junctions": [
   {
    "code": "TMC-01",

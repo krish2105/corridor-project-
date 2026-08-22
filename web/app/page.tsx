@@ -39,6 +39,7 @@ export default function Page() {
   const c2 = d.constraints;
   const cp = d.capacity;
   const sc = d.scheme;
+  const sen = d.sensitivity;
   const NOGAP = sc?.no_gap_vc_threshold ?? 3;
   // busier corridor approach at each junction
   const relief = cp ? Object.values(cp.relief.reduce((m, r) => {
@@ -566,6 +567,56 @@ export default function Page() {
               </table>
             </div>
           </Reveal>
+        </section>
+      )}
+
+      {/* SENSITIVITY */}
+      {sen && (
+        <section>
+          <Reveal><p className="eyebrow">Before you argue with the numbers</p></Reveal>
+          <Reveal delay={.04}>
+            <h2 style={{ marginTop: ".5rem" }}>Do these conclusions survive their own assumptions?</h2>
+          </Reveal>
+          <Reveal delay={.08}>
+            <p className="col lede" style={{ marginTop: "1rem" }}>
+              Every headline here rests on a judgement &mdash; the PCU band, lane capacity,
+              effective lane count, the critical gap, the growth rate. A conclusion that
+              only holds at one corner of that space is a coincidence, not a finding. Both
+              were run across the whole of it: <strong>{sen.combinations} combinations</strong>.
+            </p>
+          </Reveal>
+          <div className="grid2" style={{ marginTop: "1.2rem" }}>
+            <Reveal delay={.12}>
+              <div className="card">
+                <header><span className="chip critical">Robust</span>
+                  <h3>The U-turn bays still cannot carry the demand</h3></header>
+                <div className="body">
+                  <p>At the critical gap <em>most favourable to the scheme</em> &mdash; the
+                  shortest gap drivers might plausibly accept, maximising bay capacity
+                  &mdash; <strong>{sen.uturn.optimistic?.fails} of {sen.uturn.optimistic?.of}</strong>{" "}
+                  corridor approaches still cannot be served.</p>
+                  <p>No assumption inside the defensible range rescues it.</p>
+                </div>
+              </div>
+            </Reveal>
+            <Reveal delay={.16}>
+              <div className="card">
+                <header><span className="chip fixed">Robust</span>
+                  <h3>The elevated option still restores the corridor</h3></header>
+                <div className="body">
+                  <p>Across every combination of PCU uplift, lane capacity and effective
+                  lane count, all approaches return under planning capacity in{" "}
+                  <strong>{sen.elevated_all_pass_combinations} of{" "}
+                  {sen.elevated_total_combinations}</strong> cases. The worst still returns
+                  10 of 12.</p>
+                  <p>One-at-a-time analysis swings the result by <strong>zero</strong>{" "}
+                  approaches on every axis, so no assumption is named most influential. The
+                  finding is driven by the size of the through movement, not by anything
+                  assumed.</p>
+                </div>
+              </div>
+            </Reveal>
+          </div>
         </section>
       )}
 

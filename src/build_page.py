@@ -46,10 +46,12 @@ def build():
     con = d.get("constraints") or {}
     capd = d.get("capacity") or {}
     sch = d.get("scheme") or {}
+    sen = d.get("sensitivity") or {}
     chart = dict(
         constraints=con,
         capacity=capd,
         scheme=sch,
+        sensitivity=sen,
         profiles=[dict(code=j["code"], peak=j["peak_start"],
                        v=[p["v"] for p in j["profile"]],
                        t=[p["t"] for p in j["profile"]]) for j in js],
@@ -110,6 +112,11 @@ def build():
         SFORCED=fmt(sch.get("forced_uturns_per_hour", 0)),
         SOK=str(sch.get("s1_serviceable", 0)),
         SNJ=str(sch.get("n_junctions", 0)),
+        SENSN=str(sen.get("combinations", 0)),
+        SENSUOPT=str((sen.get("uturn") or {}).get("optimistic", {}).get("fails", 0)),
+        SENSUOF=str((sen.get("uturn") or {}).get("optimistic", {}).get("of", 0)),
+        SENSEOK=str(sen.get("elevated_all_pass_combinations", 0)),
+        SENSETOT=str(sen.get("elevated_total_combinations", 0)),
         CAPRATIO=f"{capd.get('observed_vs_planning_ratio', 0):.2f}",
         CAPOK=str(capd.get("approaches_ok_after_grade_separation", 0)),
         CAPN=str(len(capd.get("relief", []))),

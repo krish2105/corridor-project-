@@ -50,6 +50,12 @@ export type Corridor = {
                  s1_uturn_vc_cons: number; s1_works: boolean;
                  s2_vc: number; s2_los: string }[];
   } | null;
+  sensitivity: {
+    combinations: number; uturn_robust: boolean;
+    uturn: Record<string, { fails: number; of: number }>;
+    elevated_all_pass_combinations: number; elevated_total_combinations: number;
+    most_influential: string | null; swing: number; assumption_driven: boolean;
+  } | null;
   junctions: Junction[];
   corridor: {
     through_pct_mean: number; through_pct_range: [number, number];
