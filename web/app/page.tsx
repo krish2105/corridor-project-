@@ -33,7 +33,7 @@ export default function Page() {
         <Reveal delay={.06}><h1>{meta.corridor}</h1></Reveal>
         <Reveal delay={.12}>
           <p className="lede col" style={{ marginTop: "1.1rem" }}>
-            Six signalised junctions, {meta.city}. Surveyed {meta.survey_dates[0]} and{" "}
+            Six junctions, {meta.city}. Surveyed {meta.survey_dates[0]} and{" "}
             {meta.survey_dates[1]} by the appointed contractor and issued to JDA as twelve
             workbooks. This is an independent re-derivation of every number in them.
           </p>
