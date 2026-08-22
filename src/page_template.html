@@ -814,9 +814,12 @@ footer{padding-block:2.5rem 3.5rem; border-top:1px solid var(--rule); color:var(
     <p class="eyebrow">Before you argue with the numbers</p>
     <h2>Do these conclusions survive their own assumptions?</h2>
     <p class="col lede">Every headline here rests on at least one judgement &mdash; the PCU
-    band, the lane capacity, the effective lane count, the critical gap, the growth rate.
-    A conclusion that only holds at one corner of that space is a coincidence, not a
-    finding. So both were run across the whole of it: <strong>$SENSN combinations</strong>.</p>
+    band, the lane capacity, the effective lane count, the critical gap, the growth rate,
+    the jam packing. A conclusion that only holds at one corner of that space is a
+    coincidence, not a finding. So each was run across the whole of it:
+    <strong>$SENSN combinations</strong> for the capacity and scheme conclusions, and a
+    further <strong>$SENSQN</strong> for the queue conclusion, whose assumptions none of
+    the first set touches.</p>
 
     <div class="grid2" style="margin-top:.4rem">
       <div class="finding">
@@ -828,6 +831,20 @@ footer{padding-block:2.5rem 3.5rem; border-top:1px solid var(--rule); color:var(
           &mdash; <strong>$SENSUOPT of $SENSUOF</strong> corridor approaches still cannot
           be served.</p>
           <p>There is no assumption inside the defensible range that rescues it.</p>
+        </div>
+      </div>
+
+      <div class="finding">
+        <header><span class="chip critical">Robust</span>
+          <h3>Queues still block the junction behind them</h3></header>
+        <div class="body">
+          <p>Tested at the assumptions <em>most favourable to the corridor still
+          working</em> &mdash; the densest plausible packing, the smallest vehicle
+          footprints, and the most generous lane capacity &mdash;
+          <strong>$SENSQMIN of $SENSQOF</strong> approaches still queue past the junction
+          upstream. At the central assumptions it is <strong>$SENSQMAX</strong>.</p>
+          <p>No combination in the grid removes it, so the finding is not an artefact of
+          the packing or footprint figures.</p>
         </div>
       </div>
       <div class="finding">

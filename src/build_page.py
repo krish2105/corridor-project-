@@ -149,6 +149,10 @@ def build():
         ECHI=str((ecod.get("annual_cost_crore") or [0, 0])[1]),
         ECBLO=str((ecod.get("annual_benefit_crore") or [0, 0])[0]),
         ECBHI=str((ecod.get("annual_benefit_crore") or [0, 0])[1]),
+        SENSQN=str(len(sen.get("queue", []))),
+        SENSQMIN=str(sen.get("queue_spillback_min", "")),
+        SENSQMAX=str(sen.get("queue_spillback_max", "")),
+        SENSQOF=str((sen.get("queue") or [{}])[0].get("total", "")),
         DLFAIL=str(capd.get("design_life_first_failure_med", "")),
         DLYEARS=str((capd.get("design_life_first_failure_med", 0) or 0)
                     - capd.get("assumptions", {}).get("base_year", 0)),

@@ -638,6 +638,22 @@ def method_statement():
             ["Scheme test", "Gap acceptance against measured opposing flow, both "
              "optimistic and conservative critical gaps.",
              f"v/c above {s['no_gap_vc_threshold']} reported as 'no viable gaps', not as a number"],
+            ["Design life", "Compound growth applied to the residual turning demand "
+             "after grade separation, to find the year each approach returns to capacity.",
+             "relief reported for the horizon, not the opening year"],
+            ["Queue and delay", "Deterministic oversaturation queueing. No signal model "
+             "is used because the survey records no signal timings. Queue converted to a "
+             "length by vehicle footprint against the measured carriageway width.",
+             "no queue reported longer than the road can physically hold"],
+            ["Economics", "Delay valued at an occupancy-weighted value of time, over the "
+             "oversaturated hours counted from the survey's own intervals.",
+             "every figure banded; value of time declared a policy input"],
+            ["Annotation (pending footage)", "Frames selected by temporal stratification "
+             "and de-duplication, labelled in CVAT, Roboflow or Label Studio.",
+             "unknown labels dropped, never guessed"],
+            ["Detection stage 2 (pending footage)", "Fine-tune on frames from the study "
+             "camera, starting from the IDD weights at a tenth of the learning rate.",
+             "train/val split by contiguous time block, never at random"],
             ["Sensitivity", "Every conclusion re-run across the full assumption grid.",
              f"{sen['combinations']} combinations"],
             ["Detection (pending footage)", "YOLO fine-tuned on IDD then on annotated "

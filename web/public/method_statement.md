@@ -38,6 +38,11 @@ Each stage carries a numeric acceptance gate. A failed gate is reported, not wor
 | Constraint atlas | All constraint layers extracted from the CAD; pier siting profiled at 25 m stations against an 8 m footprint. | hard constraints flagged, not scored away |
 | Capacity | Widths measured on transects across the alignment; demand from corrected PCU at the derived peak. | measured widths, not assumed |
 | Scheme test | Gap acceptance against measured opposing flow, both optimistic and conservative critical gaps. | v/c above 3.0 reported as 'no viable gaps', not as a number |
+| Design life | Compound growth applied to the residual turning demand after grade separation, to find the year each approach returns to capacity. | relief reported for the horizon, not the opening year |
+| Queue and delay | Deterministic oversaturation queueing. No signal model is used because the survey records no signal timings. Queue converted to a length by vehicle footprint against the measured carriageway width. | no queue reported longer than the road can physically hold |
+| Economics | Delay valued at an occupancy-weighted value of time, over the oversaturated hours counted from the survey's own intervals. | every figure banded; value of time declared a policy input |
+| Annotation (pending footage) | Frames selected by temporal stratification and de-duplication, labelled in CVAT, Roboflow or Label Studio. | unknown labels dropped, never guessed |
+| Detection stage 2 (pending footage) | Fine-tune on frames from the study camera, starting from the IDD weights at a tenth of the learning rate. | train/val split by contiguous time block, never at random |
 | Sensitivity | Every conclusion re-run across the full assumption grid. | 144 combinations |
 | Detection (pending footage) | YOLO fine-tuned on IDD then on annotated frames from the study camera. SAHI sliced inference for small two-wheelers; ByteTrack association; homography to ground plane by footpoint. | mAP@0.5 >= 0.80 overall, >= 0.70 per class |
 | Count validation (pending footage) | Automated counts against manual counts from the same footage. | MAPE < 10% total, < 15% per major class |

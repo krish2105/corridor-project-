@@ -44,6 +44,46 @@ AXES = dict(
     growth_pct=[4.0, 6.0, 8.0],
 )
 
+# The queue conclusion has its own assumptions, which none of the axes above touch.
+# Packing and footprint both scale queue LENGTH; lane capacity scales the excess that
+# forms the queue in the first place. All three run from most favourable to the claim
+# (short queues, no spillback) to least.
+QUEUE_AXES = dict(
+    jam_packing=[0.85, 0.75, 0.65],       # denser packing -> shorter queue -> less spillback
+    footprint_scale=[0.8, 1.0, 1.2],      # uncertainty in the vehicle dimensions used
+    lane_capacity_pcu=[1800, 1500, 1200],
+)
+
+
+def spillback_verdict(packing, fscale, lane_cap):
+    """
+    How many approaches queue past the junction behind them, at one set of assumptions.
+
+    Reads the published delay output and rescales it rather than re-deriving the queue,
+    because the quantity under test is the SENSITIVITY of the conclusion to these three
+    assumptions, not the queue itself. Queue length is linear in 1/packing and in
+    footprint, and the excess that forms it is linear in the capacity shortfall.
+    """
+    from src.delay import JAM_PACKING
+    d = json.loads((OUT_DATA / "delay.json").read_text())
+    LANES = 2                      # matches the measured widths in capacity.py
+    base_cap = 1200.0 * LANES      # the capacity delay.py divided by
+    spills = total = 0
+    for a in d["approaches"]:
+        if a["storage_m"] is None:      # corridor ends have no junction behind them
+            continue
+        total += 1
+        demand = a["vc"] * base_cap
+        # lane_cap is PER LANE, so the comparison capacity is lanes x lane_cap.
+        # Treating it as a total makes every value on the axis look worse than the
+        # baseline and the axis then appears to have no effect at all.
+        excess = max(0.0, demand - lane_cap * LANES)
+        base_excess = max(1e-9, demand - base_cap)
+        q = a["queue_m"] * (excess / base_excess) * (JAM_PACKING / packing) * fscale
+        if q > a["storage_m"]:
+            spills += 1
+    return spills, total
+
 
 def uturn_verdict(bins, day, gap_choice):
     """How many corridor approaches the U-turn bays cannot serve, at one gap assumption."""
@@ -173,6 +213,41 @@ if __name__ == "__main__":
         print(f"\n  Most influential: **{swings[0][0]}** "
               f"(swings the result by {swings[0][3]} approaches)")
 
+    # --- conclusion 3: do queues block the junction behind them? ----------
+    qrows, qmin, qmax = [], None, None
+    if (OUT_DATA / "delay.json").exists():
+        print("\n=== Conclusion 3 — queues block the junction upstream ===")
+        print("  Jam packing, vehicle footprint and lane capacity all bear on this one.")
+        print("  None of them appears in the axes above, so it needs its own grid.\n")
+        for pk, fs, lc in product(QUEUE_AXES["jam_packing"],
+                                  QUEUE_AXES["footprint_scale"],
+                                  QUEUE_AXES["lane_capacity_pcu"]):
+            sp, tot = spillback_verdict(pk, fs, lc)
+            qrows.append(dict(packing=pk, footprint=fs, lane_cap=lc,
+                              spillback=sp, total=tot))
+        qdf = pd.DataFrame(qrows)
+        qmin, qmax = int(qdf.spillback.min()), int(qdf.spillback.max())
+        tot = int(qdf.total.iloc[0])
+        best_row = qdf.loc[qdf.spillback.idxmin()]
+        print(f"  {'packing':>9}{'footprint':>11}{'lane cap':>10}{'spill back':>13}")
+        print("  " + "-" * 45)
+        for _, r in qdf.nsmallest(3, "spillback").iterrows():
+            print(f"  {r.packing:>9}{r.footprint:>11}{r.lane_cap:>10}"
+                  f"{int(r.spillback):>8} of {tot:<3}")
+        print(f"  ... {len(qdf) - 3} more combinations")
+        print(f"\n  MOST FAVOURABLE to 'the corridor still works': packing "
+              f"{best_row.packing}, footprint {best_row.footprint}, capacity "
+              f"{int(best_row.lane_cap)} PCU/lane")
+        print(f"  and even there, **{qmin} of {tot}** approaches still queue past the "
+              "junction behind them.")
+        print(f"  Range across all {len(qdf)} combinations: {qmin} to {qmax} of {tot}.")
+        if qmin > 0:
+            print("\n  ROBUST: no combination in the grid removes the spillback. The")
+            print("  conclusion is not an artefact of the packing or footprint figures.")
+        else:
+            print("\n  CONDITIONAL: the most generous assumptions eliminate spillback,")
+            print("  so the conclusion depends on them and must be reported that way.")
+
     OUT_DATA.mkdir(parents=True, exist_ok=True)
     p = OUT_DATA / "sensitivity.json"
     p.write_text(json.dumps(dict(
@@ -182,6 +257,11 @@ if __name__ == "__main__":
         elevated=[{k: (v if not hasattr(v, "item") else v.item()) for k, v in r.items()}
                   for r in df.to_dict("records")],
         elevated_all_pass_combinations=allpass, elevated_total_combinations=len(df),
+        queue_axes=QUEUE_AXES,
+        queue=[{k: (v if not hasattr(v, "item") else v.item()) for k, v in r.items()}
+               for r in qrows],
+        queue_spillback_min=qmin, queue_spillback_max=qmax,
+        queue_robust=(None if qmin is None else bool(qmin > 0)),
         most_influential=(swings[0][0] if swings[0][3] > 0 else None),
         swing=swings[0][3], assumption_driven=bool(swings[0][3] > 0),
     ), indent=1))

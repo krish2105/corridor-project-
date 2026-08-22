@@ -738,7 +738,10 @@ export default function Page() {
               Every headline here rests on a judgement &mdash; the PCU band, lane capacity,
               effective lane count, the critical gap, the growth rate. A conclusion that
               only holds at one corner of that space is a coincidence, not a finding. Both
-              were run across the whole of it: <strong>{sen.combinations} combinations</strong>.
+              were run across the whole of it: <strong>{sen.combinations} combinations</strong>
+              {sen.queue && sen.queue.length > 0 ? (<> for the capacity and scheme
+              conclusions, and a further <strong>{sen.queue.length}</strong> for the queue
+              conclusion, whose assumptions none of the first set touches</>) : null}.
             </p>
           </Reveal>
           <div className="grid2" style={{ marginTop: "1.2rem" }}>
@@ -772,6 +775,24 @@ export default function Page() {
                 </div>
               </div>
             </Reveal>
+            {sen.queue_spillback_min != null && (
+              <Reveal delay={.2}>
+                <div className="card">
+                  <header><span className="chip critical">Robust</span>
+                    <h3>Queues still block the junction behind them</h3></header>
+                  <div className="body">
+                    <p>At the assumptions <em>most favourable to the corridor still
+                    working</em> &mdash; the densest plausible packing, the smallest
+                    vehicle footprints, the most generous lane capacity &mdash;{" "}
+                    <strong>{sen.queue_spillback_min} of {sen.queue?.[0]?.total}</strong>{" "}
+                    approaches still queue past the junction upstream. At the central
+                    assumptions it is <strong>{sen.queue_spillback_max}</strong>.</p>
+                    <p>No combination in the grid removes it, so the finding is not an
+                    artefact of the packing or footprint figures.</p>
+                  </div>
+                </div>
+              </Reveal>
+            )}
           </div>
         </section>
       )}

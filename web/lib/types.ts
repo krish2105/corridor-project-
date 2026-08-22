@@ -77,6 +77,10 @@ export type Corridor = {
                  s2_vc: number; s2_los: string }[];
   } | null;
   sensitivity: {
+    queue?: { packing: number; footprint: number; lane_cap: number;
+              spillback: number; total: number }[];
+    queue_spillback_min?: number | null; queue_spillback_max?: number | null;
+    queue_robust?: boolean | null;
     combinations: number; uturn_robust: boolean;
     uturn: Record<string, { fails: number; of: number }>;
     elevated_all_pass_combinations: number; elevated_total_combinations: number;
