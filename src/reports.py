@@ -79,6 +79,231 @@ def chainage():
     return main.length, rows
 
 
+NOT_MEASURED = "—"   # a cell that has no measurement; never a zero
+
+
+def _opt(name):
+    """Pipeline output that only exists once footage has been processed."""
+    f = DATA / f"{name}.json"
+    return json.loads(f.read_text()) if f.exists() else None
+
+
+def _status_line(v):
+    """
+    Failures lead. A report that opens with what was nearly fine and buries the failed
+    gates behind it is doing the reader's judgement for them.
+    """
+    if not v["accepted"]:
+        line = ("**STATUS: NOT ACCEPTED.** Failed gates: "
+                + ", ".join(v["failed_gates"]) + ".")
+        if v.get("marginal_gates"):
+            line += (" Also short of target, though within tolerance: "
+                     + ", ".join(v["marginal_gates"]) + ".")
+        return line
+    if v.get("meets_target"):
+        return "**STATUS: ACCEPTED.** All gates met at target."
+    return ("**STATUS: ACCEPTED.** Every gate is met, but the following are within "
+            "minimum tolerance rather than at target: "
+            + ", ".join(v["marginal_gates"]) + ".")
+
+
+def validation_report():
+    """
+    D8 - count validation.
+
+    Emits the finished report when validation output exists, and a pro-forma when it does
+    not. The pro-forma is not a document with blanks to fill in by hand; it is this same
+    generator running with the measurement absent, so the finished report cannot end up
+    structured differently from the one that was promised.
+
+    Its purpose is to publish the acceptance gates BEFORE the measurement exists. A gate
+    agreed after the result is known is not a gate, and validation reports in this field
+    routinely quote an accuracy without ever having stated what would have counted as
+    failure. Every threshold below is already fixed in src/validate.py and is rendered
+    from there, so it cannot be softened once a number lands beside it.
+
+    Unmeasured slots render as an em dash, never as zero and never as "TBD" - a zero in an
+    accuracy table reads as a measurement.
+    """
+    from src.validate import GATES, MAJOR
+    from src.train import CLASSES_STAGE2
+    from src.scheme_test import CRITICAL_GAP_S, FOLLOW_UP_S
+    from src.critical_gap import MIN_DRIVERS
+
+    v = _opt("validation")
+    cg = _opt("critical_gap")
+    s_test = _load("scheme_test")
+    pending = v is None
+
+    def cell(value, fmt="{:.1%}"):
+        return NOT_MEASURED if value is None else fmt.format(value)
+
+    status = ("**STATUS: PRO FORMA.** No footage has been processed, so no accuracy has "
+              "been measured. The gates below are already fixed in code and are published "
+              "here ahead of the measurement; they are not adjustable once a result "
+              "exists."
+              ) if pending else (
+              _status_line(v))
+
+    md = [
+        "# Count validation report",
+        f"### {CORRIDOR_ROAD} corridor — automated counts against manual counts",
+        "",
+        f"**Generated** {date.today().isoformat()}. "
+        + ("Structure and gates are final; measurements are outstanding."
+           if pending else "Measured from processed footage."),
+        "",
+        status,
+        "",
+        ("Throughout this document **— means not yet measured**. No unmeasured "
+         "quantity is shown as a number, because a zero in an accuracy table reads as a "
+         "measurement." if pending else
+         "Every figure below is read from pipeline output at generation time."),
+        "",
+        "---",
+        "",
+        "## 1. What is being validated",
+        "",
+        "Whether counts produced by detection and tracking can be trusted in place of a "
+        "human counting the same footage. This is the only claim in the project that "
+        "cannot be checked from the authority's data alone, so it is checked against a "
+        "count made by hand.",
+        "",
+        "The manual count is made from **the same footage**, not a separate roadside "
+        "count. A roadside count would differ for reasons that have nothing to do with "
+        "detection accuracy - different observer, different moment, different weather - "
+        "and would confound the thing being measured with everything else.",
+        "",
+        "## 2. Acceptance gates",
+        "",
+        "Fixed in `src/validate.py` before any footage existed. Two thresholds per "
+        "metric: a **target** the method should reach, and a **minimum** below which the "
+        "result is not usable. A result between the two is reported as marginal, never "
+        "rounded up to a pass.",
+        "",
+        _table(["Metric", "Target", "Minimum", "Direction"], [
+            ["Total count MAPE", f"{GATES['total']['target']:.0%}",
+             f"{GATES['total']['minimum']:.0%}", "lower is better"],
+            [f"Major class MAPE ({', '.join(sorted(MAJOR))})",
+             f"{GATES['major']['target']:.0%}", f"{GATES['major']['minimum']:.0%}",
+             "lower is better"],
+            ["Minor class MAPE", f"{GATES['minor']['target']:.0%}",
+             f"{GATES['minor']['minimum']:.0%}", "lower is better"],
+            ["Movement assignment accuracy", f"{GATES['assignment']['target']:.0%}",
+             f"{GATES['assignment']['minimum']:.0%}", "higher is better"],
+        ]),
+        "",
+        "Minor classes carry a looser minimum because their counts are small: a handful "
+        "of buses in a 15-minute interval makes percentage error volatile for reasons "
+        "that are arithmetic rather than a failure of detection.",
+        "",
+        "## 3. Total accuracy",
+        "",
+        _table(["Manual", "Automated", "MAPE", "Intervals", "Verdict"],
+               [[f"{v['total']['manual_total']:,}" if v else NOT_MEASURED,
+                 f"{v['total']['auto_total']:,}" if v else NOT_MEASURED,
+                 cell(v["total"]["mape"] if v else None),
+                 v["total"]["intervals"] if v else NOT_MEASURED,
+                 v["total"]["verdict"] if v else NOT_MEASURED]]),
+        "",
+        "## 4. Accuracy by vehicle class",
+        "",
+        _table(["Class", "Band", "Manual", "Automated", "MAPE", "Verdict"],
+               ([[c, d["band"], f"{d['manual_total']:,}", f"{d['auto_total']:,}",
+                  f"{d['mape']:.1%}", d["verdict"]]
+                 for c, d in sorted(v["per_class"].items())] if v else
+                [[c, "major" if c in MAJOR else "minor", NOT_MEASURED, NOT_MEASURED,
+                  NOT_MEASURED, NOT_MEASURED]
+                 # the classes the DETECTOR emits, not the PCU or gap-acceptance
+                 # buckets - pedestrians are counted but never enter the TMC
+                 for c in CLASSES_STAGE2 if c != "PERSON"])),
+        "",
+        "## 5. Movement assignment",
+        "",
+        "A vehicle counted correctly but assigned to the wrong turning movement corrupts "
+        "the matrix while leaving the total intact, so it is measured separately from "
+        "count accuracy rather than folded into it.",
+        "",
+        _table(["Metric", "Result", "Gate", "Verdict"], [
+            ["Tracks resolved to a movement",
+             cell(v["assignment"]["accuracy"]) if v and "assignment" in v else NOT_MEASURED,
+             f"{GATES['assignment']['minimum']:.0%} minimum",
+             v["assignment"]["verdict"] if v and "assignment" in v else NOT_MEASURED],
+        ]),
+        "",
+        "## 6. What the detector could not classify",
+        "",
+        "The unmapped-detection rate is reported as a number rather than assumed to be "
+        "zero. It is the direct measure of the gap this project has flagged from the "
+        "start: the survey pools auto-rickshaw with cars, and has no e-rickshaw column at "
+        "all. If a material share of detections cannot be classified, the counts inherit "
+        "that limitation and the report says so.",
+        "",
+        _table(["Diagnostic", "Result"], [
+            ["Detections not mapped to an IRC class",
+             cell(v.get("unmapped_rate") if v else None)],
+            ["Tracks discarded before movement assignment",
+             cell(v.get("discarded_rate") if v else None)],
+        ]),
+        "",
+        "## 7. Critical gap, measured against literature",
+        "",
+        f"The U-turn conclusion currently rests on critical-gap values from literature, "
+        f"not from this corridor. Footage replaces them with measured values from at "
+        f"least {MIN_DRIVERS} head-of-queue drivers, estimated two ways - Raff and "
+        "Troutbeck maximum likelihood - so the two can be compared rather than one "
+        "trusted alone.",
+        "",
+        _table(["Quantity", "Literature (opt / cons)", "Measured", "Effect"], [
+            ["Critical gap, car bucket",
+             f"{CRITICAL_GAP_S['CAR_BUCKET'][0]} / {CRITICAL_GAP_S['CAR_BUCKET'][1]} s",
+             f"{cg['mle_mean']:.2f} s" if cg and cg.get("reportable") else NOT_MEASURED,
+             "sets U-turn bay capacity"],
+            ["Follow-up headway", f"{FOLLOW_UP_S[0]} / {FOLLOW_UP_S[1]} s",
+             f"{cg['follow_up']:.2f} s" if cg and cg.get("follow_up") else NOT_MEASURED,
+             "sets saturation discharge"],
+            ["Raff vs MLE disagreement", NOT_MEASURED,
+             f"{cg['disagreement_s']:.2f} s" if cg and cg.get("disagreement_s") else
+             NOT_MEASURED, "large disagreement withdraws the estimate"],
+        ]),
+        "",
+        f"The literature values are Raff-derived and therefore likely biased high, which "
+        f"makes the present U-turn finding conservative. Measured values would be expected "
+        f"to worsen it, not relieve it. The finding as it stands is that "
+        f"{s_test['fails_conservative']} of {len(s_test['uturns'])} approaches fail; "
+        "measurement is capable of changing that number and this report will state the "
+        "revised figure whichever way it moves.",
+        "",
+        "## 8. Verdict",
+        "",
+        ("No verdict. Nothing has been measured, and an accuracy figure will not appear "
+         "in this document until footage has been processed through the pipeline."
+         if pending else
+         ("**Counts are accepted for reporting.**" if v["accepted"] else
+          "**Counts are not accepted for reporting.** The failed gates above are not "
+          "advisory; the automated counts are not used in any published figure until "
+          "they are met.")),
+        "",
+        "## 9. Limitations that remain regardless of the result",
+        "",
+        "- Validation covers the junction that was filmed. It does not transfer to the "
+        "other five without either footage or a stated assumption.",
+        "- Manual counts are themselves fallible. Two independent passes over the same "
+        "interval bound that error; a single pass does not.",
+        "- E-rickshaw accuracy depends entirely on self-annotated frames, since no public "
+        "dataset carries the class. If those frames are not annotated, e-rickshaw is "
+        "reported as absent rather than as zero.",
+        "- Night-time and adverse-weather accuracy is not established by daytime footage "
+        "and is not claimed.",
+        "",
+        "---",
+        "",
+        "Method, standards and the full gate list are set out in the accompanying method "
+        "statement. Gates are defined in `src/validate.py`.",
+    ]
+    return "\n".join(md), pending
+
+
 def capacity_report():
     c, s, sen = _load("capacity"), _load("scheme_test"), _load("sensitivity")
     a = c["assumptions"]
@@ -375,7 +600,7 @@ def method_statement():
             ["D5", "Median opening schedule", "GeoJSON"],
             ["D6", "Capacity and design-year assessment", "Markdown"],
             ["D7", "Interactive dashboard", "Web link"],
-            ["D8", "Count validation report", "pending footage"],
+            ["D8", "Count validation report", "Markdown, pro forma until footage"],
             ["D9", "Method statement", "this document"],
         ]),
         "",
@@ -395,6 +620,8 @@ if __name__ == "__main__":
     (OUT / "capacity_report.md").write_text(cap)
     meth = method_statement()
     (OUT / "method_statement.md").write_text(meth)
+    val, pending = validation_report()
+    (OUT / "validation_report.md").write_text(val)
 
     c, s, sen = _load("capacity"), _load("scheme_test"), _load("sensitivity")
 
@@ -413,7 +640,18 @@ if __name__ == "__main__":
          cap.count("| TMC-") >= len(c["junctions"])),
         ("no placeholder text", "TODO" not in cap + meth and "TBD" not in cap + meth),
         ("pure ASCII except typographic dashes",
-         all(ord(ch) < 128 or ch in "—–≥×" for ch in cap + meth)),
+         all(ord(ch) < 128 or ch in "—–≥×" for ch in cap + meth + val)),
+        ("validation report written", len(val) > 3000),
+        ("gates published ahead of the measurement",
+         "5%" in val and "10%" in val and "95%" in val),
+        ("pro forma states its status" if pending else "result states its status",
+         ("PRO FORMA" in val) if pending else
+         ("ACCEPTED" in val or "NOT ACCEPTED" in val)),
+        ("no unmeasured value rendered as a number",
+         ("0.0%" not in val) if pending else True),
+        ("unmeasured cells carry the marker and a legend",
+         (val.count("\u2014") > 20 and "means not yet measured" in val)
+         if pending else True),
     ]
     for name, good in tests:
         checks += good
@@ -422,3 +660,5 @@ if __name__ == "__main__":
     print(f"\n  GATE - reports generated and bound to source: **{checks} of {len(tests)}**")
     print(f"  out/capacity_report.md    {len(cap):,} chars")
     print(f"  out/method_statement.md   {len(meth):,} chars")
+    print(f"  out/validation_report.md  {len(val):,} chars"
+          + ("   PRO FORMA - awaiting footage" if pending else ""))

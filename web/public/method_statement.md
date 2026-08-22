@@ -82,7 +82,7 @@ Each stage carries a numeric acceptance gate. A failed gate is reported, not wor
 | D5 | Median opening schedule | GeoJSON |
 | D6 | Capacity and design-year assessment | Markdown |
 | D7 | Interactive dashboard | Web link |
-| D8 | Count validation report | pending footage |
+| D8 | Count validation report | Markdown, pro forma until footage |
 | D9 | Method statement | this document |
 
 ---

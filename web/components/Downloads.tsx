@@ -15,6 +15,8 @@ const FILES = [
     note: "Seven checks, each with its own pass/fail and the discrepancy register", kind: "MD" },
   { f: "capacity_report.md", label: "Capacity and design-year assessment",
     note: "Measured widths, v/c by approach, and the grade-separation relief table", kind: "MD" },
+  { f: "validation_report.md", label: "Count validation report",
+    note: "Pro forma \u2014 acceptance gates published ahead of the measurement", kind: "MD" },
   { f: "method_statement.md", label: "Method statement",
     note: "Standards applied, every acceptance gate, and where this stops being reliable", kind: "MD" },
   { f: "corridor_constraint_atlas.pdf", label: "Corridor Constraint Atlas",
