@@ -77,9 +77,10 @@ a{color:var(--accent)}
 .verdict p{font-size:1.02rem}
 
 /* scope strip ---------------------------------------------------------- */
-.scope{display:grid; grid-template-columns:repeat(auto-fit,minmax(9rem,1fr)); gap:1px;
-  background:var(--rule); border:1px solid var(--rule); border-radius:4px; overflow:hidden}
-.scope > div{background:var(--surface); padding:.85rem 1rem}
+.scope{display:grid; grid-template-columns:repeat(auto-fit,minmax(9rem,1fr));
+  background:var(--surface); border:1px solid var(--rule); border-radius:4px; overflow:hidden}
+.scope > div{background:var(--surface); padding:.85rem 1rem;
+  box-shadow:1px 0 0 var(--rule), 0 1px 0 var(--rule)}
 .scope .k{font-size:1.45rem; font-weight:600; letter-spacing:-.02em; display:block; line-height:1.15}
 .scope .l{font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); font-weight:500}
 

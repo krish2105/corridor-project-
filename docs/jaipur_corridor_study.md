@@ -313,6 +313,10 @@ def extract(dxf_path, layers, M=None):
                 yield e
 
     for e in walk(msp):
+        # ERRATUM: entities inside a block usually sit on layer "0" and inherit the
+        # INSERT's layer at draw time. Filtering on e.dxf.layer here therefore drops
+        # exactly the block geometry that walk() exists to recover. Carry the parent
+        # INSERT's layer down through walk() and test against that instead.
         if e.dxf.layer not in layers:
             continue
         pts = entity_to_coords(e)
@@ -383,7 +387,7 @@ def build_network(centrelines):
     # CAD drawings routinely have 5-50 cm gaps at junctions. Without snapping,
     # unary_union won't node them and you get a disconnected network.
     merged = unary_union(centrelines)
-    snapped = snap(merged, merged, SNAP_TOL)
+    snapped = snap(merged, merged, SNAP_TOL)   # <-- see ERRATUM below
 
     # --- Step 2: node at all intersections ---------------------------------
     # unary_union on a collection of lines splits every line wherever it
@@ -432,6 +436,23 @@ def classify_nodes(G):
         G.nodes[n]["degree"] = deg
     return G
 ```
+
+> **ERRATUM — `snap(merged, merged, tol)` snaps a geometry to itself.** That is close
+> to a no-op: it cannot pull the endpoint of line A onto line B, which is the entire
+> reason snapping appears in this pipeline. The gaps stay open and the network
+> fragments, exactly the failure the step exists to prevent.
+>
+> Use GEOS precision reduction, which nodes and snaps in one pass:
+>
+> ```python
+> import shapely
+>
+> def node_lines(centrelines, tol=SNAP_TOL):
+>     merged = unary_union(centrelines)
+>     # set_precision snaps every vertex to a grid of size `tol` and re-nodes,
+>     # which closes sub-tolerance gaps between *different* lines.
+>     return shapely.node(shapely.set_precision(merged, tol))
+> ```
 
 **Tuning `SNAP_TOL` — this is a real judgement call:**
 - **Too small (0.1 m):** junctions stay disconnected, your network fragments, routing fails.
@@ -495,6 +516,19 @@ def lanes_from_width(width_m, divided):
     per_dir = usable / (2 if divided else 1)
     return max(1, round(per_dir / 3.5))
 ```
+
+> **ERRATUM — the divided/undivided test is inverted.** `measure_width` casts its
+> transects from **one** centreline. On a divided road OSM and CAD both carry one
+> centreline *per carriageway*, so the measured width already describes a single
+> direction and must not be halved. On an undivided road the one measured width
+> carries both directions and must be. The correct line is:
+>
+> ```python
+> per_dir = usable if divided else usable / 2
+> ```
+>
+> As written, a divided arterial reports half its real lane count and an undivided
+> road reports double.
 
 **Caveat, and state it in your report:** width-derived lane counts are an *estimate*. In Jaipur, marked lanes and used lanes diverge sharply — a 10.5 m carriageway nominally carries 3 lanes but in practice carries 4–5 streams of mixed traffic. Validate against video (Phase 6) and report the *observed* stream count, not just the geometric one. This is exactly why the sublane simulation model in Phase 8 matters.
 
@@ -670,6 +704,21 @@ def uturn_permitted(node_pt, median_geoms, search_r=50.0, min_gap=4.0):
             for i in range(len(pieces)) for j in range(i + 1, len(pieces))]
     return max(gaps) >= min_gap
 ```
+
+> **ERRATUM — `max()` over all pairs is the wrong statistic.** The docstring says
+> "largest gap between *consecutive* median pieces", but the code takes the maximum
+> over *every* pair. With three or more median fragments that returns the distance
+> between the two furthest-apart pieces, not the size of any opening, so the function
+> reports "U-turn permitted" almost unconditionally.
+>
+> Order the pieces along the median and measure only adjacent gaps:
+>
+> ```python
+> ref = local if local.geom_type == "LineString" else max(local.geoms, key=lambda g: g.length)
+> pieces.sort(key=lambda g: ref.project(g.centroid))
+> gaps = [pieces[i].distance(pieces[i + 1]) for i in range(len(pieces) - 1)]
+> return max(gaps, default=0.0) >= min_gap
+> ```
 
 **Reality check:** whatever the CAD says, **verify every restriction on site during the Phase 5 survey.** Signage changes, medians get broken open informally, and enforcement varies by time of day. The CAD gives you a hypothesis; the field visit confirms it. Build a "restriction verification" column into your field form.
 
@@ -987,6 +1036,31 @@ def footpoint(bbox):
     return ((x1 + x2) / 2.0, y2)
 ```
 
+> **ERRATUM — `float32` will eat half your error budget.** `WORLD_PTS` above is
+> declared `dtype=np.float32`. A UTM 43N northing near `2,976,040` needs eight
+> significant figures; float32 carries about seven, so the coordinate is quantised to
+> roughly **0.25 m before any real error is measured** — against a 0.5 m gate.
+> `to_world` casts to float32 too, so every projected track point inherits it.
+>
+> Fix by subtracting a local origin and working in float64 metres:
+>
+> ```python
+> ORIGIN = np.array([578_000.0, 2_976_000.0])      # junction-local, keeps values small
+>
+> def fit_homography(img_pts, world_pts, origin=ORIGIN):
+>     img = np.asarray(img_pts, dtype=np.float64)
+>     wld = np.asarray(world_pts, dtype=np.float64) - origin
+>     # LMEDS, not RANSAC: with 6-8 hand-picked GCPs there is no large outlier
+>     # population, and RANSAC's 1.0 m threshold can reject a genuinely good point.
+>     H, mask = cv2.findHomography(img, wld, cv2.LMEDS)
+>     proj = cv2.perspectiveTransform(img.reshape(-1, 1, 2), H).reshape(-1, 2)
+>     err = np.linalg.norm(proj - wld, axis=1)
+>     print(f"Homography RMSE : {np.sqrt((err**2).mean()):.3f} m")
+>     return H, origin
+> ```
+>
+> Add `origin` back when writing world coordinates out.
+
 **Accept the homography only if RMSE < 0.5 m near the junction centre.** Accuracy degrades toward the frame edges and at shallow viewing angles — this is why camera height matters. If RMSE exceeds 1 m, re-survey GCPs or raise the camera.
 
 ## 6.3 Zone-based movement counting
@@ -1028,6 +1102,37 @@ def build_zones(G, node):
         zones[("exit",  nb)] = leg_zone(G, node, nb, offset=15, depth=15)
     return zones
 ```
+
+> **ERRATUM — this function as written cannot work.** The entry and exit zones are
+> built with identical arguments, so they are the *same polygon*. `assign_movement`
+> below takes the **first** matching zone via `next(...)`, so on every leg the entry
+> zone wins and the exit zone is never reached. `exits` is always empty, every track
+> returns `None`, and track resolution is 0% against a >90% gate.
+>
+> On a **divided** carriageway the two zones belong on opposite sides of the median:
+> place them by the direction of travel, not on the shared centreline. On an
+> **undivided** leg a single polygon genuinely serves both, and the movement must be
+> resolved by the *order* the track passes through it rather than by zone identity:
+>
+> ```python
+> def build_zones(G, node, offset=15.0, depth=15.0):
+>     """Entry and exit zones per leg, separated across the median where one exists."""
+>     zones = {}
+>     for nb in set(G.successors(node)) | set(G.predecessors(node)):
+>         base = leg_zone(G, node, nb, offset=offset, depth=depth)
+>         if G[node][nb][0].get("divided"):
+>             # offset each zone half a carriageway either side of the centreline
+>             half = G[node][nb][0].get("width", 10.0) / 4.0
+>             nx, ny = _leg_normal(G, node, nb)
+>             zones[("entry", nb)] = affinity.translate(base,  nx * half,  ny * half)
+>             zones[("exit",  nb)] = affinity.translate(base, -nx * half, -ny * half)
+>         else:
+>             zones[("entry", nb)] = zones[("exit", nb)] = base
+>     return zones
+> ```
+>
+> `assign_movement` must then collect **all** zones containing the point, not the
+> first, and infer direction from the sign of travel along the leg axis.
 
 **Assigning movements from tracks:**
 
@@ -1089,8 +1194,10 @@ def aggregate_tmc(tracks, zones, movement_table, fps, bin_minutes=15):
         tmc[(bin_idx, t["class"], mv["code"])] += 1
 
     total = len(tracks)
-    print(f"Resolved {total - unresolved}/{total} tracks "
-          f"({100*(total-unresolved)/total:.1f}%)")
+    # ERRATUM: guard the division — an empty track set raised ZeroDivisionError,
+    # which is the one case where you most want the diagnostic to print.
+    pct = 100 * (total - unresolved) / total if total else 0.0
+    print(f"Resolved {total - unresolved}/{total} tracks ({pct:.1f}%)")
     return tmc
 ```
 

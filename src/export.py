@@ -138,7 +138,13 @@ if __name__ == "__main__":
     OUT_DATA.mkdir(parents=True, exist_ok=True)
     p = build()
     path = OUT_DATA / "corridor.json"
-    path.write_text(json.dumps(p, indent=1, default=jsonable))
+    blob = json.dumps(p, indent=1, default=jsonable)
+    path.write_text(blob)
+    # the Next.js app reads the same file, so both dashboards render identical figures
+    web = OUT_DATA.parent.parent / "web" / "public"
+    if web.parent.exists():
+        web.mkdir(parents=True, exist_ok=True)
+        (web / "corridor.json").write_text(blob)
     kb = path.stat().st_size / 1024
     print(f"written : {path}  ({kb:,.0f} KB)")
     print(f"junctions      : {len(p['junctions'])}")
