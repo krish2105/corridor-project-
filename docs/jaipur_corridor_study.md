@@ -1050,9 +1050,9 @@ def footpoint(bbox):
 > def fit_homography(img_pts, world_pts, origin=ORIGIN):
 >     img = np.asarray(img_pts, dtype=np.float64)
 >     wld = np.asarray(world_pts, dtype=np.float64) - origin
->     # LMEDS, not RANSAC: with 6-8 hand-picked GCPs there is no large outlier
->     # population, and RANSAC's 1.0 m threshold can reject a genuinely good point.
->     H, mask = cv2.findHomography(img, wld, cv2.LMEDS)
+>     # Plain least-squares over all points. NOT LMEDS and NOT RANSAC - see the
+>     # correction below; robust estimators are worse at this sample size.
+>     H, mask = cv2.findHomography(img, wld, 0)
 >     proj = cv2.perspectiveTransform(img.reshape(-1, 1, 2), H).reshape(-1, 2)
 >     err = np.linalg.norm(proj - wld, axis=1)
 >     print(f"Homography RMSE : {np.sqrt((err**2).mean()):.3f} m")
@@ -1060,6 +1060,30 @@ def footpoint(bbox):
 > ```
 >
 > Add `origin` back when writing world coordinates out.
+>
+> **CORRECTION TO THIS ERRATUM, from measurement.** An earlier version of this note
+> recommended `cv2.LMEDS` in place of the original `cv2.RANSAC`. That was wrong, and the
+> original was closer to right. Tested over 40 random draws per condition in
+> `src/homography.py`:
+>
+> | GCPs | noise | least-squares | LMEDS | RANSAC |
+> |---|---|---|---|---|
+> | 6 | 1.0 px | **0.025 / 0.038** | 0.119 / 1.328 | 0.025 / 0.038 |
+> | 6 | 2.0 px | **0.054 / 0.080** | 0.240 / 2.004 | 0.054 / 0.080 |
+> | 8 | 1.0 px | **0.034 / 0.049** | 0.052 / 0.174 | 0.034 / 0.049 |
+>
+> RMSE in metres, median / p90. With 5-8 hand-picked control points LMEDS is several
+> times worse in the median and an order of magnitude worse in the tail, because it
+> minimises the median residual over minimal subsets and there is not enough redundancy
+> to stop it settling on a degenerate four-point fit. RANSAC matches least-squares only
+> because, with no true outliers, it accepts every point and refines by least-squares
+> anyway. **Use `method=0`.** Robust estimators belong on large automatically-matched
+> point sets, not on control you picked by hand and trust.
+>
+> On the magnitude of the float32 problem: 0.25 m is the *quantisation step* at UTM
+> northings, not the resulting error. Measured contribution to fitted RMSE is about
+> **0.055 m** - roughly a ninth of the 0.5 m budget rather than half of it. Still worth
+> fixing, and free to fix, but the original wording overstated it.
 
 **Accept the homography only if RMSE < 0.5 m near the junction centre.** Accuracy degrades toward the frame edges and at shallow viewing angles — this is why camera height matters. If RMSE exceeds 1 m, re-survey GCPs or raise the camera.
 

@@ -169,3 +169,78 @@ def test_follow_up_is_plausible():
     events, _ = synthesise(n_drivers=200, seed=13)
     fu = follow_up(events)
     assert fu is None or 0.5 < fu < 8.0
+
+
+# --- Phase 6 pipeline ------------------------------------------------------
+def test_homography_recovers_planted_transform():
+    """The fit must recover a homography we planted, inside the 0.5 m acceptance gate."""
+    from src.homography import RMSE_GATE_M, _plant_and_recover, fit
+    px, world, origin, _ = _plant_and_recover(seed=21, noise_px=1.0, n=8)
+    _H, _o, st = fit(px, world, origin=origin)
+    assert st["rmse_m"] < RMSE_GATE_M
+    assert st["passes_gate"]
+
+
+def test_homography_rejects_too_few_gcps():
+    import pytest as _pt
+    from src.homography import fit
+    with _pt.raises(ValueError):
+        fit([[0, 0], [1, 0], [0, 1]], [[0, 0], [1, 0], [0, 1]])
+
+
+def test_footpoint_is_bottom_centre():
+    """A box centroid sits at half vehicle height and displaces a bus metres further."""
+    from src.homography import footpoint
+    assert footpoint((10, 20, 30, 60)) == (20.0, 60)
+
+
+def test_divided_leg_entry_and_exit_zones_differ():
+    """
+    The methodology's build_zones returns the same polygon for both, which makes the
+    exit zone unreachable and drives track resolution to zero.
+    """
+    from src.count import build_zones
+    legs = {"N": dict(bearing=0, divided=True, width=14.0)}
+    z = build_zones((0.0, 0.0), legs)
+    assert not z[("entry", "N")].equals(z[("exit", "N")])
+
+
+def test_undivided_leg_shares_one_zone():
+    from src.count import build_zones
+    legs = {"N": dict(bearing=0, divided=False, width=10.0)}
+    z = build_zones((0.0, 0.0), legs)
+    assert z[("entry", "N")].equals(z[("exit", "N")])
+
+
+def test_track_assignment_recovers_known_movements():
+    from src.count import RESOLUTION_GATE, assign_movement, build_zones, synthesise_tracks
+    legs = {n: dict(bearing=b, divided=True, width=14.0)
+            for n, b in (("N", 0), ("E", 90), ("S", 180), ("W", 270))}
+    centre = (0.0, 0.0)
+    zones = build_zones(centre, legs)
+    tracks, truth = synthesise_tracks(legs, centre, per_movement=6, seed=3)
+    res = [(assign_movement(t["pts"], zones, centre), truth[i]) for i, t in tracks.items()]
+    got = [r for r in res if r[0] is not None]
+    assert len(got) / len(res) >= RESOLUTION_GATE
+    assert sum(1 for a, b in got if a == b) / len(got) >= 0.95
+
+
+def test_aggregate_survives_empty_track_set():
+    """The original raised ZeroDivisionError exactly when the diagnostic mattered most."""
+    from src.count import aggregate, build_zones
+    legs = {"N": dict(bearing=0, divided=True, width=14.0)}
+    _c, st = aggregate({}, build_zones((0, 0), legs), (0, 0))
+    assert st["tracks"] == 0 and st["resolution"] == 0.0
+
+
+def test_validation_catches_planted_bias():
+    from src.validate import _synth, validate
+    assert validate(_synth(bias=0.00, noise=0.03, seed=3))["total"]["verdict"] == "PASS"
+    assert validate(_synth(bias=0.20, noise=0.04, seed=4))["total"]["verdict"] == "FAIL"
+
+
+def test_validation_mape_ignores_zero_manual_intervals():
+    """Percentage error is undefined at zero; including it destroys rare-class stats."""
+    from src.validate import mape
+    val, n = mape([0, 0, 10], [5, 3, 11])
+    assert n == 1 and abs(val - 0.1) < 1e-9
