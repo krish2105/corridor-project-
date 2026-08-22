@@ -132,6 +132,12 @@ def build():
         CAPRATIO=f"{capd.get('observed_vs_planning_ratio', 0):.2f}",
         CAPOK=str(capd.get("approaches_ok_after_grade_separation", 0)),
         CAPN=str(len(capd.get("relief", []))),
+        DLFAIL=str(capd.get("design_life_first_failure_med", "")),
+        DLYEARS=str((capd.get("design_life_first_failure_med", 0) or 0)
+                    - capd.get("assumptions", {}).get("base_year", 0)),
+        DLHOLD=str(capd.get("design_life_survives_horizon", "")),
+        DLN=str(len(capd.get("design_life", []))),
+        DLHORIZON=str(capd.get("horizon_year", "")),
         CAPYEAR=str(capd.get("horizon_year", "")),
         CAPMULT=f"{(capd.get('growth') or [{},{'multiple':0}])[1].get('multiple', 0):.2f}",
         CAPW=f"{list((capd.get('widths') or {}).values())[0].get('width_m', 0):.1f}"

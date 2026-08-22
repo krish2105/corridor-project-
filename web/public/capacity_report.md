@@ -63,7 +63,7 @@ The mechanism is that removing a signalised right turn does not remove the deman
 
 ## 5. Grade separation returns the corridor to service
 
-Removing the through movement from the at-grade surface — the elevated option — leaves only turning traffic at the junction. Applying the measured through percentage to each approach returns **all 12 approaches** to acceptable operation.
+Removing the through movement from the at-grade surface — the elevated option — leaves only turning traffic at the junction. Applying the measured through percentage to each approach returns **all 12 approaches** to acceptable operation on opening. Section 6 tests how long that holds.
 
 | Junction | Approach | Through % | Peak PCU | Residual | v/c before | v/c after | LOS after |
 |---|---|---|---|---|---|---|---|
@@ -80,16 +80,41 @@ Removing the through movement from the at-grade surface — the elevated option 
 | TMC-06 | Mansarover Metro | 72.9% | 3,797 | 1,029 | 1.58 | 0.43 | B |
 | TMC-06 | Sanganer Stadium | 72.9% | 3,566 | 966 | 1.49 | 0.40 | B |
 
-## 6. Do these conclusions survive their own assumptions?
+## 6. How long does that relief last?
+
+Opening-year relief is not the same as a design life, and the difference is the whole point of a 20-year horizon. Applying compound growth to the residual turning demand gives the year each approach returns to capacity.
+
+| Junction | Approach | v/c on opening | 4% | 6% | 8% |
+|---|---|---|---|---|---|
+| TMC-01 | Mansarover Metro | 0.59 | 2040 | 2036 | 2033 |
+| TMC-01 | Sanganer Stadium | 0.71 | 2035 | 2032 | 2031 |
+| TMC-02 | Mansarover Metro | 0.41 | 2049 | 2042 | 2038 |
+| TMC-02 | Sanganer Stadium | 0.39 | 2051 | 2043 | 2039 |
+| TMC-03 | Mansarover Metro | 0.35 | 2053 | 2045 | 2040 |
+| TMC-03 | Sanganer Stadium | 0.35 | 2053 | 2045 | 2040 |
+| TMC-04 | Mansarover Metro | 0.47 | 2046 | 2039 | 2036 |
+| TMC-04 | Sanganer Stadium | 0.43 | 2048 | 2041 | 2037 |
+| TMC-05 | Mansarover Metro | 0.51 | 2044 | 2038 | 2035 |
+| TMC-05 | Sanganer Stadium | 0.36 | 2053 | 2044 | 2040 |
+| TMC-06 | Mansarover Metro | 0.43 | 2048 | 2041 | 2037 |
+| TMC-06 | Sanganer Stadium | 0.40 | 2050 | 2042 | 2038 |
+
+**At the medium 6% growth rate, 0 of 12 approaches still hold at 2046.** The first returns to capacity in **2032** — 6 years after the base year — and the last in 2045.
+
+This does not withdraw the recommendation; grade separation is still the only measure tested here that returns the corridor to service at all. It qualifies it. A structure sized on opening-year relief alone would be delivering a corridor that is over capacity again well inside its own design horizon, so the scheme needs a demand-side measure alongside it — public transport priority, parking control, or access management — not a structure on its own.
+
+The growth rates are applied to a counted flow that is already capacity-constrained. A saturated approach cannot show suppressed or diverted trips, so these dates are the optimistic end: real demand recovery would bring them forward, not push them back.
+
+## 7. Do these conclusions survive their own assumptions?
 
 Both were re-run across **144 combinations** of PCU uplift, lane capacity, effective lane count, critical gap and growth rate.
 
 - **U-turn scheme fails:** holds. Robust across the grid.
-- **Grade separation relieves:** all 12 approaches pass in **23 of 24** combinations.
+- **Grade separation relieves on opening:** all 12 approaches pass in **23 of 24** combinations.
 
 No single assumption dominates the outcome — the swing across the grid is negligible, so naming a most-influential parameter would overstate what the analysis shows.
 
-## 7. Limitations
+## 8. Limitations
 
 - The survey covers **one day**, not the two the workbooks present. Day two is derived from day one; see the integrity audit report.
 - Composite vehicle classes prevent a point PCU estimate. Bands are reported throughout and no band is collapsed to its midpoint.

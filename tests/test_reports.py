@@ -115,3 +115,25 @@ def test_method_statement_states_where_it_stops_being_reliable():
     meth = method_statement()
     assert "stops being reliable" in meth
     assert "e-rickshaw" in meth.lower()
+
+
+# --- design life -------------------------------------------------------------
+def test_capacity_report_states_design_life_not_only_opening_year():
+    """
+    Regression: the report was titled 'capacity and design-year assessment', declared a
+    20-year horizon, and contained no forecast at all — so the grade-separation section
+    read as a clean win when 0 of 12 approaches actually survive to the horizon.
+    """
+    import src.reports as R
+    cap = capacity_report()
+    c = R._load("capacity")
+    assert "How long does that relief last" in cap
+    assert str(c["design_life_first_failure_med"]) in cap
+    for d in c["design_life"]:
+        assert str(d["fails_med"]) in cap
+
+
+def test_opening_year_relief_is_labelled_as_such():
+    cap = capacity_report()
+    section = cap.split("## 5.")[1].split("## 6.")[0]
+    assert "on opening" in section

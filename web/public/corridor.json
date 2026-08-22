@@ -610,6 +610,107 @@
    }
   ],
   "approaches_ok_after_grade_separation": 12,
+  "design_life": [
+   {
+    "junction": "TMC-01",
+    "approach": "from Mansarover Metro",
+    "vc_after": 0.59,
+    "fails_low": 2040,
+    "fails_med": 2036,
+    "fails_high": 2033
+   },
+   {
+    "junction": "TMC-01",
+    "approach": "from Sanganer Stadium",
+    "vc_after": 0.71,
+    "fails_low": 2035,
+    "fails_med": 2032,
+    "fails_high": 2031
+   },
+   {
+    "junction": "TMC-02",
+    "approach": "from Mansarover Metro",
+    "vc_after": 0.41,
+    "fails_low": 2049,
+    "fails_med": 2042,
+    "fails_high": 2038
+   },
+   {
+    "junction": "TMC-02",
+    "approach": "from Sanganer Stadium",
+    "vc_after": 0.39,
+    "fails_low": 2051,
+    "fails_med": 2043,
+    "fails_high": 2039
+   },
+   {
+    "junction": "TMC-03",
+    "approach": "from Mansarover Metro",
+    "vc_after": 0.35,
+    "fails_low": 2053,
+    "fails_med": 2045,
+    "fails_high": 2040
+   },
+   {
+    "junction": "TMC-03",
+    "approach": "from Sanganer Stadium",
+    "vc_after": 0.35,
+    "fails_low": 2053,
+    "fails_med": 2045,
+    "fails_high": 2040
+   },
+   {
+    "junction": "TMC-04",
+    "approach": "from Mansarover Metro",
+    "vc_after": 0.47,
+    "fails_low": 2046,
+    "fails_med": 2039,
+    "fails_high": 2036
+   },
+   {
+    "junction": "TMC-04",
+    "approach": "from Sanganer Stadium",
+    "vc_after": 0.43,
+    "fails_low": 2048,
+    "fails_med": 2041,
+    "fails_high": 2037
+   },
+   {
+    "junction": "TMC-05",
+    "approach": "from Mansarover Metro",
+    "vc_after": 0.51,
+    "fails_low": 2044,
+    "fails_med": 2038,
+    "fails_high": 2035
+   },
+   {
+    "junction": "TMC-05",
+    "approach": "from Sanganer Stadium",
+    "vc_after": 0.36,
+    "fails_low": 2053,
+    "fails_med": 2044,
+    "fails_high": 2040
+   },
+   {
+    "junction": "TMC-06",
+    "approach": "from Mansarover Metro",
+    "vc_after": 0.43,
+    "fails_low": 2048,
+    "fails_med": 2041,
+    "fails_high": 2037
+   },
+   {
+    "junction": "TMC-06",
+    "approach": "from Sanganer Stadium",
+    "vc_after": 0.4,
+    "fails_low": 2050,
+    "fails_med": 2042,
+    "fails_high": 2038
+   }
+  ],
+  "design_life_first_failure_med": 2032,
+  "design_life_last_failure_med": 2045,
+  "design_life_survives_horizon": 0,
   "growth": [
    {
     "growth_pct": 4.0,

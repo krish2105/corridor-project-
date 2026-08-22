@@ -38,6 +38,12 @@ export type Corridor = {
     relief: { junction: string; approach: string; through_pct: number; peak_pcu: number;
               residual_pcu: number; vc_before: number; vc_after: number; los_after: string }[];
     growth: { growth_pct: number; multiple: number; binding_need_pcu: number }[];
+    assumptions: { base_year: number; design_horizon_years: number };
+    design_life?: { junction: string; approach: string; vc_after: number;
+                    fails_low: number; fails_med: number; fails_high: number }[];
+    design_life_first_failure_med?: number;
+    design_life_last_failure_med?: number;
+    design_life_survives_horizon?: number;
   } | null;
   scheme: {
     no_gap_vc_threshold: number; fails_conservative: number; fails_optimistic: number;

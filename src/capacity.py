@@ -353,6 +353,42 @@ if __name__ == "__main__":
               f"{w.vc_after:>11.2f}{w.los_after:>5}")
     worst_after = rel.loc[rel.vc_after.idxmax()]
     ok = int((rel.vc_after < 1.0).sum())
+
+    # DESIGN LIFE - the question the relief table on its own does not answer.
+    # Every approach is already over capacity, so the do-nothing design year is the base
+    # year and stating it adds nothing. What matters is how long grade separation lasts:
+    # relief that expires inside the design horizon is a different recommendation from
+    # relief that does not, and reporting only the opening-year figure would overstate it.
+    horizon_yr = ASSUMPTIONS["base_year"] + ASSUMPTIONS["design_horizon_years"]
+    design_life = []
+    for _, r in rel.iterrows():
+        entry = dict(junction=r.junction, approach=r.approach, vc_after=r.vc_after)
+        for label, g in (("low", ASSUMPTIONS["growth_low_pct"]),
+                         ("med", ASSUMPTIONS["growth_med_pct"]),
+                         ("high", ASSUMPTIONS["growth_high_pct"])):
+            entry[f"fails_{label}"] = failure_year(r.vc_after, g)
+        design_life.append(entry)
+    med_years = sorted(d["fails_med"] for d in design_life)
+    first_fail_med, last_fail_med = med_years[0], med_years[-1]
+    within_horizon = sum(1 for d in design_life if d["fails_med"] <= horizon_yr)
+
+    print(f"\n=== Design life of the relief, at {ASSUMPTIONS['growth_med_pct']}% growth ===")
+    print(f"  {'junction':<10}{'approach':<20}{'v/c open':>9}"
+          f"{'4%':>7}{'6%':>7}{'8%':>7}")
+    print("  " + "-" * 60)
+    for d in design_life:
+        print(f"  {d['junction']:<10}{d['approach'].replace('from ',''):<20}"
+              f"{d['vc_after']:>9.2f}{d['fails_low']:>7}{d['fails_med']:>7}"
+              f"{d['fails_high']:>7}")
+    print(f"\n  GATE - approaches whose relief survives to the {horizon_yr} horizon: "
+          f"**{len(design_life) - within_horizon} of {len(design_life)}**")
+    print(f"  first approach back over capacity: {first_fail_med}, "
+          f"{first_fail_med - ASSUMPTIONS['base_year']} years after the base year")
+    print("\n  Grade separation returns every approach to service on opening and does NOT")
+    print(f"  hold it there for the stated {ASSUMPTIONS['design_horizon_years']}-year "
+          "horizon. Reporting the opening-year")
+    print("  figure alone would overstate the scheme; the corridor needs a demand-side")
+    print("  measure alongside the structure, not instead of it.")
     print(f"\n  GATE — approaches back under the planning capacity after grade separation: "
           f"**{ok} of {len(rel)}**")
     print(f"  worst remaining: {worst_after.junction} at v/c {worst_after.vc_after:.2f} "
@@ -399,6 +435,10 @@ if __name__ == "__main__":
         relief=[{k: (v if not hasattr(v, "item") else v.item())
                  for k, v in r.items()} for r in rel.to_dict("records")],
         approaches_ok_after_grade_separation=ok,
+        design_life=design_life,
+        design_life_first_failure_med=first_fail_med,
+        design_life_last_failure_med=last_fail_med,
+        design_life_survives_horizon=len(design_life) - within_horizon,
         growth=grow,
     ), indent=1))
     print(f"\nwritten: {OUT_DATA/'capacity.json'}")

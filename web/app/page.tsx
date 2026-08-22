@@ -461,9 +461,25 @@ export default function Page() {
                 </div>
                 <p className="col"><strong>{cp.approaches_ok_after_grade_separation} of{" "}
                 {cp.relief.length}</strong> corridor approaches return under the planning
-                capacity. This is the argument the count data exists to make, and the one
-                place turning movement data is irreplaceable &mdash; no other dataset
-                separates through traffic from turning traffic.</p>
+                capacity <em>on opening</em>. This is the argument the count data exists to
+                make, and the one place turning movement data is irreplaceable &mdash; no
+                other dataset separates through traffic from turning traffic.</p>
+                {cp.design_life && cp.design_life_first_failure_med && (
+                  <p className="col" style={{
+                    borderLeft: "3px solid var(--defect)", paddingLeft: ".9rem" }}>
+                    <strong>It does not hold for the design horizon.</strong> Growing the
+                    residual turning demand at 6% returns the first approach to capacity in{" "}
+                    <strong>{cp.design_life_first_failure_med}</strong> &mdash;{" "}
+                    {cp.design_life_first_failure_med - cp.assumptions.base_year} years
+                    after the base year &mdash; and{" "}
+                    <strong>{cp.design_life_survives_horizon} of {cp.design_life.length}</strong>{" "}
+                    still hold at {cp.horizon_year}. That qualifies the recommendation
+                    rather than withdrawing it: grade separation is the only measure tested
+                    here that relieves the corridor at all, but a structure sized on
+                    opening-year relief alone would be over capacity again well inside its
+                    own design life. The scheme needs a demand-side measure beside it.
+                  </p>
+                )}
                 <p className="col">On growth to {cp.horizon_year}: 6% compounding implies
                 roughly <strong>{cp.growth[1]?.multiple}&times;</strong> today&rsquo;s flow.
                 Treat that as a floor, not a forecast &mdash; counted flow on a saturated

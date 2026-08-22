@@ -311,6 +311,7 @@ def capacity_report():
     over = [j for j in js if j["vc_pt"] > 1.0]
     worst = max(js, key=lambda j: j["vc_pt"])
 
+    dl = c["design_life"]
     align_len, ch_rows = chainage()
     align_km = align_len / 1000
     # the junction with fewest transects is the one whose width is least well supported
@@ -406,8 +407,9 @@ def capacity_report():
         "",
         "Removing the through movement from the at-grade surface — the elevated option — "
         "leaves only turning traffic at the junction. Applying the measured through "
-        f"percentage to each approach returns **all {c['approaches_ok_after_grade_separation']} "
-        "approaches** to acceptable operation.",
+        f"percentage to each approach returns **all "
+        f"{c['approaches_ok_after_grade_separation']} approaches** to acceptable "
+        "operation on opening. Section 6 tests how long that holds.",
         "",
         _table(["Junction", "Approach", "Through %", "Peak PCU", "Residual",
                 "v/c before", "v/c after", "LOS after"],
@@ -416,13 +418,46 @@ def capacity_report():
                  f"{r['residual_pcu']:,}", f"{r['vc_before']:.2f}",
                  f"{r['vc_after']:.2f}", r["los_after"]] for r in c["relief"]]),
         "",
-        "## 6. Do these conclusions survive their own assumptions?",
+        "## 6. How long does that relief last?",
+        "",
+        f"Opening-year relief is not the same as a design life, and the difference is the "
+        f"whole point of a {a['design_horizon_years']}-year horizon. Applying compound "
+        "growth to the residual turning demand gives the year each approach returns to "
+        "capacity.",
+        "",
+        _table(["Junction", "Approach", "v/c on opening",
+                f"{a['growth_low_pct']:.0f}%", f"{a['growth_med_pct']:.0f}%",
+                f"{a['growth_high_pct']:.0f}%"],
+               [[d["junction"], d["approach"].replace("from ", ""),
+                 f"{d['vc_after']:.2f}", d["fails_low"], d["fails_med"], d["fails_high"]]
+                for d in dl]),
+        "",
+        f"**At the medium {a['growth_med_pct']:.0f}% growth rate, "
+        f"{c['design_life_survives_horizon']} of {len(dl)} approaches still hold at "
+        f"{c['horizon_year']}.** The first returns to capacity in "
+        f"**{c['design_life_first_failure_med']}** — "
+        f"{c['design_life_first_failure_med'] - a['base_year']} years after the base "
+        f"year — and the last in {c['design_life_last_failure_med']}.",
+        "",
+        "This does not withdraw the recommendation; grade separation is still the only "
+        "measure tested here that returns the corridor to service at all. It qualifies "
+        "it. A structure sized on opening-year relief alone would be delivering a "
+        "corridor that is over capacity again well inside its own design horizon, so the "
+        "scheme needs a demand-side measure alongside it — public transport priority, "
+        "parking control, or access management — not a structure on its own.",
+        "",
+        "The growth rates are applied to a counted flow that is already "
+        "capacity-constrained. A saturated approach cannot show suppressed or diverted "
+        "trips, so these dates are the optimistic end: real demand recovery would bring "
+        "them forward, not push them back.",
+        "",
+        "## 7. Do these conclusions survive their own assumptions?",
         "",
         f"Both were re-run across **{sen['combinations']} combinations** of PCU uplift, "
         "lane capacity, effective lane count, critical gap and growth rate.",
         "",
         f"- **U-turn scheme fails:** holds. {'Robust across the grid.' if sen['uturn_robust'] else 'NOT robust — see sensitivity.json.'}",
-        f"- **Grade separation relieves:** all 12 approaches pass in "
+        f"- **Grade separation relieves on opening:** all 12 approaches pass in "
         f"**{sen['elevated_all_pass_combinations']} of "
         f"{sen['elevated_total_combinations']}** combinations.",
         "",
@@ -431,7 +466,7 @@ def capacity_report():
          "analysis shows.") if not sen.get("most_influential") else
         f"Most influential assumption: {sen['most_influential']}.",
         "",
-        "## 7. Limitations",
+        "## 8. Limitations",
         "",
         "- The survey covers **one day**, not the two the workbooks present. Day two is "
         "derived from day one; see the integrity audit report.",
