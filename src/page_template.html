@@ -185,9 +185,10 @@ footer{padding-block:2.5rem 3.5rem; border-top:1px solid var(--rule); color:var(
   <p class="eyebrow">Data integrity audit &middot; classified turning movement survey</p>
   <h1>$CORRIDOR</h1>
   <div class="col stack" style="margin-top:1.1rem">
-    <p class="lede">Six junctions, $CITY. Surveyed $DATE1 and $DATE2 by the
-    appointed contractor and issued to JDA as twelve workbooks. This is an independent
-    re-derivation of every number in them.</p>
+    <p class="lede">Six junctions on <strong>$ROAD</strong>, $CITY. Surveyed $DATE1 and
+    $DATE2 by the appointed contractor and issued to JDA as twelve workbooks. This is an
+    independent re-derivation of every number in them, checked against the survey
+    drawing.</p>
   </div>
   <div class="verdict col">
     <p><strong>The survey contains one day of observation, not two.</strong> The second
@@ -275,10 +276,51 @@ footer{padding-block:2.5rem 3.5rem; border-top:1px solid var(--rule); color:var(
   </div>
 </section>
 
+<!-- FINDING 1b --------------------------------------------------------- -->
+<section>
+  <div class="stack">
+    <h2>Finding 2 &mdash; the survey omits the movement the scheme is built on</h2>
+    <div class="finding">
+      <header>
+        <span class="chip critical">Critical</span>
+        <h3>JDA is converting this road to U-turn operation. No U-turn was counted.</h3>
+      </header>
+      <div class="body">
+        <p class="col">JDA has a scheme to make <strong>$ROAD</strong> signal-free,
+        replacing junction signals with <strong>seven U-turn bays</strong>. The junctions
+        it names for redesign &mdash; Bhrigu Path, Rajat Path, VT Road, Patel Marg, Vijay
+        Path and B-2 Bypass &mdash; are the same six this survey counted. $NAMEMATCH of
+        the survey&rsquo;s own arm labels match those names exactly.</p>
+
+        <p class="col">The survey recorded <strong>Left, Straight and Right</strong>.
+        It contains <strong>no U-turn column anywhere</strong>. The scheme&rsquo;s entire
+        operating principle is converting turning movements into U-turns, and the traffic
+        evidence base for it does not measure U-turns at all.</p>
+
+        <p class="col">The drawing shows the demand is real. Along the
+        <strong>$CKM km</strong> alignment, <strong>$UTURNS</strong> gaps in the median
+        are wide enough for a vehicle to turn &mdash; <strong>$UTPERKM per km</strong>.
+        $UTTYP are typical notified openings, $UTMOUTH are junction mouths, and $UTMARG
+        are marginal, passable by a two-wheeler or auto but not a car.</p>
+
+        <p class="col">There is a second-order effect that matters more than the missing
+        column. At a median opening the U-turn competes with the right turn for the same
+        gap in opposing traffic. So the right-turn volumes the survey <em>does</em> report
+        understate their own effect on capacity. The gap is not just incomplete data; it
+        biases the movement that is usually the binding constraint.</p>
+
+        <p class="prov"><span class="tag">DIVIDER, 161 polylines</span>
+        <span class="tag">89&percnt; of the corridor is divided</span>
+        <span class="tag">gaps measured between adjacent median runs</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- FINDING 2 ---------------------------------------------------------- -->
 <section>
   <div class="stack">
-    <h2>Finding 2 &mdash; PCU conversion understates demand</h2>
+    <h2>Finding 3 &mdash; PCU conversion understates demand</h2>
     <div class="finding">
       <header>
         <span class="chip material">Material</span>
@@ -322,9 +364,17 @@ footer{padding-block:2.5rem 3.5rem; border-top:1px solid var(--rule); color:var(
         widest defensible bound on those columns puts the true correction anywhere between
         <strong>+$BANDLO&percnt;</strong> and <strong>+$BANDHI&percnt;</strong>.</p>
 
+        <p class="col">Both numbers should travel together. <strong>+$UPLIFT&percnt; is
+        the floor</strong> &mdash; every step of it is citable to IRC:106 and it does not
+        move under questioning. But it is a floor, and the true correction is larger: the
+        defensible range runs to <strong>+$BANDHI&percnt;</strong>. Quoting the floor
+        alone understates demand; quoting a midpoint invites an argument about an
+        assumption the data cannot settle.</p>
+
         <p class="col">That 60-point spread is the real cost of the class scheme. It is not
         uncertainty in the traffic; it is uncertainty manufactured by recording half the
-        stream in one box.</p>
+        stream in one box. Resolving it needs a re-count to a proper class scheme, which is
+        a finding in its own right.</p>
 
         <p class="prov"><span class="tag">rows 104&ndash;105</span> Factors back-solved from
         each workbook&rsquo;s own Total&nbsp;(Veh.) and Total&nbsp;(PCUs) rows, and constant
@@ -337,7 +387,7 @@ footer{padding-block:2.5rem 3.5rem; border-top:1px solid var(--rule); color:var(
 <!-- FINDING 3 ---------------------------------------------------------- -->
 <section>
   <div class="stack">
-    <h2>Finding 3 &mdash; the flow diagram reports the wrong classes</h2>
+    <h2>Finding 4 &mdash; the flow diagram reports the wrong classes</h2>
     <div class="finding">
       <header>
         <span class="chip critical">Critical</span>
@@ -385,7 +435,7 @@ footer{padding-block:2.5rem 3.5rem; border-top:1px solid var(--rule); color:var(
 <!-- FINDING 4 ---------------------------------------------------------- -->
 <section>
   <div class="stack">
-    <h2>Finding 4 &mdash; arithmetic, and what it revealed</h2>
+    <h2>Finding 5 &mdash; arithmetic, and what it revealed</h2>
     <div class="finding">
       <header>
         <span class="chip fixed">Correctable</span>
@@ -454,7 +504,7 @@ footer{padding-block:2.5rem 3.5rem; border-top:1px solid var(--rule); color:var(
     <div class="tscroll">
       <table id="jtab">
         <caption>Day 1 only. PCU shown as surveyed and after the one-to-one IRC:106 correction.</caption>
-        <thead><tr><th>Junction</th><th>Cross-street</th><th>Vehicles/day</th><th>Peak</th><th>Peak hr</th><th>PHF</th><th>Through</th><th>PCU surveyed</th><th>PCU corrected</th></tr></thead>
+        <thead><tr><th>Junction</th><th>JDA name</th><th>Cross-street</th><th>Vehicles/day</th><th>Peak</th><th>PHF</th><th>Through</th><th>PCU surveyed</th><th>PCU corrected</th><th>Location</th></tr></thead>
         <tbody></tbody>
       </table>
     </div>
@@ -472,6 +522,49 @@ footer{padding-block:2.5rem 3.5rem; border-top:1px solid var(--rule); color:var(
         <caption>Left turn = next arm clockwise. The heavy cells are the corridor movement.</caption>
         <thead></thead><tbody></tbody>
       </table>
+    </div>
+  </div>
+</section>
+
+<!-- CONSTRAINTS -------------------------------------------------------- -->
+<section>
+  <div class="stack">
+    <h2>Corridor constraints</h2>
+    <p class="col lede">The counts say what uses the corridor. The survey drawing says
+    what is physically in the way &mdash; and it was sitting unconverted in the project
+    folder. Read directly, it carries 1,041,959 entities across 44 layers, including a
+    full utility survey.</p>
+
+    <div class="finding">
+      <header>
+        <span class="chip fixed">Feasible</span>
+        <h3>An elevated structure has room, and the argument is about five pinch points</h3>
+      </header>
+      <div class="body">
+        <p class="col">Walking the <strong>$CKM km</strong> alignment at 25 m stations and
+        counting what falls inside an 8 m pier footprint: <strong>$CFREE of $CSTN
+        stations ($CFREEPCT&percnt;)</strong> carry no hard constraint &mdash; no building,
+        temple, railway or gas main. The longest uninterrupted runs are
+        <strong>$CRUN1 m</strong> and <strong>$CRUN2 m</strong>, ample for any pier spacing.</p>
+
+        <p class="col">Reporting a single blended score would have been misleading, and
+        nearly was. Weighted equally, <strong>2,300 lamp posts outrank a building</strong>
+        and the corridor reads as 74&percnt; blocked. Lamp posts get relocated as a matter
+        of routine; a temple does not. Separating the two inverts the conclusion.</p>
+
+        <div class="tscroll">
+          <table>
+            <caption>Constraint inventory, read from the drawing. Grouped by who owns the
+              diversion, because that is what drives cost and lead time.</caption>
+            <thead><tr><th>Category</th><th>Features</th><th>Why it matters</th></tr></thead>
+            <tbody id="ctab"></tbody>
+          </table>
+        </div>
+
+        <p class="prov"><span class="tag">EPSG:32643</span>
+        <span class="tag">8 m pier footprint</span><span class="tag">25 m stations</span>
+        Severity weighting is a stated judgement, not a measurement.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -560,14 +653,16 @@ var D = $DATA;
   var tb = document.querySelector('#jtab tbody'), h='';
   D.junctions.forEach(function(j){
     h += '<tr><td class="mono">'+j.code+'</td>'
+      +  '<td style="text-align:left">'+j.jda+'</td>'
       +  '<td style="text-align:left">'+j.arms[1]+' / '+j.arms[3]+'</td>'
       +  '<td class="num">'+j.daily.toLocaleString()+'</td>'
       +  '<td class="num">'+j.peak+'</td>'
-      +  '<td class="num">'+j.peakveh.toLocaleString()+'</td>'
       +  '<td class="num">'+j.phf.toFixed(3)+'</td>'
       +  '<td class="num'+(j.thru>=70?' good':'')+'">'+j.thru.toFixed(1)+'%</td>'
       +  '<td class="num">'+j.surv.toLocaleString()+'</td>'
-      +  '<td class="num good">'+j.corr.toLocaleString()+'</td></tr>';
+      +  '<td class="num good">'+j.corr.toLocaleString()+'</td>'
+      +  '<td class="num'+(j.conf==="name match"?' good':'')+'" title="'
+      +  j.lat.toFixed(6)+', '+j.lon.toFixed(6)+'">'+j.conf+'</td></tr>';
   });
   tb.innerHTML = h;
 })();
@@ -591,6 +686,31 @@ var D = $DATA;
       +  '<span class="val num">peak '+p.peak+'</span>';
   });
   el.innerHTML = h;
+})();
+
+/* constraint inventory */
+(function(){
+  var tb = document.getElementById('ctab');
+  if (!tb || !D.constraints || !D.constraints.totals) return;
+  var WHY = {
+    structures: 'demolition or realignment; the hard constraint',
+    electrical: 'poles, lamps, transformers - routine to divert',
+    drainage:   'nalas and chambers; deep, and they set levels',
+    vegetation: 'felling permissions, and a political cost',
+    telecom:    'OFC cuts are fast but outage-sensitive',
+    gas:        'marker stones; a live main is a hard stop',
+    geotech:    'boreholes - free foundation data, already paid for',
+    religious:  'relocation is a political decision, not an engineering one',
+    water:      'wells and hand pumps still in community use',
+    rail:       'level crossing; separate approval regime'
+  };
+  var h = '';
+  Object.keys(D.constraints.totals).forEach(function(k){
+    if (!WHY[k]) return;
+    h += '<tr><td>'+k+'</td><td class="num">'+D.constraints.totals[k].toLocaleString()
+      +  '</td><td style="text-align:left">'+WHY[k]+'</td></tr>';
+  });
+  tb.innerHTML = h;
 })();
 
 /* theme toggle */

@@ -14,7 +14,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from src.analyse import (composition, corridor_order, movements, peak_hours,
                          through_vs_turning, tmc_matrix)
-from src.config import CORRIDOR_NAME, JUNCTIONS, OUT_DATA, SURVEY_DATES
+from src.config import (CORRIDOR_NAME, CORRIDOR_ROAD, JDA_SCHEME, JUNCTIONS,
+                        JUNCTION_COORDS, OUT_DATA, SURVEY_DATES)
 from src.pcu import SURVEYED, convert, factor_band
 from src.tmc_parse import CLASS_LABELS, parse_all
 
@@ -23,6 +24,48 @@ def jsonable(o):
     if isinstance(o, (datetime, date)):
         return o.isoformat()
     raise TypeError(type(o))
+
+
+def _constraints():
+    """Atlas and median findings, if those stages have been run."""
+    prof_p = OUT_DATA / "constraint_profile.json"
+    med_p = OUT_DATA / "median_openings.geojson"
+    if not prof_p.exists() or not med_p.exists():
+        return None
+    prof = json.loads(prof_p.read_text())
+    med = json.loads(med_p.read_text())["features"]
+    # full drawing inventory, not just what falls inside a pier footprint
+    sum_p = OUT_DATA / "atlas_summary.json"
+    inv = json.loads(sum_p.read_text())["categories"] if sum_p.exists() else {}
+    cats = {k: v["features"] for k, v in inv.items()
+            if k not in ("carriageway", "median", "alignment")}
+    cats = dict(sorted(cats.items(), key=lambda kv: -kv[1]))
+    hard_free = [r for r in prof if r["hard"] == 0]
+    runs, cur = [], None
+    for r in prof:
+        if r["hard"] == 0:
+            cur = cur if cur is not None else r["chainage_m"]
+        elif cur is not None:
+            runs.append(r["chainage_m"] - cur); cur = None
+    if cur is not None:
+        runs.append(prof[-1]["chainage_m"] - cur)
+    turnable = [f["properties"] for f in med if f["properties"]["uturn_possible"]]
+    by_class = {}
+    for f in med:
+        c = f["properties"]["classification"]
+        by_class[c] = by_class.get(c, 0) + 1
+    return dict(
+        corridor_km=round(prof[-1]["chainage_m"] / 1000, 2),
+        stations=len(prof), pier_radius_m=8, station_step_m=25,
+        hard_free=len(hard_free),
+        hard_free_pct=round(100 * len(hard_free) / len(prof), 1),
+        longest_clear_runs_m=sorted(runs, reverse=True)[:3],
+        totals=cats,
+        layers={k: v["layers"] for k, v in inv.items()},
+        median_openings=len(med), uturn_possible=len(turnable),
+        uturn_per_km=round(len(turnable) / (prof[-1]["chainage_m"] / 1000), 1),
+        opening_classes=by_class,
+    )
 
 
 def build():
@@ -55,9 +98,12 @@ def build():
         g = mv[mv.junction == code]
         profile = (g.groupby("bin_start")["count"].sum().sort_index())
         c = comp[comp.junction == code].sort_values("count", ascending=False)
+        lat, lon, jda_name, cluster, conf = JUNCTION_COORDS[code]
         junctions.append(dict(
             code=code,
             arms=list(JUNCTIONS[code]),
+            lat=lat, lon=lon, jda_name=jda_name,
+            signal_cluster=cluster, location_confidence=conf,
             daily_veh=int(ph.loc[code, "daily_veh"]),
             peak_start=ph.loc[code, "peak_start"].strftime("%H:%M"),
             peak_veh=int(ph.loc[code, "peak_veh"]),
@@ -90,7 +136,8 @@ def build():
                             irc_high=round(hi, 2), composite=pt is None))
 
     payload = dict(
-        meta=dict(corridor=CORRIDOR_NAME, city="Jaipur",
+        meta=dict(corridor=CORRIDOR_NAME, road=CORRIDOR_ROAD, jda_scheme=JDA_SCHEME,
+                  city="Jaipur",
                   survey_dates=list(SURVEY_DATES), analysis_date=str(day),
                   n_junctions=len(JUNCTIONS), bins_parsed=int(len(bins)),
                   note="Day 2 excluded from analysis: see audit finding F."),
@@ -119,6 +166,7 @@ def build():
                 "U-turns were never counted. Twelve movements per junction, not sixteen.",
             ],
         ),
+        constraints=_constraints(),
         junctions=junctions,
         corridor=dict(
             through_pct_mean=round(float(tv.through_pct.mean()), 1),

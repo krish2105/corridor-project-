@@ -4,6 +4,8 @@ export type Factor = {
 };
 export type Junction = {
   code: string; arms: string[]; daily_veh: number; peak_start: string;
+  lat: number; lon: number; jda_name: string;
+  signal_cluster: string; location_confidence: string;
   peak_veh: number; peak15: number; phf: number; through_pct: number;
   corridor_through_pct: number; pcu_surveyed: number; pcu_corrected: number;
   pcu_band: [number, number]; uplift_pct: number;
@@ -12,7 +14,7 @@ export type Junction = {
   profile: { t: string; v: number }[];
 };
 export type Corridor = {
-  meta: { corridor: string; city: string; survey_dates: string[];
+  meta: { corridor: string; road: string; jda_scheme: string; city: string; survey_dates: string[];
           analysis_date: string; n_junctions: number; bins_parsed: number; note: string };
   audit: {
     arithmetic: { discrepancies: number; understate: number; overstate: number; net_grand_total: number };
@@ -22,6 +24,13 @@ export type Corridor = {
     flow_diagram: { ref_errors: number; files_affected: number; mislabelled: [string, number, string][] };
     survey_design: string[];
   };
+  constraints: {
+    corridor_km: number; stations: number; pier_radius_m: number;
+    hard_free: number; hard_free_pct: number; longest_clear_runs_m: number[];
+    totals: Record<string, number>; median_openings: number;
+    uturn_possible: number; uturn_per_km: number;
+    opening_classes: Record<string, number>;
+  } | null;
   junctions: Junction[];
   corridor: {
     through_pct_mean: number; through_pct_range: [number, number];

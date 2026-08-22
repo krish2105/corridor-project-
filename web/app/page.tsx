@@ -3,9 +3,23 @@ import path from "node:path";
 import Reveal from "@/components/Reveal";
 import EvidenceField from "@/components/EvidenceField";
 import JunctionExplorer from "@/components/JunctionExplorer";
+import CorridorMap from "@/components/CorridorMap";
 import type { Corridor } from "@/lib/types";
 
 const nf = new Intl.NumberFormat("en-US");
+
+const WHY: Record<string, string> = {
+  structures: "demolition or realignment; the hard constraint",
+  electrical: "poles, lamps, transformers - routine to divert",
+  drainage: "nalas and chambers; deep, and they set levels",
+  vegetation: "felling permissions, and a political cost",
+  telecom: "OFC cuts are fast but outage-sensitive",
+  gas: "marker stones; a live main is a hard stop",
+  geotech: "boreholes - free foundation data, already paid for",
+  religious: "relocation is a political decision, not an engineering one",
+  water: "wells and hand pumps still in community use",
+  rail: "level crossing; separate approval regime",
+};
 
 function load(): Corridor {
   // Same file the Artifact page renders from, so both show identical figures.
@@ -22,6 +36,7 @@ export default function Page() {
   const tw = a.pcu.factors.find((f) => f.cls === "TWO_W")!;
   const car = a.pcu.factors.find((f) => f.cls === "CAR_BUCKET")!;
   const maxPcu = Math.max(...js.map((j) => j.pcu_corrected));
+  const c2 = d.constraints;
 
   return (
     <main className="wrap">
@@ -33,9 +48,10 @@ export default function Page() {
         <Reveal delay={.06}><h1>{meta.corridor}</h1></Reveal>
         <Reveal delay={.12}>
           <p className="lede col" style={{ marginTop: "1.1rem" }}>
-            Six junctions, {meta.city}. Surveyed {meta.survey_dates[0]} and{" "}
-            {meta.survey_dates[1]} by the appointed contractor and issued to JDA as twelve
-            workbooks. This is an independent re-derivation of every number in them.
+            Six junctions on <strong>{meta.road}</strong>, {meta.city}. Surveyed{" "}
+            {meta.survey_dates[0]} and {meta.survey_dates[1]} by the appointed contractor
+            and issued to JDA as twelve workbooks. This is an independent re-derivation of
+            every number in them, checked against the survey drawing.
           </p>
         </Reveal>
         <Reveal delay={.18}>
@@ -106,9 +122,46 @@ export default function Page() {
         </Reveal>
       </section>
 
-      {/* FINDING 2 */}
+      {/* FINDING 2 — the scheme the survey was for */}
       <section>
-        <Reveal><h2>Finding 2 &mdash; PCU conversion understates demand</h2></Reveal>
+        <Reveal><h2>Finding 2 &mdash; the survey omits the movement the scheme is built on</h2></Reveal>
+        <Reveal delay={.06}>
+          <div className="card" style={{ marginTop: "1.1rem" }}>
+            <header><span className="chip critical">Critical</span>
+              <h3>JDA is converting this road to U-turn operation. No U-turn was counted.</h3></header>
+            <div className="body">
+              <p className="col">JDA has a scheme to make <strong>{meta.road}</strong>{" "}
+              signal-free, replacing junction signals with <strong>seven U-turn bays</strong>.
+              The junctions it names for redesign &mdash; Bhrigu Path, Rajat Path, VT Road,
+              Patel Marg, Vijay Path and B-2 Bypass &mdash; are the same six this survey
+              counted, and three of the survey&rsquo;s own arm labels match those names exactly.</p>
+              <p className="col">The survey recorded <strong>Left, Straight and Right</strong>.
+              It contains <strong>no U-turn column anywhere</strong>. The scheme&rsquo;s entire
+              operating principle is converting turning movements into U-turns, and the
+              traffic evidence base for it does not measure U-turns.</p>
+              {c2 && (
+                <p className="col">The drawing shows the demand is real. Along the{" "}
+                <strong>{c2.corridor_km} km</strong> alignment, <strong>{c2.uturn_possible}</strong>{" "}
+                median gaps are wide enough for a vehicle to turn &mdash;{" "}
+                <strong>{c2.uturn_per_km} per km</strong>.{" "}
+                {c2.opening_classes["typical opening"]} are typical notified openings,{" "}
+                {c2.opening_classes["wide / junction mouth"]} are junction mouths, and{" "}
+                {c2.opening_classes["marginal"]} are marginal &mdash; passable by a
+                two-wheeler or auto, not a car.</p>
+              )}
+              <p className="col">There is a second-order effect that matters more than the
+              missing column. At a median opening the U-turn competes with the right turn
+              for the same gap in opposing traffic, so the right-turn volumes the survey{" "}
+              <em>does</em> report understate their own effect on capacity. The gap biases
+              the movement that is usually the binding constraint.</p>
+            </div>
+          </div>
+        </Reveal>
+      </section>
+
+      {/* FINDING 3 */}
+      <section>
+        <Reveal><h2>Finding 3 &mdash; PCU conversion understates demand</h2></Reveal>
         <Reveal delay={.06}>
           <div className="card" style={{ marginTop: "1.1rem" }}>
             <header><span className="chip material">Material</span>
@@ -174,9 +227,15 @@ export default function Page() {
               column reading &ldquo;{car.label}&rdquo;, which mixes a car (1.0) with an
               auto-rickshaw (up to 2.0) and a pickup (up to 2.0). The true correction lies
               between <strong>+{a.pcu.band_low_pct}%</strong> and{" "}
-              <strong>+{a.pcu.band_high_pct}%</strong>. That spread is the real cost of the
-              class scheme &mdash; uncertainty manufactured by recording half the stream in
-              one box.</p>
+              <strong>+{a.pcu.band_high_pct}%</strong>.</p>
+
+              <p className="col">Both numbers should travel together.{" "}
+              <strong>+{a.pcu.uplift_floor_pct}% is the floor</strong> &mdash; every step of
+              it is citable to IRC:106 and it does not move under questioning. But it is a
+              floor, and the true correction is larger. Quoting the floor alone understates
+              demand; quoting a midpoint invites an argument about an assumption the data
+              cannot settle. That spread is the real cost of the class scheme &mdash;
+              uncertainty manufactured by recording half the stream in one box.</p>
             </div>
           </div>
         </Reveal>
@@ -184,7 +243,7 @@ export default function Page() {
 
       {/* FINDING 3 */}
       <section>
-        <Reveal><h2>Finding 3 &mdash; the flow diagram reports the wrong classes</h2></Reveal>
+        <Reveal><h2>Finding 4 &mdash; the flow diagram reports the wrong classes</h2></Reveal>
         <Reveal delay={.06}>
           <div className="card" style={{ marginTop: "1.1rem" }}>
             <header><span className="chip critical">Critical</span>
@@ -226,7 +285,7 @@ export default function Page() {
 
       {/* FINDING 4 */}
       <section>
-        <Reveal><h2>Finding 4 &mdash; arithmetic, and what it revealed</h2></Reveal>
+        <Reveal><h2>Finding 5 &mdash; arithmetic, and what it revealed</h2></Reveal>
         <Reveal delay={.06}>
           <div className="card" style={{ marginTop: "1.1rem" }}>
             <header><span className="chip fixed">Correctable</span>
@@ -269,6 +328,59 @@ export default function Page() {
         </div>
       </section>
 
+      {/* CONSTRAINTS */}
+      <section>
+        <Reveal><h2>Corridor constraints</h2></Reveal>
+        <Reveal delay={.05}>
+          <p className="col lede" style={{ marginTop: "1rem" }}>
+            The counts say what uses the corridor. The survey drawing says what is
+            physically in the way &mdash; and it was sitting unconverted in the project
+            folder. Read directly it carries 1,041,959 entities across 44 layers,
+            including a full utility survey.
+          </p>
+        </Reveal>
+        <div style={{ marginTop: "1.4rem" }}>
+          <Reveal delay={.1}><CorridorMap junctions={js} /></Reveal>
+        </div>
+        {c2 && (
+          <Reveal delay={.14}>
+            <div className="card" style={{ marginTop: "1.1rem" }}>
+              <header><span className="chip fixed">Feasible</span>
+                <h3>An elevated structure has room; the argument is about five pinch points</h3></header>
+              <div className="body">
+                <p className="col">Walking the <strong>{c2.corridor_km} km</strong> alignment
+                at 25 m stations and counting what falls inside an {c2.pier_radius_m} m pier
+                footprint: <strong>{c2.hard_free} of {c2.stations} stations
+                ({c2.hard_free_pct}%)</strong> carry no hard constraint &mdash; no building,
+                temple, railway or gas main. The longest uninterrupted runs are{" "}
+                <strong>{nf.format(Math.round(c2.longest_clear_runs_m[0]))} m</strong> and{" "}
+                <strong>{nf.format(Math.round(c2.longest_clear_runs_m[1]))} m</strong>.</p>
+                <p className="col">Reporting a single blended score would have been
+                misleading, and nearly was. Weighted equally,{" "}
+                <strong>2,300 lamp posts outrank a building</strong> and the corridor reads
+                as 74% blocked. Lamp posts get relocated as a matter of routine; a temple
+                does not.</p>
+                <div className="tscroll">
+                  <table>
+                    <caption>Constraint inventory read from the drawing, grouped by who owns
+                      the diversion &mdash; that is what drives cost and lead time.</caption>
+                    <thead><tr><th>Category</th><th>Features</th><th>Why it matters</th></tr></thead>
+                    <tbody>
+                      {Object.entries(c2.totals).map(([k, v]) => (
+                        <tr key={k}>
+                          <td>{k}</td><td className="num">{nf.format(v)}</td>
+                          <td style={{ textAlign: "left" }}>{WHY[k] ?? ""}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        )}
+      </section>
+
       {/* OPEN */}
       <section>
         <Reveal><h2>What remains unknown</h2></Reveal>
@@ -279,11 +391,12 @@ export default function Page() {
             <li><strong>E-rickshaws.</strong> No column anywhere holds them.</li>
             <li><strong>Half the PCU correction.</strong> Locked behind the composite class
             columns. Only re-counting to a proper class scheme resolves it.</li>
-            <li><strong>Junction coordinates.</strong> The workbooks carry no georeference.
-            Recovering the corridor order from flow continuity alone gives{" "}
-            <code>{c.order_best.map((x) => x.replace("TMC-", "")).join(" → ")}</code>, but at
-            a {c.order_margin_pct}% margin over the runner-up &mdash; noise, not a result.
-            Map pins are needed, and this section becomes a map once they arrive.</li>
+            <li><strong>Three junction positions are inferred.</strong> Rajat Path, VT Road
+            and Patel Marg are fixed by an exact name match against JDA&rsquo;s scheme. The
+            other three are placed by position in that sequence. Flow continuity ranks this
+            ordering 128th of 720, sharing four of six positions with its own best &mdash;
+            but that best had a {c.order_margin_pct}% margin, which is noise. The survey
+            contractor&rsquo;s location schedule would settle it.</li>
             {/* the U-turn item is already covered above in more detail */}
             {a.survey_design.filter((s) => !s.startsWith("U-turns")).map((s) => <li key={s}>{s}</li>)}
           </ul>

@@ -301,6 +301,12 @@ if __name__ == "__main__":
 
     OUT_DATA.mkdir(parents=True, exist_ok=True)
     (OUT_DATA / "atlas.geojson").write_text(json.dumps(to_geojson(geom)))
+    # full inventory, distinct from what the profile counts near the alignment
+    (OUT_DATA / "atlas_summary.json").write_text(json.dumps(dict(
+        alignment_km=round(length_km, 2),
+        categories={cat: dict(features=len(items),
+                              layers=sorted({l for l, _, _ in items}))
+                    for cat, items in sorted(geom.items())})))
     (OUT_DATA / "constraint_profile.json").write_text(json.dumps(
         [{k: r[k] for k in ("chainage_m", "constraints", "n", "score", "hard")} for r in rows]))
 

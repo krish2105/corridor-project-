@@ -45,6 +45,34 @@ JUNCTIONS = {
     "TMC-06": ("Mansarover Metro", "New Aatish Market", "Sanganer Stadium", "Mansarover"),
 }
 
+# --- junction coordinates ---------------------------------------------------
+# The workbooks carry no georeference. These come from matching the survey's arm
+# names against the junctions JDA names on New Sanganer Road in its signal-free
+# scheme (Bhrigu Path, Rajat Path, VT Road, Patel Marg, Vijay Path, B-2 Bypass),
+# then locating each on the survey drawing's own alignment.
+#
+# Three arm names match exactly - Rajatpath (TMC-05), VT Road (TMC-04), Patel Marg
+# Crossing (TMC-03) - and they fall in the same order JDA lists them, which is what
+# fixes the sequence. Positions are the centroid of the traffic-signal cluster at
+# each junction, all within 10 m of the alignment.
+#
+# CONFIDENCE is per junction and honest: the three name-matched ones are firm, the
+# rest are placed by position in the sequence. The survey contractor's location
+# schedule would settle it outright. Every downstream output carries this flag.
+JUNCTION_COORDS = {
+    #          lat        lon        JDA name        cluster  confidence
+    "TMC-01": (26.840536, 75.770289, "B-2 Bypass",   "C8",  "inferred"),
+    "TMC-02": (26.847800, 75.769429, "Vijay Path",   "C21", "inferred"),
+    "TMC-03": (26.852267, 75.767456, "Patel Marg",   "C26", "name match"),
+    "TMC-04": (26.860842, 75.763579, "VT Road",      "C18", "name match"),
+    "TMC-05": (26.864799, 75.758347, "Rajat Path",   "C22", "name match"),
+    "TMC-06": (26.871403, 75.755127, "Bhrigu Path",  "C28", "inferred"),
+}
+CORRIDOR_ROAD = "New Sanganer Road"
+# JDA is converting this road to signal-free operation with 7 U-turns, which is
+# almost certainly why the survey exists - and the survey counted no U-turns.
+JDA_SCHEME = "signal-free New Sanganer Road, 7 U-turns"
+
 # The survey counts LEFT / STRAIGHT / RIGHT only. U-turns were never surveyed —
 # that is a gap to report, not a zero to assume.
 MOVEMENTS = ("Left", "Straight", "Right")

@@ -43,7 +43,9 @@ def build():
     car = next(f for f in pcu["factors"] if f["cls"] == "CAR_BUCKET")
 
     # data the page's charts render from
+    con = d.get("constraints") or {}
     chart = dict(
+        constraints=con,
         profiles=[dict(code=j["code"], peak=j["peak_start"],
                        v=[p["v"] for p in j["profile"]],
                        t=[p["t"] for p in j["profile"]]) for j in js],
@@ -52,7 +54,8 @@ def build():
                         peak=j["peak_start"], peakveh=j["peak_veh"], phf=j["phf"],
                         thru=j["through_pct"], surv=j["pcu_surveyed"],
                         corr=j["pcu_corrected"], up=j["uplift_pct"],
-                        matrix=j["matrix_veh"]) for j in js],
+                        matrix=j["matrix_veh"], lat=j["lat"], lon=j["lon"],
+                        jda=j["jda_name"], conf=j["location_confidence"]) for j in js],
         factors=pcu["factors"],
     )
 
@@ -84,6 +87,18 @@ def build():
         ORDER=" &rarr; ".join(x.replace("TMC-", "") for x in c["order_best"]),
         MARGIN=f"{c['order_margin_pct']:.1f}",
         CELLS=fmt(a["derived_sheets"]["cells_checked"]),
+        ROAD=d["meta"].get("road", ""), SCHEME=d["meta"].get("jda_scheme", ""),
+        CKM=f"{con.get('corridor_km', 0):.2f}", CSTN=str(con.get("stations", 0)),
+        CFREE=str(con.get("hard_free", 0)),
+        CFREEPCT=f"{con.get('hard_free_pct', 0):.0f}",
+        CRUN1=fmt(con.get("longest_clear_runs_m", [0])[0]),
+        CRUN2=fmt(con.get("longest_clear_runs_m", [0, 0])[1]),
+        UTURNS=str(con.get("uturn_possible", 0)),
+        UTPERKM=f"{con.get('uturn_per_km', 0):.1f}",
+        UTTYP=str(con.get("opening_classes", {}).get("typical opening", 0)),
+        UTMOUTH=str(con.get("opening_classes", {}).get("wide / junction mouth", 0)),
+        UTMARG=str(con.get("opening_classes", {}).get("marginal", 0)),
+        NAMEMATCH=str(sum(1 for j in js if j["location_confidence"] == "name match")),
     )
     sub = {k: ascii_only(v) for k, v in sub.items()}
     html = Template(TPL.read_text()).substitute(sub)
