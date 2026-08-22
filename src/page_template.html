@@ -641,6 +641,88 @@ footer{padding-block:2.5rem 3.5rem; border-top:1px solid var(--rule); color:var(
   </div>
 </section>
 
+<!-- SCHEME TEST -------------------------------------------------------- -->
+<section>
+  <div class="stack">
+    <p class="eyebrow">The question the survey could not answer</p>
+    <h2>Will the seven U-turn bays work?</h2>
+
+    <div class="finding">
+      <header>
+        <span class="chip critical">No</span>
+        <h3>$SFAIL of $SN corridor approaches cannot be served</h3>
+      </header>
+      <div class="body">
+        <p class="col">The survey counted no U-turns, so on the face of it the scheme has
+        no traffic evidence base. It does &mdash; in a column nobody read that way.</p>
+
+        <p class="col"><strong>Under signal-free operation a right turn becomes a
+        U-turn.</strong> A driver wanting to turn right can no longer cross opposing
+        traffic at the junction. They travel through, turn around at a downstream median
+        bay, come back and turn left. So the demand each bay must carry is the
+        <strong>right-turn volume the survey already recorded</strong>, and that is in hand
+        for every approach.</p>
+
+        <p class="col">Capacity of an unsignalised U-turn is gap acceptance: the driver
+        must find a gap in the opposing through stream. The critical gap here is weighted
+        by observed composition, because two-wheelers accept far shorter gaps and are
+        49&percnt; of this stream &mdash; a car-based figure would badly understate capacity.</p>
+
+        <div class="tscroll">
+          <table id="schtab">
+            <caption>Peak-hour right-turn demand that becomes U-turn demand, against the
+              gap-acceptance capacity of a bay in the opposing flow. Conservative critical
+              gap.</caption>
+            <thead><tr><th>Junction</th><th>Approach</th><th>U-turn demand</th>
+              <th>Opposing flow</th><th>Bay capacity</th><th>Verdict</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <p class="col"><strong>$SNOGAP</strong> of them sit past the point where acceptable
+        gaps effectively cease to exist. No ratio is quoted for those: past that threshold
+        the capacity formula runs to near zero and a volume/capacity figure becomes an
+        artefact rather than a measurement. Under the <em>optimistic</em> critical gap it
+        is still <strong>$SFAILOPT of $SN</strong>.</p>
+      </div>
+    </div>
+
+    <div class="finding">
+      <header>
+        <span class="chip critical">Second-order</span>
+        <h3>The U-turn does not fail quietly. It blocks the through movement.</h3>
+      </header>
+      <div class="body">
+        <p class="col">Gap acceptance assumes a driver waits. Indian drivers do not &mdash;
+        they creep, encroach and force the movement, and opposing traffic yields. So the
+        U-turn still happens.</p>
+        <p class="col">It happens <em>on top of</em> the opposing through stream. Every
+        forced U-turn imposes a stoppage on the movement the scheme exists to speed up.
+        At these conflicting flows the bays would not merely underperform &mdash; they
+        would convert a capacity problem at the junction into a capacity problem on the
+        link, where there is no longer a signal to meter it.</p>
+        <p class="col"><strong>$SFORCED vehicles per peak hour</strong> would be forcing
+        their way across opposing traffic with no gap to take.</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:1.2rem">Three futures for the corridor</h3>
+    <div class="tscroll">
+      <table id="scntab">
+        <caption>Volume/capacity at each junction under each option. S0 is today.</caption>
+        <thead><tr><th>Junction</th><th>JDA name</th><th>S0 do nothing</th>
+          <th>S1 JDA signal-free</th><th>S2 elevated through-road</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <p class="col lede" style="margin-top:.8rem">The scheme currently being built removes
+    the signals that are the only thing metering these movements, and replaces them with
+    bays that cannot serve the demand. The elevated option returns
+    <strong>$CAPOK of $CAPN</strong> approaches under capacity because it takes the through
+    movement out of the conflict entirely.</p>
+  </div>
+</section>
+
 <!-- OPEN --------------------------------------------------------------- -->
 <section>
   <div class="col stack">
@@ -758,6 +840,45 @@ var D = $DATA;
       +  '<span class="val num">peak '+p.peak+'</span>';
   });
   el.innerHTML = h;
+})();
+
+/* scheme test tables */
+(function(){
+  var tb = document.querySelector('#schtab tbody');
+  if (!tb || !D.scheme || !D.scheme.uturns) return;
+  var TH = D.scheme.no_gap_vc_threshold || 3;
+  var rows = D.scheme.uturns.slice().sort(function(a,b){
+    return b.vc_conservative - a.vc_conservative; });
+  var h = '';
+  rows.forEach(function(r){
+    var v, cls;
+    if (r.vc_conservative >= TH) { v = 'no viable gaps'; cls = 'bad'; }
+    else if (r.vc_conservative >= 1) { v = 'fails, v/c ' + r.vc_conservative.toFixed(2); cls = 'bad'; }
+    else { v = 'ok, v/c ' + r.vc_conservative.toFixed(2); cls = 'good'; }
+    var ap = r.approach.indexOf('Mansarover') >= 0 ? 'from north' : 'from south';
+    h += '<tr><td class="mono">'+r.junction+'</td><td style="text-align:left">'+ap+'</td>'
+      +  '<td class="num">'+Math.round(r.uturn_demand).toLocaleString()+'</td>'
+      +  '<td class="num">'+Math.round(r.conflicting_flow).toLocaleString()+'</td>'
+      +  '<td class="num">'+Math.round(r.cap_conservative).toLocaleString()+'</td>'
+      +  '<td class="'+cls+'" style="text-align:left">'+v+'</td></tr>';
+  });
+  tb.innerHTML = h;
+})();
+(function(){
+  var tb = document.querySelector('#scntab tbody');
+  if (!tb || !D.scheme || !D.scheme.scenarios) return;
+  var TH = D.scheme.no_gap_vc_threshold || 3;
+  var h = '';
+  D.scheme.scenarios.forEach(function(r){
+    var s1 = r.s1_uturn_vc_cons >= TH ? 'no viable gaps'
+           : r.s1_uturn_vc_cons.toFixed(2) + (r.s1_works ? '' : ' fails');
+    h += '<tr><td class="mono">'+r.junction+'</td>'
+      +  '<td style="text-align:left">'+r.jda_name+'</td>'
+      +  '<td class="num bad">'+r.s0_vc.toFixed(2)+' F</td>'
+      +  '<td class="bad" style="text-align:left">'+s1+'</td>'
+      +  '<td class="num good">'+r.s2_vc.toFixed(2)+' '+r.s2_los+'</td></tr>';
+  });
+  tb.innerHTML = h;
 })();
 
 /* capacity relief table */

@@ -39,6 +39,17 @@ export type Corridor = {
               residual_pcu: number; vc_before: number; vc_after: number; los_after: string }[];
     growth: { growth_pct: number; multiple: number; binding_need_pcu: number }[];
   } | null;
+  scheme: {
+    no_gap_vc_threshold: number; fails_conservative: number; fails_optimistic: number;
+    no_viable_gap: number; forced_uturns_per_hour: number;
+    s1_serviceable: number; n_junctions: number;
+    uturns: { junction: string; approach: string; uturn_demand: number;
+              conflicting_flow: number; cap_conservative: number;
+              vc_conservative: number }[];
+    scenarios: { junction: string; jda_name: string; s0_vc: number;
+                 s1_uturn_vc_cons: number; s1_works: boolean;
+                 s2_vc: number; s2_los: string }[];
+  } | null;
   junctions: Junction[];
   corridor: {
     through_pct_mean: number; through_pct_range: [number, number];

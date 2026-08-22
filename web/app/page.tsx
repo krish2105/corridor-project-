@@ -38,6 +38,8 @@ export default function Page() {
   const maxPcu = Math.max(...js.map((j) => j.pcu_corrected));
   const c2 = d.constraints;
   const cp = d.capacity;
+  const sc = d.scheme;
+  const NOGAP = sc?.no_gap_vc_threshold ?? 3;
   // busier corridor approach at each junction
   const relief = cp ? Object.values(cp.relief.reduce((m, r) => {
     if (!m[r.junction] || r.vc_after > m[r.junction].vc_after) m[r.junction] = r;
@@ -463,6 +465,105 @@ export default function Page() {
                 invisible to it. No at-grade widening inside the available 15 m section
                 delivers a threefold increase.</p>
               </div>
+            </div>
+          </Reveal>
+        </section>
+      )}
+
+      {/* SCHEME TEST */}
+      {sc && (
+        <section>
+          <Reveal><p className="eyebrow">The question the survey could not answer</p></Reveal>
+          <Reveal delay={.04}><h2 style={{ marginTop: ".5rem" }}>Will the seven U-turn bays work?</h2></Reveal>
+          <Reveal delay={.08}>
+            <div className="card" style={{ marginTop: "1.2rem" }}>
+              <header><span className="chip critical">No</span>
+                <h3>{sc.fails_conservative} of {sc.uturns.length} corridor approaches cannot be served</h3></header>
+              <div className="body">
+                <p className="col">The survey counted no U-turns, so on the face of it the
+                scheme has no traffic evidence base. It does &mdash; in a column nobody read
+                that way.</p>
+                <p className="col"><strong>Under signal-free operation a right turn becomes a
+                U-turn.</strong> A driver wanting to turn right can no longer cross opposing
+                traffic at the junction. They travel through, turn around at a downstream
+                median bay, come back and turn left. So the demand each bay must carry is the{" "}
+                <strong>right-turn volume the survey already recorded</strong>.</p>
+                <p className="col">Capacity of an unsignalised U-turn is gap acceptance. The
+                critical gap is weighted by observed composition, because two-wheelers accept
+                far shorter gaps and are 49% of this stream.</p>
+                <div className="tscroll">
+                  <table>
+                    <caption>Peak-hour right-turn demand that becomes U-turn demand, against
+                      gap-acceptance capacity. Conservative critical gap.</caption>
+                    <thead><tr><th>Junction</th><th>Approach</th><th>U-turn demand</th>
+                      <th>Opposing flow</th><th>Bay capacity</th><th>Verdict</th></tr></thead>
+                    <tbody>
+                      {[...sc.uturns].sort((a, b) => b.vc_conservative - a.vc_conservative)
+                        .map((r, i) => {
+                          const nogap = r.vc_conservative >= NOGAP;
+                          const fails = r.vc_conservative >= 1;
+                          return (
+                            <tr key={i}>
+                              <td className="mono">{r.junction}</td>
+                              <td style={{ textAlign: "left" }}>
+                                {r.approach.includes("Mansarover") ? "from north" : "from south"}</td>
+                              <td className="num">{nf.format(Math.round(r.uturn_demand))}</td>
+                              <td className="num">{nf.format(Math.round(r.conflicting_flow))}</td>
+                              <td className="num">{nf.format(Math.round(r.cap_conservative))}</td>
+                              <td className={nogap || fails ? "bad" : "good"} style={{ textAlign: "left" }}>
+                                {nogap ? "no viable gaps"
+                                  : (fails ? "fails, v/c " : "ok, v/c ") + r.vc_conservative.toFixed(2)}</td>
+                            </tr>);
+                        })}
+                    </tbody>
+                  </table>
+                </div>
+                <p className="col"><strong>{sc.no_viable_gap}</strong> sit past the point where
+                acceptable gaps effectively cease to exist. No ratio is quoted for those: past
+                that threshold the capacity formula runs to near zero and a v/c figure becomes
+                an artefact rather than a measurement. Under the <em>optimistic</em> critical
+                gap it is still <strong>{sc.fails_optimistic} of {sc.uturns.length}</strong>.</p>
+              </div>
+            </div>
+          </Reveal>
+          <Reveal delay={.12}>
+            <div className="card" style={{ marginTop: "1.1rem" }}>
+              <header><span className="chip critical">Second-order</span>
+                <h3>The U-turn does not fail quietly. It blocks the through movement.</h3></header>
+              <div className="body">
+                <p className="col">Gap acceptance assumes a driver waits. Indian drivers do
+                not &mdash; they creep, encroach and force the movement, and opposing traffic
+                yields. So the U-turn still happens.</p>
+                <p className="col">It happens <em>on top of</em> the opposing through stream.
+                Every forced U-turn imposes a stoppage on the movement the scheme exists to
+                speed up, converting a junction capacity problem into a link capacity problem
+                with no signal left to meter it.</p>
+                <p className="col"><strong>{nf.format(Math.round(sc.forced_uturns_per_hour))}{" "}
+                vehicles per peak hour</strong> would be forcing their way across opposing
+                traffic with no gap to take.</p>
+              </div>
+            </div>
+          </Reveal>
+          <Reveal delay={.16}>
+            <h3 style={{ marginTop: "1.4rem" }}>Three futures for the corridor</h3>
+            <div className="tscroll" style={{ marginTop: ".7rem" }}>
+              <table>
+                <caption>Volume/capacity under each option. S0 is today.</caption>
+                <thead><tr><th>Junction</th><th>JDA name</th><th>S0 do nothing</th>
+                  <th>S1 JDA signal-free</th><th>S2 elevated through-road</th></tr></thead>
+                <tbody>
+                  {sc.scenarios.map((r) => (
+                    <tr key={r.junction}>
+                      <td className="mono">{r.junction}</td>
+                      <td style={{ textAlign: "left" }}>{r.jda_name}</td>
+                      <td className="num bad">{r.s0_vc.toFixed(2)} F</td>
+                      <td className="bad" style={{ textAlign: "left" }}>
+                        {r.s1_uturn_vc_cons >= NOGAP ? "no viable gaps"
+                          : r.s1_uturn_vc_cons.toFixed(2) + (r.s1_works ? "" : " fails")}</td>
+                      <td className="num good">{r.s2_vc.toFixed(2)} {r.s2_los}</td>
+                    </tr>))}
+                </tbody>
+              </table>
             </div>
           </Reveal>
         </section>
