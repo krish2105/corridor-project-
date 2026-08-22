@@ -4,6 +4,8 @@ import Reveal from "@/components/Reveal";
 import EvidenceField from "@/components/EvidenceField";
 import JunctionExplorer from "@/components/JunctionExplorer";
 import CorridorMap from "@/components/CorridorMap";
+import PierProfile from "@/components/PierProfile";
+import Downloads from "@/components/Downloads";
 import type { Corridor } from "@/lib/types";
 
 const nf = new Intl.NumberFormat("en-US");
@@ -390,6 +392,9 @@ export default function Page() {
             </div>
           </Reveal>
         )}
+        <Reveal delay={.18}>
+          <div style={{ marginTop: "1.1rem" }}><PierProfile /></div>
+        </Reveal>
       </section>
 
       {/* CAPACITY */}
@@ -619,6 +624,21 @@ export default function Page() {
           </div>
         </section>
       )}
+
+      {/* CHECK THE WORK */}
+      <section>
+        <Reveal><h2>Check the work</h2></Reveal>
+        <Reveal delay={.05}>
+          <p className="col lede" style={{ marginTop: "1rem" }}>
+            An audit that cannot itself be audited is an assertion with better typography.
+            Every derived dataset behind this page is downloadable, in open formats, and
+            the code that produces them is public.
+          </p>
+        </Reveal>
+        <div style={{ marginTop: "1.2rem" }}>
+          <Reveal delay={.09}><Downloads /></Reveal>
+        </div>
+      </section>
 
       {/* OPEN */}
       <section>

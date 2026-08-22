@@ -14,7 +14,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from src.analyse import (composition, corridor_order, movements, peak_hours,
                          through_vs_turning, tmc_matrix)
-from src.config import (CORRIDOR_NAME, CORRIDOR_ROAD, JDA_SCHEME, JUNCTIONS,
+from src.config import (OUT, CORRIDOR_NAME, CORRIDOR_ROAD, JDA_SCHEME, JUNCTIONS,
                         JUNCTION_COORDS, OUT_DATA, SURVEY_DATES)
 from src.pcu import SURVEYED, convert, factor_band
 from src.tmc_parse import CLASS_LABELS, parse_all
@@ -78,6 +78,79 @@ def _scheme():
     """Phase 8 scheme test, if that stage has been run."""
     p = OUT_DATA / "scheme_test.json"
     return json.loads(p.read_text()) if p.exists() else None
+
+
+def _simplify(coords, tol_deg=0.0000045):
+    """Douglas-Peucker. tol is ~0.5 m at this latitude."""
+    if len(coords) < 3:
+        return coords
+    def rdp(pts):
+        if len(pts) < 3:
+            return pts
+        (x0, y0), (x1, y1) = pts[0], pts[-1]
+        dx, dy = x1 - x0, y1 - y0
+        n = (dx * dx + dy * dy) ** .5 or 1e-12
+        worst, wi = 0.0, 0
+        for i in range(1, len(pts) - 1):
+            px, py = pts[i]
+            d = abs(dy * px - dx * py + x1 * y0 - y1 * x0) / n
+            if d > worst:
+                worst, wi = d, i
+        if worst <= tol_deg:
+            return [pts[0], pts[-1]]
+        return rdp(pts[:wi + 1])[:-1] + rdp(pts[wi:])
+    import sys as _s
+    lim = _s.getrecursionlimit()
+    _s.setrecursionlimit(max(lim, 10000))
+    try:
+        return rdp(coords)
+    finally:
+        _s.setrecursionlimit(lim)
+
+
+def _write_web_layers(webdir):
+    """Constraint atlas + junction candidates, simplified for the browser."""
+    src = OUT_DATA / "atlas.geojson"
+    if not src.exists() or not webdir.parent.exists():
+        return
+    webdir.mkdir(parents=True, exist_ok=True)
+    g = json.loads(src.read_text())
+    keep = {"structures", "vegetation", "drainage", "electrical", "telecom",
+            "gas", "geotech", "water", "religious", "rail", "median", "alignment"}
+    feats = []
+    for f in g["features"]:
+        cat = f["properties"].get("category")
+        if cat not in keep:
+            continue
+        geom = f["geometry"]
+        if geom["type"] == "LineString":
+            c = _simplify([tuple(p) for p in geom["coordinates"]])
+            if len(c) < 2:
+                continue
+            geom = dict(type="LineString", coordinates=[list(p) for p in c])
+        feats.append(dict(type="Feature", geometry=geom,
+                          properties=dict(category=cat, layer=f["properties"].get("layer"))))
+    (webdir / "atlas.geojson").write_text(
+        json.dumps(dict(type="FeatureCollection", features=feats), separators=(",", ":")))
+    # deliverables a reviewer can pull straight off the page. Cross-verification is the
+    # product; making someone email for the data defeats it.
+    import shutil as _sh
+    for src_f in (OUT / "audit_report.md", OUT / "corridor_constraint_atlas.pdf",
+                  OUT_DATA / "median_openings.geojson", OUT_DATA / "scheme_test.json",
+                  OUT_DATA / "capacity.json", OUT_DATA / "sensitivity.json"):
+        if src_f.exists():
+            _sh.copy(src_f, webdir / src_f.name)
+
+    cand = OUT_DATA / "junction_candidates.geojson"
+    if cand.exists():
+        (webdir / "junction_candidates.geojson").write_text(
+            json.dumps(json.loads(cand.read_text()), separators=(",", ":")))
+    prof = OUT_DATA / "constraint_profile.json"
+    if prof.exists():
+        rows = json.loads(prof.read_text())
+        (webdir / "constraint_profile.json").write_text(json.dumps(
+            [dict(ch=round(r["chainage_m"]), score=r["score"], hard=r["hard"]) for r in rows],
+            separators=(",", ":")))
 
 
 def _sensitivity():
@@ -208,6 +281,11 @@ if __name__ == "__main__":
     path = OUT_DATA / "corridor.json"
     blob = json.dumps(p, indent=1, default=jsonable)
     path.write_text(blob)
+    # web-sized constraint layers. The full atlas is 4.5 MB, most of it vertex noise on
+    # building outlines; simplifying to 0.5 m and dropping single-point clutter keeps
+    # every feature JDA needs to cross-check while staying loadable on a phone.
+    _write_web_layers(OUT_DATA.parent.parent / "web" / "public")
+
     # the Next.js app reads the same file, so both dashboards render identical figures
     web = OUT_DATA.parent.parent / "web" / "public"
     if web.parent.exists():

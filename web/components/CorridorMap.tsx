@@ -1,25 +1,44 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import type { Junction } from "@/lib/types";
 
 /**
- * The six junctions on their real positions. Marker fill encodes how the location
- * was established: a name match against the JDA scheme is firm, the rest are placed
- * by position in the sequence and are labelled as inferred rather than presented as
- * equally certain.
+ * The six junctions, the corridor, and the constraint atlas as toggleable layers.
+ *
+ * Layers load only when switched on. The atlas is 2.9 MB even after simplification, and
+ * an officer opening this on a phone in a meeting should not wait for constraint data
+ * they may never look at.
+ *
+ * Marker fill encodes how each position was established: solid where the survey's own
+ * arm name matches JDA's scheme, dashed where it was placed by position in that sequence.
+ * That distinction is the point - it lets the three inferred ones be challenged.
  */
+type LayerDef = { id: string; label: string; colour: string; kind: "line" | "circle" };
+
+const ATLAS_LAYERS: LayerDef[] = [
+  { id: "structures", label: "Buildings", colour: "#9E2B25", kind: "line" },
+  { id: "median", label: "Medians", colour: "#5C6663", kind: "line" },
+  { id: "drainage", label: "Drainage", colour: "#1B6E8F", kind: "line" },
+  { id: "electrical", label: "Electrical", colour: "#B08A00", kind: "circle" },
+  { id: "telecom", label: "Telecom", colour: "#2C6249", kind: "circle" },
+  { id: "vegetation", label: "Trees", colour: "#3E7A3E", kind: "circle" },
+  { id: "gas", label: "Gas markers", colour: "#C8791A", kind: "circle" },
+  { id: "religious", label: "Temples", colour: "#6B2D8C", kind: "circle" },
+];
+
 export default function CorridorMap({ junctions }: { junctions: Junction[] }) {
   const box = useRef<HTMLDivElement>(null);
+  const map = useRef<maplibregl.Map | null>(null);
+  const atlas = useRef<unknown>(null);
+  const [on, setOn] = useState<Record<string, boolean>>({});
+  const [cands, setCands] = useState(false);
+  const [busy, setBusy] = useState<string | null>(null);
 
-  // No "already created" guard here. React StrictMode mounts effects twice in dev;
-  // a guard lets the first mount's cleanup destroy the map while blocking the second
-  // from rebuilding it, and you get an empty container. Create, and let cleanup remove.
   useEffect(() => {
     if (!box.current) return;
-
-    const map = new maplibregl.Map({
+    const m = new maplibregl.Map({
       container: box.current,
       style: {
         version: 8,
@@ -27,20 +46,18 @@ export default function CorridorMap({ junctions }: { junctions: Junction[] }) {
           osm: {
             type: "raster",
             tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
-            tileSize: 256,
-            attribution: "&copy; OpenStreetMap contributors",
+            tileSize: 256, attribution: "&copy; OpenStreetMap contributors",
           },
         },
         layers: [{ id: "osm", type: "raster", source: "osm" }],
       },
-      center: [75.7635, 26.856],
-      zoom: 12.6,
+      center: [75.7635, 26.856], zoom: 12.6,
     });
-    map.addControl(new maplibregl.NavigationControl(), "top-right");
-    map.addControl(new maplibregl.ScaleControl({ maxWidth: 110, unit: "metric" }));
+    map.current = m;
+    m.addControl(new maplibregl.NavigationControl(), "top-right");
+    m.addControl(new maplibregl.ScaleControl({ maxWidth: 110, unit: "metric" }));
 
     const ordered = [...junctions].sort((a, b) => b.lat - a.lat);
-
     const bounds = new maplibregl.LngLatBounds();
     ordered.forEach((j) => {
       bounds.extend([j.lon, j.lat]);
@@ -48,7 +65,7 @@ export default function CorridorMap({ junctions }: { junctions: Junction[] }) {
       const el = document.createElement("div");
       const d = 16 + Math.round((j.daily_veh / 160000) * 18);
       el.style.cssText =
-        `width:${d}px;height:${d}px;border-radius:50%;cursor:pointer;` +
+        `width:${d}px;height:${d}px;border-radius:50%;cursor:pointer;z-index:5;` +
         `background:${firm ? "#1B3A6B" : "#9E2B25"};` +
         `border:2px ${firm ? "solid" : "dashed"} #fff;` +
         `box-shadow:0 1px 5px rgba(0,0,0,.45);display:flex;align-items:center;` +
@@ -58,57 +75,123 @@ export default function CorridorMap({ junctions }: { junctions: Junction[] }) {
         .setLngLat([j.lon, j.lat])
         .setPopup(new maplibregl.Popup({ offset: 14, closeButton: false }).setHTML(
           `<div style="font:12px/1.45 'IBM Plex Mono',monospace">
-             <b>${j.code}</b> &middot; ${j.jda_name}<br>
-             ${j.arms[1]} / ${j.arms[3]}<br>
+             <b>${j.code}</b> &middot; ${j.jda_name}<br>${j.arms[1]} / ${j.arms[3]}<br>
              ${j.daily_veh.toLocaleString("en-US")} veh/day &middot; peak ${j.peak_start}<br>
              through ${j.through_pct}%<br>
              <span style="color:#5C6663">${j.lat.toFixed(6)}, ${j.lon.toFixed(6)}<br>
-             location: ${j.location_confidence}</span>
-           </div>`))
-        .addTo(map);
+             location: ${j.location_confidence}</span></div>`))
+        .addTo(m);
     });
-    map.fitBounds(bounds, { padding: 70, maxZoom: 14, duration: 0 });
 
-    map.on("load", () => {
-      // corridor line through the six, north to south
-      map.addSource("corridor", {
+    m.on("load", () => {
+      m.addSource("corridor", {
         type: "geojson",
-        data: {
-          type: "Feature", properties: {},
-          geometry: { type: "LineString", coordinates: ordered.map((j) => [j.lon, j.lat]) },
-        },
+        data: { type: "Feature", properties: {},
+                geometry: { type: "LineString",
+                            coordinates: ordered.map((j) => [j.lon, j.lat]) } },
       });
-      map.addLayer({
-        id: "corridor-halo", type: "line", source: "corridor",
-        paint: { "line-color": "#FAFBF8", "line-width": 7, "line-opacity": .85 },
-      });
-      map.addLayer({
-        id: "corridor-line", type: "line", source: "corridor",
-        paint: { "line-color": "#1B3A6B", "line-width": 2.6 },
-      });
-
+      m.addLayer({ id: "corridor-halo", type: "line", source: "corridor",
+        paint: { "line-color": "#FAFBF8", "line-width": 7, "line-opacity": .85 } });
+      m.addLayer({ id: "corridor-line", type: "line", source: "corridor",
+        paint: { "line-color": "#1B3A6B", "line-width": 2.6 } });
+      m.fitBounds(bounds, { padding: 70, maxZoom: 14, duration: 0 });
     });
 
-    return () => map.remove();
+    return () => { m.remove(); map.current = null; };
   }, [junctions]);
+
+  async function toggleLayer(def: LayerDef) {
+    const m = map.current;
+    if (!m) return;
+    const isOn = !!on[def.id];
+    if (isOn) {
+      if (m.getLayer(`atlas-${def.id}`)) m.removeLayer(`atlas-${def.id}`);
+      setOn((s) => ({ ...s, [def.id]: false }));
+      return;
+    }
+    setBusy(def.id);
+    if (!atlas.current) {
+      const r = await fetch("/atlas.geojson");
+      atlas.current = await r.json();
+      if (!m.getSource("atlas")) m.addSource("atlas", { type: "geojson", data: atlas.current as never });
+    }
+    if (!m.getLayer(`atlas-${def.id}`)) {
+      m.addLayer(def.kind === "line"
+        ? { id: `atlas-${def.id}`, type: "line", source: "atlas",
+            filter: ["==", ["get", "category"], def.id],
+            paint: { "line-color": def.colour, "line-width": 1.4, "line-opacity": .85 } }
+        : { id: `atlas-${def.id}`, type: "circle", source: "atlas",
+            filter: ["==", ["get", "category"], def.id],
+            paint: { "circle-color": def.colour, "circle-radius": 2.4, "circle-opacity": .8 } },
+        "corridor-halo");
+    }
+    setOn((s) => ({ ...s, [def.id]: true }));
+    setBusy(null);
+  }
+
+  async function toggleCandidates() {
+    const m = map.current;
+    if (!m) return;
+    if (cands) {
+      if (m.getLayer("cand-c")) m.removeLayer("cand-c");
+      if (m.getLayer("cand-l")) m.removeLayer("cand-l");
+      setCands(false);
+      return;
+    }
+    setBusy("cand");
+    if (!m.getSource("cand")) {
+      const r = await fetch("/junction_candidates.geojson");
+      m.addSource("cand", { type: "geojson", data: await r.json() });
+    }
+    if (!m.getLayer("cand-c")) {
+      m.addLayer({ id: "cand-c", type: "circle", source: "cand",
+        paint: { "circle-radius": ["interpolate", ["linear"], ["get", "signal_heads"], 1, 3, 14, 9],
+                 "circle-color": "#82600F", "circle-opacity": .55,
+                 "circle-stroke-width": 1, "circle-stroke-color": "#fff" } }, "corridor-halo");
+      m.addLayer({ id: "cand-l", type: "symbol", source: "cand",
+        layout: { "text-field": ["get", "cluster"], "text-size": 9,
+                  "text-offset": [0, 1.2], "text-allow-overlap": false },
+        paint: { "text-color": "#5C6663", "text-halo-color": "#fff", "text-halo-width": 1 } });
+    }
+    setCands(true);
+    setBusy(null);
+  }
 
   return (
     <div className="card">
       <header>
-        <h3>The six junctions</h3>
+        <h3>The six junctions, and what is around them</h3>
         <span className="tag">New Sanganer Road</span>
         <span className="tag">marker size = vehicles/day</span>
       </header>
       <div className="body" style={{ padding: 0 }}>
-        <div ref={box} style={{ width: "100%", height: 460 }} />
+        <div ref={box} style={{ width: "100%", height: 480 }} />
+      </div>
+      <div style={{ padding: ".85rem 1.15rem", borderTop: "1px solid var(--rule)",
+                    display: "flex", flexWrap: "wrap", gap: ".4rem", alignItems: "center" }}>
+        <span style={{ fontSize: ".68rem", letterSpacing: ".1em", textTransform: "uppercase",
+                       color: "var(--muted)", marginRight: ".3rem" }}>Layers</span>
+        {ATLAS_LAYERS.map((d) => (
+          <button key={d.id} className="lyr" aria-pressed={!!on[d.id]}
+                  onClick={() => toggleLayer(d)} disabled={busy === d.id}>
+            <i style={{ background: d.colour }} />
+            {busy === d.id ? "loading" : d.label}
+          </button>
+        ))}
+        <button className="lyr" aria-pressed={cands} onClick={toggleCandidates}
+                disabled={busy === "cand"}>
+          <i style={{ background: "#82600F" }} />
+          {busy === "cand" ? "loading" : "All 39 signal clusters"}
+        </button>
       </div>
       <div style={{ padding: ".8rem 1.15rem", borderTop: "1px solid var(--rule)",
                     fontSize: ".76rem", color: "var(--muted)" }}>
         <span style={{ color: "var(--accent)", fontWeight: 600 }}>Solid</span> — the
-        survey&rsquo;s own arm name matches the junction JDA names in its signal-free
-        scheme. <span style={{ color: "var(--defect)", fontWeight: 600 }}>Dashed</span> —
-        placed by position in that sequence, not confirmed. The survey contractor&rsquo;s
-        location schedule would settle the dashed ones.
+        survey&rsquo;s own arm name matches a junction JDA names in its signal-free scheme.{" "}
+        <span style={{ color: "var(--defect)", fontWeight: 600 }}>Dashed</span> — placed by
+        position in that sequence, not confirmed. Switch on <em>All 39 signal clusters</em>{" "}
+        to see every candidate considered and judge the choice yourself. Constraint layers
+        are read directly from the JDA survey drawing.
       </div>
     </div>
   );

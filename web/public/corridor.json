@@ -1128,8 +1128,9 @@
   ],
   "elevated_all_pass_combinations": 23,
   "elevated_total_combinations": 24,
-  "most_influential": "pcu_uplift_pct",
-  "swing": 0
+  "most_influential": null,
+  "swing": 0,
+  "assumption_driven": false
  },
  "junctions": [
   {
