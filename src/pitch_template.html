@@ -1,0 +1,417 @@
+<title>Traffic Data Assurance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<style>
+:root{
+  --paper:#F1F2EF; --surface:#FAFBF8; --sunk:#E9EBE6; --deep:#14181A;
+  --ink:#14181A; --muted:#5C6663; --faint:#8B938E;
+  --rule:#D5D9D4; --rule-hard:#B4BBB4;
+  --accent:#1B3A6B; --accent-soft:#E2E8F1;
+  --risk:#9E2B25; --risk-soft:#F2E3E1;
+  --ok:#2C6249; --ok-soft:#E0EDE6;
+  --shadow:0 1px 2px rgba(20,24,26,.06), 0 10px 30px -18px rgba(20,24,26,.30);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --paper:#10130F; --surface:#171B16; --sunk:#1D2220; --deep:#0A0C09;
+  --ink:#E9EBE4; --muted:#9AA39C; --faint:#6F7973;
+  --rule:#2A302B; --rule-hard:#3C443D;
+  --accent:#8FB2E2; --accent-soft:#1B2534;
+  --risk:#E39289; --risk-soft:#2E1E1C;
+  --ok:#79C39B; --ok-soft:#152720;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -18px rgba(0,0,0,.85);
+}}
+:root[data-theme="dark"]{
+  --paper:#10130F; --surface:#171B16; --sunk:#1D2220; --deep:#0A0C09;
+  --ink:#E9EBE4; --muted:#9AA39C; --faint:#6F7973;
+  --rule:#2A302B; --rule-hard:#3C443D;
+  --accent:#8FB2E2; --accent-soft:#1B2534;
+  --risk:#E39289; --risk-soft:#2E1E1C;
+  --ok:#79C39B; --ok-soft:#152720;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -18px rgba(0,0,0,.85);
+}
+*{box-sizing:border-box}
+body{margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Source Serif 4",Georgia,serif; font-size:clamp(15px,.5vw + 14px,17px);
+  line-height:1.62; -webkit-font-smoothing:antialiased}
+h1,h2,h3,.disp{font-family:Archivo,"Helvetica Neue",Arial,sans-serif; text-wrap:balance; margin:0}
+.mono,code,th,.tag,.eyebrow,.num{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+.num,td,th{font-variant-numeric:tabular-nums}
+p{margin:0} a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:2px}
+
+.wrap{max-width:72rem; margin:0 auto; padding:0 clamp(1rem,4vw,2.5rem)}
+.col{max-width:40rem}
+section{padding-block:clamp(3rem,7vw,5.5rem); border-top:1px solid var(--rule)}
+.stack{display:flex; flex-direction:column; gap:1.1rem}
+.eyebrow{font-size:.68rem; letter-spacing:.15em; text-transform:uppercase; color:var(--muted); font-weight:600}
+h1{font-size:clamp(2.3rem,6.5vw,4.4rem); line-height:.98; letter-spacing:-.035em; font-weight:800}
+h2{font-size:clamp(1.45rem,3vw,2.1rem); line-height:1.08; letter-spacing:-.022em; font-weight:700}
+h3{font-size:1.02rem; font-weight:600; letter-spacing:-.005em}
+.lede{font-size:clamp(1.05rem,1.3vw,1.24rem); color:var(--muted)}
+strong{font-weight:600; color:var(--ink)}
+
+/* hero ------------------------------------------------------------------ */
+.hero{background:var(--deep); color:#E9EBE4; padding-block:clamp(3rem,8vw,6rem);
+  border-bottom:1px solid var(--rule)}
+.hero .eyebrow{color:#8B938E}
+.hero h1{color:#FAFBF8}
+.hero .lede{color:#B4BBB4}
+.hero .rulebar{height:3px; background:#E9EBE4; margin-bottom:1.5rem; max-width:8rem}
+
+/* the scale comparison &mdash; the signature -------------------------------- */
+.scale{margin-top:2.6rem; display:flex; flex-direction:column; gap:.5rem}
+.scale .row{display:grid; grid-template-columns:minmax(7rem,10rem) 1fr; gap:1rem; align-items:center}
+.scale .lbl{font-family:"IBM Plex Mono",monospace; font-size:.7rem; letter-spacing:.06em;
+  text-transform:uppercase; color:#8B938E; text-align:right}
+.scale .bar{height:34px; position:relative; display:flex; align-items:center}
+.scale .fill{height:100%; border-radius:2px; display:flex; align-items:center; padding-left:.7rem;
+  font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:.86rem; white-space:nowrap; color:#FAFBF8}
+.scale .after{padding-left:.6rem; font-family:"IBM Plex Mono",monospace; font-size:.8rem; color:#8B938E}
+.scale .note{margin-top:.9rem; font-size:.82rem; color:#8B938E; max-width:44rem}
+
+.strip{display:grid; grid-template-columns:repeat(auto-fit,minmax(9rem,1fr));
+  background:var(--surface); border:1px solid var(--rule); border-radius:4px; overflow:hidden}
+.strip > div{background:var(--surface); padding:.9rem 1rem;
+  box-shadow:1px 0 0 var(--rule), 0 1px 0 var(--rule)}
+.strip .k{font-size:1.5rem; font-weight:700; letter-spacing:-.025em; display:block; line-height:1.15;
+  font-family:Archivo,sans-serif}
+.strip .l{font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted)}
+
+.card{background:var(--surface); border:1px solid var(--rule); border-radius:5px;
+  box-shadow:var(--shadow); overflow:hidden}
+.card > header{display:flex; flex-wrap:wrap; gap:.7rem; align-items:baseline;
+  padding:1rem 1.15rem; border-bottom:1px solid var(--rule)}
+.card > .body{padding:1.15rem; display:flex; flex-direction:column; gap:.95rem}
+.chip{font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; font-weight:600;
+  padding:.24rem .5rem; border-radius:3px; white-space:nowrap; font-family:"IBM Plex Mono",monospace}
+.chip.risk{background:var(--risk-soft); color:var(--risk); border:1px solid var(--risk)}
+.chip.ok{background:var(--ok-soft); color:var(--ok); border:1px solid var(--ok)}
+.chip.n{background:var(--sunk); color:var(--muted); border:1px solid var(--rule)}
+.tag{font-size:.68rem; color:var(--faint); background:var(--sunk); padding:.16rem .4rem; border-radius:3px}
+.src{font-size:.72rem; color:var(--faint); margin-top:.2rem}
+
+.grid2{display:grid; grid-template-columns:1fr; gap:1.1rem}
+@media(min-width:56rem){.grid2{grid-template-columns:1fr 1fr}}
+.grid3{display:grid; grid-template-columns:1fr; gap:1.1rem}
+@media(min-width:56rem){.grid3{grid-template-columns:repeat(3,1fr)}}
+
+/* tier ladder ---------------------------------------------------------- */
+.tier{display:grid; grid-template-columns:2.4rem 1fr; gap:1rem; padding:1.15rem;
+  border:1px solid var(--rule); border-radius:5px; background:var(--surface)}
+.tier .n{font-family:Archivo,sans-serif; font-weight:800; font-size:1.5rem; color:var(--rule-hard);
+  line-height:1}
+.tier.now{border-color:var(--accent)}
+.tier.now .n{color:var(--accent)}
+
+.tscroll{overflow-x:auto; border:1px solid var(--rule); border-radius:4px; background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:.78rem; min-width:32rem;
+  font-family:"IBM Plex Mono",monospace}
+th,td{padding:.5rem .7rem; text-align:right; border-bottom:1px solid var(--rule); white-space:nowrap}
+th{background:var(--sunk); font-weight:600; font-size:.65rem; letter-spacing:.07em;
+  text-transform:uppercase; color:var(--muted)}
+th:first-child,td:first-child{text-align:left}
+tbody tr:last-child td{border-bottom:0}
+td.bad{color:var(--risk); font-weight:600} td.good{color:var(--ok); font-weight:600}
+caption{caption-side:bottom; padding:.6rem .7rem; font-size:.73rem; color:var(--muted);
+  text-align:left; font-family:"Source Serif 4",serif}
+
+ul{padding-left:1.1rem; margin:0} li{margin-bottom:.5rem} li::marker{color:var(--faint)}
+footer{padding-block:2.5rem 4rem; border-top:1px solid var(--rule); color:var(--muted); font-size:.82rem}
+.themetoggle{position:fixed; top:1rem; right:1rem; z-index:60; font-family:"IBM Plex Mono",monospace;
+  font-size:.66rem; letter-spacing:.08em; text-transform:uppercase; padding:.42rem .7rem;
+  border-radius:3px; cursor:pointer; background:var(--surface); color:var(--muted);
+  border:1px solid var(--rule); box-shadow:var(--shadow)}
+.themetoggle:hover{color:var(--ink); border-color:var(--rule-hard)}
+@media print{.themetoggle{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms !important; transition-duration:.01ms !important}}
+</style>
+
+<script>
+(function(){ var t=null; try{ t=localStorage.getItem("corridor-theme"); }catch(e){}
+  document.documentElement.setAttribute("data-theme", t || "light"); })();
+</script>
+<button class="themetoggle" id="themetoggle" aria-label="Switch theme"></button>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="rulebar"></div>
+    <p class="eyebrow">Independent traffic data assurance</p>
+    <h1>The data is<br>the risk.</h1>
+    <div class="col stack" style="margin-top:1.4rem">
+      <p class="lede">India builds roads on traffic counts nobody checks. The Comptroller
+      and Auditor General has already priced what that costs.</p>
+    </div>
+
+    <div class="scale" aria-label="Cost comparison, bars proportional">
+      <div class="row">
+        <span class="lbl">Scope change, 23 projects</span>
+        <span class="bar"><i class="fill" style="width:100%; background:#6E2A26">
+          &#8377;856.80 crore</i></span>
+      </div>
+      <div class="row">
+        <span class="lbl">Of which: deficient DPRs</span>
+        <span class="bar"><i class="fill" style="width:77.3%; background:#9E2B25">
+          &#8377;662.53 crore</i></span>
+      </div>
+      <div class="row">
+        <span class="lbl">One whole DPR fee</span>
+        <span class="bar"><i class="fill" style="width:0.67%; background:#5C6663"></i>
+          <span class="after">&#8377;5.78 crore &mdash; the live Dravyavati corridor DPR</span></span>
+      </div>
+      <p class="note">CAG audit of NHAI: of <strong style="color:#E9EBE4">&#8377;856.80
+      crore</strong> spent on change of scope across 23 projects,
+      <strong style="color:#E9EBE4">&#8377;662.53 crore was attributable to deficient DPR
+      and feasibility reports</strong>. Bars are proportional to those figures.</p>
+      <p class="note" style="margin-top:.5rem">An entire DPR for a &#8377;5,000-crore
+      corridor costs 0.67&percnt; of that loss. <strong style="color:#E9EBE4">Verifying the
+      data underneath it costs a fraction of the DPR.</strong></p>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<section style="border-top:0">
+  <div class="stack">
+    <h2>The failure is not collection. It is verification.</h2>
+    <div class="grid3" style="margin-top:.6rem">
+      <div class="card"><div class="body">
+        <span class="chip risk">Documented</span>
+        <p>Road developers <strong>do not rely on NHAI traffic estimates</strong> and build
+        their own, citing "scope for inaccuracy and misreporting". Surveys are tendered to
+        private firms, which "opens it up to a possibility of malpractices."</p>
+        <p class="src">Business Standard</p>
+      </div></div>
+      <div class="card"><div class="body">
+        <span class="chip risk">Audited</span>
+        <p><strong>&#8377;662.53 crore</strong> of scope change attributable to deficient
+        DPR and feasibility reports, across 23 NHAI projects. The cost of unverified inputs
+        is not theoretical; it has been counted.</p>
+        <p class="src">Comptroller and Auditor General of India</p>
+      </div></div>
+      <div class="card"><div class="body">
+        <span class="chip risk">Structural</span>
+        <p>Traffic forecasting error at a <strong>20-year horizon runs 20&ndash;30%</strong>.
+        Optimistic projections drove a wave of failed concessions between 2008 and 2015.</p>
+        <p class="src">Sector analysis</p>
+      </div></div>
+    </div>
+    <p class="col lede" style="margin-top:1.2rem">Counts are a commodity &mdash; a dozen
+    firms sell them cheaply. Nobody sells the layer in between: <strong>checking the data
+    before it becomes a capital decision.</strong></p>
+  </div>
+</section>
+
+<section>
+  <div class="stack">
+    <p class="eyebrow">Proof, not proposal</p>
+    <h2>What we found on a live JDA corridor</h2>
+    <p class="col lede">$NJUNC junctions on $ROAD. Twelve issued workbooks and the JDA survey
+    drawing. Every figure below is reproducible from files the authority already holds.</p>
+
+    <div class="strip" style="margin-top:1rem">
+      <div><span class="k num">$BINS</span><span class="l">class-bins parsed</span></div>
+      <div><span class="k num">$ENTITIES</span><span class="l">CAD entities read</span></div>
+      <div><span class="k num">$LAYERS</span><span class="l">drawing layers</span></div>
+      <div><span class="k num">$TESTS</span><span class="l">automated tests</span></div>
+      <div><span class="k num" style="color:var(--risk)">1</span><span class="l">usable survey day</span></div>
+    </div>
+
+    <div class="grid2" style="margin-top:1.4rem">
+      <div class="card">
+        <header><span class="chip risk">Critical</span><h3>A survey day that was never observed</h3></header>
+        <div class="body">
+          <p><strong>$IDENT of $SERIES</strong> movement-class series reproduce the previous
+          day to the exact vehicle while their 15-minute bins differ. Of those that move,
+          <strong>$GREATER rise and $SMALLER fall</strong>.</p>
+          <p>Under independent counting that split has probability
+          <strong>p &asymp; 2&times;10<sup>&minus;39</sup></strong>. The authority paid for two
+          days and holds one.</p>
+        </div>
+      </div>
+      <div class="card">
+        <header><span class="chip risk">Critical</span><h3>The scheme's key movement, uncounted</h3></header>
+        <div class="body">
+          <p>JDA is converting this road to signal-free operation with <strong>seven U-turn
+          bays</strong>. The survey commissioned for it contains <strong>no U-turn column
+          anywhere</strong>.</p>
+          <p>The survey drawing shows <strong>$UTURNS median gaps</strong> wide enough for a
+          vehicle to turn through. The demand exists and was never measured.</p>
+        </div>
+      </div>
+      <div class="card">
+        <header><span class="chip risk">Material</span><h3>Demand understated by at least $UPLIFT&percnt;</h3></header>
+        <div class="body">
+          <p>Static PCU factors applied against a composition-dependent standard.
+          Two-wheelers are 49&percnt; of this stream and are carried at the IRC:106 value
+          reserved for a class below 5&percnt;.</p>
+          <p>The defensible correction runs from <strong>+$UPLIFT&percnt;</strong> to
+          <strong>+$BANDHI&percnt;</strong>. The spread is the cost of a class scheme that
+          records half the stream in one column.</p>
+        </div>
+      </div>
+      <div class="card">
+        <header><span class="chip risk">Critical</span><h3>Reported classes do not match the data</h3></header>
+        <div class="body">
+          <p>The flow-diagram sheet carries a 20-class header over 10-class data, offset by
+          one column. <strong>The two-wheeler count appears under "Taxi."</strong></p>
+          <p><strong>$REFS</strong> <code>&num;REF!</code> cells across the deliverable, and
+          <strong>$DISC</strong> stored totals disagree with their own components.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="stack">
+    <p class="eyebrow">And what the data does support</p>
+    <h2>The scheme case, quantified</h2>
+    <p class="col">An audit that only finds fault is not useful. Through movements are
+    <strong>$THRULO&ndash;$THRUHI&percnt;</strong> of junction traffic. Carried over the
+    junctions rather than through them, <strong>$CAPOK of $CAPN corridor approaches</strong>
+    return under planning capacity &mdash; volume/capacity falls from <strong>$VCWAS</strong>
+    to <strong>$VCLO&ndash;$VCHI</strong>.</p>
+    <p class="col">That is the argument turning-movement data exists to make, and no other
+    dataset makes it. It is also the number that decides whether an elevated corridor is
+    justified or merely expensive.</p>
+    <p class="col"><a href="$AUDITURL">Read the full technical audit &rarr;</a></p>
+  </div>
+</section>
+
+<section>
+  <div class="stack">
+    <p class="eyebrow">The offer</p>
+    <h2>Four tiers. Buy any of them.</h2>
+    <div class="stack" style="margin-top:.6rem">
+      <div class="tier now"><span class="n">1</span><div class="stack" style="gap:.5rem">
+        <h3>Data Assurance &mdash; 2 to 3 weeks</h3>
+        <p>Audit an issued survey before it drives a decision. Every stored total recomputed
+        from components, statistical independence tested across days, PCU method reviewed
+        against IRC:106. Output: an integrity report with a certify, qualify or reject
+        recommendation, plus a corrected dataset the next consultant can use.</p>
+        <p><span class="tag">available now</span> <span class="tag">proven on this corridor</span></p>
+      </div></div>
+      <div class="tier now"><span class="n">2</span><div class="stack" style="gap:.5rem">
+        <h3>Corridor Intelligence &mdash; 5 to 7 weeks</h3>
+        <p>Tier 1 plus the analytical pack a DPR needs: constraint atlas from the CAD survey,
+        pier-siting profile, median and U-turn analysis, capacity and design-year demand with
+        the model's applicability tested rather than assumed, and a dashboard that opens on
+        a phone.</p>
+        <p><span class="tag">available now</span> <span class="tag">proven on this corridor</span></p>
+      </div></div>
+      <div class="tier"><span class="n">3</span><div class="stack" style="gap:.5rem">
+        <h3>Verified Counts &mdash; 1 field day per junction</h3>
+        <p>Primary video collection anchored to surveyed ground control, with detection
+        covering auto-rickshaw and e-rickshaw that off-the-shelf models miss entirely.
+        Validation reported as MAPE by class &mdash; a deliverable, not an appendix.</p>
+        <p><span class="tag">pilot scale now</span> <span class="tag">partnered field team for full corridor</span></p>
+      </div></div>
+      <div class="tier"><span class="n">4</span><div class="stack" style="gap:.5rem">
+        <h3>Assurance Platform</h3>
+        <p>The pipeline as a tool the authority runs itself: upload the workbooks, receive an
+        integrity report against the same gates. Follows reference engagements, not before.</p>
+        <p><span class="tag">second phase</span></p>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="stack">
+    <h2>Ten weeks to a validated corridor</h2>
+    <div class="tscroll">
+      <table>
+        <caption>Every stage carries a numeric gate. A failed gate is reported, not worked around.</caption>
+        <thead><tr><th>Week</th><th>Stage</th><th>Gate</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td style="text-align:left">Data assurance on the issued survey</td><td style="text-align:left">Zero silent corrections</td></tr>
+          <tr><td>2</td><td style="text-align:left">Contractor query cycle</td><td style="text-align:left">Blocking items answered</td></tr>
+          <tr><td>3</td><td style="text-align:left">CAD ingest, constraint atlas</td><td style="text-align:left">Georeference RMSE &lt; 3 m</td></tr>
+          <tr><td>4</td><td style="text-align:left">Median and U-turn analysis</td><td style="text-align:left">Gaps between adjacent runs</td></tr>
+          <tr><td>5</td><td style="text-align:left">Field collection, pilot junction</td><td style="text-align:left">GCPs before the shoot</td></tr>
+          <tr><td>6&ndash;7</td><td style="text-align:left">Detection, tracking, homography</td><td style="text-align:left">Homography RMSE &lt; 0.5 m</td></tr>
+          <tr><td>8</td><td style="text-align:left">Validation against manual count</td><td style="text-align:left">MAPE &lt; 10&percnt; total</td></tr>
+          <tr><td>9</td><td style="text-align:left">Capacity, LOS, design year</td><td style="text-align:left">Model applicability tested</td></tr>
+          <tr><td>10</td><td style="text-align:left">Atlas, dashboard, final pack</td><td style="text-align:left">Every figure regenerable</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="grid2">
+    <div class="stack">
+      <h2>Why this holds up</h2>
+      <ul style="margin-top:.4rem">
+        <li><strong>Never trust a stored total.</strong> Every subtotal recomputed from its
+        components; disagreements registered, never absorbed.</li>
+        <li><strong>State the assumption, band the answer.</strong> Where data cannot settle a
+        question, the output is a range with the cause named &mdash; not a point estimate
+        with false precision.</li>
+        <li><strong>Test the model before quoting it.</strong> The capacity analysis reports
+        that a lane-based v/c does not describe this corridor, rather than quoting a grade it
+        cannot support.</li>
+        <li><strong>Publish the error rate on the front page.</strong> MAPE, homography RMSE,
+        georeference RMSE. Unusual in Indian traffic reporting, and deliberate.</li>
+        <li><strong>Independence is structural.</strong> No fee contingent on a project
+        proceeding. An assurance service paid on success is not one.</li>
+      </ul>
+    </div>
+    <div class="stack">
+      <h2>Stated limits</h2>
+      <p>A capability statement that overclaims is worth less than one that does not.</p>
+      <ul style="margin-top:.4rem">
+        <li>Delivery is <strong>solo, full-time</strong>. One corridor at a time, ten weeks
+        end to end.</li>
+        <li>Single-camera capacity is <strong>one junction per peak</strong>. Full-corridor
+        primary collection needs a partnered field team.</li>
+        <li><strong>Partner-fronted:</strong> structural, geotechnical, environmental
+        clearance, and any tender requiring empanelled principal status.</li>
+        <li><strong>Out of scope:</strong> construction supervision, EPC, signal
+        implementation.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="col stack">
+    <h2>The question to put to your own data</h2>
+    <p class="lede">Not whether the survey looks professional. Whether anyone has recomputed
+    a single total in it.</p>
+    <p>On this corridor the answer was no, and it took $BINS parsed bins to show that the
+    authority had paid for two days of observation and received one. The same check applies
+    to every survey feeding every scheme currently in DPR.</p>
+    <p style="margin-top:.4rem"><a href="$AUDITURL">The full technical audit &rarr;</a></p>
+  </div>
+</section>
+
+<footer class="col">
+  <p>Findings on $ROAD derived independently from twelve issued workbooks and the JDA
+  survey drawing. $BINS class-bins parsed, $ENTITIES CAD entities read across $LAYERS
+  layers, $TESTS automated tests. Every figure regenerable from source.</p>
+  <p style="margin-top:.7rem">External figures: Comptroller and Auditor General of India
+  (NHAI change-of-scope audit); Business Standard (developer reliance on NHAI traffic data).
+  Standards: IRC:106, IRC:SP:41, IRC:92, Indo-HCM 2017.</p>
+</footer>
+</div>
+
+<script>
+(function(){
+  var b=document.getElementById("themetoggle");
+  var label=function(){ var c=document.documentElement.getAttribute("data-theme");
+    b.textContent = c==="light" ? "Dark" : "Light";
+    b.title = "Switch to " + (c==="light"?"dark":"light") + " theme"; };
+  label();
+  b.addEventListener("click", function(){
+    var c=document.documentElement.getAttribute("data-theme");
+    var n = c==="light" ? "dark" : "light";
+    document.documentElement.setAttribute("data-theme", n);
+    try{ localStorage.setItem("corridor-theme", n); }catch(e){}
+    label();
+  });
+})();
+</script>
