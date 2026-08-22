@@ -569,6 +569,78 @@ footer{padding-block:2.5rem 3.5rem; border-top:1px solid var(--rule); color:var(
   </div>
 </section>
 
+<!-- CAPACITY ----------------------------------------------------------- -->
+<section>
+  <div class="stack">
+    <h2>Capacity, and what the scheme would remove</h2>
+    <p class="col lede">Counting traffic establishes demand. Whether the corridor can
+    carry it is a separate question, and it is the one an elevated-corridor business
+    case turns on.</p>
+
+    <div class="finding">
+      <header>
+        <span class="chip material">Method</span>
+        <h3>A lane-based capacity model does not describe this corridor</h3>
+      </header>
+      <div class="body">
+        <p class="col">Carriageway width is measured, not assumed: 155 perpendicular
+        transects from the alignment to the kerb linework, taking the outermost hit each
+        side and subtracting the median. The corridor runs <strong>$CAPW m per
+        direction</strong> &mdash; two nominal lanes, about 2,400 PCU/hour by IRC:106.</p>
+
+        <p class="col">Observed peak flow is <strong>$CAPRATIO&times;</strong> that. On the
+        binding approach it reaches <strong>3,266 vehicles per nominal lane per hour</strong>
+        against a saturation flow near 1,800&ndash;2,000, with <strong>58&percnt;
+        two-wheelers</strong>. Lane discipline is not what limits this road.</p>
+
+        <p class="col">That is not a rounding problem, it is the wrong model. The
+        methodology predicts it: nominal lanes and used streams diverge in mixed traffic.
+        So volume/capacity ratios here are reported as <em>what the standard says</em>,
+        not as a measurement, and Indo-HCM&rsquo;s sublane treatment with local
+        calibration is what a detailed design would need.</p>
+      </div>
+    </div>
+
+    <div class="finding">
+      <header>
+        <span class="chip fixed">The case</span>
+        <h3>Carrying the through movement over the junctions restores every approach</h3>
+      </header>
+      <div class="body">
+        <p class="col">Through movements do not need the at-grade junction. Removing them
+        leaves the turning traffic, and the through share on this corridor is high enough
+        that this settles it.</p>
+
+        <div class="tscroll">
+          <table id="captab">
+            <caption>Peak-hour PCU on the busier corridor approach at each junction,
+              before and after the through movement is carried over.</caption>
+            <thead><tr><th>Junction</th><th>Through</th><th>Peak PCU</th>
+              <th>Left at grade</th><th>v/c before</th><th>v/c after</th><th>LOS</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <p class="col"><strong>$CAPOK of $CAPN</strong> corridor approaches return under
+        the planning capacity. The worst remaining sits at LOS C, down from a v/c above
+        1.6. This is the argument the count data exists to make, and it is the one place
+        where turning movement data is irreplaceable &mdash; no other dataset separates
+        through traffic from turning traffic.</p>
+
+        <p class="col">On growth to $CAPYEAR: 6&percnt; compounding implies roughly
+        <strong>$CAPMULT&times;</strong> today&rsquo;s flow. Treat that as a floor rather
+        than a forecast. Counted flow on a saturated approach is capacity-constrained, so
+        suppressed trips, diverted trips and peak spreading are all invisible to it. No
+        at-grade widening inside the available 15 m section delivers a threefold increase.</p>
+
+        <p class="prov"><span class="tag">155 transects</span>
+        <span class="tag">IRC:106 planning capacity</span>
+        <span class="tag">growth 4/6/8&percnt; stated, not derived</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- OPEN --------------------------------------------------------------- -->
 <section>
   <div class="col stack">
@@ -686,6 +758,28 @@ var D = $DATA;
       +  '<span class="val num">peak '+p.peak+'</span>';
   });
   el.innerHTML = h;
+})();
+
+/* capacity relief table */
+(function(){
+  var tb = document.querySelector('#captab tbody');
+  if (!tb || !D.capacity || !D.capacity.relief) return;
+  var best = {};
+  D.capacity.relief.forEach(function(r){
+    if (!best[r.junction] || r.vc_after > best[r.junction].vc_after) best[r.junction] = r;
+  });
+  var h = '';
+  Object.keys(best).sort().forEach(function(k){
+    var r = best[k];
+    h += '<tr><td class="mono">'+r.junction+'</td>'
+      +  '<td class="num">'+r.through_pct.toFixed(1)+'%</td>'
+      +  '<td class="num">'+r.peak_pcu.toLocaleString()+'</td>'
+      +  '<td class="num">'+r.residual_pcu.toLocaleString()+'</td>'
+      +  '<td class="num bad">'+r.vc_before.toFixed(2)+'</td>'
+      +  '<td class="num good">'+r.vc_after.toFixed(2)+'</td>'
+      +  '<td class="num good">'+r.los_after+'</td></tr>';
+  });
+  tb.innerHTML = h;
 })();
 
 /* constraint inventory */

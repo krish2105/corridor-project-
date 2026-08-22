@@ -68,6 +68,12 @@ def _constraints():
     )
 
 
+def _capacity():
+    """Phase 7 results, if that stage has been run."""
+    p = OUT_DATA / "capacity.json"
+    return json.loads(p.read_text()) if p.exists() else None
+
+
 def build():
     bins, mism = parse_all()
     day = sorted(bins.date.unique())[0]
@@ -167,6 +173,7 @@ def build():
             ],
         ),
         constraints=_constraints(),
+        capacity=_capacity(),
         junctions=junctions,
         corridor=dict(
             through_pct_mean=round(float(tv.through_pct.mean()), 1),

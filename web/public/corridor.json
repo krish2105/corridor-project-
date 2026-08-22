@@ -263,6 +263,371 @@
    "too narrow": 3
   }
  },
+ "capacity": {
+  "assumptions": {
+   "base_year": 2026,
+   "design_horizon_years": 20,
+   "growth_low_pct": 4.0,
+   "growth_med_pct": 6.0,
+   "growth_high_pct": 8.0,
+   "lane_width_m": 3.5,
+   "shy_distance_m": 1.0,
+   "capacity_pcu_per_lane_hr": 1200,
+   "phf_applied": true
+  },
+  "analysis_date": "2026-05-11",
+  "widths": {
+   "TMC-01": {
+    "width_m": 7.2,
+    "transects": 5,
+    "lanes_per_dir": 2,
+    "capacity_pcu_hr": 2400
+   },
+   "TMC-02": {
+    "width_m": 7.1,
+    "transects": 31,
+    "lanes_per_dir": 2,
+    "capacity_pcu_hr": 2400
+   },
+   "TMC-03": {
+    "width_m": 7.1,
+    "transects": 30,
+    "lanes_per_dir": 2,
+    "capacity_pcu_hr": 2400
+   },
+   "TMC-04": {
+    "width_m": 7.2,
+    "transects": 27,
+    "lanes_per_dir": 2,
+    "capacity_pcu_hr": 2400
+   },
+   "TMC-05": {
+    "width_m": 7.0,
+    "transects": 30,
+    "lanes_per_dir": 2,
+    "capacity_pcu_hr": 2400
+   },
+   "TMC-06": {
+    "width_m": 7.0,
+    "transects": 27,
+    "lanes_per_dir": 2,
+    "capacity_pcu_hr": 2400
+   }
+  },
+  "junctions": [
+   {
+    "junction": "TMC-01",
+    "approach": "from Mansarover Metro",
+    "capacity": 2400,
+    "peak": "09:15",
+    "pcu_lo": 3301.2,
+    "pcu_pt": 3317.0,
+    "pcu_hi": 4859.9,
+    "vc_lo": 1.3755,
+    "vc_pt": 1.3820833333333333,
+    "vc_hi": 2.024958333333333,
+    "los_pt": "F",
+    "los_hi": "F"
+   },
+   {
+    "junction": "TMC-01",
+    "approach": "from Sanganer Stadium",
+    "capacity": 2400,
+    "peak": "08:30",
+    "pcu_lo": 3938.4500000000003,
+    "pcu_pt": 3962.75,
+    "pcu_hi": 5703.849999999999,
+    "vc_lo": 1.6410208333333334,
+    "vc_pt": 1.6511458333333333,
+    "vc_hi": 2.3766041666666666,
+    "los_pt": "F",
+    "los_hi": "F"
+   },
+   {
+    "junction": "TMC-02",
+    "approach": "from Mansarover Metro",
+    "capacity": 2400,
+    "peak": "09:15",
+    "pcu_lo": 3114.75,
+    "pcu_pt": 3125.55,
+    "pcu_hi": 4829.849999999999,
+    "vc_lo": 1.2978125,
+    "vc_pt": 1.3023125,
+    "vc_hi": 2.0124375,
+    "los_pt": "F",
+    "los_hi": "F"
+   },
+   {
+    "junction": "TMC-02",
+    "approach": "from Sanganer Stadium",
+    "capacity": 2400,
+    "peak": "18:15",
+    "pcu_lo": 2970.8999999999996,
+    "pcu_pt": 2989.8,
+    "pcu_hi": 4495.9,
+    "vc_lo": 1.2378749999999998,
+    "vc_pt": 1.2457500000000001,
+    "vc_hi": 1.8732916666666666,
+    "los_pt": "F",
+    "los_hi": "F"
+   },
+   {
+    "junction": "TMC-03",
+    "approach": "from Mansarover Metro",
+    "capacity": 2400,
+    "peak": "09:00",
+    "pcu_lo": 3743.95,
+    "pcu_pt": 3749.75,
+    "pcu_hi": 5256.349999999999,
+    "vc_lo": 1.5599791666666667,
+    "vc_pt": 1.5623958333333334,
+    "vc_hi": 2.1901458333333332,
+    "los_pt": "F",
+    "los_hi": "F"
+   },
+   {
+    "junction": "TMC-03",
+    "approach": "from Sanganer Stadium",
+    "capacity": 2400,
+    "peak": "18:30",
+    "pcu_lo": 3734.6499999999996,
+    "pcu_pt": 3757.0499999999997,
+    "pcu_hi": 5314.55,
+    "vc_lo": 1.5561041666666666,
+    "vc_pt": 1.5654374999999998,
+    "vc_hi": 2.2143958333333336,
+    "los_pt": "F",
+    "los_hi": "F"
+   },
+   {
+    "junction": "TMC-04",
+    "approach": "from Mansarover Metro",
+    "capacity": 2400,
+    "peak": "09:15",
+    "pcu_lo": 3501.65,
+    "pcu_pt": 3509.6499999999996,
+    "pcu_hi": 5029.0,
+    "vc_lo": 1.4590208333333334,
+    "vc_pt": 1.4623541666666666,
+    "vc_hi": 2.0954166666666665,
+    "los_pt": "F",
+    "los_hi": "F"
+   },
+   {
+    "junction": "TMC-04",
+    "approach": "from Sanganer Stadium",
+    "capacity": 2400,
+    "peak": "17:45",
+    "pcu_lo": 3181.7999999999997,
+    "pcu_pt": 3193.8,
+    "pcu_hi": 5064.45,
+    "vc_lo": 1.32575,
+    "vc_pt": 1.33075,
+    "vc_hi": 2.1101875,
+    "los_pt": "F",
+    "los_hi": "F"
+   },
+   {
+    "junction": "TMC-05",
+    "approach": "from Mansarover Metro",
+    "capacity": 2400,
+    "peak": "09:45",
+    "pcu_lo": 5772.85,
+    "pcu_pt": 5777.45,
+    "pcu_hi": 8437.45,
+    "vc_lo": 2.4053541666666667,
+    "vc_pt": 2.4072708333333335,
+    "vc_hi": 3.515604166666667,
+    "los_pt": "F",
+    "los_hi": "F"
+   },
+   {
+    "junction": "TMC-05",
+    "approach": "from Sanganer Stadium",
+    "capacity": 2400,
+    "peak": "09:15",
+    "pcu_lo": 4070.45,
+    "pcu_pt": 4086.15,
+    "pcu_hi": 6183.15,
+    "vc_lo": 1.6960208333333333,
+    "vc_pt": 1.7025625,
+    "vc_hi": 2.5763125,
+    "los_pt": "F",
+    "los_hi": "F"
+   },
+   {
+    "junction": "TMC-06",
+    "approach": "from Mansarover Metro",
+    "capacity": 2400,
+    "peak": "09:15",
+    "pcu_lo": 3787.5499999999997,
+    "pcu_pt": 3796.85,
+    "pcu_hi": 5435.75,
+    "vc_lo": 1.5781458333333331,
+    "vc_pt": 1.5820208333333332,
+    "vc_hi": 2.2648958333333336,
+    "los_pt": "F",
+    "los_hi": "F"
+   },
+   {
+    "junction": "TMC-06",
+    "approach": "from Sanganer Stadium",
+    "capacity": 2400,
+    "peak": "09:30",
+    "pcu_lo": 3537.2,
+    "pcu_pt": 3565.8,
+    "pcu_hi": 5648.999999999999,
+    "vc_lo": 1.4738333333333333,
+    "vc_pt": 1.4857500000000001,
+    "vc_hi": 2.35375,
+    "los_pt": "F",
+    "los_hi": "F"
+   }
+  ],
+  "horizon_year": 2046,
+  "observed_vs_planning_ratio": 1.66,
+  "lane_model_applicable": false,
+  "relief": [
+   {
+    "junction": "TMC-01",
+    "approach": "from Mansarover Metro",
+    "through_pct": 57.2,
+    "peak_pcu": 3317,
+    "residual_pcu": 1420,
+    "vc_before": 1.38,
+    "vc_after": 0.59,
+    "los_after": "B"
+   },
+   {
+    "junction": "TMC-01",
+    "approach": "from Sanganer Stadium",
+    "through_pct": 57.2,
+    "peak_pcu": 3963,
+    "residual_pcu": 1696,
+    "vc_before": 1.65,
+    "vc_after": 0.71,
+    "los_after": "C"
+   },
+   {
+    "junction": "TMC-02",
+    "approach": "from Mansarover Metro",
+    "through_pct": 68.3,
+    "peak_pcu": 3126,
+    "residual_pcu": 991,
+    "vc_before": 1.3,
+    "vc_after": 0.41,
+    "los_after": "B"
+   },
+   {
+    "junction": "TMC-02",
+    "approach": "from Sanganer Stadium",
+    "through_pct": 68.3,
+    "peak_pcu": 2990,
+    "residual_pcu": 948,
+    "vc_before": 1.25,
+    "vc_after": 0.39,
+    "los_after": "A"
+   },
+   {
+    "junction": "TMC-03",
+    "approach": "from Mansarover Metro",
+    "through_pct": 77.4,
+    "peak_pcu": 3750,
+    "residual_pcu": 847,
+    "vc_before": 1.56,
+    "vc_after": 0.35,
+    "los_after": "A"
+   },
+   {
+    "junction": "TMC-03",
+    "approach": "from Sanganer Stadium",
+    "through_pct": 77.4,
+    "peak_pcu": 3757,
+    "residual_pcu": 849,
+    "vc_before": 1.57,
+    "vc_after": 0.35,
+    "los_after": "A"
+   },
+   {
+    "junction": "TMC-04",
+    "approach": "from Mansarover Metro",
+    "through_pct": 67.9,
+    "peak_pcu": 3510,
+    "residual_pcu": 1127,
+    "vc_before": 1.46,
+    "vc_after": 0.47,
+    "los_after": "B"
+   },
+   {
+    "junction": "TMC-04",
+    "approach": "from Sanganer Stadium",
+    "through_pct": 67.9,
+    "peak_pcu": 3194,
+    "residual_pcu": 1025,
+    "vc_before": 1.33,
+    "vc_after": 0.43,
+    "los_after": "B"
+   },
+   {
+    "junction": "TMC-05",
+    "approach": "from Mansarover Metro",
+    "through_pct": 78.7,
+    "peak_pcu": 5777,
+    "residual_pcu": 1231,
+    "vc_before": 2.41,
+    "vc_after": 0.51,
+    "los_after": "B"
+   },
+   {
+    "junction": "TMC-05",
+    "approach": "from Sanganer Stadium",
+    "through_pct": 78.7,
+    "peak_pcu": 4086,
+    "residual_pcu": 870,
+    "vc_before": 1.7,
+    "vc_after": 0.36,
+    "los_after": "A"
+   },
+   {
+    "junction": "TMC-06",
+    "approach": "from Mansarover Metro",
+    "through_pct": 72.9,
+    "peak_pcu": 3797,
+    "residual_pcu": 1029,
+    "vc_before": 1.58,
+    "vc_after": 0.43,
+    "los_after": "B"
+   },
+   {
+    "junction": "TMC-06",
+    "approach": "from Sanganer Stadium",
+    "through_pct": 72.9,
+    "peak_pcu": 3566,
+    "residual_pcu": 966,
+    "vc_before": 1.49,
+    "vc_after": 0.4,
+    "los_after": "B"
+   }
+  ],
+  "approaches_ok_after_grade_separation": 12,
+  "growth": [
+   {
+    "growth_pct": 4.0,
+    "multiple": 2.19,
+    "binding_need_pcu": 12659
+   },
+   {
+    "growth_pct": 6.0,
+    "multiple": 3.21,
+    "binding_need_pcu": 18529
+   },
+   {
+    "growth_pct": 8.0,
+    "multiple": 4.66,
+    "binding_need_pcu": 26928
+   }
+  ]
+ },
  "junctions": [
   {
    "code": "TMC-01",

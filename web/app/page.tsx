@@ -37,6 +37,14 @@ export default function Page() {
   const car = a.pcu.factors.find((f) => f.cls === "CAR_BUCKET")!;
   const maxPcu = Math.max(...js.map((j) => j.pcu_corrected));
   const c2 = d.constraints;
+  const cp = d.capacity;
+  // busier corridor approach at each junction
+  const relief = cp ? Object.values(cp.relief.reduce((m, r) => {
+    if (!m[r.junction] || r.vc_after > m[r.junction].vc_after) m[r.junction] = r;
+    return m;
+  }, {} as Record<string, typeof cp.relief[number]>)).sort((a, b) =>
+    a.junction.localeCompare(b.junction)) : [];
+  const width0 = cp ? Object.values(cp.widths)[0]?.width_m : 0;
 
   return (
     <main className="wrap">
@@ -380,6 +388,85 @@ export default function Page() {
           </Reveal>
         )}
       </section>
+
+      {/* CAPACITY */}
+      {cp && (
+        <section>
+          <Reveal><h2>Capacity, and what the scheme would remove</h2></Reveal>
+          <Reveal delay={.05}>
+            <p className="col lede" style={{ marginTop: "1rem" }}>
+              Counting traffic establishes demand. Whether the corridor can carry it is a
+              separate question, and it is the one an elevated-corridor business case
+              turns on.
+            </p>
+          </Reveal>
+          <Reveal delay={.09}>
+            <div className="card" style={{ marginTop: "1.2rem" }}>
+              <header><span className="chip material">Method</span>
+                <h3>A lane-based capacity model does not describe this corridor</h3></header>
+              <div className="body">
+                <p className="col">Carriageway width is measured, not assumed: 155
+                perpendicular transects from the alignment to the kerb linework, taking the
+                outermost hit each side and subtracting the median. The corridor runs{" "}
+                <strong>{width0?.toFixed(1)} m per direction</strong> &mdash; two nominal
+                lanes, about 2,400 PCU/hour by IRC:106.</p>
+                <p className="col">Observed peak flow is{" "}
+                <strong>{cp.observed_vs_planning_ratio}&times;</strong> that. On the binding
+                approach it reaches <strong>3,266 vehicles per nominal lane per hour</strong>{" "}
+                against a saturation flow near 1,800&ndash;2,000, with{" "}
+                <strong>58% two-wheelers</strong>. Lane discipline is not what limits this road.</p>
+                <p className="col">That is not a rounding problem, it is the wrong model. So
+                v/c here is reported as <em>what the standard says</em>, not as a measurement,
+                and Indo-HCM&rsquo;s sublane treatment with local calibration is what a
+                detailed design would need.</p>
+              </div>
+            </div>
+          </Reveal>
+          <Reveal delay={.12}>
+            <div className="card" style={{ marginTop: "1.1rem" }}>
+              <header><span className="chip fixed">The case</span>
+                <h3>Carrying the through movement over the junctions restores every approach</h3></header>
+              <div className="body">
+                <p className="col">Through movements do not need the at-grade junction.
+                Removing them leaves the turning traffic, and the through share here is high
+                enough that this settles it.</p>
+                <div className="tscroll">
+                  <table>
+                    <caption>Peak-hour PCU on the busier corridor approach at each junction,
+                      before and after the through movement is carried over.</caption>
+                    <thead><tr><th>Junction</th><th>Through</th><th>Peak PCU</th>
+                      <th>Left at grade</th><th>v/c before</th><th>v/c after</th><th>LOS</th></tr></thead>
+                    <tbody>
+                      {relief.map((r) => (
+                        <tr key={r.junction}>
+                          <td className="mono">{r.junction}</td>
+                          <td className="num">{r.through_pct.toFixed(1)}%</td>
+                          <td className="num">{nf.format(r.peak_pcu)}</td>
+                          <td className="num">{nf.format(r.residual_pcu)}</td>
+                          <td className="num bad">{r.vc_before.toFixed(2)}</td>
+                          <td className="num good">{r.vc_after.toFixed(2)}</td>
+                          <td className="num good">{r.los_after}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <p className="col"><strong>{cp.approaches_ok_after_grade_separation} of{" "}
+                {cp.relief.length}</strong> corridor approaches return under the planning
+                capacity. This is the argument the count data exists to make, and the one
+                place turning movement data is irreplaceable &mdash; no other dataset
+                separates through traffic from turning traffic.</p>
+                <p className="col">On growth to {cp.horizon_year}: 6% compounding implies
+                roughly <strong>{cp.growth[1]?.multiple}&times;</strong> today&rsquo;s flow.
+                Treat that as a floor, not a forecast &mdash; counted flow on a saturated
+                approach is capacity-constrained, so suppressed and diverted trips are
+                invisible to it. No at-grade widening inside the available 15 m section
+                delivers a threefold increase.</p>
+              </div>
+            </div>
+          </Reveal>
+        </section>
+      )}
 
       {/* OPEN */}
       <section>

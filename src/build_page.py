@@ -44,8 +44,10 @@ def build():
 
     # data the page's charts render from
     con = d.get("constraints") or {}
+    capd = d.get("capacity") or {}
     chart = dict(
         constraints=con,
+        capacity=capd,
         profiles=[dict(code=j["code"], peak=j["peak_start"],
                        v=[p["v"] for p in j["profile"]],
                        t=[p["t"] for p in j["profile"]]) for j in js],
@@ -99,6 +101,13 @@ def build():
         UTMOUTH=str(con.get("opening_classes", {}).get("wide / junction mouth", 0)),
         UTMARG=str(con.get("opening_classes", {}).get("marginal", 0)),
         NAMEMATCH=str(sum(1 for j in js if j["location_confidence"] == "name match")),
+        CAPRATIO=f"{capd.get('observed_vs_planning_ratio', 0):.2f}",
+        CAPOK=str(capd.get("approaches_ok_after_grade_separation", 0)),
+        CAPN=str(len(capd.get("relief", []))),
+        CAPYEAR=str(capd.get("horizon_year", "")),
+        CAPMULT=f"{(capd.get('growth') or [{},{'multiple':0}])[1].get('multiple', 0):.2f}",
+        CAPW=f"{list((capd.get('widths') or {}).values())[0].get('width_m', 0):.1f}"
+             if capd.get("widths") else "0",
     )
     sub = {k: ascii_only(v) for k, v in sub.items()}
     html = Template(TPL.read_text()).substitute(sub)

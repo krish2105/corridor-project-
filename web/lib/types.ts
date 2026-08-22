@@ -31,6 +31,14 @@ export type Corridor = {
     uturn_possible: number; uturn_per_km: number;
     opening_classes: Record<string, number>;
   } | null;
+  capacity: {
+    observed_vs_planning_ratio: number; horizon_year: number;
+    approaches_ok_after_grade_separation: number;
+    widths: Record<string, { width_m: number; lanes_per_dir: number; capacity_pcu_hr: number }>;
+    relief: { junction: string; approach: string; through_pct: number; peak_pcu: number;
+              residual_pcu: number; vc_before: number; vc_after: number; los_after: string }[];
+    growth: { growth_pct: number; multiple: number; binding_need_pcu: number }[];
+  } | null;
   junctions: Junction[];
   corridor: {
     through_pct_mean: number; through_pct_range: [number, number];
