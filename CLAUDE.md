@@ -189,20 +189,28 @@ corridor/
 │   ├── raw/          # video, downloaded OSM
 │   ├── gcps/         # ground control points
 │   └── processed/    # geojson, graphml, parquet
-├── src/
-│   ├── config.py       # corridor + junction constants
-│   ├── inspect_tmc.py  # raw workbook structure probe
-│   ├── tmc_parse.py    # workbooks -> tidy frames
-│   ├── audit.py        # integrity + conservation report
-│   ├── pcu.py          # IRC:106 share-dependent PCU
-│   ├── analyse.py      # peak hour, TMC matrices, corridor continuity
-│   ├── export.py       # -> out/data/*.json
-│   ├── geo.py          # projections, georeferencing
-│   ├── network.py      # OSM -> noded graph
-│   ├── movements.py    # movement enumeration + classification
-│   ├── detect.py       # YOLO + ByteTrack
-│   ├── homography.py   # pixel -> world
-│   └── atlas.py        # map outputs
+├── src/                # every module runs standalone and prints its own metric
+│   ├── config.py       # corridor + junction constants, incl. coordinates
+│   ├── dwg_probe.py    # Phase 0 — CRS discovery from the DWG header
+│   ├── dxf_inventory.py# Phase 1 — layer inventory, junction candidates
+│   ├── inspect_tmc.py  # raw workbook structure probe, no reshaping
+│   ├── tmc_parse.py    # workbooks -> tidy frames; never trusts a stored total
+│   ├── audit.py        # integrity audit -> out/audit_report.md
+│   ├── pcu.py          # Phase 4 — IRC:106 share-dependent PCU
+│   ├── analyse.py      # peak hour, TMC matrices, through/turning split
+│   ├── atlas.py        # Phase 9 — constraint atlas + pier-siting profile
+│   ├── medians.py      # U-turn feasibility from DIVIDER linework
+│   ├── export.py       # -> out/data/corridor.json (both dashboards read this)
+│   ├── build_page.py   # -> out/corridor_audit.html
+│   └── build_picker.py # local map for assigning TMC codes to candidates
+│
+│   NOT BUILT, and deliberately so — nothing in the current deliverable needs them:
+│     network.py    Phase 2, CAD -> noded graph
+│     movements.py  Phase 3 from CAD (the survey supplies movements directly)
+│     geo.py        superseded by pyproj use in dwg_probe/atlas/medians
+│     detect.py     Phase 6, YOLO + ByteTrack   ) no video exists yet
+│     homography.py Phase 6, pixel -> world     )
+│     count.py      Phase 6, zones -> TMC       )
 ├── web/              # Next.js dashboard
 ├── tests/
 └── out/              # deliverables, audit report, static JSON
