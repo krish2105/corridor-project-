@@ -10,6 +10,7 @@ dependencies = [
     "tabulate>=0.10.0",
     "pyproj>=3.7.2",
     "ezdxf>=1.4.4",
+    "matplotlib>=3.11.1",
 ]
 
 [dependency-groups]
