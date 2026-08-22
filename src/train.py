@@ -62,6 +62,16 @@ NOT_LEARNABLE_FROM_IDD = {
     "CYCLE_RIK": "cycle-rickshaw - not a distinct IDD class",
 }
 
+# Stage two learns from frames we annotate ourselves, so it CAN carry the two classes IDD
+# cannot teach. Annotation and stage-two training must both use this longer list: validate
+# incoming labels against CLASSES and an annotator's E_RIK boxes are silently dropped as
+# an unknown label - losing the one class self-annotation exists to capture.
+#
+# The head is reinitialised when stage two starts from stage-one weights, because the
+# class count changes. The backbone - which is where the IDD viewpoint knowledge lives -
+# transfers intact, so this costs far less than it sounds.
+CLASSES_STAGE2 = CLASSES + list(NOT_LEARNABLE_FROM_IDD)
+
 TRAIN_DEFAULTS = dict(epochs=60, imgsz=960, batch=8, patience=15,
                       optimizer="auto", cos_lr=True, mosaic=0.6,
                       # small objects dominate here; heavy scale jitter hurts them

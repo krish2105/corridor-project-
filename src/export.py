@@ -136,6 +136,7 @@ def _write_web_layers(webdir):
     # product; making someone email for the data defeats it.
     import shutil as _sh
     for src_f in (OUT / "audit_report.md", OUT / "corridor_constraint_atlas.pdf",
+                  OUT / "capacity_report.md", OUT / "method_statement.md",
                   OUT_DATA / "median_openings.geojson", OUT_DATA / "scheme_test.json",
                   OUT_DATA / "capacity.json", OUT_DATA / "sensitivity.json"):
         if src_f.exists():

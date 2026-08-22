@@ -13,6 +13,10 @@ const FILES = [
     note: "Every figure on this page, as produced by the pipeline", kind: "JSON" },
   { f: "audit_report.md", label: "Integrity audit report",
     note: "Seven checks, each with its own pass/fail and the discrepancy register", kind: "MD" },
+  { f: "capacity_report.md", label: "Capacity and design-year assessment",
+    note: "Measured widths, v/c by approach, and the grade-separation relief table", kind: "MD" },
+  { f: "method_statement.md", label: "Method statement",
+    note: "Standards applied, every acceptance gate, and where this stops being reliable", kind: "MD" },
   { f: "corridor_constraint_atlas.pdf", label: "Corridor Constraint Atlas",
     note: "A3 print sheet: all constraint layers, north arrow, scale bar, profile", kind: "PDF" },
   { f: "atlas.geojson", label: "Constraint layers",
@@ -28,10 +32,18 @@ const FILES = [
   { f: "scheme_test.json", label: "U-turn scheme test",
     note: "Gap-acceptance results for all 12 corridor approaches", kind: "JSON" },
   { f: "sensitivity.json", label: "Sensitivity analysis",
-    note: "Both conclusions across 72 assumption combinations", kind: "JSON" },
+    note: (n?: number) => n
+      ? `Both conclusions across ${n} assumption combinations`
+      : "Both conclusions across the full assumption grid",
+    kind: "JSON" },
 ];
 
-export default function Downloads() {
+/**
+ * `combinations` comes from the pipeline so this note can never drift from the data.
+ * Optional because the downloads section renders even if sensitivity output is absent -
+ * in which case the note drops the count rather than inventing one.
+ */
+export default function Downloads({ combinations }: { combinations?: number }) {
   return (
     <div className="card">
       <header>
@@ -48,7 +60,7 @@ export default function Downloads() {
               <span className="k">{x.kind}</span>
               <span>
                 <strong>{x.label}</strong>
-                <em>{x.note}</em>
+                <em>{typeof x.note === "function" ? x.note(combinations) : x.note}</em>
               </span>
             </a>
           ))}

@@ -636,7 +636,7 @@ export default function Page() {
           </p>
         </Reveal>
         <div style={{ marginTop: "1.2rem" }}>
-          <Reveal delay={.09}><Downloads /></Reveal>
+          <Reveal delay={.09}><Downloads combinations={sen?.combinations} /></Reveal>
         </div>
       </section>
 
