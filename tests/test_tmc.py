@@ -244,3 +244,49 @@ def test_validation_mape_ignores_zero_manual_intervals():
     from src.validate import mape
     val, n = mape([0, 0, 10], [5, 3, 11])
     assert n == 1 and abs(val - 0.1) < 1e-9
+
+
+# --- detection stage -------------------------------------------------------
+def test_slices_cover_the_whole_frame():
+    """A gap in tile coverage is a blind spot that silently loses vehicles."""
+    from src.detect import coverage, slices
+    for w, h in ((1920, 1080), (3840, 2160), (1280, 720), (640, 640)):
+        assert coverage(w, h, slices(w, h)) == 1.0
+
+
+def test_slice_overlap_exceeds_a_two_wheeler():
+    """Overlap must exceed the largest object or a vehicle on a seam is counted twice."""
+    from src.detect import OVERLAP, SLICE
+    assert SLICE * OVERLAP >= 100      # px, comfortably more than a 2W at 8-12 m
+
+
+def test_merge_removes_cross_tile_duplicates():
+    from src.detect import merge
+    a = dict(bbox=(100, 100, 160, 140), conf=0.9, cls="CAR_BUCKET")
+    dup = dict(bbox=(104, 102, 164, 142), conf=0.8, cls="CAR_BUCKET")
+    far = dict(bbox=(600, 600, 660, 640), conf=0.7, cls="CAR_BUCKET")
+    assert len(merge([a, dup, far])) == 2
+
+
+def test_merge_keeps_different_classes_at_the_same_place():
+    """A 2W beside a car must not be collapsed into one detection."""
+    from src.detect import merge
+    a = dict(bbox=(100, 100, 160, 140), conf=0.9, cls="CAR_BUCKET")
+    b = dict(bbox=(102, 101, 162, 141), conf=0.8, cls="TWO_W")
+    assert len(merge([a, b])) == 2
+
+
+def test_auto_rickshaw_is_not_silently_mapped_to_car():
+    """
+    COCO has no auto-rickshaw. Folding it into `car` would reproduce exactly the
+    composite-class failure the audit criticises in the survey.
+    """
+    from src.detect import COCO_TO_IRC, UNMAPPABLE
+    assert "AUTO" not in COCO_TO_IRC.values()
+    assert "E_RIK" not in COCO_TO_IRC.values()
+    assert "AUTO" in UNMAPPABLE and "E_RIK" in UNMAPPABLE
+
+
+def test_unmapped_coco_labels_are_flagged_not_guessed():
+    from src.detect import COCO_TO_IRC
+    assert COCO_TO_IRC.get("train", "UNMAPPED") == "UNMAPPED"
