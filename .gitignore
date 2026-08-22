@@ -1,0 +1,20 @@
+# Large / regenerable inputs
+data/raw/
+out/
+*.mp4
+*.mov
+*.pt
+*.rar
+*.dwg
+
+# Python
+__pycache__/
+.venv/
+*.pyc
+
+# macOS
+.DS_Store
+
+# Node / Next.js
+node_modules/
+.next/

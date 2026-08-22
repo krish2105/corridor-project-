@@ -1,0 +1,17 @@
+[project]
+name = "corridor"
+version = "0.1.0"
+description = "Mansarovar corridor junction intelligence — JDA TMC survey audit and analysis"
+requires-python = ">=3.11,<3.12"
+dependencies = [
+    "pandas>=2.2",
+    "openpyxl>=3.1",
+    "pyarrow>=16.0",
+]
+
+[dependency-groups]
+dev = ["pytest>=8.0"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
