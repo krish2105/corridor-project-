@@ -44,10 +44,22 @@ def build():
 
     # data the page's charts render from
     con = d.get("constraints") or {}
+    import json as _j
+    prof = _j.loads((OUT_DATA / "constraint_profile.json").read_text()) \
+        if (OUT_DATA / "constraint_profile.json").exists() else []
+    cands = (_j.loads((OUT_DATA / "junction_candidates.geojson").read_text())["features"]
+             if (OUT_DATA / "junction_candidates.geojson").exists() else [])
     capd = d.get("capacity") or {}
     sch = d.get("scheme") or {}
     sen = d.get("sensitivity") or {}
     chart = dict(
+        profile=[dict(ch=round(r["chainage_m"]), s=r["score"], h=r["hard"]) for r in prof],
+        candidates=sorted(
+            [dict(id=f["properties"]["cluster"], n=f["properties"]["signal_heads"],
+                  lat=f["geometry"]["coordinates"][1], lon=f["geometry"]["coordinates"][0],
+                  label=(f["properties"].get("nearest_label") or "")[:34])
+             for f in cands], key=lambda r: -r["n"])[:14],
+        chosen=[j["signal_cluster"] for j in js],
         constraints=con,
         capacity=capd,
         scheme=sch,

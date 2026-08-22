@@ -536,6 +536,24 @@ footer{padding-block:2.5rem 3.5rem; border-top:1px solid var(--rule); color:var(
     full utility survey.</p>
 
     <div class="finding">
+      <header><h3>Pier-siting profile &mdash; $CSTN stations along the alignment</h3>
+        <span class="tag">8 m footprint, 25 m stations</span></header>
+      <div class="body">
+        <svg id="profsvg" viewBox="0 0 1000 190" preserveAspectRatio="none"
+             style="width:100%;height:190px;display:block" role="img"
+             aria-label="Constraint score along the corridor alignment"></svg>
+        <p class="legend" style="margin-top:.2rem">
+          <span><i class="sw" style="background:var(--defect)"></i>hard constraint &mdash;
+            buildings, temples, rail, gas</span>
+          <span><i class="sw" style="background:var(--muted)"></i>all constraints, weighted</span>
+        </p>
+        <p class="col">The five pinch points are visible here and nowhere else. Everywhere
+        between them is open, which is why the corridor is feasible despite the weighted
+        score looking crowded.</p>
+      </div>
+    </div>
+
+    <div class="finding">
       <header>
         <span class="chip fixed">Feasible</span>
         <h3>An elevated structure has room, and the argument is about five pinch points</h3>
@@ -767,6 +785,37 @@ footer{padding-block:2.5rem 3.5rem; border-top:1px solid var(--rule); color:var(
   </div>
 </section>
 
+<!-- AUDIT TRAIL -------------------------------------------------------- -->
+<section>
+  <div class="stack">
+    <h2>Check the work</h2>
+    <p class="col lede">An audit that cannot itself be audited is an assertion with better
+    typography. Three of the six junction positions are inferred, and the evidence for
+    every candidate considered is below rather than summarised away.</p>
+
+    <div class="tscroll">
+      <table id="candtab">
+        <caption>The largest of 39 traffic-signal clusters found in the survey drawing.
+          Six were selected; the rest are shown so the choice can be challenged.</caption>
+        <thead><tr><th>Cluster</th><th>Signal heads</th><th>Position</th>
+          <th>Nearest label in the drawing</th><th>Selected</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <p class="col">Three junctions are fixed by an exact name match against the junctions
+    JDA names in its own signal-free scheme &mdash; Rajat Path, VT Road, Patel Marg. The
+    other three are placed by position in that sequence and are labelled inferred
+    throughout, including in the map legend and the junction table.</p>
+
+    <p class="col">The full datasets behind every figure &mdash; the parsed analysis, the
+    discrepancy register, the constraint layers, the median schedule, the capacity and
+    scheme-test results &mdash; are downloadable from the interactive dashboard. The
+    twelve JDA workbooks and the CAD drawing are not, because they are the
+    authority&rsquo;s data to share rather than ours.</p>
+  </div>
+</section>
+
 <!-- OPEN --------------------------------------------------------------- -->
 <section>
   <div class="col stack">
@@ -921,6 +970,52 @@ var D = $DATA;
       +  '<td class="num bad">'+r.s0_vc.toFixed(2)+' F</td>'
       +  '<td class="bad" style="text-align:left">'+s1+'</td>'
       +  '<td class="num good">'+r.s2_vc.toFixed(2)+' '+r.s2_los+'</td></tr>';
+  });
+  tb.innerHTML = h;
+})();
+
+/* pier-siting profile */
+(function(){
+  var el = document.getElementById('profsvg');
+  if (!el || !D.profile || !D.profile.length) return;
+  var P = D.profile, W = 1000, H = 190, pad = 4;
+  var maxS = Math.max.apply(null, P.map(function(r){ return r.s; })) || 1;
+  var n = P.length, bw = W / n;
+  var g = '';
+  P.forEach(function(r, i){
+    var hs = (r.s / maxS) * (H - pad * 2);
+    g += '<rect x="'+(i*bw).toFixed(2)+'" y="'+(H-pad-hs).toFixed(2)+'" width="'+(bw*0.92).toFixed(2)
+      +  '" height="'+hs.toFixed(2)+'" fill="var(--muted)" opacity="0.34"></rect>';
+    if (r.h > 0) {
+      var hh = (r.h * 5 / maxS) * (H - pad * 2);
+      g += '<rect x="'+(i*bw).toFixed(2)+'" y="'+(H-pad-hh).toFixed(2)+'" width="'+(bw*0.92).toFixed(2)
+        +  '" height="'+hh.toFixed(2)+'" fill="var(--defect)" opacity="0.85"></rect>';
+    }
+  });
+  g += '<line x1="0" y1="'+(H-pad)+'" x2="'+W+'" y2="'+(H-pad)+'" stroke="var(--rule)" stroke-width="1"/>';
+  for (var k = 0; k <= 4; k++) {
+    var x = (k / 4) * W;
+    g += '<text x="'+(x + (k===0?4:(k===4?-40:-14)))+'" y="'+(H-8)+'" font-size="10" '
+      +  'fill="var(--faint)" font-family="IBM Plex Mono,monospace">'
+      +  ((P[Math.min(Math.round(k/4*(n-1)), n-1)].ch)/1000).toFixed(1)+' km</text>';
+  }
+  el.innerHTML = g;
+})();
+
+/* junction candidate audit trail */
+(function(){
+  var tb = document.querySelector('#candtab tbody');
+  if (!tb || !D.candidates) return;
+  var chosen = {}; (D.chosen || []).forEach(function(c){ chosen[c] = true; });
+  var h = '';
+  D.candidates.forEach(function(c){
+    var sel = chosen[c.id];
+    h += '<tr><td class="mono">'+c.id+'</td>'
+      +  '<td class="num">'+c.n+'</td>'
+      +  '<td class="num">'+c.lat.toFixed(5)+', '+c.lon.toFixed(5)+'</td>'
+      +  '<td style="text-align:left">'+(c.label || '&mdash;')+'</td>'
+      +  '<td class="'+(sel?'good':'')+'" style="text-align:left">'
+      +  (sel ? 'yes' : 'no')+'</td></tr>';
   });
   tb.innerHTML = h;
 })();
