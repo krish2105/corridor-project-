@@ -247,3 +247,29 @@ def test_the_irc_benchmark_records_its_adjustment():
     from src.scheme_test import IRC_SP41_CAR_GAP_S, IRC_SP41_LARGE_CITY_ADJ, IRC_SP41_APPLIED
     assert IRC_SP41_APPLIED == IRC_SP41_CAR_GAP_S + IRC_SP41_LARGE_CITY_ADJ
     assert IRC_SP41_LARGE_CITY_ADJ < 0
+
+
+def test_gap_capacity_matches_the_hcm_formula_worked_by_hand():
+    """
+    Pins the model, not just its behaviour. c = q_c*exp(-q_c*t_c/3600)/(1-exp(-q_c*t_f/3600)).
+    The implementation previously spelled the 3600 scaling three different ways in one
+    expression, which reads like a unit bug; this is what proves it was not.
+    """
+    from src.scheme_test import gap_capacity
+    for q, tc, tf in [(1000, 6.5, 3.5), (500, 4.1, 2.2), (2500, 5.5, 3.0), (3000, 4.0, 2.2)]:
+        expected = q * math.exp(-q * tc / 3600) / (1 - math.exp(-q * tf / 3600))
+        assert gap_capacity(q, tc, tf) == pytest.approx(expected, rel=1e-9)
+
+
+def test_the_critical_gap_matters_far_more_than_the_follow_up_headway():
+    """
+    Which unmeasured input to prioritise measuring. At representative values a half-second
+    on the critical gap moves capacity about five times as much as the same change to the
+    follow-up headway.
+    """
+    from src.scheme_test import gap_capacity
+    q, tc, tf = 2800, 3.5, 2.2
+    base = gap_capacity(q, tc, tf)
+    d_tc = abs(gap_capacity(q, tc + 0.5, tf) / base - 1)
+    d_tf = abs(gap_capacity(q, tc, tf + 0.5) / base - 1)
+    assert d_tc > 4 * d_tf

@@ -130,14 +130,25 @@ def cap_ok(sc):
 
 
 def gap_capacity(q_c_veh_hr, t_c, t_f):
-    """Gap-acceptance capacity, veh/h. q_c is the conflicting flow in veh/h."""
+    """
+    Gap-acceptance capacity, veh/h. The HCM potential-capacity form:
+
+        c = q_c * exp(-q_c * t_c / 3600) / (1 - exp(-q_c * t_f / 3600))
+
+    q_c is the conflicting flow in veh/h; t_c and t_f are in seconds. Verified against
+    the formula worked by hand at four points; see tests.
+
+    The previous body computed the same thing but wrote the scaling as
+    `3600 * (...) / 3600 * 3600`, which is a multiply by 3600 spelled three ways and
+    reads like a unit bug even though it is not.
+    """
     if q_c_veh_hr <= 0:
         return float("inf")
-    q = q_c_veh_hr / 3600.0
+    q = q_c_veh_hr / 3600.0            # conflicting flow, veh/second
     denom = 1.0 - math.exp(-q * t_f)
     if denom <= 0:
         return float("inf")
-    return 3600.0 * (q * math.exp(-q * t_c) / denom) / 3600.0 * 3600.0
+    return q_c_veh_hr * math.exp(-q * t_c) / denom
 
 
 def weighted_gap(share, which):

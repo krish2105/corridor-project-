@@ -114,6 +114,10 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `frac` | ok divided by total. |
 | `free_flow_kmh` | Free-flow speed used for journey time, km/h. |
 | `free_flow_min` | Through journey time at the free-flow speed. |
+| `gap_margin_s` | The difference between them. |
+| `gap_ours_median_s` | Median of our optimistic weighted gaps. |
+| `gap_required_median_s` | Median t_c_required across the corridor. |
+| `gap_source` | Where the critical gaps come from and what they are benchmarked against. |
 | `gaps` | Spacings between consecutive openings. |
 | `greater` | Series where day two exceeds day one. |
 | `growth_high_pct` | High growth scenario. |
@@ -129,6 +133,7 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `irc_high` | IRC:106 factor at or above 10% share. |
 | `irc_low` | IRC:106 factor at or below 5% share. |
 | `irc_point` | Interpolated factor at the observed share. null for composites. |
+| `irc_sp41_car_gap_s` | IRC:SP:41-1994 App III Table III-2 passenger-car critical gap, four-lane crossing under stop control, large-city adjustment applied. Our weighted gaps sit below it because two-wheelers are half the stream, so our figures favour the scheme. |
 | `jam_packing` | Packing efficiency of a jammed queue. |
 | `jda_name` | The authority's own name for the junction in its scheme documents. |
 | `jda_scheme` | The authority's scheme as described in its documents. |
@@ -154,6 +159,7 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `los_hi` | Level of service at vc_hi. |
 | `los_pt` | Level of service at vc_pt, IRC bands. F is over capacity. |
 | `magnitude` | The larger absolute swing, used to sort the tornado. |
+| `margin_s` | t_c_optimistic minus t_c_required. Positive means the bay would need a gap SHORTER than we already assume before it could serve the demand. |
 | `matrix_pcu` | The same matrix in PCU. |
 | `matrix_veh` | Turning-movement matrix in vehicles. |
 | `max_pcu_hr` | Highest rolling-hour demand seen on this approach. |
@@ -266,8 +272,11 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `swing` | Size of that swing, in approaches. |
 | `swing_high_pct` | The same at the IRC:106 high value, %. |
 | `swing_low_pct` | Effect on corridor PCU of correcting this class to the IRC:106 low value, %. Negative means the survey overstated it. |
+| `t_c_conservative` | The same at the conservative end. |
 | `t_c_hi` | Critical gap, conservative. |
 | `t_c_lo` | Critical gap, optimistic, seconds. |
+| `t_c_optimistic` | Composition-weighted critical gap, optimistic end, seconds. |
+| `t_c_required` | The critical gap at which this bay would exactly serve its demand. The question about an unmeasured input is not whether it is right but how wrong it would have to be to change the answer. |
 | `t_hours` | Analysis period, hours. |
 | `through_journey_min_after` | Through journey time once grade separated. |
 | `through_pct` | Share of approach traffic going straight through, %. |
@@ -309,6 +318,7 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `widths_checked` | Openings whose width was measurable. |
 | `within_18_20m` | Openings within the IRC:SP:84 18-20 m length rule. |
 | `working_days` | [low, high] equivalent working days per year. |
+| `works_at_our_optimistic` | Whether this bay serves its demand at our optimistic gap. |
 | `worst_direction` | Which of southbound/northbound is slower. |
 | `years_to_first_failure` | Years from the base year to design_life_first_failure_med. |
 | `zebra_ceiling_pcu_dir` | IRC:103 draft: above this, pedestrian delay passes 45 s and a zebra crossing shall not be provided. |
