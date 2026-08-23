@@ -5,7 +5,7 @@
 <style>
 :root{
   --paper:#F1F2EF; --surface:#FAFBF8; --sunk:#E9EBE6;
-  --ink:#14181A; --muted:#5C6663; --faint:#8B938E;
+  --ink:#14181A; --muted:#5C6663; --faint:#606964;
   --rule:#D5D9D4; --rule-hard:#B4BBB4;
   --accent:#1B3A6B; --accent-soft:#E2E8F1;
   --defect:#9E2B25; --defect-soft:#F2E3E1;
@@ -16,7 +16,7 @@
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --paper:#10130F; --surface:#171B16; --sunk:#1D2220;
-    --ink:#E9EBE4; --muted:#9AA39C; --faint:#6F7973;
+    --ink:#E9EBE4; --muted:#9AA39C; --faint:#828C86;
     --rule:#2A302B; --rule-hard:#3C443D;
     --accent:#8FB2E2; --accent-soft:#1B2534;
     --defect:#E39289; --defect-soft:#2E1E1C;
@@ -27,7 +27,7 @@
 }
 :root[data-theme="dark"]{
   --paper:#10130F; --surface:#171B16; --sunk:#1D2220;
-  --ink:#E9EBE4; --muted:#9AA39C; --faint:#6F7973;
+  --ink:#E9EBE4; --muted:#9AA39C; --faint:#828C86;
   --rule:#2A302B; --rule-hard:#3C443D;
   --accent:#8FB2E2; --accent-soft:#1B2534;
   --defect:#E39289; --defect-soft:#2E1E1C;
@@ -159,6 +159,9 @@ footer{padding-block:2.5rem 3.5rem; border-top:1px solid var(--rule); color:var(
 @media (prefers-reduced-motion:no-preference){
   .finding,.scope>div{transition:none}
 }
+/* Touch targets: Apple HIG 44x44pt, Material 48x48dp. The desktop density is
+   deliberate, so the minimum is raised only where the pointer is coarse. */
+@media (pointer: coarse){.themetoggle,.picker button,.lyr{min-height:44px}}
 @media (max-width:640px){
   .bar{grid-template-columns:3.4rem 1fr auto}
   .spark{grid-template-columns:auto 1fr; }
