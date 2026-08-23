@@ -1,4 +1,6 @@
 "use client";
+import { useState } from "react";
+import Readout from "./Readout";
 
 /**
  * Conflict points, and what the signal-free scheme does to them.
@@ -24,6 +26,32 @@ type Safety = {
 
 export default function ConflictDiagram({ s }: { s: Safety }) {
   const worst = Math.max(...s.junctions.map((r) => Math.max(r.today_crossing_exposure, r.scheme_crossing_exposure)));
+  // Pick a junction to isolate it. The table and the bars are two views of one row, so
+  // selecting in either has to light up both — otherwise the reader has to hold the row
+  // order in their head to connect a bar to its number.
+  const [pinned, setPinned] = useState<string | null>(null);
+  const [hover, setHover] = useState<string | null>(null);
+  const activeCode = pinned ?? hover;
+  // default to the junction the scheme hurts most: the row the argument rests on
+  const sel = s.junctions.find((r) => r.junction === activeCode)
+    ?? s.junctions.reduce((a, b) => ((b.change_pct ?? 0) > (a.change_pct ?? 0) ? b : a), s.junctions[0]);
+  const rowProps = (code: string) => ({
+    className: "grow",
+    tabIndex: 0,
+    role: "button" as const,
+    "aria-selected": pinned === code,
+    "aria-label": `Isolate ${code}`,
+    onMouseEnter: () => setHover(code),
+    onMouseLeave: () => setHover(null),
+    onFocus: () => setHover(code),
+    onBlur: () => setHover(null),
+    onClick: () => setPinned((p) => (p === code ? null : code)),
+    onKeyDown: (e: React.KeyboardEvent) => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setPinned((p) => (p === code ? null : code)); }
+      if (e.key === "Escape") setPinned(null);
+    },
+  });
+  const dim = (code: string) => (activeCode && activeCode !== code ? .28 : 1);
   return (
     <div className="card">
       <header>
@@ -60,7 +88,7 @@ export default function ConflictDiagram({ s }: { s: Safety }) {
             </tr></thead>
             <tbody>
               {s.junctions.map((r) => (
-                <tr key={r.junction}>
+                <tr key={r.junction} {...rowProps(r.junction)}>
                   <td>{r.junction}</td><td>{r.jda_name}</td>
                   <td className="num">{r.today_points}</td>
                   <td className="num good">{r.scheme_junction_points}</td>
@@ -76,22 +104,41 @@ export default function ConflictDiagram({ s }: { s: Safety }) {
         {/* exposure comparison, drawn to scale */}
         <div style={{ display: "flex", flexDirection: "column", gap: ".5rem" }}>
           {s.junctions.map((r) => (
-            <div key={r.junction} style={{ display: "grid", gridTemplateColumns: "5rem 1fr", gap: ".7rem", alignItems: "center" }}>
+            <div key={r.junction} {...rowProps(r.junction)}
+                 style={{ display: "grid", gridTemplateColumns: "5rem 1fr", gap: ".7rem",
+                          alignItems: "center", opacity: dim(r.junction), transition: "opacity .15s",
+                          cursor: "pointer" }}>
               <span className="mono" style={{ fontSize: ".68rem", color: "var(--muted)" }}>{r.junction}</span>
               <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
                 <div style={{ height: 9, width: `${100 * r.today_crossing_exposure / worst}%`,
-                              background: "var(--rule-hard)", borderRadius: 2 }}
-                     title={`today: ${r.today_crossing_exposure}`} />
+                              background: "var(--rule-hard)", borderRadius: 2 }} />
                 <div style={{ height: 9, width: `${100 * r.scheme_crossing_exposure / worst}%`,
-                              background: "var(--defect)", borderRadius: 2 }}
-                     title={`signal-free: ${r.scheme_crossing_exposure}`} />
+                              background: "var(--defect)", borderRadius: 2 }} />
               </div>
             </div>
           ))}
           <p style={{ fontSize: ".72rem", color: "var(--muted)" }}>
             Upper bar: today. Lower bar: signal-free scheme. Drawn to one scale.
+            Pick any junction, in the table or the bars, to isolate it.
           </p>
         </div>
+
+        <Readout
+          title={`${sel.junction} · ${sel.jda_name}`}
+          pinned={!!pinned}
+          onClear={() => setPinned(null)}
+          hint={activeCode ? "click to pin" : "worst change · pick any junction"}
+          fields={[
+            { k: "points today", v: `${sel.today_points}` },
+            { k: "points after", v: `${sel.scheme_junction_points}`, tone: "ok" },
+            { k: "crossing exposure now", v: sel.today_crossing_exposure.toLocaleString("en-US") },
+            { k: "after", v: sel.scheme_crossing_exposure.toLocaleString("en-US"), tone: "bad" },
+            { k: "change", v: `${(sel.change_pct ?? 0) > 0 ? "+" : ""}${sel.change_pct}%`,
+              tone: (sel.change_pct ?? 0) > 0 ? "bad" : "ok" },
+            { k: "of which at the U-turn", v: sel.uturn_crossing_exposure.toLocaleString("en-US"),
+              tone: "bad" },
+          ]}
+        />
 
         <p className="col" style={{ borderLeft: "3px solid var(--defect)", paddingLeft: ".9rem" }}>
           <strong>The scheme removes eight conflict points per junction and raises
