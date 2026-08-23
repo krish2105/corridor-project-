@@ -484,7 +484,8 @@ def implementation_plan(c):
             ["Field day lost to weather or thermal failure", "Medium", "Low",
              "30-minute segments, not one take; one junction per day"],
             ["Detection underperforms on two-wheelers", "Medium", "High",
-             "SAHI sliced inference; two-stage fine-tune; MAPE gate before counts are trusted"],
+             "Sliced inference over overlapping tiles; two-stage fine-tune; MAPE gate "
+             "before any count is trusted"],
             ["Authority has no budget line for assurance", "High", "High",
              "Framed against CAG exposure and the cost of delay already being incurred"],
             ["Scope creep into full DPR", "Medium", "Medium",
@@ -715,10 +716,14 @@ def capability_statement(c):
         "",
         "**Survey and analysis:** Python, pandas, openpyxl, pyarrow. Workbook parsing that "
         "never trusts a stored total.",
-        "**Geospatial and CAD:** ezdxf, shapely, geopandas, pyproj, networkx. DXF ingest "
-        "at the scale of a full corridor survey drawing.",
-        "**Computer vision:** ultralytics YOLO, SAHI sliced inference for small "
-        "two-wheelers, supervision/ByteTrack, OpenCV homography.",
+        "**Geospatial and CAD:** shapely, pyproj, and a streaming group-code parser "
+        "written for this project. The converted survey drawing is 198 MB of ASCII, "
+        "which the usual DXF libraries cannot open practically; streaming reads the "
+        "whole file in seconds at negligible memory.",
+        "**Computer vision:** ultralytics YOLO with sliced inference over overlapping "
+        "tiles for small two-wheelers, supervision/ByteTrack association, OpenCV "
+        "homography. The slicing is implemented directly rather than taken from a "
+        "library, so the tile geometry and the box-merge rule are under our own tests.",
         "**Delivery:** Next.js, MapLibre GL, Recharts, static JSON, Vercel. A link an "
         "officer opens on a phone, not software they install.",
         "",

@@ -167,18 +167,34 @@ report the failure instead of working around it.
 
 ## Stack
 
+Only what is actually imported. This list is asserted against `pyproject.toml` and the
+import graph by a test, because an earlier version named six libraries the project does
+not use — including one it had evaluated and deliberately rejected.
+
 - Python 3.11, `uv` for env and lockfile
-- `pandas`, `openpyxl` — survey ingest
-- `pyarrow` — Parquet for intermediate tables
-- `osmnx` — network ingest
-- `shapely` 2.x, `geopandas`, `networkx` — geometry and topology
+- `pandas`, `numpy`, `openpyxl` — survey ingest and analysis
+- `pyarrow`, `tabulate` — Parquet and markdown tables, via pandas rather than imported
+- `shapely` 2.x — geometry
 - `pyproj` — projections
-- `ezdxf` — DXF parsing (used only once the DWG is converted)
-- `opencv-python` — homography, video IO
-- `ultralytics` + `sahi` — YOLO detection, sliced inference for small 2W
-- `supervision` — ByteTrack tracking, zone utilities
-- `matplotlib`, `folium` — static outputs
+- `scipy` — statistics for the audit tests
+- `opencv-python` — homography, video IO, frame handling
+- `ultralytics` + `torch` — YOLO detection and fine-tuning
+- `supervision` — ByteTrack tracking
+- `matplotlib` — the constraint atlas PDF
+- `pyyaml` — dataset manifests
 - Next.js + React, MapLibre GL, Recharts — dashboard, static JSON, no backend
+
+**Deliberately NOT used, and why:**
+
+- **`ezdxf`** — the converted DXF is 198 MB of ASCII and `ezdxf.readfile` is not practical
+  on it. `dxf_inventory.py` streams group-code pairs instead: whole file in seconds, no
+  meaningful memory. Do not reintroduce it.
+- **`sahi`** — the slicing technique is used and implemented directly in `detect.py`
+  (`slices`, `iou`, `merge`), which keeps the tile geometry and the merge rule under our
+  own tests. Describe it as sliced inference, never as SAHI the library.
+- **`osmnx`, `geopandas`, `networkx`, `folium`** — the survey supplies movements and the
+  CAD supplies geometry, so no OSM ingest, no graph topology and no folium output was
+  ever needed.
 
 ## Hardware split
 

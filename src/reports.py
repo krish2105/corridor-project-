@@ -657,7 +657,8 @@ def method_statement():
             ["Sensitivity", "Every conclusion re-run across the full assumption grid.",
              f"{sen['combinations']} combinations"],
             ["Detection (pending footage)", "YOLO fine-tuned on IDD then on annotated "
-             "frames from the study camera. SAHI sliced inference for small two-wheelers; "
+             "frames from the study camera. Sliced inference over overlapping tiles "
+             "for small two-wheelers; "
              "ByteTrack association; homography to ground plane by footpoint.",
              "mAP@0.5 >= 0.80 overall, >= 0.70 per class"],
             ["Count validation (pending footage)", "Automated counts against manual counts "

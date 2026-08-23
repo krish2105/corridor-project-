@@ -44,7 +44,7 @@ Each stage carries a numeric acceptance gate. A failed gate is reported, not wor
 | Annotation (pending footage) | Frames selected by temporal stratification and de-duplication, labelled in CVAT, Roboflow or Label Studio. | unknown labels dropped, never guessed |
 | Detection stage 2 (pending footage) | Fine-tune on frames from the study camera, starting from the IDD weights at a tenth of the learning rate. | train/val split by contiguous time block, never at random |
 | Sensitivity | Every conclusion re-run across the full assumption grid. | 144 combinations |
-| Detection (pending footage) | YOLO fine-tuned on IDD then on annotated frames from the study camera. SAHI sliced inference for small two-wheelers; ByteTrack association; homography to ground plane by footpoint. | mAP@0.5 >= 0.80 overall, >= 0.70 per class |
+| Detection (pending footage) | YOLO fine-tuned on IDD then on annotated frames from the study camera. Sliced inference over overlapping tiles for small two-wheelers; ByteTrack association; homography to ground plane by footpoint. | mAP@0.5 >= 0.80 overall, >= 0.70 per class |
 | Count validation (pending footage) | Automated counts against manual counts from the same footage. | MAPE < 10% total, < 15% per major class |
 
 ## 4. Data provenance
