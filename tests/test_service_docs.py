@@ -11,6 +11,11 @@ import pytest
 from src.service_docs import (DELIVERABLES, _status, capability_statement,
                               commercial_pack, context, implementation_plan, proven_table)
 
+# Every test here renders a deliverable, which needs out/data. See conftest.
+from conftest import needs_generated_output
+
+pytestmark = needs_generated_output()
+
 
 @pytest.fixture(scope="module")
 def c():

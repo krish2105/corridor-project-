@@ -179,3 +179,45 @@ def pytest_collection_finish(session):
             {"collected": len(session.items)}))
     except Exception:
         pass          # recording the count must never fail a test run
+
+
+def needs_generated_output():
+    """
+    Module-level skip for tests that render a deliverable.
+
+    Rendering any document requires out/data, which is gitignored because every file in
+    it derives from the client's workbooks and CAD. On a clean checkout - which is what
+    CI runs - those files do not exist and reports._load() calls SystemExit. Sixteen
+    tests failed that way on CI's very first run.
+    """
+    from src.config import OUT_DATA
+    return pytest.mark.skipif(
+        not (OUT_DATA / "corridor.json").exists(),
+        reason="deliverables are generated from client data, absent on a clean checkout")
+
+
+@pytest.fixture(scope="session")
+def published():
+    """
+    Loader for generated datasets in out/data, or skip.
+
+    Delivered as a fixture rather than an importable helper on purpose: pandas ships a
+    top-level `tests` package, so `from tests.conftest import ...` resolves to
+    site-packages instead of this file. Fixtures are injected by pytest and dodge the
+    shadowing entirely.
+
+    out/ is gitignored because everything in it derives from the client's workbooks and
+    CAD, so on a clean checkout - which is exactly what CI runs - these files do not
+    exist. A test that reads one without guarding fails for the wrong reason and turns
+    CI red on its first run, which is what happened.
+    """
+    import json
+    from src.config import OUT_DATA
+
+    def _load(name):
+        p = OUT_DATA / f"{name}.json"
+        if not p.exists():
+            pytest.skip(f"{name}.json is generated from client data, "
+                        "absent on a clean checkout")
+        return json.loads(p.read_text())
+    return _load

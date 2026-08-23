@@ -57,8 +57,11 @@ def _imported():
                 found |= {a.name.split(".")[0] for a in n.names}
             elif isinstance(n, ast.ImportFrom) and n.module and n.level == 0:
                 found.add(n.module.split(".")[0])
+    # conftest is this repo's own fixture module, imported by name because pandas ships
+    # a top-level `tests` package that shadows `tests.conftest`.
+    local = {"src", "tests", "conftest"}
     return {ALIAS.get(m, m).lower() for m in found
-            if m not in stdlib and m not in {"src", "tests"}}
+            if m not in stdlib and m not in local}
 
 
 def _declared():

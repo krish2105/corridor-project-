@@ -13,6 +13,11 @@ import pytest
 from src.reports import _status_line, capacity_report, method_statement, validation_report
 from src.validate import GATES, validate, _synth
 
+# Every test here renders a deliverable, which needs out/data. See conftest.
+from conftest import needs_generated_output
+
+pytestmark = needs_generated_output()
+
 DATA_FILE = "validation.json"
 
 

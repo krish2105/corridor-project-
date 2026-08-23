@@ -110,30 +110,25 @@ def test_a_heavier_stream_costs_more_than_a_two_wheeler_stream():
 
 
 # --- the published outputs stay consistent with each other -------------------
-def test_delay_and_economics_outputs_agree_on_the_approach_count():
-    from src.config import OUT_DATA
-    d = json.loads((OUT_DATA / "delay.json").read_text())
-    e = json.loads((OUT_DATA / "economics.json").read_text())
+def test_delay_and_economics_outputs_agree_on_the_approach_count(published):
+    d, e = published("delay"), published("economics")
     assert d["n_approaches"] == len(e["approaches"])
 
 
-def test_spillback_count_is_consistent_with_the_per_approach_rows():
-    from src.config import OUT_DATA
-    d = json.loads((OUT_DATA / "delay.json").read_text())
+def test_spillback_count_is_consistent_with_the_per_approach_rows(published):
+    d = published("delay")
     assert d["spillback_count"] == sum(1 for a in d["approaches"] if a["spillback"])
 
 
-def test_reported_queue_never_exceeds_reported_storage_in_the_published_data():
-    from src.config import OUT_DATA
-    d = json.loads((OUT_DATA / "delay.json").read_text())
+def test_reported_queue_never_exceeds_reported_storage_in_the_published_data(published):
+    d = published("delay")
     for a in d["approaches"]:
         if a["storage_m"] and not a["spillback"]:
             assert a["queue_m"] <= a["storage_m"]
 
 
-def test_economics_declares_the_value_of_time_as_a_policy_input():
-    from src.config import OUT_DATA
-    e = json.loads((OUT_DATA / "economics.json").read_text())
+def test_economics_declares_the_value_of_time_as_a_policy_input(published):
+    e = published("economics")
     assert "policy" in e["assumptions"]["vot_status"].lower()
     assert e["assumptions"]["excluded"]
 
