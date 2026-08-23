@@ -141,7 +141,7 @@ export default function Exhibits({ safety, profiles, exhibits, sensitivity, capa
         </section>
       )}
 
-      {/* VOLUME FLOW */}
+      {/* VOLUME FLOW — all six junctions, selectable */}
       {exh?.volume_flow && (
         <section>
           <Reveal><p className="eyebrow">The movements themselves</p></Reveal>
@@ -150,16 +150,17 @@ export default function Exhibits({ safety, profiles, exhibits, sensitivity, capa
           </Reveal>
           <Reveal delay={.08}>
             <p className="col lede" style={{ marginTop: "1rem" }}>
-              The turning-movement diagram, drawn to volume. Left turns are the next arm
-              clockwise because India drives on the left, so the right turn is the movement
-              that crosses opposing traffic &mdash; and the one the scheme converts into a
+              The intersection volume diagram, drawn to peak-hour volume. Pick any of the
+              six junctions and isolate any movement. Left turns hug the kerb because
+              India drives on the left; the right turn swings across the whole junction
+              against opposing traffic, and it is the one the scheme converts into a
               U-turn.
             </p>
           </Reveal>
-          <div className="grid2" style={{ marginTop: "1.4rem" }}>
-            {(exh.volume_flow as never[]).slice(0, 2).map((j, i) => (
-              <Reveal key={i} delay={.1 + i * .04}><VolumeFlow j={j} /></Reveal>
-            ))}
+          <div style={{ marginTop: "1.4rem" }}>
+            <Reveal delay={.1}>
+              <VolumeFlow junctions={exh.volume_flow as never} />
+            </Reveal>
           </div>
         </section>
       )}

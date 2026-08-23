@@ -132,3 +132,41 @@ def test_the_theme_listener_is_removed_with_the_same_reference():
     assert 'mq.addEventListener("change", repaint)' in src
     assert 'mq.removeEventListener("change", repaint)' in src
     assert "themeWatch.disconnect()" in src
+
+
+# --- volume flow diagram -----------------------------------------------------
+def test_a_through_movement_is_never_called_a_turn():
+    """
+    Regression. The group label read "straight turns", which is not a thing. A through
+    movement does not turn, and that phrase is the kind an engineer stops reading after.
+    """
+    src = _code_only(COMPONENTS / "VolumeFlow.tsx")
+    assert "straight turns" not in src.lower()
+    assert "through movements" in src
+
+
+def test_isolation_is_driven_by_click_not_hover_alone():
+    """
+    There is no hover on a phone, and a phone in a meeting is the whole reason this is a
+    link rather than a PDF. Hover stays as a desktop preview; click is what has to work.
+    """
+    src = _code_only(COMPONENTS / "VolumeFlow.tsx")
+    assert "onClick" in src
+    assert "setPinned" in src
+    assert "pinned ?? hover" in src
+
+
+def test_movements_enter_and_leave_on_the_left():
+    """
+    India drives on the left. Entering and leaving on opposite sides of the centreline is
+    what makes a left turn hug the kerb and a right turn cross the junction — drawn from
+    the centreline, the diagram stops showing which movement crosses opposing traffic.
+    """
+    src = _code_only(COMPONENTS / "VolumeFlow.tsx")
+    assert "entering ? 1 : -1" in src
+
+
+def test_the_uncounted_uturn_is_shown_as_a_hole():
+    src = _code_only(COMPONENTS / "VolumeFlow.tsx")
+    assert "strokeDasharray" in src
+    assert "U?" in src
