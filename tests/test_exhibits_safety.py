@@ -121,3 +121,28 @@ def test_flow_raster_covers_every_link_and_bin(synth_bins, synth_day):
     r = flow_raster(synth_bins, synth_day, ["TMC-01", "TMC-02"])
     assert {c["link"] for c in r} == {0, 1}
     assert len({c["t"] for c in r}) == 96
+
+
+# --- continuity residual ------------------------------------------------------
+def test_continuity_keeps_the_full_per_bin_series(synth_bins, synth_day):
+    """The residual is published per 15-minute bin, not just as a daily total."""
+    c = continuity(synth_bins, synth_day, ["TMC-01", "TMC-02"])
+    assert len(c[0]["series"]) == 96
+    assert {"t", "out", "inn", "residual"} <= set(c[0]["series"][0])
+
+
+def test_the_residual_is_arriving_minus_leaving(synth_bins, synth_day):
+    c = continuity(synth_bins, synth_day, ["TMC-01", "TMC-02"])
+    for r in c[0]["series"][:12]:
+        assert r["residual"] == r["inn"] - r["out"]
+
+
+def test_a_balanced_corridor_has_no_residual(synth_bins, synth_day):
+    """
+    The fixture gives every movement identical volume, so southbound outflow and the
+    next junction's inflow match exactly and the residual is zero. If this ever reports
+    a residual on flat data, the pairing of arms is wrong.
+    """
+    c = continuity(synth_bins, synth_day, ["TMC-01", "TMC-02"])
+    assert all(r["residual"] == 0 for r in c[0]["series"])
+    assert c[0]["mean_residual_pct"] == 0

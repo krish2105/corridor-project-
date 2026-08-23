@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import ConflictDiagram from "./ConflictDiagram";
+import Continuity from "./Continuity";
 import Standards from "./Standards";
 import CumulativeQueue from "./CumulativeQueue";
 import Tornado from "./Tornado";
@@ -29,7 +30,8 @@ type Series = {
                            dep_low: number; dep_high: number; queue: number }[] };
   volume_flow?: never[];
   continuity?: { north: string; south: string; daily_out: number; daily_in: number;
-                 mean_residual_pct: number; worst_residual_pct: number }[];
+                 mean_residual_pct: number; worst_residual_pct: number;
+                 series: { t: string; out: number; inn: number; residual: number }[] }[];
 };
 
 export default function Exhibits({ safety, profiles, exhibits, sensitivity, capacity, standards, scheme }: {
@@ -183,6 +185,11 @@ export default function Exhibits({ safety, profiles, exhibits, sensitivity, capa
             <Reveal delay={.1}>
               <Tornado t={(exhibits as unknown as { tornado: never }).tornado} />
             </Reveal>
+            {exh?.continuity && (
+              <div style={{ marginTop: "1.2rem" }}>
+                <Reveal delay={.12}><Continuity links={exh.continuity} /></Reveal>
+              </div>
+            )}
           </div>
         </section>
       )}
