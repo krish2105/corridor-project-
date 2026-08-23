@@ -31,11 +31,15 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `annual_cost_after_crore` | [low, high] annual cost once grade separated. |
 | `annual_cost_crore` | [low, high] annual cost of delay, crore rupees. |
 | `approach` | Which arm traffic enters from. Only the two corridor arms carry a v/c. |
+| `approach_hours_F` | Of those, how many are at Level of Service F. |
+| `approach_hours_total` | Approach-hours assessed: approaches x rolling hours. |
 | `approaches_ok_after_grade_separation` | Approaches under capacity on opening. |
 | `arms` | Arm names, clockwise from north. |
 | `assumption_driven` | Whether any single assumption changes the conclusion. |
 | `band_high_pct` | High end of the PCU correction band, %. |
 | `band_low_pct` | Low end of the PCU correction band, %. |
+| `base_pcu` | Corridor peak PCU on the survey's own factors, before correction. |
+| `base_total` | Total conflict points at a four-arm junction, from geometry. |
 | `base_year` | Year the survey and all present-day figures refer to. |
 | `bays_planned_by_jda` | U-turn bays in the published scheme. |
 | `benefit_to_first_failure_crore` | Undiscounted benefit over the years the relief lasts. |
@@ -47,8 +51,10 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `capacity_pcu_hr` | That approach's capacity, PCU/hour. |
 | `capacity_pcu_per_lane_hr` | Assumed lane capacity, PCU/lane/hour. |
 | `category` | Constraint category. |
+| `caveat` | What the figure is NOT. Read before quoting it. |
 | `cells_checked` | Cells re-derived when checking stored totals. |
 | `chainage_m` | Distance along the alignment from its start, metres. |
+| `change_pct` | Change in crossing exposure between the two schemes, %. |
 | `city` | City. |
 | `classification` | Width band this opening falls in. |
 | `cls` | Vehicle class code. |
@@ -61,10 +67,12 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `conflicting_stream` | Which movement the U-turn must cross. |
 | `corridor` | Corridor-level aggregates. |
 | `corridor_km` | Length of the surveyed alignment between the end junctions. |
+| `corridor_order` | Junction order along the alignment, from chainage. |
 | `corridor_through_pct` | Through share used for the relief calculation, %. |
 | `cost` | Mismatch between those pairs, as a fraction of flow. |
 | `critical_gap` | Which critical-gap assumption was used. |
 | `critical_gap_source` | Where the critical-gap values come from. |
+| `crossing` | Conflict points where two paths cross. |
 | `daily_veh` | Vehicles counted over the survey day. |
 | `delay_veh_hr_day` | Vehicle-hours of delay accumulated per day. A lower bound. |
 | `design_horizon_years` | Design horizon length, years. |
@@ -72,12 +80,14 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `design_life_last_failure_med` | Latest of fails_med. |
 | `design_life_survives_horizon` | How many approaches still hold at horizon_year. |
 | `discrepancies` | Stored totals that disagreed with their own components. |
+| `diverging` | Points where one stream splits. |
 | `easting` | Easting, EPSG:32643, metres. |
 | `effective_kmh` | Corridor length divided by peak_journey_min. |
 | `elevated_all_pass_combinations` | Combinations where all approaches are relieved. |
 | `elevated_total_combinations` | Size of the elevated grid. |
 | `excess_pcu` | Excess ARRIVALS per day, PCU. Not PCU-hours. |
 | `excluded` | Cost components deliberately not counted. |
+| `f_share_pct` | That as a percentage. |
 | `fails` | Approaches failing under that assumption. |
 | `fails_conservative` | Approaches the bays cannot serve, conservative gap. |
 | `fails_high` | Year it returns to capacity at the high growth rate. |
@@ -110,6 +120,7 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `jda_name` | The authority's own name for the junction in its scheme documents. |
 | `jda_scheme` | The authority's scheme as described in its documents. |
 | `junction` | Survey code, TMC-01 to TMC-06. |
+| `junctions_worse` | Junctions where crossing exposure rises under the scheme. |
 | `label` | Human-readable name. |
 | `lane_cap` | Lane capacity tested, PCU per lane. |
 | `lane_capacity_pcu` | Lane capacity tested, PCU per lane. |
@@ -128,12 +139,16 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `los_after` | Level of service after relief, on opening. |
 | `los_hi` | Level of service at vc_hi. |
 | `los_pt` | Level of service at vc_pt, IRC bands. F is over capacity. |
+| `magnitude` | The larger absolute swing, used to sort the tornado. |
 | `matrix_pcu` | The same matrix in PCU. |
 | `matrix_veh` | Turning-movement matrix in vehicles. |
 | `max_pcu_hr` | Highest rolling-hour demand seen on this approach. |
+| `mean_change_pct` | Mean change in crossing exposure across the corridor, %. |
 | `mean_delay_min` | Mean delay per arriving vehicle, minutes. |
 | `mean_hours_over` | Mean of hours_over across approaches. |
 | `median_openings` | Median gaps found. |
+| `merging` | Points where two streams join. |
+| `method` | How the figure was produced. |
 | `minutes_to_spillback` | Minutes into the peak before the upstream junction blocks. |
 | `mislabelled` | Series whose label does not match the column it reads. |
 | `model` | Which model produced the figure. |
@@ -144,6 +159,8 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `nearest_label` | Nearest text label in the drawing. |
 | `nearest_label_m` | Distance to it, metres. |
 | `net_grand_total` | Net effect of all discrepancies on the grand total. |
+| `net_high_pct` | Net effect at the high end, %. |
+| `net_low_pct` | Net effect of correcting every class, low end, %. |
 | `next` | Junction after it. |
 | `no_gap_vc_threshold` | v/c past which no capacity figure is reported. |
 | `no_viable_gap` | Approaches where gap acceptance degenerates; no number is quoted. |
@@ -177,6 +194,7 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `peak_pcu` | Peak-hour demand, PCU/hour. |
 | `peak_start` | As `peak`. |
 | `peak_veh` | Peak-hour vehicles. |
+| `pedestrian_column_present` | Whether the survey counts pedestrians at all. It does not. |
 | `phf` | Peak hour factor: peak hour over four times the busiest 15 minutes. |
 | `phf_applied` | Whether a peak hour factor was applied. |
 | `pier_radius_m` | Half-footprint used when testing a pier position, metres. |
@@ -202,8 +220,12 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `s2_los` | Elevated-option level of service. |
 | `s2_vc` | Elevated-option v/c. |
 | `saving_min_per_trip` | Delay avoided by a through trip on an elevated carriageway. |
+| `scheme_crossing_exposure` | The same measure under the signal-free scheme, including the U-turn openings the removed right turns move to. |
+| `scheme_junction_points` | Conflict points remaining after the right turn is removed. |
 | `series` | Movement-class series compared between the two survey days. |
+| `series_available` | Per-bin series split into a separate file and fetched on demand. |
 | `share` | That class's share of the stream. |
+| `share_pct` | That class's share of the stream, %. |
 | `shy_distance_m` | Kerb and median clearance deducted, metres. |
 | `signal_cluster` | Cluster id this junction was matched to. |
 | `signal_data` | Whether the survey contains signal timings. It does not. |
@@ -211,6 +233,7 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `smaller` | Series where it falls short. |
 | `southbound_in` | Southbound flow arriving at the southern one. |
 | `southbound_out` | Southbound flow leaving the northern junction. |
+| `speed_flow` | Why a speed-flow diagram is deliberately absent. |
 | `spillback` | True when the queue is longer than the available storage. |
 | `spillback_count` | Approaches whose queue exceeds their storage. |
 | `station_step_m` | Spacing between stations, metres. |
@@ -218,7 +241,10 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `storage_m` | Distance to the junction behind. null at a corridor end. |
 | `survey_dates` | Dates as stated in the workbooks. |
 | `survey_design` | What the survey design was against IRC:SP:19. |
+| `surveyed_factor` | The static PCU factor the survey applied. |
 | `swing` | Size of that swing, in approaches. |
+| `swing_high_pct` | The same at the IRC:106 high value, %. |
+| `swing_low_pct` | Effect on corridor PCU of correcting this class to the IRC:106 low value, %. Negative means the survey overstated it. |
 | `t_c_hi` | Critical gap, conservative. |
 | `t_c_lo` | Critical gap, optimistic, seconds. |
 | `t_hours` | Analysis period, hours. |
@@ -226,8 +252,11 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `through_pct` | Share of approach traffic going straight through, %. |
 | `through_pct_mean` | Mean through share across junctions, %. |
 | `through_pct_range` | [min, max] through share, %. |
+| `time_space` | Why a time-space diagram is deliberately absent. |
 | `to_next_m` | Distance to the next, metres. |
 | `to_previous_m` | Distance to the previous junction, metres. |
+| `today_crossing_exposure` | Crossing exposure today: the product of each conflicting pair's flows, summed. Meaningful only as a ratio. |
+| `today_points` | Conflict points at this junction as built. |
 | `total` | Approaches assessed in that combination. |
 | `total_delay_pcu_hr` | Delay accumulated over the analysis period, PCU-hours. |
 | `total_excess_pcu_day` | Corridor sum of excess_pcu. |
@@ -237,6 +266,7 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `uplift_floor_pct` | Minimum PCU correction, %. The floor, not the estimate. |
 | `uplift_pct` | PCU correction for one junction, %. |
 | `upstream` | The junction that gets blocked. |
+| `uturn_crossing_exposure` | The share of that arising at the mid-block U-turn openings. |
 | `uturn_demand` | Right-turn demand that becomes a U-turn once signals are removed. |
 | `uturn_per_km` | Those per kilometre. |
 | `uturn_possible` | Gaps wide enough to turn in. |
@@ -249,6 +279,7 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `vc_lo` | Volume/capacity at pcu_lo. |
 | `vc_optimistic` | Demand over optimistic capacity. |
 | `vc_pt` | Volume/capacity at pcu_pt. |
+| `veh_class` | Vehicle class code. |
 | `vot_status` | That value of time is a policy input, not a measurement. |
 | `width_m` | Carriageway width, metres, ONE direction. Measured, not assumed. |
 | `working_days` | [low, high] equivalent working days per year. |

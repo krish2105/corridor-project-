@@ -65,6 +65,28 @@ export type Corridor = {
     approaches: { junction: string; approach: string; hours_over: number;
                   excess_pcu: number }[];
   } | null;
+  safety: {
+    base_counts: Record<string, number>; base_total: number;
+    junctions: { junction: string; jda_name: string; today_points: number;
+                 scheme_junction_points: number; today_crossing_exposure: number;
+                 scheme_crossing_exposure: number; uturn_crossing_exposure: number;
+                 change_pct: number | null }[];
+    junctions_worse: number; mean_change_pct: number; pedestrian_column_present: boolean;
+  } | null;
+  profiles: {
+    los_distribution: Record<string, number>; approach_hours_total: number;
+    approach_hours_F: number; f_share_pct: number; mean_hours_over: number;
+    series_available: string[];
+  } | null;
+  exhibits: {
+    tornado: { base_pcu: number; net_low_pct: number; net_high_pct: number;
+               classes: { veh_class: string; share_pct: number; surveyed_factor: number;
+                          irc_low: number | null; irc_high: number | null; exact: boolean;
+                          swing_low_pct: number; swing_high_pct: number; magnitude: number }[] };
+    corridor_order: string[];
+    omitted: Record<string, string>;
+    series_available: string[];
+  } | null;
   scheme: {
     no_gap_vc_threshold: number; fails_conservative: number; fails_optimistic: number;
     no_viable_gap: number; forced_uturns_per_hour: number;

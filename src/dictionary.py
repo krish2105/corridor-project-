@@ -301,6 +301,47 @@ FIELDS.update({
 })
 
 
+
+FIELDS.update({
+    # safety and conflict analysis
+    "method": "How the figure was produced.",
+    "caveat": "What the figure is NOT. Read before quoting it.",
+    "crossing": "Conflict points where two paths cross.",
+    "merging": "Points where two streams join.",
+    "diverging": "Points where one stream splits.",
+    "base_total": "Total conflict points at a four-arm junction, from geometry.",
+    "today_points": "Conflict points at this junction as built.",
+    "scheme_junction_points": "Conflict points remaining after the right turn is removed.",
+    "today_crossing_exposure": "Crossing exposure today: the product of each conflicting "
+                               "pair's flows, summed. Meaningful only as a ratio.",
+    "scheme_crossing_exposure": "The same measure under the signal-free scheme, including "
+                                "the U-turn openings the removed right turns move to.",
+    "uturn_crossing_exposure": "The share of that arising at the mid-block U-turn openings.",
+    "change_pct": "Change in crossing exposure between the two schemes, %.",
+    "junctions_worse": "Junctions where crossing exposure rises under the scheme.",
+    "mean_change_pct": "Mean change in crossing exposure across the corridor, %.",
+    "pedestrian_column_present": "Whether the survey counts pedestrians at all. It does not.",
+    # whole-day profiles
+    "approach_hours_total": "Approach-hours assessed: approaches x rolling hours.",
+    "approach_hours_F": "Of those, how many are at Level of Service F.",
+    "f_share_pct": "That as a percentage.",
+    # exhibits
+    "base_pcu": "Corridor peak PCU on the survey's own factors, before correction.",
+    "veh_class": "Vehicle class code.",
+    "share_pct": "That class's share of the stream, %.",
+    "surveyed_factor": "The static PCU factor the survey applied.",
+    "swing_low_pct": "Effect on corridor PCU of correcting this class to the IRC:106 low "
+                     "value, %. Negative means the survey overstated it.",
+    "swing_high_pct": "The same at the IRC:106 high value, %.",
+    "magnitude": "The larger absolute swing, used to sort the tornado.",
+    "net_low_pct": "Net effect of correcting every class, low end, %.",
+    "net_high_pct": "Net effect at the high end, %.",
+    "corridor_order": "Junction order along the alignment, from chainage.",
+    "series_available": "Per-bin series split into a separate file and fetched on demand.",
+    "time_space": "Why a time-space diagram is deliberately absent.",
+    "speed_flow": "Why a speed-flow diagram is deliberately absent.",
+})
+
 def _is_data_keyed(d):
     if not isinstance(d, dict) or not d:
         return False

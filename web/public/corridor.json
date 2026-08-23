@@ -1960,6 +1960,255 @@
   ],
   "years_to_first_failure": 6
  },
+ "safety": {
+  "method": "geometric conflict-point construction, flow-weighted exposure",
+  "caveat": "exposure, not crash prediction; no accident data exists for this corridor",
+  "base_counts": {
+   "crossing": 16,
+   "merging": 8,
+   "diverging": 8
+  },
+  "base_total": 32,
+  "junctions": [
+   {
+    "junction": "TMC-01",
+    "jda_name": "B-2 Bypass",
+    "peak_veh": 11107,
+    "today_points": 32,
+    "today_crossing_exposure": 19.0,
+    "scheme_junction_points": 24,
+    "scheme_crossing_exposure": 21.7,
+    "uturn_crossing_exposure": 2.7,
+    "change_pct": 14.3
+   },
+   {
+    "junction": "TMC-02",
+    "jda_name": "Vijay Path",
+    "peak_veh": 9476,
+    "today_points": 32,
+    "today_crossing_exposure": 12.2,
+    "scheme_junction_points": 24,
+    "scheme_crossing_exposure": 14.3,
+    "uturn_crossing_exposure": 2.0,
+    "change_pct": 16.7
+   },
+   {
+    "junction": "TMC-03",
+    "jda_name": "Patel Marg",
+    "peak_veh": 9695,
+    "today_points": 32,
+    "today_crossing_exposure": 9.9,
+    "scheme_junction_points": 24,
+    "scheme_crossing_exposure": 12.4,
+    "uturn_crossing_exposure": 2.6,
+    "change_pct": 26.2
+   },
+   {
+    "junction": "TMC-04",
+    "jda_name": "VT Road",
+    "peak_veh": 10876,
+    "today_points": 32,
+    "today_crossing_exposure": 16.5,
+    "scheme_junction_points": 24,
+    "scheme_crossing_exposure": 19.9,
+    "uturn_crossing_exposure": 3.4,
+    "change_pct": 20.8
+   },
+   {
+    "junction": "TMC-05",
+    "jda_name": "Rajat Path",
+    "peak_veh": 12433,
+    "today_points": 32,
+    "today_crossing_exposure": 11.6,
+    "scheme_junction_points": 24,
+    "scheme_crossing_exposure": 15.3,
+    "uturn_crossing_exposure": 3.7,
+    "change_pct": 32.2
+   },
+   {
+    "junction": "TMC-06",
+    "jda_name": "Bhrigu Path",
+    "peak_veh": 9403,
+    "today_points": 32,
+    "today_crossing_exposure": 6.5,
+    "scheme_junction_points": 24,
+    "scheme_crossing_exposure": 8.9,
+    "uturn_crossing_exposure": 2.4,
+    "change_pct": 37.2
+   }
+  ],
+  "junctions_worse": 6,
+  "mean_change_pct": 24.6,
+  "pedestrian_column_present": false
+ },
+ "profiles": {
+  "los_distribution": {
+   "A": 314,
+   "B": 98,
+   "C": 84,
+   "D": 106,
+   "E": 113,
+   "F": 401
+  },
+  "approach_hours_total": 1116,
+  "approach_hours_F": 401,
+  "f_share_pct": 35.9,
+  "hours_over_capacity": {
+   "TMC-01|from Mansarover Metro": 5.0,
+   "TMC-01|from Sanganer Stadium": 3.75,
+   "TMC-02|from Mansarover Metro": 5.5,
+   "TMC-02|from Sanganer Stadium": 3.0,
+   "TMC-03|from Mansarover Metro": 10.25,
+   "TMC-03|from Sanganer Stadium": 10.5,
+   "TMC-04|from Mansarover Metro": 10.5,
+   "TMC-04|from Sanganer Stadium": 12.5,
+   "TMC-05|from Mansarover Metro": 10.25,
+   "TMC-05|from Sanganer Stadium": 11.0,
+   "TMC-06|from Mansarover Metro": 9.75,
+   "TMC-06|from Sanganer Stadium": 8.25
+  },
+  "mean_hours_over": 8.35,
+  "series_available": [
+   "cumulative",
+   "los_grid"
+  ]
+ },
+ "exhibits": {
+  "tornado": {
+   "base_pcu": 640825,
+   "classes": [
+    {
+     "veh_class": "CAR_BUCKET",
+     "share_pct": 47.96,
+     "surveyed_factor": 1.0,
+     "irc_low": 1.0,
+     "irc_high": 2.0,
+     "exact": false,
+     "swing_low_pct": 0.0,
+     "swing_high_pct": 58.47,
+     "magnitude": 58.47
+    },
+    {
+     "veh_class": "TWO_W",
+     "share_pct": 49.12,
+     "surveyed_factor": 0.5,
+     "irc_low": 0.75,
+     "irc_high": 0.75,
+     "exact": true,
+     "swing_low_pct": 14.97,
+     "swing_high_pct": 14.97,
+     "magnitude": 14.97
+    },
+    {
+     "veh_class": "AGRI_LCV",
+     "share_pct": 0.65,
+     "surveyed_factor": 1.5,
+     "irc_low": 1.4,
+     "irc_high": 4.0,
+     "exact": false,
+     "swing_low_pct": -0.08,
+     "swing_high_pct": 1.99,
+     "magnitude": 1.99
+    },
+    {
+     "veh_class": "TRL_MAV",
+     "share_pct": 0.65,
+     "surveyed_factor": 4.5,
+     "irc_low": 3.7,
+     "irc_high": 4.0,
+     "exact": false,
+     "swing_low_pct": -0.63,
+     "swing_high_pct": -0.4,
+     "magnitude": 0.63
+    },
+    {
+     "veh_class": "AUTO_TRK_BUS",
+     "share_pct": 0.26,
+     "surveyed_factor": 3.0,
+     "irc_low": 1.2,
+     "irc_high": 2.2,
+     "exact": false,
+     "swing_low_pct": -0.57,
+     "swing_high_pct": -0.25,
+     "magnitude": 0.57
+    },
+    {
+     "veh_class": "BULLOCK",
+     "share_pct": 0.01,
+     "surveyed_factor": 8.0,
+     "irc_low": 4.0,
+     "irc_high": 4.0,
+     "exact": true,
+     "swing_low_pct": -0.04,
+     "swing_high_pct": -0.04,
+     "magnitude": 0.04
+    },
+    {
+     "veh_class": "CYCLE",
+     "share_pct": 0.16,
+     "surveyed_factor": 0.5,
+     "irc_low": 0.4,
+     "irc_high": 0.4,
+     "exact": true,
+     "swing_low_pct": -0.02,
+     "swing_high_pct": -0.02,
+     "magnitude": 0.02
+    },
+    {
+     "veh_class": "CYCLE_RIK",
+     "share_pct": 0.04,
+     "surveyed_factor": 1.5,
+     "irc_low": 1.5,
+     "irc_high": 1.5,
+     "exact": true,
+     "swing_low_pct": 0.0,
+     "swing_high_pct": 0.0,
+     "magnitude": 0.0
+    },
+    {
+     "veh_class": "HAND_CART",
+     "share_pct": 0.02,
+     "surveyed_factor": 3.0,
+     "irc_low": 3.0,
+     "irc_high": 3.0,
+     "exact": false,
+     "swing_low_pct": 0.0,
+     "swing_high_pct": 0.0,
+     "magnitude": 0.0
+    },
+    {
+     "veh_class": "HORSE_DRAWN",
+     "share_pct": 1.14,
+     "surveyed_factor": 4.0,
+     "irc_low": 4.0,
+     "irc_high": 4.0,
+     "exact": true,
+     "swing_low_pct": 0.0,
+     "swing_high_pct": 0.0,
+     "magnitude": 0.0
+    }
+   ],
+   "net_low_pct": 13.63,
+   "net_high_pct": 74.72
+  },
+  "corridor_order": [
+   "TMC-06",
+   "TMC-05",
+   "TMC-04",
+   "TMC-03",
+   "TMC-02",
+   "TMC-01"
+  ],
+  "omitted": {
+   "time_space": "bandwidth is time inside a green phase; this corridor is being made signal-free, so there is nothing to read",
+   "speed_flow": "a classified count contains no speed or density; a fitted fundamental diagram would be decoration with axes"
+  },
+  "series_available": [
+   "continuity",
+   "flow_raster",
+   "volume_flow"
+  ]
+ },
  "junctions": [
   {
    "code": "TMC-01",

@@ -1,0 +1,81 @@
+{
+ "method": "geometric conflict-point construction, flow-weighted exposure",
+ "caveat": "exposure, not crash prediction; no accident data exists for this corridor",
+ "base_counts": {
+  "crossing": 16,
+  "merging": 8,
+  "diverging": 8
+ },
+ "base_total": 32,
+ "junctions": [
+  {
+   "junction": "TMC-01",
+   "jda_name": "B-2 Bypass",
+   "peak_veh": 11107,
+   "today_points": 32,
+   "today_crossing_exposure": 19.0,
+   "scheme_junction_points": 24,
+   "scheme_crossing_exposure": 21.7,
+   "uturn_crossing_exposure": 2.7,
+   "change_pct": 14.3
+  },
+  {
+   "junction": "TMC-02",
+   "jda_name": "Vijay Path",
+   "peak_veh": 9476,
+   "today_points": 32,
+   "today_crossing_exposure": 12.2,
+   "scheme_junction_points": 24,
+   "scheme_crossing_exposure": 14.3,
+   "uturn_crossing_exposure": 2.0,
+   "change_pct": 16.7
+  },
+  {
+   "junction": "TMC-03",
+   "jda_name": "Patel Marg",
+   "peak_veh": 9695,
+   "today_points": 32,
+   "today_crossing_exposure": 9.9,
+   "scheme_junction_points": 24,
+   "scheme_crossing_exposure": 12.4,
+   "uturn_crossing_exposure": 2.6,
+   "change_pct": 26.2
+  },
+  {
+   "junction": "TMC-04",
+   "jda_name": "VT Road",
+   "peak_veh": 10876,
+   "today_points": 32,
+   "today_crossing_exposure": 16.5,
+   "scheme_junction_points": 24,
+   "scheme_crossing_exposure": 19.9,
+   "uturn_crossing_exposure": 3.4,
+   "change_pct": 20.8
+  },
+  {
+   "junction": "TMC-05",
+   "jda_name": "Rajat Path",
+   "peak_veh": 12433,
+   "today_points": 32,
+   "today_crossing_exposure": 11.6,
+   "scheme_junction_points": 24,
+   "scheme_crossing_exposure": 15.3,
+   "uturn_crossing_exposure": 3.7,
+   "change_pct": 32.2
+  },
+  {
+   "junction": "TMC-06",
+   "jda_name": "Bhrigu Path",
+   "peak_veh": 9403,
+   "today_points": 32,
+   "today_crossing_exposure": 6.5,
+   "scheme_junction_points": 24,
+   "scheme_crossing_exposure": 8.9,
+   "uturn_crossing_exposure": 2.4,
+   "change_pct": 37.2
+  }
+ ],
+ "junctions_worse": 6,
+ "mean_change_pct": 24.6,
+ "pedestrian_column_present": false
+}

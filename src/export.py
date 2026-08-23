@@ -86,6 +86,41 @@ def _economics():
     return json.loads(p.read_text()) if p.exists() else None
 
 
+def _safety():
+    p = OUT_DATA / "safety.json"
+    return json.loads(p.read_text()) if p.exists() else None
+
+
+# corridor.json is fetched on every page view, so it carries SUMMARIES only. The heavy
+# per-bin series - 1,116 LOS cells, 96-step cumulative curves, 576 raster cells and five
+# continuity series - are split into files the page fetches when a reader opens the
+# exhibit that needs them. Keeping them inline took corridor.json from 84 KB to 265 KB,
+# which is three times the payload for data most readers never scroll to.
+HEAVY = {"profiles": ("los_grid", "cumulative"),
+         "exhibits": ("flow_raster", "continuity", "volume_flow")}
+
+
+def _split(name):
+    """Return (summary, heavy) for a dataset, or (None, None)."""
+    p = OUT_DATA / f"{name}.json"
+    if not p.exists():
+        return None, None
+    d = json.loads(p.read_text())
+    heavy = {k: d[k] for k in HEAVY[name] if k in d}
+    summary = {k: v for k, v in d.items() if k not in heavy}
+    # keep a light shape hint so the page knows what it can lazily fetch
+    summary["series_available"] = sorted(heavy)
+    return summary, heavy
+
+
+def _profiles():
+    return _split("profiles")[0]
+
+
+def _exhibits():
+    return _split("exhibits")[0]
+
+
 def _scheme():
     """Phase 8 scheme test, if that stage has been run."""
     p = OUT_DATA / "scheme_test.json"
@@ -197,7 +232,9 @@ def _write_web_layers(webdir):
                   OUT / "validation_report.md", ROOT / "docs" / "data_dictionary.md",
                   OUT_DATA / "median_openings.geojson", OUT_DATA / "scheme_test.json",
                   OUT_DATA / "capacity.json", OUT_DATA / "sensitivity.json",
-                  OUT_DATA / "delay.json", OUT_DATA / "economics.json"):
+                  OUT_DATA / "delay.json", OUT_DATA / "economics.json",
+                  OUT_DATA / "safety.json", OUT_DATA / "profiles.json",
+                  OUT_DATA / "exhibits.json"):
         if src_f.exists():
             _sh.copy(src_f, webdir / src_f.name)
 
@@ -322,6 +359,9 @@ def build():
         sensitivity=_sensitivity(),
         delay=_delay(),
         economics=_economics(),
+        safety=_safety(),
+        profiles=_profiles(),
+        exhibits=_exhibits(),
         junctions=junctions,
         corridor=dict(
             through_pct_mean=round(float(tv.through_pct.mean()), 1),
@@ -347,7 +387,14 @@ if __name__ == "__main__":
     # building outlines; simplifying to 0.5 m and dropping single-point clutter keeps
     # every feature JDA needs to cross-check while staying loadable on a phone.
     _write_web_layers(OUT_DATA.parent.parent / "web" / "public")
-    bm = _write_basemap(OUT_DATA.parent.parent / "web" / "public")
+    webdir = OUT_DATA.parent.parent / "web" / "public"
+    for name in ("profiles", "exhibits"):
+        _s, heavy = _split(name)
+        if heavy:
+            f = webdir / f"{name}_series.json"
+            f.write_text(json.dumps(heavy, separators=(",", ":")))
+            print(f"{name+'_series':<15}: {f.stat().st_size/1024:.0f} KB, lazily fetched")
+    bm = _write_basemap(webdir)
     if bm:
         print(f"basemap        : {bm[0]:,} surveyed features, {bm[1]/1024:.0f} KB "
               f"(replaces OSM tiles)")

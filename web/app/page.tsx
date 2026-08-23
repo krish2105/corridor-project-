@@ -6,6 +6,7 @@ import JunctionExplorer from "@/components/JunctionExplorer";
 import CorridorMap from "@/components/CorridorMap";
 import PierProfile from "@/components/PierProfile";
 import Downloads from "@/components/Downloads";
+import Exhibits from "@/components/Exhibits";
 import type { Corridor } from "@/lib/types";
 
 const nf = new Intl.NumberFormat("en-US");
@@ -796,6 +797,12 @@ export default function Page() {
           </div>
         </section>
       )}
+
+      {/* NEW ANALYTICAL EXHIBITS — conflict, whole-day LOS, volume flow, scenario tool.
+          Kept in their own component so this file stays navigable. */}
+      <Exhibits safety={d.safety as never} profiles={d.profiles as never}
+                exhibits={d.exhibits as never} sensitivity={sen as never}
+                capacity={cp as never} />
 
       {/* CHECK THE WORK */}
       <section>
