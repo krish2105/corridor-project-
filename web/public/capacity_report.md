@@ -55,11 +55,11 @@ PCU is reported as a band, not a point. The survey's composite vehicle classes (
 
 ## 4. The published scheme does not resolve this
 
-The scheme under construction — signal-free New Sanganer Road, 7 U-turns — replaces signalised turning with U-turn bays. Tested by gap acceptance against the measured opposing flow, **11 of 12 approaches fail** under conservative critical-gap assumptions and **9 still fail** under optimistic ones.
+The scheme under construction — signal-free New Sanganer Road, 7 U-turns — replaces signalised turning with U-turn bays. Tested by gap acceptance against the measured opposing flow, **11 of 12 approaches fail** under conservative critical-gap assumptions and **11 still fail** under optimistic ones.
 
-On **10** approaches the opposing flow is heavy enough that gap acceptance degenerates entirely: there is no usable gap, and no capacity figure is quoted because none would be meaningful.
+On **11** approaches the opposing flow is heavy enough that gap acceptance degenerates entirely: there is no usable gap, and no capacity figure is quoted because none would be meaningful.
 
-The mechanism is that removing a signalised right turn does not remove the demand — it converts it into a U-turn. Across the corridor that forces **3,781 additional U-turning vehicles per hour** onto bays sized for far less.
+The mechanism is that removing a signalised right turn does not remove the demand — it converts it into a U-turn. Across the corridor that forces **3,923 additional U-turning vehicles per hour** onto bays sized for far less.
 
 ## 5. Grade separation returns the corridor to service
 

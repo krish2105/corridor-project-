@@ -100,6 +100,17 @@ export type Corridor = {
     series_available: string[];
   } | null;
   scheme: {
+    indo_hcm_no_uturn_chapter: string;
+    csir_crri_design_gap_s: number;
+    csir_crri_design_source: string;
+    follow_up_measured_s: number[];
+    gap_evidence_spread: { label: string; t_c: number; t_f: number; unservable: number;
+      no_viable_gap: number; of: number; source: string; geometric_match: string }[];
+    gap_conclusion_holds_in: number;
+    gap_bases_tested: number;
+    uturn_analogue: string;
+    gap_direction_note: string;
+    two_wheeler_gap_basis: string;
     gap_benchmark?: { junction: string; approach: string; t_c_optimistic: number;
                       t_c_conservative: number; t_c_required: number; margin_s: number;
                       works_at_our_optimistic: boolean }[];

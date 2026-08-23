@@ -7,6 +7,7 @@ import CorridorMap from "@/components/CorridorMap";
 import PierProfile from "@/components/PierProfile";
 import Downloads from "@/components/Downloads";
 import Exhibits from "@/components/Exhibits";
+import GapEvidence from "@/components/GapEvidence";
 import type { Corridor } from "@/lib/types";
 
 const nf = new Intl.NumberFormat("en-US");
@@ -677,10 +678,23 @@ export default function Page() {
                   </table>
                 </div>
                 <p className="col"><strong>{sc.no_viable_gap}</strong> sit past the point where
-                acceptable gaps effectively cease to exist. No ratio is quoted for those: past
-                that threshold the capacity formula runs to near zero and a v/c figure becomes
-                an artefact rather than a measurement. Under the <em>optimistic</em> critical
-                gap it is still <strong>{sc.fails_optimistic} of {sc.uturns.length}</strong>.</p>
+                acceptable gaps effectively cease to exist. No ratio is quoted for those, and
+                the omission is deliberate: past that threshold the capacity formula runs to
+                near zero and a v/c figure becomes an artefact rather than a measurement. The
+                honest statement is not that the ratio is large but that the gap is not there.
+                Under the <em>optimistic</em> critical gap it is{" "}
+                <strong>{sc.fails_optimistic} of {sc.uturns.length}</strong>.</p>
+                <p className="col">There is no Indian code value to check this against.{" "}
+                {sc.indo_hcm_no_uturn_chapter} The nearest is a CSIR-CRRI field
+                recommendation of <strong>{sc.csir_crri_design_gap_s} s</strong>, measured on
+                an inter-urban national highway rather than an urban arterial &mdash;{" "}
+                {sc.csir_crri_design_source}. That a scheme of this size is being built on a
+                manoeuvre no Indian standard dimensions is a finding in its own right.</p>
+                <GapEvidence spread={sc.gap_evidence_spread}
+                  holdsIn={sc.gap_conclusion_holds_in}
+                  ours={sc.two_wheeler_gap_basis}
+                  analogue={sc.uturn_analogue}
+                  direction={sc.gap_direction_note} />
               </div>
             </div>
           </Reveal>

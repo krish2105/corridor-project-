@@ -49,7 +49,7 @@ from src.tmc_parse import parse_all
 # cars; using a single car-based figure understates capacity where 2W dominate. Reported
 # as a band because these are literature values calibrated elsewhere, not measured here.
 CRITICAL_GAP_S = {          # (optimistic, conservative)
-    "TWO_W":        (2.8, 3.8),
+    "TWO_W":        (3.5, 4.4),
     "CAR_BUCKET":   (4.2, 5.6),
     "AGRI_LCV":     (5.0, 6.5),
     "AUTO_TRK_BUS": (5.5, 7.0),
@@ -61,6 +61,12 @@ CRITICAL_GAP_S = {          # (optimistic, conservative)
     "BULLOCK":      (5.0, 6.5),
 }
 FOLLOW_UP_S = (2.2, 3.0)    # (optimistic, conservative)
+# Corroborated after the fact by the only two measured Indian values reachable, both of
+# which fall inside this band near its optimistic end: 2.50 s (Ramireddy, Jatoth &
+# Srikanth 2025, Siegloch regression, Hyderabad and Kurnool) and 2.17 s (Dash, Mohapatra
+# & Dey, Transp. Letters 11(5)). No Indian source disaggregates follow-up by class, so
+# neither do we.
+FOLLOW_UP_MEASURED_S = (2.50, 2.17)
 
 # Above this conflicting flow, classical gap acceptance degenerates: acceptable gaps
 # essentially cease to exist and the capacity formula runs to near zero, which makes the
@@ -105,8 +111,75 @@ IRC_SP41_APPLIED = IRC_SP41_CAR_GAP_S + IRC_SP41_LARGE_CITY_ADJ
 # publish no U-turn row at all, which is consistent with IRC having no U-turn bay clause
 # either. It is the nearest published movement, not the same movement.
 INDO_HCM_BASE_GAP_S = {"2w": 3.5, "3w": 3.7, "4w": 3.8}
-INDO_HCM_GAP_SOURCE = ("Indo-HCM 2017 base critical gap, four-lane divided, right turn "
-                       "minor-to-major, via a secondary reproduction of the table")
+
+# WHERE OUR GAP SITS IN THE EVIDENCE, AND HOW THAT CLAIM MOVED TWICE.
+#
+# First we asserted our gaps sat BELOW published values and were therefore generous to the
+# scheme. Wrong, and wrong in the direction that flattered our own conclusion. Then, on
+# Kerala median-opening data, we asserted they sat ABOVE all Indian field measurements and
+# the finding was exposed. Also wrong: that paper never states lane count.
+#
+# With the four-lane divided median-opening studies in hand, the accurate statement is
+# that our composition-weighted optimistic gap sits mid-pack - above Kerala and Mohan &
+# Chandra, below Gupta, CSIR-CRRI and IRC:SP:41. It is neither the generous end nor the
+# punitive one. That is why the spread is published rather than a single value: the
+# reader re-runs the finding on whichever basis they trust and sees the answer move.
+GAP_DIRECTION_NOTE = ("our gap sits mid-pack in the Indian field evidence - above the "
+                      "Kerala openings, below Gupta, CSIR-CRRI and IRC:SP:41 - so the "
+                      "finding rests on neither the generous nor the punitive end")
+
+# The two-wheeler value, and why it moved from 2.8 to 3.5.
+#
+# It was set at 2.8 against Kumar & Sasikumar's Kerala median openings. That was the
+# wrong anchor: the Kerala paper states carriageway width per direction (6.0-10.5 m) and
+# never states lane count, so reading it as four-lane was our inference, not theirs.
+#
+# Two studies do measure median openings on roads explicitly described as four-lane
+# divided, and both put two-wheelers well above 2.8:
+#
+#   Gupta, Mondal & Sharma 2018, Curr. Sci. 114(7) Table 5 - Varanasi, carriageway
+#     7.03-8.90 m per direction, which is close to this corridor's ~7 m. Two-wheeler
+#     critical gap averages 3.83 s over sites and methods.
+#   Datta & Bhuyan 2014 - six median openings, Odisha and Jharkhand. Two-wheelers
+#     average 3.37 s by probability equilibrium and 4.78 s by INAFOGA.
+#
+# 3.5 s sits inside that range and coincides with the Indo-HCM four-lane-divided base.
+# The conservative value moves 3.8 -> 4.4 to sit between the two studies' upper methods,
+# and lands beside CSIR-CRRI's own 4.5 s design recommendation for Indian median openings
+# (Khan, Chalumuri & Senapathi 2015).
+# 2.8 was below all three four-lane estimates, so it overstated bay capacity.
+TWO_WHEELER_GAP_BASIS = ("Gupta, Mondal & Sharma 2018 (Varanasi, four-lane divided, "
+                         "7.03-8.90 m per direction) 3.83 s and Datta & Bhuyan 2014 "
+                         "(six four-lane median openings) 3.37-4.78 s; 3.5 s sits "
+                         "inside both")
+INDO_HCM_GAP_SOURCE = ("Mohan & Chandra 2020, Can. J. Civ. Eng. 47(6), produced under the "
+                       "CSIR-CRRI Indo-HCM project: base critical gap, four-lane divided, "
+                       "right turn minor-to-major, via a secondary reproduction")
+
+# INDO-HCM HAS NO MEDIAN-OPENING CHAPTER. Verified against the manual's own chapter list:
+# 1 basic concepts, 2 two-lane, 3 multilane interurban, 4 expressways, 5 urban roads,
+# 6 signalised intersections, 7 roundabouts, 8 uncontrolled intersections, 9 pedestrian,
+# 10 travel time reliability. Nothing covers mid-block median openings or U-turns, and
+# Annexure 7C (critical gap and follow-up estimation) is scoped to roundabouts.
+#
+# So the 3.5 s above is NOT an Indian code value for this manoeuvre - it is a junction
+# right-turn figure from the Indo-HCM project. It is used because the four-lane
+# median-opening field studies independently bracket it, not because a code mandates it.
+# There is no Indian code value to fall back on here, and that is itself a finding: the
+# scheme JDA is building has no design gap published for it in any Indian standard.
+INDO_HCM_NO_UTURN_CHAPTER = ("Indo-HCM 2017 has no chapter, table or parameter set for "
+                             "mid-block median openings or U-turns; Annexure 7C is scoped "
+                             "to roundabouts. No Indian code publishes a design gap for "
+                             "the manoeuvre this scheme is built on.")
+
+# The nearest thing to an Indian DESIGN value for a median opening, and it is a
+# recommendation rather than a code clause. CSIR-CRRI measured 748 U-turning vehicles on
+# NH-8 Delhi-Manesar across seven gap-acceptance methods spanning 2.10-7.26 s, and
+# concluded 4.5 s is optimum for designing median openings on Indian corridors. Our
+# conservative two-wheeler gap of 4.4 s sits beside it.
+CSIR_CRRI_DESIGN_GAP_S = 4.5
+CSIR_CRRI_DESIGN_SOURCE = ("Khan, Chalumuri & Senapathi 2015, J. EASTS 11:1842-1855, "
+                           "CSIR-CRRI, NH-8 Delhi-Manesar, 748 U-turning vehicles")
 
 # Indo-HCM DERIVES follow-up time from critical gap rather than tabulating it:
 # tf is about 60% of tc. Our follow-up headways were taken from literature and land
@@ -122,6 +195,69 @@ INDO_HCM_FOLLOWUP_RATIO = 0.60
 INDO_HCM_FORM_DIFFERS = ("Indo-HCM adds geometric factors a and b to the HCM form; we use "
                          "a = 1, b = 0 because their values sit in a chapter no free copy "
                          "of the manual reproduces")
+
+
+# WHICH ANALOGUE THE U-TURN IS MODELLED AS — the load-bearing assumption here.
+#
+# No Indian standard publishes a U-turn critical gap. IRC:SP:41 has no U-turn row at all;
+# Indo-HCM Chapter 8 scopes itself to "three legged and four legged unsignalized
+# intersections only" and does not cover median openings. So a U-turn has to be modelled
+# as something else, and the choice decides the answer:
+#
+#   as a MERGE into one stream        Indian field gaps 1.4-2.8 s  -> bays look better
+#   as a CROSSING of both lanes       Indian field gaps 3.5-9.1 s  -> bays look far worse
+#
+# We model it as a MERGE. A U-turn from a median bay on a divided carriageway enters the
+# opposing stream and joins it; it does not traverse to a far-side receiving lane. The
+# crossing analogue would only apply if bay geometry forced vehicles across both lanes,
+# which the drawing does not show. This is the more favourable of the two choices for the
+# scheme, and it is stated rather than left implicit.
+UTURN_ANALOGUE = "merge into the opposing stream, not a crossing of it"
+
+# Published Indian field values, for the method spread rather than a single number.
+#
+# Bhatt, Gore & Shah (2022) measured the SAME vehicle at the SAME junction at 1.18 s by
+# Ashworth and 2.88 s by the Indo-HCM occupancy-time method - a 2.4x spread, and their
+# capacities at one junction range 337-2213 PCU/h on method choice alone. Publishing one
+# critical gap, ours or anyone else's, hides that. So the spread is published and the
+# point at which the conclusion changes is published with it.
+GAP_EVIDENCE = [
+    # label, t_c, t_f, source, geometric match to this corridor
+    ("Kerala median openings, traditional/Raff", 2.05, 1.23,
+     "Kumar & Sasikumar 2020, IJTTE 10(4), six mid-block median openings, Kerala",
+     "median openings, but the paper states carriageway width only and never lane "
+     "count - reading it as four-lane was our inference, not theirs"),
+    ("Kerala median openings, merging behaviour", 2.80, 1.70,
+     "Kumar & Sasikumar 2020; merging behaviour is the method those authors recommend "
+     "for mixed traffic",
+     "median openings, lane count not stated in the paper"),
+    ("Datta & Bhuyan 2014, four-lane median openings, prob. equilibrium", 3.79, 2.17,
+     "Datta & Bhuyan 2014, ICAET, six median openings on four-lane divided roads, "
+     "Odisha and Jharkhand; mean over all classes and sites",
+     "closest by road type: median openings explicitly on four-lane divided"),
+    ("Gupta et al. 2018, four-lane median openings, Varanasi", 4.45, 2.50,
+     "Gupta, Mondal & Sharma 2018, Curr. Sci. 114(7) Table 5, traditional and INAFOGA "
+     "over 30 observations; follow-up from Ramireddy et al. 2025 Siegloch measurement",
+     "closest overall: four-lane divided median openings, carriageway 7.03-8.90 m per "
+     "direction against this corridor's ~7 m"),
+    ("Datta & Bhuyan 2014, four-lane median openings, INAFOGA", 5.09, 3.00,
+     "Datta & Bhuyan 2014; INAFOGA/merging-behaviour method, mean over all classes",
+     "closest by road type: median openings explicitly on four-lane divided"),
+    ("ours, optimistic", None, None,
+     "composition-weighted from literature", "none stated"),
+    ("ours, conservative", None, None,
+     "composition-weighted from literature", "none stated"),
+    ("Mohan & Chandra 2020, RT from minor, 4-lane divided", 3.50, 2.10,
+     "Can. J. Civ. Eng. 47(6), produced under the CSIR-CRRI Indo-HCM project",
+     "four-lane divided major, but a junction movement not a median opening"),
+    ("CSIR-CRRI NH-8 design recommendation", 4.50, 2.70,
+     "Khan, Chalumuri & Senapathi 2015, J. EASTS 11:1842-1855; 748 U-turning vehicles "
+     "across seven methods spanning 2.10-7.26 s; follow-up at the 0.6 x t_c convention",
+     "the only Indian DESIGN value for a median opening, but inter-urban NH not urban"),
+    ("IRC:SP:41 Table III-2, RT from major, 4-lane, 48 kmph", 5.50, 3.00,
+     "IRC:SP:41-1994 Appendix III Table III-2, passenger cars, large-city adjustment "
+     "applied", "four-lane, but HCM 1985 in metric with no Indian calibration"),
+]
 
 
 def breakpoint_gap(demand, conflicting, t_f, lo=0.05, hi=12.0):
@@ -361,8 +497,12 @@ if __name__ == "__main__":
     print(f"\n  IRC:SP:41 App III Table III-2 passenger-car value, 4-lane crossing,")
     print(f"  Stop control, large-city adjustment applied: {IRC_SP41_APPLIED} s")
     print("  Our weighted gaps sit BELOW that because two-wheelers are half the stream.")
-    print("  Substituting the code's car value makes the finding stronger, not weaker,")
-    print("  so the conclusion cannot be attacked as too pessimistic on gaps.")
+    print("  This claim has moved twice, and both earlier versions are withdrawn. We")
+    print("  first said our gaps sat below published values and were generous to the")
+    print("  scheme; then, on Kerala data, that they sat above every Indian measurement.")
+    print("  The Kerala paper never states lane count. Against the studies that do")
+    print("  measure four-lane median openings, our gap sits mid-pack. That is the")
+    print("  reason the spread below is published rather than a single number.")
 
     print("\n=== Against Indo-HCM 2017 (SECONDARY source for the numbers) ===")
     print(f"  base critical gap, four-lane divided, right turn minor-to-major:")
@@ -392,10 +532,60 @@ if __name__ == "__main__":
     payload["gap_source"] = ("composition-weighted from literature; benchmarked against "
                              "IRC:SP:41-1994 Appendix III Table III-2 passenger-car value "
                              "and Indo-HCM 2017 base gaps")
+    # --- the method spread, and where the conclusion changes -------------------
+    spread = []
+    for label, tc, tf, src, match in GAP_EVIDENCE:
+        t_c = tc if tc is not None else (med_opt if "optimistic" in label else
+                                         _st.median(r["t_c_conservative"] for r in bench))
+        t_f = tf if tf is not None else (FOLLOW_UP_S[0] if "optimistic" in label
+                                         else FOLLOW_UP_S[1])
+        fails = nogap = 0
+        for u in res.to_dict("records") if hasattr(res, "to_dict") else res:
+            c = gap_capacity(u["conflicting_flow"], t_c, t_f)
+            vc = u["uturn_demand"] / c if c else 99
+            if vc > 1.0:
+                fails += 1
+            if vc >= NO_GAP_VC:
+                nogap += 1
+        spread.append(dict(label=label, t_c=round(t_c, 2), t_f=round(t_f, 2),
+                           unservable=fails, no_viable_gap=nogap,
+                           of=len(bench), source=src, geometric_match=match))
+    spread.sort(key=lambda r: r["t_c"])
+
+    print("\n=== The critical gap is method-dependent by 2.4x. So publish the spread. ===")
+    print("  Bhatt, Gore & Shah (2022) measured the same vehicle at the same junction at")
+    print("  1.18 s by Ashworth and 2.88 s by occupancy time, giving capacities of 337 to")
+    print("  2,213 PCU/h at one junction on method choice alone. One number hides that.\n")
+    print(f"  {'basis':<66}{'t_c':>6}{'t_f':>6}{'unservable':>12}")
+    print("  " + "-" * 90)
+    for r in spread:
+        print(f"  {r['label']:<66}{r['t_c']:>6.2f}{r['t_f']:>6.2f}"
+              f"{r['unservable']:>7} of {r['of']}")
+    holds = [r for r in spread if r["unservable"] >= r["of"] * 0.5]
+    print(f"\n  The conclusion holds in {len(holds)} of {len(spread)} bases.")
+    breaks = [r for r in spread if r["unservable"] < r["of"] * 0.5]
+    if breaks:
+        for b in breaks:
+            print(f"  IT DOES NOT HOLD at: {b['label']} ({b['unservable']} of {b['of']})")
+        print("  That basis uses traditional Raff, which the same authors who published it")
+        print("  recommend AGAINST for mixed traffic in favour of merging behaviour. At")
+        print("  their recommended method the conclusion holds. Both are published.")
+    print(f"\n  U-turn modelled as: {UTURN_ANALOGUE}")
+
+    payload["uturn_analogue"] = UTURN_ANALOGUE
+    payload["gap_direction_note"] = GAP_DIRECTION_NOTE
+    payload["two_wheeler_gap_basis"] = TWO_WHEELER_GAP_BASIS
+    payload["gap_evidence_spread"] = spread
+    payload["gap_conclusion_holds_in"] = len(holds)
+    payload["gap_bases_tested"] = len(spread)
     payload["indo_hcm_base_gap_s"] = INDO_HCM_BASE_GAP_S
     payload["indo_hcm_gap_source"] = INDO_HCM_GAP_SOURCE
     payload["indo_hcm_followup_ratio"] = INDO_HCM_FOLLOWUP_RATIO
     payload["indo_hcm_form_differs"] = INDO_HCM_FORM_DIFFERS
+    payload["indo_hcm_no_uturn_chapter"] = INDO_HCM_NO_UTURN_CHAPTER
+    payload["csir_crri_design_gap_s"] = CSIR_CRRI_DESIGN_GAP_S
+    payload["csir_crri_design_source"] = CSIR_CRRI_DESIGN_SOURCE
+    payload["follow_up_measured_s"] = list(FOLLOW_UP_MEASURED_S)
     payload["two_wheeler_gap_ours"] = CRITICAL_GAP_S["TWO_W"][0]
     payload["two_wheeler_gap_indo_hcm"] = INDO_HCM_BASE_GAP_S["2w"]
     payload["followup_implied_by_indo_hcm"] = [

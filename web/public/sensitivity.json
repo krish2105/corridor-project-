@@ -28,7 +28,7 @@
  "combinations": 144,
  "uturn": {
   "optimistic": {
-   "fails": 9,
+   "fails": 11,
    "of": 12
   },
   "conservative": {

@@ -275,15 +275,39 @@ def test_the_critical_gap_matters_far_more_than_the_follow_up_headway():
     assert d_tc > 4 * d_tf
 
 
-def test_our_two_wheeler_gap_is_generous_to_the_scheme():
+def test_two_wheeler_gap_sits_inside_the_four_lane_median_opening_evidence():
     """
-    Indo-HCM 2017 publishes a base two-wheeler critical gap of 3.5 s on a four-lane
-    divided road. Ours is 2.8 s optimistic. Two-wheelers are half this stream, so that
-    0.7 s is the most consequential number in the model — and a LOWER gap means MORE bay
-    capacity, so the generosity runs in the scheme's favour, not ours.
+    Two-wheelers are half this stream, so their critical gap is the most consequential
+    number in the model. It used to be 2.8 s, anchored on Kumar & Sasikumar's Kerala
+    median openings — but that paper states carriageway width and never states lane
+    count, so treating it as four-lane was our inference, not theirs.
+
+    The two studies that DO measure median openings on roads explicitly described as
+    four-lane divided both put two-wheelers higher: Gupta et al. 2018 (Varanasi,
+    7.03-8.90 m per direction) at 3.83 s, and Datta & Bhuyan 2014 (six openings,
+    Odisha/Jharkhand) at 3.37 s by probability equilibrium and 4.78 s by INAFOGA.
+
+    The value must sit inside that evidence. Below it we would be overstating bay
+    capacity; above it we would be manufacturing our own conclusion.
     """
     from src.scheme_test import CRITICAL_GAP_S, INDO_HCM_BASE_GAP_S
-    assert CRITICAL_GAP_S["TWO_W"][0] < INDO_HCM_BASE_GAP_S["2w"]
+    lo, hi = CRITICAL_GAP_S["TWO_W"]
+    assert 3.37 <= lo <= 4.78, f"optimistic {lo} outside the four-lane evidence"
+    assert 3.37 <= hi <= 4.78, f"conservative {hi} outside the four-lane evidence"
+    assert lo == INDO_HCM_BASE_GAP_S["2w"], "optimistic should be the Indo-HCM base"
+    assert lo < hi
+
+
+def test_follow_up_headway_band_contains_both_measured_indian_values():
+    """
+    Our follow-up band was assumed before any measurement was found. Both Indian values
+    that exist — 2.50 s (Ramireddy et al. 2025, Siegloch) and 2.17 s (Dash et al.) —
+    must fall inside it, or the band is not defensible.
+    """
+    from src.scheme_test import FOLLOW_UP_S, FOLLOW_UP_MEASURED_S
+    lo, hi = FOLLOW_UP_S
+    for m in FOLLOW_UP_MEASURED_S:
+        assert lo - 0.05 <= m <= hi, f"measured {m}s falls outside the band {FOLLOW_UP_S}"
 
 
 def test_our_follow_up_headway_matches_the_indo_hcm_relation():

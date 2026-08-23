@@ -25,6 +25,9 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 
 | Field | Meaning |
 |---|---|
+| `2w` | Two-wheeler. |
+| `3w` | Three-wheeler. |
+| `4w` | Four-wheeler. |
 | `LCV` | PCU factor for light commercial vehicles. |
 | `MAV` | PCU factor for multi-axle vehicles. |
 | `alignment_km` | Length of the surveyed alignment. |
@@ -83,6 +86,8 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `critical_gap` | Which critical-gap assumption was used. |
 | `critical_gap_source` | Where the critical-gap values come from. |
 | `crossing` | Conflict points where two paths cross. |
+| `csir_crri_design_gap_s` | CSIR-CRRI's recommended design critical gap for Indian median openings, seconds. |
+| `csir_crri_design_source` | Where the CSIR-CRRI design gap comes from. |
 | `daily_veh` | Vehicles counted over the survey day. |
 | `delay_veh_hr_day` | Vehicle-hours of delay accumulated per day. A lower bound. |
 | `design_horizon_years` | Design horizon length, years. |
@@ -107,18 +112,25 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `features` | Geometry features extracted. |
 | `files_affected` | Workbooks containing at least one discrepancy. |
 | `floor_vs_warrant` | That floor as a multiple of the interchange warrant. |
+| `follow_up_measured_s` | The only measured Indian follow-up headways found, seconds, against which our assumed band is checked. |
 | `follow_up_s` | Follow-up headway band, seconds. |
+| `followup_implied_by_indo_hcm` | [optimistic, conservative] follow-up time implied by Indo-HCM's ratio applied to our weighted gaps. |
+| `followup_ours` | The follow-up headways we use, seconds. |
 | `footprint` | Footprint scale tested. |
 | `footprint_scale` | Scale applied to the vehicle footprints tested. |
 | `forced_uturns_per_hour` | Vehicles per peak hour forced across a stream with no gap. |
 | `frac` | ok divided by total. |
 | `free_flow_kmh` | Free-flow speed used for journey time, km/h. |
 | `free_flow_min` | Through journey time at the free-flow speed. |
+| `gap_bases_tested` | How many published critical-gap bases the test was re-run on. |
+| `gap_conclusion_holds_in` | How many of the tested gap bases return the same finding. |
+| `gap_direction_note` | Which way our critical-gap assumption errs against the field evidence, and what that does to the finding. |
 | `gap_margin_s` | The difference between them. |
 | `gap_ours_median_s` | Median of our optimistic weighted gaps. |
 | `gap_required_median_s` | Median t_c_required across the corridor. |
 | `gap_source` | Where the critical gaps come from and what they are benchmarked against. |
 | `gaps` | Spacings between consecutive openings. |
+| `geometric_match` | How closely the source geometry matches this corridor. |
 | `greater` | Series where day two exceeds day one. |
 | `growth_high_pct` | High growth scenario. |
 | `growth_low_pct` | Low growth scenario, % per year. |
@@ -129,6 +141,10 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `horizon_year` | End of the stated design horizon. |
 | `hours_over` | Hours per day this approach is over capacity. Counted, not assumed. |
 | `identical` | Series reproducing the previous day to the exact vehicle. |
+| `indo_hcm_followup_ratio` | Indo-HCM derives follow-up time as this fraction of the critical gap rather than tabulating it. |
+| `indo_hcm_form_differs` | How Indo-HCM's capacity equation differs from the HCM form we use, and why the difference is not applied. |
+| `indo_hcm_gap_source` | Where those Indo-HCM figures came from, and why they are marked secondary. |
+| `indo_hcm_no_uturn_chapter` | Indo-HCM 2017 publishes no chapter or parameter set for mid-block median openings, so no Indian code carries a design gap for the manoeuvre this scheme is built on. |
 | `interchange_warrant_pcu` | IRC:SP:90-2010 threshold above which an interchange is justified, PCU/hr across all arms. |
 | `irc_high` | IRC:106 factor at or above 10% share. |
 | `irc_low` | IRC:106 factor at or below 5% share. |
@@ -256,6 +272,7 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `signal_data` | Whether the survey contains signal timings. It does not. |
 | `signal_heads` | Signal heads counted in that cluster. |
 | `smaller` | Series where it falls short. |
+| `source` | Publication the values are taken from. |
 | `southbound_in` | Southbound flow arriving at the southern one. |
 | `southbound_out` | Southbound flow leaving the northern junction. |
 | `speed_flow` | Why a speed-flow diagram is deliberately absent. |
@@ -272,11 +289,13 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `swing` | Size of that swing, in approaches. |
 | `swing_high_pct` | The same at the IRC:106 high value, %. |
 | `swing_low_pct` | Effect on corridor PCU of correcting this class to the IRC:106 low value, %. Negative means the survey overstated it. |
+| `t_c` | Critical gap, seconds - the smallest gap a driver will accept. |
 | `t_c_conservative` | The same at the conservative end. |
 | `t_c_hi` | Critical gap, conservative. |
 | `t_c_lo` | Critical gap, optimistic, seconds. |
 | `t_c_optimistic` | Composition-weighted critical gap, optimistic end, seconds. |
 | `t_c_required` | The critical gap at which this bay would exactly serve its demand. The question about an unmeasured input is not whether it is right but how wrong it would have to be to change the answer. |
+| `t_f` | Follow-up headway, seconds - spacing between successive entering vehicles. |
 | `t_hours` | Analysis period, hours. |
 | `through_journey_min_after` | Through journey time once grade separated. |
 | `through_pct` | Share of approach traffic going straight through, %. |
@@ -293,12 +312,17 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `transects` | How many cross-sections the width was measured on. Fewer is weaker. |
 | `truck` | PCU factor for trucks. |
 | `two wheeler` | PCU factor for two-wheelers in the cited document. |
+| `two_wheeler_gap_basis` | Source for the two-wheeler critical gap actually used. |
+| `two_wheeler_gap_indo_hcm` | Indo-HCM's published base value for the same class. |
+| `two_wheeler_gap_ours` | Our optimistic two-wheeler critical gap, seconds. |
 | `understate` | Discrepancies where the stored total was too low. |
+| `unservable` | Movements out of 12 whose demand exceeds the bay capacity on this basis. |
 | `unverified` | Clauses that could not be checked against a primary source. |
 | `uplift` | PCU uplift tested, %. |
 | `uplift_floor_pct` | Minimum PCU correction, %. The floor, not the estimate. |
 | `uplift_pct` | PCU correction for one junction, %. |
 | `upstream` | The junction that gets blocked. |
+| `uturn_analogue` | Which manoeuvre the U-turn is modelled as. Load-bearing: a merge into the opposing stream needs a smaller gap than a crossing of it. |
 | `uturn_crossing_exposure` | The share of that arising at the mid-block U-turn openings. |
 | `uturn_demand` | Right-turn demand that becomes a U-turn once signals are removed. |
 | `uturn_per_km` | Those per kilometre. |

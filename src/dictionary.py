@@ -279,6 +279,28 @@ FIELDS.update({
     "excluded": "Cost components deliberately not counted.",
     "critical_gap": "Which critical-gap assumption was used.",
     "critical_gap_source": "Where the critical-gap values come from.",
+    "indo_hcm_no_uturn_chapter": ("Indo-HCM 2017 publishes no chapter or parameter set for "
+                                  "mid-block median openings, so no Indian code carries a "
+                                  "design gap for the manoeuvre this scheme is built on."),
+    "csir_crri_design_gap_s": ("CSIR-CRRI's recommended design critical gap for Indian "
+                               "median openings, seconds."),
+    "csir_crri_design_source": "Where the CSIR-CRRI design gap comes from.",
+    "follow_up_measured_s": ("The only measured Indian follow-up headways found, seconds, "
+                             "against which our assumed band is checked."),
+    "uturn_analogue": ("Which manoeuvre the U-turn is modelled as. Load-bearing: a merge "
+                       "into the opposing stream needs a smaller gap than a crossing of it."),
+    "gap_direction_note": ("Which way our critical-gap assumption errs against the field "
+                           "evidence, and what that does to the finding."),
+    "two_wheeler_gap_basis": "Source for the two-wheeler critical gap actually used.",
+    "gap_evidence_spread": ("The same capacity test re-run on every published critical-gap "
+                            "basis reachable, rather than on one chosen value."),
+    "gap_conclusion_holds_in": "How many of the tested gap bases return the same finding.",
+    "gap_bases_tested": "How many published critical-gap bases the test was re-run on.",
+    "geometric_match": "How closely the source geometry matches this corridor.",
+    "t_c": "Critical gap, seconds - the smallest gap a driver will accept.",
+    "t_f": "Follow-up headway, seconds - spacing between successive entering vehicles.",
+    "unservable": "Movements out of 12 whose demand exceeds the bay capacity on this basis.",
+    "source": "Publication the values are taken from.",
     "conflicting_stream": "Which movement the U-turn must cross.",
     "bays_planned_by_jda": "U-turn bays in the published scheme.",
     "right_turn_becomes_uturn": "Whether removed right turns are re-added as U-turns.",
