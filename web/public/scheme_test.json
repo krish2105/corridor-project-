@@ -6,7 +6,7 @@
   "bays_planned_by_jda": 7,
   "right_turn_becomes_uturn": true,
   "follow_up_s": [
-   2.2,
+   2.0,
    3.0
   ]
  },
@@ -21,9 +21,9 @@
    "t_c_lo": 3.93,
    "t_c_hi": 5.12,
    "cap_conservative": 40.96162889630116,
-   "cap_optimistic": 124.0036559514254,
+   "cap_optimistic": 128.28110471694907,
    "vc_conservative": 3.344593554783441,
-   "vc_optimistic": 1.1048061361486432,
+   "vc_optimistic": 1.0679671047601988,
    "peak_start": "09:00"
   },
   {
@@ -35,9 +35,9 @@
    "t_c_lo": 3.93,
    "t_c_hi": 5.12,
    "cap_conservative": 116.69541996013879,
-   "cap_optimistic": 273.1030116019308,
+   "cap_optimistic": 286.3088398670539,
    "vc_conservative": 5.424377411009123,
-   "vc_optimistic": 2.317806736319142,
+   "vc_optimistic": 2.210899252338595,
    "peak_start": "09:00"
   },
   {
@@ -49,9 +49,9 @@
    "t_c_lo": 3.88,
    "t_c_hi": 5.04,
    "cap_conservative": 81.21351181326646,
-   "cap_optimistic": 205.660838088121,
+   "cap_optimistic": 214.342416843318,
    "vc_conservative": 6.58757376765237,
-   "vc_optimistic": 2.601370319082161,
+   "vc_optimistic": 2.4960061936367883,
    "peak_start": "09:15"
   },
   {
@@ -63,9 +63,9 @@
    "t_c_lo": 3.88,
    "t_c_hi": 5.04,
    "cap_conservative": 66.93198435670779,
-   "cap_optimistic": 177.6392291779011,
+   "cap_optimistic": 184.67499589500167,
    "vc_conservative": 0.5826810660827434,
-   "vc_optimistic": 0.21954610015191245,
+   "vc_optimistic": 0.21118181056938395,
    "peak_start": "09:15"
   },
   {
@@ -77,9 +77,9 @@
    "t_c_lo": 3.84,
    "t_c_hi": 4.98,
    "cap_conservative": 31.658980683741948,
-   "cap_optimistic": 100.07769295021549,
+   "cap_optimistic": 103.10807326824008,
    "vc_conservative": 10.423582594036805,
-   "vc_optimistic": 3.2974381230406795,
+   "vc_optimistic": 3.200525327842087,
    "peak_start": "18:30"
   },
   {
@@ -91,9 +91,9 @@
    "t_c_lo": 3.84,
    "t_c_hi": 4.98,
    "cap_conservative": 51.698001242309864,
-   "cap_optimistic": 145.01352432812217,
+   "cap_optimistic": 150.19742878726734,
    "vc_conservative": 7.466439528112664,
-   "vc_optimistic": 2.6618206942312335,
+   "vc_optimistic": 2.5699507848880185,
    "peak_start": "18:30"
   },
   {
@@ -105,9 +105,9 @@
    "t_c_lo": 3.86,
    "t_c_hi": 5.01,
    "cap_conservative": 90.07581480663599,
-   "cap_optimistic": 222.1529891495829,
+   "cap_optimistic": 231.78585500423424,
    "vc_conservative": 7.116227606444886,
-   "vc_optimistic": 2.885398942655656,
+   "vc_optimistic": 2.765483683153531,
    "peak_start": "09:15"
   },
   {
@@ -119,9 +119,9 @@
    "t_c_lo": 3.86,
    "t_c_hi": 5.01,
    "cap_conservative": 64.53563345389777,
-   "cap_optimistic": 172.54424256948656,
+   "cap_optimistic": 179.24191644426637,
    "vc_conservative": 6.833434126203108,
-   "vc_optimistic": 2.5558662139793027,
+   "vc_optimistic": 2.460361999851329,
    "peak_start": "09:15"
   },
   {
@@ -133,9 +133,9 @@
    "t_c_lo": 3.86,
    "t_c_hi": 5.02,
    "cap_conservative": 16.077701051726528,
-   "cap_optimistic": 60.95764835743722,
+   "cap_optimistic": 62.44696664958218,
    "vc_conservative": 14.989705258521388,
-   "vc_optimistic": 3.9535645894154063,
+   "vc_optimistic": 3.8592747243009997,
    "peak_start": "09:15"
   },
   {
@@ -147,9 +147,9 @@
    "t_c_lo": 3.86,
    "t_c_hi": 5.02,
    "cap_conservative": 1.877249112143276,
-   "cap_optimistic": 12.21394155626412,
+   "cap_optimistic": 12.35589266916249,
    "vc_conservative": 236.51629244510886,
-   "vc_optimistic": 36.35190146888228,
+   "vc_optimistic": 35.934271354438316,
    "peak_start": "09:15"
   },
   {
@@ -161,9 +161,9 @@
    "t_c_lo": 3.89,
    "t_c_hi": 5.05,
    "cap_conservative": 34.817010340064,
-   "cap_optimistic": 108.66785725280467,
+   "cap_optimistic": 112.14132275346651,
    "vc_conservative": 4.193352576053824,
-   "vc_optimistic": 1.3435435619232459,
+   "vc_optimistic": 1.3019286416031404,
    "peak_start": "09:15"
   },
   {
@@ -175,9 +175,9 @@
    "t_c_lo": 3.89,
    "t_c_hi": 5.05,
    "cap_conservative": 31.592316806467544,
-   "cap_optimistic": 100.99965596292702,
+   "cap_optimistic": 104.12503388451528,
    "vc_conservative": 17.40929617062477,
-   "vc_optimistic": 5.4455631037187215,
+   "vc_optimistic": 5.282111126225449,
    "peak_start": "09:15"
   }
  ],
@@ -188,7 +188,7 @@
    "s0_vc": 1.53,
    "s0_los": "F",
    "s1_uturn_vc_cons": 5.424377411009123,
-   "s1_uturn_vc_opt": 2.317806736319142,
+   "s1_uturn_vc_opt": 2.210899252338595,
    "s1_works": false,
    "s2_vc": 0.65,
    "s2_los": "C",
@@ -200,7 +200,7 @@
    "s0_vc": 1.17,
    "s0_los": "F",
    "s1_uturn_vc_cons": 6.58757376765237,
-   "s1_uturn_vc_opt": 2.601370319082161,
+   "s1_uturn_vc_opt": 2.4960061936367883,
    "s1_works": false,
    "s2_vc": 0.37,
    "s2_los": "B",
@@ -212,7 +212,7 @@
    "s0_vc": 1.47,
    "s0_los": "F",
    "s1_uturn_vc_cons": 10.423582594036805,
-   "s1_uturn_vc_opt": 3.2974381230406795,
+   "s1_uturn_vc_opt": 3.200525327842087,
    "s1_works": false,
    "s2_vc": 0.33,
    "s2_los": "B",
@@ -224,7 +224,7 @@
    "s0_vc": 1.23,
    "s0_los": "F",
    "s1_uturn_vc_cons": 7.116227606444886,
-   "s1_uturn_vc_opt": 2.885398942655656,
+   "s1_uturn_vc_opt": 2.765483683153531,
    "s1_works": false,
    "s2_vc": 0.4,
    "s2_los": "B",
@@ -236,7 +236,7 @@
    "s0_vc": 1.62,
    "s0_los": "F",
    "s1_uturn_vc_cons": 236.51629244510886,
-   "s1_uturn_vc_opt": 36.35190146888228,
+   "s1_uturn_vc_opt": 35.934271354438316,
    "s1_works": false,
    "s2_vc": 0.35,
    "s2_los": "B",
@@ -248,7 +248,7 @@
    "s0_vc": 1.42,
    "s0_los": "F",
    "s1_uturn_vc_cons": 17.40929617062477,
-   "s1_uturn_vc_opt": 5.4455631037187215,
+   "s1_uturn_vc_opt": 5.282111126225449,
    "s1_works": false,
    "s2_vc": 0.38,
    "s2_los": "B",
@@ -268,8 +268,8 @@
    "approach": "Mansarover Metro",
    "t_c_optimistic": 3.93,
    "t_c_conservative": 5.12,
-   "t_c_required": 3.82,
-   "margin_s": 0.11,
+   "t_c_required": 3.86,
+   "margin_s": 0.07,
    "works_at_our_optimistic": false
   },
   {
@@ -277,8 +277,8 @@
    "approach": "Sanganer Stadium",
    "t_c_optimistic": 3.93,
    "t_c_conservative": 5.12,
-   "t_c_required": 2.55,
-   "margin_s": 1.38,
+   "t_c_required": 2.62,
+   "margin_s": 1.31,
    "works_at_our_optimistic": false
   },
   {
@@ -286,8 +286,8 @@
    "approach": "Mansarover Metro",
    "t_c_optimistic": 3.88,
    "t_c_conservative": 5.04,
-   "t_c_required": 2.53,
-   "margin_s": 1.35,
+   "t_c_required": 2.59,
+   "margin_s": 1.29,
    "works_at_our_optimistic": false
   },
   {
@@ -295,8 +295,8 @@
    "approach": "Sanganer Stadium",
    "t_c_optimistic": 3.88,
    "t_c_conservative": 5.04,
-   "t_c_required": 5.88,
-   "margin_s": -2.0,
+   "t_c_required": 5.93,
+   "margin_s": -2.05,
    "works_at_our_optimistic": true
   },
   {
@@ -304,8 +304,8 @@
    "approach": "Mansarover Metro",
    "t_c_optimistic": 3.84,
    "t_c_conservative": 4.98,
-   "t_c_required": 2.59,
-   "margin_s": 1.25,
+   "t_c_required": 2.62,
+   "margin_s": 1.22,
    "works_at_our_optimistic": false
   },
   {
@@ -313,35 +313,35 @@
    "approach": "Sanganer Stadium",
    "t_c_optimistic": 3.84,
    "t_c_conservative": 4.98,
-   "t_c_required": 2.67,
+   "t_c_required": 2.71,
+   "margin_s": 1.13,
+   "works_at_our_optimistic": false
+  },
+  {
+   "junction": "TMC-04",
+   "approach": "Mansarover Metro",
+   "t_c_optimistic": 3.86,
+   "t_c_conservative": 5.01,
+   "t_c_required": 2.38,
+   "margin_s": 1.48,
+   "works_at_our_optimistic": false
+  },
+  {
+   "junction": "TMC-04",
+   "approach": "Sanganer Stadium",
+   "t_c_optimistic": 3.86,
+   "t_c_conservative": 5.01,
+   "t_c_required": 2.69,
    "margin_s": 1.17,
    "works_at_our_optimistic": false
   },
   {
-   "junction": "TMC-04",
-   "approach": "Mansarover Metro",
-   "t_c_optimistic": 3.86,
-   "t_c_conservative": 5.01,
-   "t_c_required": 2.32,
-   "margin_s": 1.54,
-   "works_at_our_optimistic": false
-  },
-  {
-   "junction": "TMC-04",
-   "approach": "Sanganer Stadium",
-   "t_c_optimistic": 3.86,
-   "t_c_conservative": 5.01,
-   "t_c_required": 2.65,
-   "margin_s": 1.21,
-   "works_at_our_optimistic": false
-  },
-  {
    "junction": "TMC-05",
    "approach": "Mansarover Metro",
    "t_c_optimistic": 3.86,
    "t_c_conservative": 5.02,
-   "t_c_required": 2.62,
-   "margin_s": 1.24,
+   "t_c_required": 2.64,
+   "margin_s": 1.22,
    "works_at_our_optimistic": false
   },
   {
@@ -349,8 +349,8 @@
    "approach": "Sanganer Stadium",
    "t_c_optimistic": 3.86,
    "t_c_conservative": 5.02,
-   "t_c_required": 1.62,
-   "margin_s": 2.24,
+   "t_c_required": 1.63,
+   "margin_s": 2.23,
    "works_at_our_optimistic": false
   },
   {
@@ -358,8 +358,8 @@
    "approach": "Mansarover Metro",
    "t_c_optimistic": 3.89,
    "t_c_conservative": 5.05,
-   "t_c_required": 3.56,
-   "margin_s": 0.33,
+   "t_c_required": 3.6,
+   "margin_s": 0.29,
    "works_at_our_optimistic": false
   },
   {
@@ -367,14 +367,14 @@
    "approach": "Sanganer Stadium",
    "t_c_optimistic": 3.89,
    "t_c_conservative": 5.05,
-   "t_c_required": 2.08,
-   "margin_s": 1.81,
+   "t_c_required": 2.11,
+   "margin_s": 1.78,
    "works_at_our_optimistic": false
   }
  ],
- "gap_required_median_s": 2.6,
+ "gap_required_median_s": 2.63,
  "gap_ours_median_s": 3.87,
- "gap_margin_s": 1.27,
+ "gap_margin_s": 1.24,
  "irc_sp41_car_gap_s": 5.5,
  "gap_source": "composition-weighted from literature; benchmarked against IRC:SP:41-1994 Appendix III Table III-2 passenger-car value and Indo-HCM 2017 base gaps",
  "uturn_analogue": "merge into the opposing stream, not a crossing of it",
@@ -402,6 +402,16 @@
    "geometric_match": "median openings, lane count not stated in the paper"
   },
   {
+   "label": "Khan 2022 thesis, four-lane median openings, modified Raff / binary logit",
+   "t_c": 3.36,
+   "t_f": 2.04,
+   "unservable": 9,
+   "no_viable_gap": 2,
+   "of": 12,
+   "source": "T. Khan PhD thesis 2022, IIT (ISM) Dhanbad, ch. 7-8; the dataset behind Khan et al. TRR 2678 and 2679, which are closed access. Values may differ from the edited papers",
+   "geometric_match": "closest of all: four-lane divided median openings, and the only source with a MEASURED four-lane follow-up time (2.04 s, two-wheelers, Table 8.2)"
+  },
+  {
    "label": "Mohan & Chandra 2020, RT from minor, 4-lane divided",
    "t_c": 3.5,
    "t_f": 2.1,
@@ -424,12 +434,22 @@
   {
    "label": "ours, optimistic",
    "t_c": 3.87,
-   "t_f": 2.2,
+   "t_f": 2.0,
    "unservable": 11,
    "no_viable_gap": 4,
    "of": 12,
    "source": "composition-weighted from literature",
    "geometric_match": "none stated"
+  },
+  {
+   "label": "Khan 2022 thesis, four-lane median openings, occupancy time / SVM",
+   "t_c": 4.26,
+   "t_f": 2.04,
+   "unservable": 11,
+   "no_viable_gap": 8,
+   "of": 12,
+   "source": "same thesis; the authors conclude occupancy time and SVM give the values closest to published literature, so this is their own preferred pair",
+   "geometric_match": "closest of all: four-lane divided median openings, authors' preferred methods"
   },
   {
    "label": "Gupta et al. 2018, four-lane median openings, Varanasi",
@@ -482,23 +502,25 @@
    "geometric_match": "four-lane, but HCM 1985 in metric with no Indian calibration"
   }
  ],
- "gap_conclusion_holds_in": 9,
- "gap_bases_tested": 10,
+ "gap_conclusion_holds_in": 11,
+ "gap_bases_tested": 12,
  "indo_hcm_base_gap_s": {
   "2w": 3.5,
   "3w": 3.7,
   "4w": 3.8
  },
  "indo_hcm_gap_source": "Mohan & Chandra 2020, Can. J. Civ. Eng. 47(6), produced under the CSIR-CRRI Indo-HCM project: base critical gap, four-lane divided, right turn minor-to-major, via a secondary reproduction",
- "indo_hcm_followup_ratio": 0.6,
+ "followup_ratio_convention": 0.6,
  "indo_hcm_form_differs": "Indo-HCM adds geometric factors a and b to the HCM form; we use a = 1, b = 0 because their values sit in a chapter no free copy of the manual reproduces",
  "indo_hcm_no_uturn_chapter": "Indo-HCM 2017 has no chapter, table or parameter set for mid-block median openings or U-turns; Annexure 7C is scoped to roundabouts. No Indian code publishes a design gap for the manoeuvre this scheme is built on.",
  "csir_crri_design_gap_s": 4.5,
  "csir_crri_design_source": "Khan, Chalumuri & Senapathi 2015, J. EASTS 11:1842-1855, CSIR-CRRI, NH-8 Delhi-Manesar, 748 U-turning vehicles",
  "follow_up_measured_s": [
   2.5,
-  2.17
+  2.17,
+  2.04
  ],
+ "follow_up_four_lane_measured_s": 2.04,
  "two_wheeler_gap_ours": 3.5,
  "two_wheeler_gap_indo_hcm": 3.5,
  "followup_implied_by_indo_hcm": [
@@ -506,7 +528,7 @@
   3.02
  ],
  "followup_ours": [
-  2.2,
+  2.0,
   3.0
  ]
 }

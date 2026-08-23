@@ -298,28 +298,45 @@ def test_two_wheeler_gap_sits_inside_the_four_lane_median_opening_evidence():
     assert lo < hi
 
 
-def test_follow_up_headway_band_contains_both_measured_indian_values():
+def test_follow_up_headway_band_contains_every_measured_indian_value():
     """
-    Our follow-up band was assumed before any measurement was found. Both Indian values
-    that exist — 2.50 s (Ramireddy et al. 2025, Siegloch) and 2.17 s (Dash et al.) —
-    must fall inside it, or the band is not defensible.
+    Our follow-up band was assumed before any measurement was found. Every Indian value
+    that exists must fall inside it, or the band is not defensible: 2.50 s (Ramireddy
+    et al. 2025, Siegloch), 2.17 s (Dash et al.), and 2.04 s — the only one measured on
+    four-lane median openings specifically (Khan 2022 thesis Table 8.2).
+
+    The optimistic end is pinned to that four-lane measurement rather than sitting above
+    it. A shorter follow-up means MORE bay capacity, so this runs against our own
+    conclusion, which is exactly why it is pinned there and not left at the old 2.2 s.
     """
-    from src.scheme_test import FOLLOW_UP_S, FOLLOW_UP_MEASURED_S
+    from src.scheme_test import (FOLLOW_UP_S, FOLLOW_UP_MEASURED_S,
+                                 FOLLOW_UP_FOUR_LANE_MEASURED_S)
     lo, hi = FOLLOW_UP_S
     for m in FOLLOW_UP_MEASURED_S:
-        assert lo - 0.05 <= m <= hi, f"measured {m}s falls outside the band {FOLLOW_UP_S}"
+        assert lo <= m <= hi, f"measured {m}s falls outside the band {FOLLOW_UP_S}"
+    assert lo <= FOLLOW_UP_FOUR_LANE_MEASURED_S, (
+        "optimistic follow-up sits above the four-lane measurement, which would understate "
+        "bay capacity on the geometry that actually matches this corridor")
 
 
-def test_our_follow_up_headway_matches_the_indo_hcm_relation():
+def test_follow_up_departs_from_the_convention_toward_the_measurement():
     """
-    Indo-HCM derives follow-up time as about 60% of the critical gap rather than
-    tabulating it. Ours were taken from literature and land within 0.15 s of that.
+    tf = 0.6 x tc is a convention, not a code relation — Indo-HCM has no median-opening
+    chapter to carry one, and Indian studies state the ratio as an assumption in so many
+    words. Our optimistic follow-up no longer follows it: it is pinned to the 2.04 s
+    measured on four-lane median openings, roughly 0.3 s below what the convention implies.
+
+    Assert the departure is real and in the right direction. A measurement on the matching
+    geometry should beat a rule of thumb, and a shorter follow-up gives MORE bay capacity,
+    so this weakens our own conclusion rather than strengthening it.
     """
-    from src.scheme_test import FOLLOW_UP_S, INDO_HCM_FOLLOWUP_RATIO, weighted_gap
+    from src.scheme_test import (FOLLOW_UP_S, FOLLOWUP_RATIO_CONVENTION, weighted_gap,
+                                 FOLLOW_UP_FOUR_LANE_MEASURED_S)
     share = {"TWO_W": 0.49, "CAR_BUCKET": 0.48, "AUTO_TRK_BUS": 0.03}
-    for i in (0, 1):
-        implied = INDO_HCM_FOLLOWUP_RATIO * weighted_gap(share, i)
-        assert abs(FOLLOW_UP_S[i] - implied) < 0.15
+    implied = FOLLOWUP_RATIO_CONVENTION * weighted_gap(share, 0)
+    assert FOLLOW_UP_S[0] < implied, "we should sit below the convention, not on it"
+    assert abs(FOLLOW_UP_S[0] - FOLLOW_UP_FOUR_LANE_MEASURED_S) <= 0.05, (
+        "the optimistic follow-up should track the four-lane measurement")
 
 
 def test_the_model_difference_from_indo_hcm_is_stated_not_hidden():

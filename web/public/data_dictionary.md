@@ -1,7 +1,7 @@
 # Data dictionary
 ### Every field in every published dataset
 
-Generated 2026-08-23 from the files in `out/data`. The field list is read from the data itself, so a field added to the pipeline and not described here is reported below as undocumented rather than quietly omitted.
+Generated 2026-08-24 from the files in `out/data`. The field list is read from the data itself, so a field added to the pipeline and not described here is reported below as undocumented rather than quietly omitted.
 
 **All spatial data is EPSG:32643 (UTM zone 43N, metres).** GeoJSON is written in EPSG:4326 because the format requires it, and is converted at that boundary only.
 
@@ -112,10 +112,12 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `features` | Geometry features extracted. |
 | `files_affected` | Workbooks containing at least one discrepancy. |
 | `floor_vs_warrant` | That floor as a multiple of the interchange warrant. |
+| `follow_up_four_lane_measured_s` | The only follow-up headway measured on four-lane median openings in India, seconds - two-wheelers, Khan 2022 thesis Table 8.2. |
 | `follow_up_measured_s` | The only measured Indian follow-up headways found, seconds, against which our assumed band is checked. |
 | `follow_up_s` | Follow-up headway band, seconds. |
 | `followup_implied_by_indo_hcm` | [optimistic, conservative] follow-up time implied by Indo-HCM's ratio applied to our weighted gaps. |
 | `followup_ours` | The follow-up headways we use, seconds. |
+| `followup_ratio_convention` | The tf = 0.6 x tc rule of thumb. A convention stated as an assumption in Indian studies, not a code relation; published here to show where our follow-up departs from it toward the four-lane measurement. |
 | `footprint` | Footprint scale tested. |
 | `footprint_scale` | Scale applied to the vehicle footprints tested. |
 | `forced_uturns_per_hour` | Vehicles per peak hour forced across a stream with no gap. |
@@ -141,7 +143,6 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `horizon_year` | End of the stated design horizon. |
 | `hours_over` | Hours per day this approach is over capacity. Counted, not assumed. |
 | `identical` | Series reproducing the previous day to the exact vehicle. |
-| `indo_hcm_followup_ratio` | Indo-HCM derives follow-up time as this fraction of the critical gap rather than tabulating it. |
 | `indo_hcm_form_differs` | How Indo-HCM's capacity equation differs from the HCM form we use, and why the difference is not applied. |
 | `indo_hcm_gap_source` | Where those Indo-HCM figures came from, and why they are marked secondary. |
 | `indo_hcm_no_uturn_chapter` | Indo-HCM 2017 publishes no chapter or parameter set for mid-block median openings, so no Indian code carries a design gap for the manoeuvre this scheme is built on. |

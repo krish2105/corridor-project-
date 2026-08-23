@@ -1,7 +1,7 @@
 # Count validation report
 ### New Sanganer Road corridor — automated counts against manual counts
 
-**Generated** 2026-08-23. Structure and gates are final; measurements are outstanding.
+**Generated** 2026-08-24. Structure and gates are final; measurements are outstanding.
 
 **STATUS: PRO FORMA.** No footage has been processed, so no accuracy has been measured. The gates below are already fixed in code and are published here ahead of the measurement; they are not adjustable once a result exists.
 
@@ -72,7 +72,7 @@ The U-turn conclusion currently rests on critical-gap values from literature, no
 | Quantity | Literature (opt / cons) | Measured | Effect |
 |---|---|---|---|
 | Critical gap, car bucket | 4.2 / 5.6 s | — | sets U-turn bay capacity |
-| Follow-up headway | 2.2 / 3.0 s | — | sets saturation discharge |
+| Follow-up headway | 2.0 / 3.0 s | — | sets saturation discharge |
 | Raff vs MLE disagreement | — | — | large disagreement withdraws the estimate |
 
 The literature values are Raff-derived and therefore likely biased high, which makes the present U-turn finding conservative. Measured values would be expected to worsen it, not relieve it. The finding as it stands is that 11 of 12 approaches fail; measurement is capable of changing that number and this report will state the revised figure whichever way it moves.

@@ -2,7 +2,7 @@
 ### New Sanganer Road, Jaipur — six surveyed junctions
 
 **Base year** 2026  |  **Design horizon** 20 years to 2046  |  **Survey date** 2026-05-11
-**Generated** 2026-08-23 from `out/data/capacity.json`. Every figure in this document is read from the pipeline output at generation time; none is transcribed.
+**Generated** 2026-08-24 from `out/data/capacity.json`. Every figure in this document is read from the pipeline output at generation time; none is transcribed.
 
 ---
 

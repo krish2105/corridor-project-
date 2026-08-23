@@ -279,6 +279,9 @@ FIELDS.update({
     "excluded": "Cost components deliberately not counted.",
     "critical_gap": "Which critical-gap assumption was used.",
     "critical_gap_source": "Where the critical-gap values come from.",
+    "follow_up_four_lane_measured_s": ("The only follow-up headway measured on four-lane "
+                                       "median openings in India, seconds - two-wheelers, "
+                                       "Khan 2022 thesis Table 8.2."),
     "indo_hcm_no_uturn_chapter": ("Indo-HCM 2017 publishes no chapter or parameter set for "
                                   "mid-block median openings, so no Indian code carries a "
                                   "design gap for the manoeuvre this scheme is built on."),
@@ -427,8 +430,10 @@ FIELDS.update({
                            "divided, right turn minor-to-major. SECONDARY source.",
     "indo_hcm_gap_source": "Where those Indo-HCM figures came from, and why they are "
                            "marked secondary.",
-    "indo_hcm_followup_ratio": "Indo-HCM derives follow-up time as this fraction of the "
-                               "critical gap rather than tabulating it.",
+    "followup_ratio_convention": ("The tf = 0.6 x tc rule of thumb. A convention stated as "
+                                  "an assumption in Indian studies, not a code relation; "
+                                  "published here to show where our follow-up departs from "
+                                  "it toward the four-lane measurement."),
     "indo_hcm_form_differs": "How Indo-HCM's capacity equation differs from the HCM form "
                              "we use, and why the difference is not applied.",
     "two_wheeler_gap_ours": "Our optimistic two-wheeler critical gap, seconds.",

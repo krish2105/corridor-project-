@@ -60,13 +60,22 @@ CRITICAL_GAP_S = {          # (optimistic, conservative)
     "HORSE_DRAWN":  (4.5, 6.0),
     "BULLOCK":      (5.0, 6.5),
 }
-FOLLOW_UP_S = (2.2, 3.0)    # (optimistic, conservative)
+FOLLOW_UP_S = (2.0, 3.0)    # (optimistic, conservative)
 # Corroborated after the fact by the only two measured Indian values reachable, both of
 # which fall inside this band near its optimistic end: 2.50 s (Ramireddy, Jatoth &
 # Srikanth 2025, Siegloch regression, Hyderabad and Kurnool) and 2.17 s (Dash, Mohapatra
-# & Dey, Transp. Letters 11(5)). No Indian source disaggregates follow-up by class, so
-# neither do we.
-FOLLOW_UP_MEASURED_S = (2.50, 2.17)
+# & Dey, Transp. Letters 11(5)).
+#
+# The one value measured on FOUR-LANE median openings specifically is 2.04 s for
+# two-wheelers (Khan 2022 thesis Table 8.2). The optimistic end was 2.2 s and moved down
+# to 2.0 to sit at that measurement, on the same rule applied to the critical gap: follow
+# the closest-matched evidence. It moves against us - a shorter follow-up means MORE bay
+# capacity and fewer failing approaches - and it is made anyway. The value is
+# also the only per-class follow-up time that exists for this manoeuvre in India: the
+# thesis presents the rest as a bar chart with no numeric table, and every published
+# paper carrying them is closed. So we do not disaggregate follow-up by class either.
+FOLLOW_UP_MEASURED_S = (2.50, 2.17, 2.04)
+FOLLOW_UP_FOUR_LANE_MEASURED_S = 2.04
 
 # Above this conflicting flow, classical gap acceptance degenerates: acceptable gaps
 # essentially cease to exist and the capacity formula runs to near zero, which makes the
@@ -181,11 +190,16 @@ CSIR_CRRI_DESIGN_GAP_S = 4.5
 CSIR_CRRI_DESIGN_SOURCE = ("Khan, Chalumuri & Senapathi 2015, J. EASTS 11:1842-1855, "
                            "CSIR-CRRI, NH-8 Delhi-Manesar, 748 U-turning vehicles")
 
-# Indo-HCM DERIVES follow-up time from critical gap rather than tabulating it:
-# tf is about 60% of tc. Our follow-up headways were taken from literature and land
-# within 0.1 s of what that relation implies, which is the one value here that checks out
-# against the manual rather than against a substitute for it.
-INDO_HCM_FOLLOWUP_RATIO = 0.60
+# The tf = 0.6 x tc rule is a CONVENTION, not a code relation, and certainly not an
+# Indo-HCM one - the manual has no median-opening chapter to carry it. Indian studies
+# state it as an assumption in so many words: 'the follow-up was assumed to be 60% of
+# the critical gap as established in several studies' (Kota, Pallela & Lalam 2025).
+#
+# We no longer follow it. Our optimistic follow-up is pinned to the 2.04 s measured on
+# four-lane median openings, which is about 0.3 s below what the convention implies at
+# our weighted gap. A measurement on the matching geometry beats a rule of thumb, and
+# the departure is published rather than reconciled away.
+FOLLOWUP_RATIO_CONVENTION = 0.60
 
 # Indo-HCM's capacity form carries two geometric adjustment factors we do not apply:
 #     C = a * v_c * exp(-v_c (t_c - b) / 3600) / (1 - exp(-v_c t_f / 3600))
@@ -231,6 +245,19 @@ GAP_EVIDENCE = [
      "Kumar & Sasikumar 2020; merging behaviour is the method those authors recommend "
      "for mixed traffic",
      "median openings, lane count not stated in the paper"),
+    # The most directly relevant evidence reachable: four-lane divided median openings,
+    # five estimation methods, from the PhD thesis behind the closed TRR papers on exactly
+    # this manoeuvre. Both of the authors' own preferred methods and their lower pair are
+    # carried, because the two differ by 0.9 s on the same sites.
+    ("Khan 2022 thesis, four-lane median openings, modified Raff / binary logit", 3.36, 2.04,
+     "T. Khan PhD thesis 2022, IIT (ISM) Dhanbad, ch. 7-8; the dataset behind Khan et al. "
+     "TRR 2678 and 2679, which are closed access. Values may differ from the edited papers",
+     "closest of all: four-lane divided median openings, and the only source with a "
+     "MEASURED four-lane follow-up time (2.04 s, two-wheelers, Table 8.2)"),
+    ("Khan 2022 thesis, four-lane median openings, occupancy time / SVM", 4.26, 2.04,
+     "same thesis; the authors conclude occupancy time and SVM give the values closest "
+     "to published literature, so this is their own preferred pair",
+     "closest of all: four-lane divided median openings, authors' preferred methods"),
     ("Datta & Bhuyan 2014, four-lane median openings, prob. equilibrium", 3.79, 2.17,
      "Datta & Bhuyan 2014, ICAET, six median openings on four-lane divided roads, "
      "Odisha and Jharkhand; mean over all classes and sites",
@@ -504,19 +531,28 @@ if __name__ == "__main__":
     print("  measure four-lane median openings, our gap sits mid-pack. That is the")
     print("  reason the spread below is published rather than a single number.")
 
-    print("\n=== Against Indo-HCM 2017 (SECONDARY source for the numbers) ===")
-    print(f"  base critical gap, four-lane divided, right turn minor-to-major:")
-    for k, v in INDO_HCM_BASE_GAP_S.items():
-        print(f"    {k}: {v} s")
-    print(f"\n  our optimistic two-wheeler gap is {CRITICAL_GAP_S['TWO_W'][0]} s against a")
-    print(f"  published base of {INDO_HCM_BASE_GAP_S['2w']} s. Two-wheelers are half this")
-    print("  stream, so that 0.7 s is the most consequential number in the model - and it")
-    print("  runs in the scheme's favour, not ours.")
-    print(f"\n  Indo-HCM derives follow-up time as about {INDO_HCM_FOLLOWUP_RATIO:.0%} of the")
-    print(f"  critical gap rather than tabulating it. That implies "
-          f"{INDO_HCM_FOLLOWUP_RATIO*med_opt:.2f} s against our {FOLLOW_UP_S[0]} s.")
-    print("  The follow-up headway is the one input here that checks out against the")
-    print("  manual rather than against a substitute for it.")
+    print("\n=== There is no Indian code value for this manoeuvre ===")
+    print("  Indo-HCM 2017 has no chapter, table or parameter set for mid-block median")
+    print("  openings or U-turns; Annexure 7C is scoped to roundabouts. So the base gaps")
+    print("  below are a JUNCTION right-turn figure from the Indo-HCM project, not a code")
+    print("  value for a median opening, and they are used only as one basis among many.")
+    print("    " + ",  ".join(f"{k} {v} s" for k, v in INDO_HCM_BASE_GAP_S.items()))
+    print(f"    {INDO_HCM_GAP_SOURCE}")
+    print(f"\n  our optimistic two-wheeler gap  {CRITICAL_GAP_S['TWO_W'][0]} s")
+    print(f"  that junction figure            {INDO_HCM_BASE_GAP_S['2w']} s")
+    print( "  four-lane median-opening field evidence brackets both: Gupta 3.83,")
+    print( "  Datta & Bhuyan 3.37 to 4.78. Two-wheelers are half this stream, so this is")
+    print( "  the single most consequential number in the model.")
+    print(f"\n  nearest Indian DESIGN value    {CSIR_CRRI_DESIGN_GAP_S} s")
+    print(f"    {CSIR_CRRI_DESIGN_SOURCE}")
+
+    print(f"\n  The tf = {FOLLOWUP_RATIO_CONVENTION:.0%} x tc rule is a convention, not a code relation.")
+    print(f"  It implies {FOLLOWUP_RATIO_CONVENTION*med_opt:.2f} s at our weighted gap. We use "
+          f"{FOLLOW_UP_S[0]} s instead,")
+    print(f"  pinned to the {FOLLOW_UP_FOUR_LANE_MEASURED_S} s measured on four-lane median openings")
+    print( "  (Khan 2022 thesis Table 8.2) - the only follow-up time measured on the")
+    print( "  geometry that matches this corridor. A measurement beats a rule of thumb,")
+    print( "  and a shorter follow-up gives MORE bay capacity, so this runs against us.")
     print("\n  Caveat carried into the output: CRRI does not publish the manual free, its")
     print("  own preview redacts section 8.5, and no free full text reproduces Chapter 8.")
     print("  These figures come from a paper reproducing the tables. The movement is a")
@@ -580,17 +616,18 @@ if __name__ == "__main__":
     payload["gap_bases_tested"] = len(spread)
     payload["indo_hcm_base_gap_s"] = INDO_HCM_BASE_GAP_S
     payload["indo_hcm_gap_source"] = INDO_HCM_GAP_SOURCE
-    payload["indo_hcm_followup_ratio"] = INDO_HCM_FOLLOWUP_RATIO
+    payload["followup_ratio_convention"] = FOLLOWUP_RATIO_CONVENTION
     payload["indo_hcm_form_differs"] = INDO_HCM_FORM_DIFFERS
     payload["indo_hcm_no_uturn_chapter"] = INDO_HCM_NO_UTURN_CHAPTER
     payload["csir_crri_design_gap_s"] = CSIR_CRRI_DESIGN_GAP_S
     payload["csir_crri_design_source"] = CSIR_CRRI_DESIGN_SOURCE
     payload["follow_up_measured_s"] = list(FOLLOW_UP_MEASURED_S)
+    payload["follow_up_four_lane_measured_s"] = FOLLOW_UP_FOUR_LANE_MEASURED_S
     payload["two_wheeler_gap_ours"] = CRITICAL_GAP_S["TWO_W"][0]
     payload["two_wheeler_gap_indo_hcm"] = INDO_HCM_BASE_GAP_S["2w"]
     payload["followup_implied_by_indo_hcm"] = [
-        round(INDO_HCM_FOLLOWUP_RATIO * med_opt, 2),
-        round(INDO_HCM_FOLLOWUP_RATIO * _st.median(r["t_c_conservative"] for r in bench), 2)]
+        round(FOLLOWUP_RATIO_CONVENTION * med_opt, 2),
+        round(FOLLOWUP_RATIO_CONVENTION * _st.median(r["t_c_conservative"] for r in bench), 2)]
     payload["followup_ours"] = list(FOLLOW_UP_S)
     (OUT_DATA / "scheme_test.json").write_text(json.dumps(payload, indent=1))
 
