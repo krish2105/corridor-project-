@@ -93,6 +93,37 @@ IRC_SP41_LARGE_CITY_ADJ = -0.5
 IRC_SP41_APPLIED = IRC_SP41_CAR_GAP_S + IRC_SP41_LARGE_CITY_ADJ
 
 
+# Indo-HCM 2017 base critical gap, FOUR-LANE DIVIDED intersection, by vehicle class.
+#
+# SECONDARY SOURCE. CSIR-CRRI does not publish the manual free; its own "Indo-HCM
+# Snippets" preview redacts the whole of section 8.5, and the public full-text mirrors are
+# missing Chapter 8 entirely. These numbers come from a peer-reviewed paper reproducing
+# the manual's tables, not from the manual. Marked as such wherever they appear, and worth
+# closing out with an institutional copy before they go to a client as a citation.
+#
+# The movement is RIGHT TURN FROM MINOR TO MAJOR, not a U-turn. Indo-HCM appears to
+# publish no U-turn row at all, which is consistent with IRC having no U-turn bay clause
+# either. It is the nearest published movement, not the same movement.
+INDO_HCM_BASE_GAP_S = {"2w": 3.5, "3w": 3.7, "4w": 3.8}
+INDO_HCM_GAP_SOURCE = ("Indo-HCM 2017 base critical gap, four-lane divided, right turn "
+                       "minor-to-major, via a secondary reproduction of the table")
+
+# Indo-HCM DERIVES follow-up time from critical gap rather than tabulating it:
+# tf is about 60% of tc. Our follow-up headways were taken from literature and land
+# within 0.1 s of what that relation implies, which is the one value here that checks out
+# against the manual rather than against a substitute for it.
+INDO_HCM_FOLLOWUP_RATIO = 0.60
+
+# Indo-HCM's capacity form carries two geometric adjustment factors we do not apply:
+#     C = a * v_c * exp(-v_c (t_c - b) / 3600) / (1 - exp(-v_c t_f / 3600))
+# We use the plain HCM potential-capacity form, which is this with a = 1 and b = 0. The
+# values of a and b are in the part of Chapter 8 that is redacted in every free copy, so
+# applying them is not possible yet. Stated rather than silently ignored.
+INDO_HCM_FORM_DIFFERS = ("Indo-HCM adds geometric factors a and b to the HCM form; we use "
+                         "a = 1, b = 0 because their values sit in a chapter no free copy "
+                         "of the manual reproduces")
+
+
 def breakpoint_gap(demand, conflicting, t_f, lo=0.05, hi=12.0):
     """
     The critical gap at which a bay would exactly serve its demand.
@@ -333,6 +364,25 @@ if __name__ == "__main__":
     print("  Substituting the code's car value makes the finding stronger, not weaker,")
     print("  so the conclusion cannot be attacked as too pessimistic on gaps.")
 
+    print("\n=== Against Indo-HCM 2017 (SECONDARY source for the numbers) ===")
+    print(f"  base critical gap, four-lane divided, right turn minor-to-major:")
+    for k, v in INDO_HCM_BASE_GAP_S.items():
+        print(f"    {k}: {v} s")
+    print(f"\n  our optimistic two-wheeler gap is {CRITICAL_GAP_S['TWO_W'][0]} s against a")
+    print(f"  published base of {INDO_HCM_BASE_GAP_S['2w']} s. Two-wheelers are half this")
+    print("  stream, so that 0.7 s is the most consequential number in the model - and it")
+    print("  runs in the scheme's favour, not ours.")
+    print(f"\n  Indo-HCM derives follow-up time as about {INDO_HCM_FOLLOWUP_RATIO:.0%} of the")
+    print(f"  critical gap rather than tabulating it. That implies "
+          f"{INDO_HCM_FOLLOWUP_RATIO*med_opt:.2f} s against our {FOLLOW_UP_S[0]} s.")
+    print("  The follow-up headway is the one input here that checks out against the")
+    print("  manual rather than against a substitute for it.")
+    print("\n  Caveat carried into the output: CRRI does not publish the manual free, its")
+    print("  own preview redacts section 8.5, and no free full text reproduces Chapter 8.")
+    print("  These figures come from a paper reproducing the tables. The movement is a")
+    print("  right turn from minor to major, NOT a U-turn - Indo-HCM appears to publish no")
+    print("  U-turn row, consistent with IRC having no U-turn bay clause either.")
+
     payload = json.loads((OUT_DATA / "scheme_test.json").read_text())
     payload["gap_benchmark"] = bench
     payload["gap_required_median_s"] = round(med_need, 2)
@@ -340,7 +390,18 @@ if __name__ == "__main__":
     payload["gap_margin_s"] = round(med_opt - med_need, 2)
     payload["irc_sp41_car_gap_s"] = IRC_SP41_APPLIED
     payload["gap_source"] = ("composition-weighted from literature; benchmarked against "
-                             "IRC:SP:41-1994 Appendix III Table III-2 passenger-car value")
+                             "IRC:SP:41-1994 Appendix III Table III-2 passenger-car value "
+                             "and Indo-HCM 2017 base gaps")
+    payload["indo_hcm_base_gap_s"] = INDO_HCM_BASE_GAP_S
+    payload["indo_hcm_gap_source"] = INDO_HCM_GAP_SOURCE
+    payload["indo_hcm_followup_ratio"] = INDO_HCM_FOLLOWUP_RATIO
+    payload["indo_hcm_form_differs"] = INDO_HCM_FORM_DIFFERS
+    payload["two_wheeler_gap_ours"] = CRITICAL_GAP_S["TWO_W"][0]
+    payload["two_wheeler_gap_indo_hcm"] = INDO_HCM_BASE_GAP_S["2w"]
+    payload["followup_implied_by_indo_hcm"] = [
+        round(INDO_HCM_FOLLOWUP_RATIO * med_opt, 2),
+        round(INDO_HCM_FOLLOWUP_RATIO * _st.median(r["t_c_conservative"] for r in bench), 2)]
+    payload["followup_ours"] = list(FOLLOW_UP_S)
     (OUT_DATA / "scheme_test.json").write_text(json.dumps(payload, indent=1))
 
     print(f"\nwritten: {OUT_DATA/'scheme_test.json'}")

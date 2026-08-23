@@ -25,6 +25,9 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 
 | Field | Meaning |
 |---|---|
+| `2w` | Two-wheeler. |
+| `3w` | Three-wheeler. |
+| `4w` | Four-wheeler. |
 | `LCV` | PCU factor for light commercial vehicles. |
 | `MAV` | PCU factor for multi-axle vehicles. |
 | `alignment_km` | Length of the surveyed alignment. |
@@ -108,6 +111,8 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `files_affected` | Workbooks containing at least one discrepancy. |
 | `floor_vs_warrant` | That floor as a multiple of the interchange warrant. |
 | `follow_up_s` | Follow-up headway band, seconds. |
+| `followup_implied_by_indo_hcm` | [optimistic, conservative] follow-up time implied by Indo-HCM's ratio applied to our weighted gaps. |
+| `followup_ours` | The follow-up headways we use, seconds. |
 | `footprint` | Footprint scale tested. |
 | `footprint_scale` | Scale applied to the vehicle footprints tested. |
 | `forced_uturns_per_hour` | Vehicles per peak hour forced across a stream with no gap. |
@@ -129,6 +134,9 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `horizon_year` | End of the stated design horizon. |
 | `hours_over` | Hours per day this approach is over capacity. Counted, not assumed. |
 | `identical` | Series reproducing the previous day to the exact vehicle. |
+| `indo_hcm_followup_ratio` | Indo-HCM derives follow-up time as this fraction of the critical gap rather than tabulating it. |
+| `indo_hcm_form_differs` | How Indo-HCM's capacity equation differs from the HCM form we use, and why the difference is not applied. |
+| `indo_hcm_gap_source` | Where those Indo-HCM figures came from, and why they are marked secondary. |
 | `interchange_warrant_pcu` | IRC:SP:90-2010 threshold above which an interchange is justified, PCU/hr across all arms. |
 | `irc_high` | IRC:106 factor at or above 10% share. |
 | `irc_low` | IRC:106 factor at or below 5% share. |
@@ -293,6 +301,8 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `transects` | How many cross-sections the width was measured on. Fewer is weaker. |
 | `truck` | PCU factor for trucks. |
 | `two wheeler` | PCU factor for two-wheelers in the cited document. |
+| `two_wheeler_gap_indo_hcm` | Indo-HCM's published base value for the same class. |
+| `two_wheeler_gap_ours` | Our optimistic two-wheeler critical gap, seconds. |
 | `understate` | Discrepancies where the stored total was too low. |
 | `unverified` | Clauses that could not be checked against a primary source. |
 | `uplift` | PCU uplift tested, %. |

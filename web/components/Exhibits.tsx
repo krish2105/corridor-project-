@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import ConflictDiagram from "./ConflictDiagram";
 import Continuity from "./Continuity";
+import FlowRaster from "./FlowRaster";
 import Standards from "./Standards";
 import CumulativeQueue from "./CumulativeQueue";
 import Tornado from "./Tornado";
@@ -29,6 +30,7 @@ type Series = {
                  series: { t: string; arrivals: number; departures: number;
                            dep_low: number; dep_high: number; queue: number }[] };
   volume_flow?: never[];
+  flow_raster?: { link: number; junction: string; t: string; veh: number }[];
   continuity?: { north: string; south: string; daily_out: number; daily_in: number;
                  mean_residual_pct: number; worst_residual_pct: number;
                  series: { t: string; out: number; inn: number; residual: number }[] }[];
@@ -137,6 +139,14 @@ export default function Exhibits({ safety, profiles, exhibits, sensitivity, capa
             {prof?.cumulative && (
               <div style={{ marginTop: "1.2rem" }}>
                 <Reveal delay={.12}><CumulativeQueue c={prof.cumulative} /></Reveal>
+              </div>
+            )}
+            {exh?.flow_raster && (exhibits as unknown as { corridor_order?: string[] })?.corridor_order && (
+              <div style={{ marginTop: "1.2rem" }}>
+                <Reveal delay={.14}>
+                  <FlowRaster cells={exh.flow_raster}
+                    order={(exhibits as unknown as { corridor_order: string[] }).corridor_order} />
+                </Reveal>
               </div>
             )}
           </div>

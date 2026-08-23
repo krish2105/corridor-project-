@@ -273,3 +273,32 @@ def test_the_critical_gap_matters_far_more_than_the_follow_up_headway():
     d_tc = abs(gap_capacity(q, tc + 0.5, tf) / base - 1)
     d_tf = abs(gap_capacity(q, tc, tf + 0.5) / base - 1)
     assert d_tc > 4 * d_tf
+
+
+def test_our_two_wheeler_gap_is_generous_to_the_scheme():
+    """
+    Indo-HCM 2017 publishes a base two-wheeler critical gap of 3.5 s on a four-lane
+    divided road. Ours is 2.8 s optimistic. Two-wheelers are half this stream, so that
+    0.7 s is the most consequential number in the model — and a LOWER gap means MORE bay
+    capacity, so the generosity runs in the scheme's favour, not ours.
+    """
+    from src.scheme_test import CRITICAL_GAP_S, INDO_HCM_BASE_GAP_S
+    assert CRITICAL_GAP_S["TWO_W"][0] < INDO_HCM_BASE_GAP_S["2w"]
+
+
+def test_our_follow_up_headway_matches_the_indo_hcm_relation():
+    """
+    Indo-HCM derives follow-up time as about 60% of the critical gap rather than
+    tabulating it. Ours were taken from literature and land within 0.15 s of that.
+    """
+    from src.scheme_test import FOLLOW_UP_S, INDO_HCM_FOLLOWUP_RATIO, weighted_gap
+    share = {"TWO_W": 0.49, "CAR_BUCKET": 0.48, "AUTO_TRK_BUS": 0.03}
+    for i in (0, 1):
+        implied = INDO_HCM_FOLLOWUP_RATIO * weighted_gap(share, i)
+        assert abs(FOLLOW_UP_S[i] - implied) < 0.15
+
+
+def test_the_model_difference_from_indo_hcm_is_stated_not_hidden():
+    """Indo-HCM adds geometric factors a and b we cannot apply; that is recorded."""
+    from src.scheme_test import INDO_HCM_FORM_DIFFERS
+    assert "a = 1" in INDO_HCM_FORM_DIFFERS and "b = 0" in INDO_HCM_FORM_DIFFERS

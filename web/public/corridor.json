@@ -1109,7 +1109,25 @@
   "gap_ours_median_s": 3.53,
   "gap_margin_s": 0.93,
   "irc_sp41_car_gap_s": 5.5,
-  "gap_source": "composition-weighted from literature; benchmarked against IRC:SP:41-1994 Appendix III Table III-2 passenger-car value"
+  "gap_source": "composition-weighted from literature; benchmarked against IRC:SP:41-1994 Appendix III Table III-2 passenger-car value and Indo-HCM 2017 base gaps",
+  "indo_hcm_base_gap_s": {
+   "2w": 3.5,
+   "3w": 3.7,
+   "4w": 3.8
+  },
+  "indo_hcm_gap_source": "Indo-HCM 2017 base critical gap, four-lane divided, right turn minor-to-major, via a secondary reproduction of the table",
+  "indo_hcm_followup_ratio": 0.6,
+  "indo_hcm_form_differs": "Indo-HCM adds geometric factors a and b to the HCM form; we use a = 1, b = 0 because their values sit in a chapter no free copy of the manual reproduces",
+  "two_wheeler_gap_ours": 2.8,
+  "two_wheeler_gap_indo_hcm": 3.5,
+  "followup_implied_by_indo_hcm": [
+   2.12,
+   2.84
+  ],
+  "followup_ours": [
+   2.2,
+   3.0
+  ]
  },
  "sensitivity": {
   "axes": {

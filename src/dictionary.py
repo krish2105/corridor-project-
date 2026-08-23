@@ -400,6 +400,23 @@ FIELDS.update({
     "gap_source": "Where the critical gaps come from and what they are benchmarked against.",
 })
 
+FIELDS.update({
+    "indo_hcm_base_gap_s": "Indo-HCM 2017 base critical gap by vehicle class, four-lane "
+                           "divided, right turn minor-to-major. SECONDARY source.",
+    "indo_hcm_gap_source": "Where those Indo-HCM figures came from, and why they are "
+                           "marked secondary.",
+    "indo_hcm_followup_ratio": "Indo-HCM derives follow-up time as this fraction of the "
+                               "critical gap rather than tabulating it.",
+    "indo_hcm_form_differs": "How Indo-HCM's capacity equation differs from the HCM form "
+                             "we use, and why the difference is not applied.",
+    "two_wheeler_gap_ours": "Our optimistic two-wheeler critical gap, seconds.",
+    "two_wheeler_gap_indo_hcm": "Indo-HCM's published base value for the same class.",
+    "followup_implied_by_indo_hcm": "[optimistic, conservative] follow-up time implied by "
+                                    "Indo-HCM's ratio applied to our weighted gaps.",
+    "followup_ours": "The follow-up headways we use, seconds.",
+    "2w": "Two-wheeler.", "3w": "Three-wheeler.", "4w": "Four-wheeler.",
+})
+
 def _is_data_keyed(d):
     if not isinstance(d, dict) or not d:
         return False
