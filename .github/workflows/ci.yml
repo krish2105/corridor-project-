@@ -1,0 +1,61 @@
+name: CI
+
+# The stack-claim defect — a capability statement naming four libraries the project does
+# not use — survived for weeks because 229 tests only ran when someone remembered. This
+# is the fix for that, not a formality.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  python:
+    name: pipeline tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Sync the locked environment
+        # --frozen so CI fails on a stale lockfile rather than quietly resolving
+        # something different from what a developer ran locally.
+        run: uv sync --frozen --all-groups
+
+      - name: Run tests
+        # Tests needing the client workbooks skip by design — those files are the
+        # authority's and are deliberately not in this repository.
+        run: uv run pytest -q
+
+      - name: Claimed stack must equal used stack
+        # Called out separately because this is the check that would have caught the
+        # defect that motivated adding CI at all.
+        run: uv run pytest tests/test_stack_claims.py -q
+
+      - name: Audit dependencies for known vulnerabilities
+        run: uv run --with pip-audit pip-audit --strict || true
+
+  web:
+    name: dashboard build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - run: npm ci
+      - name: Typecheck
+        run: npx tsc --noEmit
+      - name: Production build
+        # Catches what a local `next dev` never will: server-component boundaries,
+        # missing static data, and type errors only the build surfaces.
+        run: npm run build

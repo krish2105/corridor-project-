@@ -103,7 +103,12 @@ def corridor_order(bins, day):
                   cost=round(link_cost(best[i], best[i + 1]), 4))
              for i in range(len(best) - 1)]
     top = [(round(c, 4), p) for c, p in scored[:5]]
-    margin = 100 * (scored[1][0] - best_cost) / scored[1][0]
+    # Guard the divide. When the runner-up ordering scores zero cost - which happens
+    # whenever two candidate orderings fit the flows equally well, including any corridor
+    # with only two junctions - this divided by zero and returned nan, and a nan margin
+    # silently reads as "not conclusive" rather than as a failed computation.
+    runner_up = scored[1][0] if len(scored) > 1 else None
+    margin = (100 * (runner_up - best_cost) / runner_up) if runner_up else 0.0
     return best, best_cost, top, margin, pd.DataFrame(links)
 
 

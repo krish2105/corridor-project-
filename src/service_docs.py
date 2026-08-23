@@ -19,7 +19,6 @@ deliverables, applied to the commercial ones.
 Run:  uv run python src/service_docs.py
 """
 import json
-import subprocess
 import sys
 from datetime import date
 from pathlib import Path
@@ -75,18 +74,19 @@ def _status(entry):
 
 
 def _tests():
-    """pytest's own count. Typed once and left is how the last one reached 26 of 144."""
-    try:
-        out = subprocess.run(["uv", "run", "pytest", "--collect-only", "-q"],
-                             cwd=ROOT, capture_output=True, text=True, timeout=300).stdout
-        import re
-        m = re.search(r"(\d+) tests? collected", out)
-        if m:
-            return int(m.group(1))
-    except Exception:
-        pass
-    return None
+    """
+    Test count, read from what the last pytest run recorded.
 
+    Previously this shelled out to `uv run pytest --collect-only` during the build. That
+    made rendering a document depend on a working test environment, and took seconds.
+    """
+    f = OUT_DATA / "testcount.json"
+    if f.exists():
+        try:
+            return int(json.loads(f.read_text())["collected"])
+        except Exception:
+            pass
+    return None
 
 def _load(name):
     p = OUT_DATA / f"{name}.json"

@@ -38,21 +38,34 @@ export default function CorridorMap({ junctions }: { junctions: Junction[] }) {
 
   useEffect(() => {
     if (!box.current) return;
+    // The basemap is the SURVEY DRAWING, not a tile service.
+    //
+    // This previously pulled raster tiles from tile.openstreetmap.org, which breaches
+    // the OSM Tile Usage Policy for a commercial deliverable. The practical risk was
+    // worse than the licensing one: OSM blocks abusive clients without warning, and a
+    // basemap that can vanish mid-meeting is not a basemap.
+    //
+    // The drawing already carries the carriageway, the building footprints, the medians
+    // and the alignment. Surveyed geometry is also the more defensible backdrop for a
+    // survey deliverable than a generic tile layer. No third party, no key, nothing to
+    // rate-limit, and the page makes zero cross-origin requests.
+    const ink = getComputedStyle(document.documentElement);
+    const tok = (n: string, f: string) => ink.getPropertyValue(n).trim() || f;
     const m = new maplibregl.Map({
       container: box.current,
       style: {
         version: 8,
-        sources: {
-          osm: {
-            type: "raster",
-            tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
-            tileSize: 256, attribution: "&copy; OpenStreetMap contributors",
-          },
-        },
-        layers: [{ id: "osm", type: "raster", source: "osm" }],
+        sources: {},
+        layers: [{ id: "ground", type: "background",
+                   paint: { "background-color": tok("--sunk", "#E9EBE6") } }],
       },
       center: [75.7635, 26.856], zoom: 12.6,
+      attributionControl: false,
     });
+    m.addControl(new maplibregl.AttributionControl({
+      compact: true,
+      customAttribution: "Basemap: JDA survey drawing (EPSG:32643)",
+    }));
     map.current = m;
     m.addControl(new maplibregl.NavigationControl(), "top-right");
     m.addControl(new maplibregl.ScaleControl({ maxWidth: 110, unit: "metric" }));
@@ -83,7 +96,12 @@ export default function CorridorMap({ junctions }: { junctions: Junction[] }) {
         .addTo(m);
     });
 
-    m.on("load", () => {
+    // Attach-or-run rather than on("load") alone.
+    //
+    // Defensive, not a fix for an observed bug: an inline style with no remote sources
+    // can finish loading before this line runs, and `once("load", ...)` would then never
+    // fire. Cheap to guard against and impossible to notice if it ever happened.
+    const build = () => {
       m.addSource("corridor", {
         type: "geojson",
         data: { type: "Feature", properties: {},
@@ -94,8 +112,30 @@ export default function CorridorMap({ junctions }: { junctions: Junction[] }) {
         paint: { "line-color": "#FAFBF8", "line-width": 7, "line-opacity": .85 } });
       m.addLayer({ id: "corridor-line", type: "line", source: "corridor",
         paint: { "line-color": "#1B3A6B", "line-width": 2.6 } });
+
+      // Surveyed basemap. Fetched after the corridor so the junctions paint first and
+      // the map is useful before 408 KB of context has arrived.
+      fetch("/basemap.geojson").then((r) => r.json()).then((base) => {
+        if (!map.current || m.getSource("base")) return;
+        m.addSource("base", { type: "geojson", data: base });
+        const rule = tok("--rule-hard", "#B4BBB4");
+        const faint = tok("--rule", "#D5D9D4");
+        m.addLayer({ id: "base-structures", type: "line", source: "base",
+          filter: ["==", ["get", "category"], "structures"],
+          paint: { "line-color": faint, "line-width": .6, "line-opacity": .9 } },
+          "corridor-halo");
+        m.addLayer({ id: "base-carriageway", type: "line", source: "base",
+          filter: ["==", ["get", "category"], "carriageway"],
+          paint: { "line-color": rule, "line-width": 1.1 } }, "corridor-halo");
+        m.addLayer({ id: "base-median", type: "line", source: "base",
+          filter: ["==", ["get", "category"], "median"],
+          paint: { "line-color": rule, "line-width": .8, "line-dasharray": [3, 2] } },
+          "corridor-halo");
+      }).catch(() => { /* basemap is context; the junctions and corridor stand alone */ });
       m.fitBounds(bounds, { padding: 70, maxZoom: 14, duration: 0 });
-    });
+    };
+    if (m.isStyleLoaded()) build();
+    else m.once("load", build);
 
     return () => { m.remove(); map.current = null; };
   }, [junctions]);

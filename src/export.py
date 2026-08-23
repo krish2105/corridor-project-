@@ -120,6 +120,51 @@ def _simplify(coords, tol_deg=0.0000045):
         _s.setrecursionlimit(lim)
 
 
+def _write_basemap(webdir):
+    """
+    A basemap built from the survey drawing itself, replacing the OSM raster tiles.
+
+    The map previously pulled tiles from tile.openstreetmap.org. That breaches the OSM
+    Tile Usage Policy for a production or commercial deliverable, and the practical risk
+    is worse than the licensing one: OSM rate-limits or blocks abusive clients without
+    warning, and this map is the centrepiece of the constraints section. A basemap that
+    can disappear mid-meeting is not a basemap.
+
+    We already own better. The drawing carries 949 carriageway edges, 1,015 building
+    footprints, the medians and the alignment - surveyed geometry rather than a generic
+    tile layer, which is also the more defensible backdrop for a survey deliverable.
+    No third party, no API key, no policy to breach, and nothing to rate-limit.
+
+    Simplified harder than the analysis layers (2 m rather than 0.5 m) because this is
+    context, not measurement. Nothing is measured off the basemap.
+    """
+    src = OUT_DATA / "atlas.geojson"
+    if not src.exists() or not webdir.parent.exists():
+        return None
+    webdir.mkdir(parents=True, exist_ok=True)
+    g = json.loads(src.read_text())
+    BASE = {"carriageway", "structures", "alignment", "median"}
+    COARSE = 0.000018          # ~2 m at this latitude
+    feats = []
+    for f in g["features"]:
+        cat = f["properties"].get("category")
+        if cat not in BASE:
+            continue
+        geom = f["geometry"]
+        if geom["type"] == "LineString":
+            c = _simplify([tuple(p) for p in geom["coordinates"]], tol_deg=COARSE)
+            if len(c) < 2:
+                continue
+            geom = dict(type="LineString", coordinates=[[round(x, 6), round(y, 6)]
+                                                        for x, y in c])
+        feats.append(dict(type="Feature", geometry=geom,
+                          properties=dict(category=cat)))
+    out = webdir / "basemap.geojson"
+    out.write_text(json.dumps(dict(type="FeatureCollection", features=feats),
+                              separators=(",", ":")))
+    return len(feats), out.stat().st_size
+
+
 def _write_web_layers(webdir):
     """Constraint atlas + junction candidates, simplified for the browser."""
     src = OUT_DATA / "atlas.geojson"
@@ -302,6 +347,10 @@ if __name__ == "__main__":
     # building outlines; simplifying to 0.5 m and dropping single-point clutter keeps
     # every feature JDA needs to cross-check while staying loadable on a phone.
     _write_web_layers(OUT_DATA.parent.parent / "web" / "public")
+    bm = _write_basemap(OUT_DATA.parent.parent / "web" / "public")
+    if bm:
+        print(f"basemap        : {bm[0]:,} surveyed features, {bm[1]/1024:.0f} KB "
+              f"(replaces OSM tiles)")
 
     # the Next.js app reads the same file, so both dashboards render identical figures
     web = OUT_DATA.parent.parent / "web" / "public"

@@ -20,30 +20,14 @@ TPL = Path(__file__).parent / "pitch_template.html"
 
 
 def _test_count():
-    """
-    Count the tests rather than typing the number.
-
-    It was typed as 26 and stayed 26 while the suite grew past ninety, which is exactly
-    the failure this whole project exists to point out in someone else's data.
-    """
-    import re
-    import subprocess
-    try:
-        # pytest's own count, so this can never disagree with what is quoted elsewhere.
-        # A regex over "def test_" undercounts: parametrised tests expand to several
-        # cases each, and 85 functions collect as 96.
-        out = subprocess.run(["uv", "run", "pytest", "--collect-only", "-q"],
-                             cwd=ROOT, capture_output=True, text=True, timeout=180).stdout
-        m = re.search(r"(\d+) tests? collected", out)
-        if m:
-            return m.group(1)
-    except Exception:
-        pass
-    n = 0
-    for f in (ROOT / "tests").glob("test_*.py"):
-        n += len(re.findall(r"^def test_", f.read_text(), re.M))
-    return str(n)
-
+    """Test count from the last pytest run. See service_docs._tests."""
+    f = OUT_DATA / "testcount.json"
+    if f.exists():
+        try:
+            return str(json.loads(f.read_text())["collected"])
+        except Exception:
+            pass
+    return "many"
 
 def build():
     d = json.loads((OUT_DATA / "corridor.json").read_text())
