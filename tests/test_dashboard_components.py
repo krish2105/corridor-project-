@@ -84,3 +84,51 @@ def test_toggles_expose_their_state_to_assistive_tech(path):
     src = path.read_text()
     if "onClick" in src and ("setCode" in src or "toggle" in src.lower()):
         assert "aria-pressed" in src or "aria-label" in src, path.name
+
+
+# --- basemap -----------------------------------------------------------------
+def test_the_map_has_no_third_party_tile_source():
+    """
+    Regression. The map pulled raster tiles from tile.openstreetmap.org, which breaches
+    the OSM Tile Usage Policy for a commercial deliverable and could be rate-limited or
+    blocked without warning while a client is looking at it.
+    """
+    src = _code_only(COMPONENTS / "CorridorMap.tsx")
+    assert "openstreetmap.org" not in src
+    assert "tile." not in src
+
+
+def test_the_basemap_is_the_survey_drawing():
+    src = _code_only(COMPONENTS / "CorridorMap.tsx")
+    assert "basemap.geojson" in src
+    for layer in ("base-structures", "base-carriageway", "base-median"):
+        assert layer in src, layer
+
+
+def test_basemap_colours_come_from_theme_tokens_not_literals():
+    """A literal here is a light-theme colour that survives into dark mode."""
+    src = _code_only(COMPONENTS / "CorridorMap.tsx")
+    for tok in ("--sunk", "--rule-hard", "--rule"):
+        assert tok in src, tok
+
+
+def test_the_map_repaints_when_the_theme_changes():
+    """
+    Regression. Paint colours resolve from CSS custom properties once, at construction,
+    so without an observer a switch to dark left the map a bright grey rectangle on a
+    near-black page. The initial call matters too: the ground layer is created in the
+    constructor, so a first load in dark mode was wrong without it.
+    """
+    src = _code_only(COMPONENTS / "CorridorMap.tsx")
+    assert "MutationObserver" in src
+    assert "data-theme" in src
+    assert "prefers-color-scheme" in src
+    assert src.count("repaint()") >= 1
+
+
+def test_the_theme_listener_is_removed_with_the_same_reference():
+    """Passing a fresh arrow to removeEventListener removes nothing and leaks per mount."""
+    src = _code_only(COMPONENTS / "CorridorMap.tsx")
+    assert 'mq.addEventListener("change", repaint)' in src
+    assert 'mq.removeEventListener("change", repaint)' in src
+    assert "themeWatch.disconnect()" in src

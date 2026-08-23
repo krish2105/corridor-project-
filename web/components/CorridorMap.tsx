@@ -49,6 +49,41 @@ export default function CorridorMap({ junctions }: { junctions: Junction[] }) {
     // and the alignment. Surveyed geometry is also the more defensible backdrop for a
     // survey deliverable than a generic tile layer. No third party, no key, nothing to
     // rate-limit, and the page makes zero cross-origin requests.
+    // Repaint the basemap when the theme changes.
+    //
+    // The basemap colours are read from CSS custom properties, which only resolve once.
+    // Without this the map keeps its light palette after a switch to dark and renders as
+    // a bright grey rectangle on a near-black page. The old raster basemap had the same
+    // problem and no way to fix it; owning the geometry is what makes this possible.
+    //
+    // Declared here rather than inside the fetch so the cleanup can remove the same
+    // function reference it registered — passing a fresh arrow to removeEventListener
+    // removes nothing and leaks a listener per mount.
+    const repaint = () => {
+      const m2 = map.current;
+      if (!m2) return;
+      const cs = getComputedStyle(document.documentElement);
+      const get = (n: string, f: string) => cs.getPropertyValue(n).trim() || f;
+      const sunk = get("--sunk", "#E9EBE6");
+      const hard = get("--rule-hard", "#B4BBB4");
+      const soft = get("--rule", "#D5D9D4");
+      try {
+        if (m2.getLayer("ground")) m2.setPaintProperty("ground", "background-color", sunk);
+        if (m2.getLayer("base-structures"))
+          m2.setPaintProperty("base-structures", "line-color", soft);
+        if (m2.getLayer("base-carriageway"))
+          m2.setPaintProperty("base-carriageway", "line-color", hard);
+        if (m2.getLayer("base-median"))
+          m2.setPaintProperty("base-median", "line-color", hard);
+      } catch { /* map torn down mid-observation */ }
+    };
+    const themeWatch = new MutationObserver(repaint);
+    themeWatch.observe(document.documentElement, {
+      attributes: true, attributeFilter: ["data-theme"],
+    });
+    const mq = window.matchMedia("(prefers-color-scheme: dark)");
+    mq.addEventListener("change", repaint);
+
     const ink = getComputedStyle(document.documentElement);
     const tok = (n: string, f: string) => ink.getPropertyValue(n).trim() || f;
     const m = new maplibregl.Map({
@@ -131,13 +166,23 @@ export default function CorridorMap({ junctions }: { junctions: Junction[] }) {
           filter: ["==", ["get", "category"], "median"],
           paint: { "line-color": rule, "line-width": .8, "line-dasharray": [3, 2] } },
           "corridor-halo");
+        // The observer only fires on CHANGE, and the ground layer is created in the
+        // constructor before any of this exists. Without one call here, a first load in
+        // dark mode paints a light ground under dark linework.
+        repaint();
       }).catch(() => { /* basemap is context; the junctions and corridor stand alone */ });
+
       m.fitBounds(bounds, { padding: 70, maxZoom: 14, duration: 0 });
     };
     if (m.isStyleLoaded()) build();
     else m.once("load", build);
 
-    return () => { m.remove(); map.current = null; };
+    return () => {
+      themeWatch.disconnect();
+      mq.removeEventListener("change", repaint);
+      m.remove();
+      map.current = null;
+    };
   }, [junctions]);
 
   async function toggleLayer(def: LayerDef) {
