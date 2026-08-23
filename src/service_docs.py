@@ -169,6 +169,114 @@ def proven_table(c):
     return _table(["Finding", "Evidence"], rows)
 
 
+# Order matters: capacity feeds delay, delay feeds economics, and everything feeds the
+# exports. Listed here once so the README and anyone running the pipeline agree.
+PIPELINE_ORDER = [
+    ("inspect_tmc",  "raw workbook structure, no reshaping"),
+    ("audit",        "-> out/audit_report.md"),
+    ("atlas",        "-> out/corridor_constraint_atlas.pdf"),
+    ("medians",      "U-turn feasibility from the DIVIDER linework"),
+    ("capacity",     "measured widths, v/c, design life"),
+    ("scheme_test",  "does the JDA U-turn scheme work?"),
+    ("delay",        "queue, spillback, corridor journey time"),
+    ("economics",    "cost of delay, banded"),
+    ("sensitivity",  "every conclusion across its assumption grid"),
+    ("export",       "-> out/data/corridor.json"),
+    ("reports",      "-> D6, D8, D9"),
+    ("dictionary",   "-> docs/data_dictionary.md"),
+    ("service_docs", "-> out/service/ and README.md"),
+    ("build_page",   "-> out/corridor_audit.html"),
+]
+
+
+def readme(c):
+    """
+    The repository front door.
+
+    Generated for the same reason the others are: it said 26 tests and listed a findings
+    table that stopped at the audit, understating the work by five findings. It is the
+    first thing anyone reads.
+    """
+    errata = (ROOT / "docs" / "jaipur_corridor_study.md").read_text().count("ERRATUM")
+    inferred = sum(1 for v in JUNCTION_COORDS.values() if v[4] != "name match")
+    named = len(JUNCTION_COORDS) - inferred
+    md = [
+        "# Corridor — JDA survey audit, Jaipur",
+        "",
+        "An independent re-derivation of a classified turning movement survey commissioned "
+        f"by the Jaipur Development Authority: {c['meta'].get('n_junctions')} junctions on "
+        f"**{CORRIDOR_ROAD}**, counted over 24 hours and issued as twelve Excel workbooks.",
+        "",
+        "The pipeline parses every cell, recomputes every stored total from its components, "
+        "and reports what disagrees. It then reads the accompanying CAD survey drawing to "
+        "establish what is physically on the corridor, tests the scheme being built on that "
+        "data, and prices the delay the corridor is already carrying.",
+        "",
+        "## What it found",
+        "",
+        proven_table(c),
+        "",
+        "Design rule throughout: **never trust a stored total.** Everything is recomputed, "
+        "and discrepancies go to a register rather than being absorbed.",
+        "",
+        "Every conclusion is re-run across its own assumption grid before publication — "
+        f"{c['sen'].get('combinations')} combinations for the capacity and scheme "
+        f"conclusions, {len(c['sen'].get('queue', []))} for the queue conclusion.",
+        "",
+        "## Running it",
+        "",
+        "Source data is not in this repo — the workbooks and CAD are the client's. Place "
+        "them under `00_source/` and:",
+        "",
+        "```bash",
+        "uv sync",
+        f"uv run pytest                     # {c['tests']} tests",
+    ] + [f"uv run python src/{m}.py{' ' * max(1, 14 - len(m))}# {d}"
+         for m, d in PIPELINE_ORDER] + [
+        "npm run dev --prefix web          # dashboard on :3210",
+        "```",
+        "",
+        "Every module runs standalone and prints its own verification metric. A module that "
+        "fails its gate reports the failure rather than continuing.",
+        "",
+        "## Layout",
+        "",
+        f"- `src/` — {c['modules']} modules. `tmc_parse` and `audit` are the core; `atlas`, "
+        "`medians` and `dxf_inventory` read the CAD survey; `capacity`, `scheme_test`, "
+        "`delay` and `economics` carry the findings.",
+        "- `web/` — Next.js dashboard, reading the same `corridor.json` as the static report.",
+        "- `docs/data_dictionary.md` — every field in every published file, with units. "
+        "Generated, so a field added without a description fails a test.",
+        f"- `docs/jaipur_corridor_study.md` — the methodology, with inline `ERRATUM` blocks "
+        f"correcting {errata} defects in its own worked code.",
+        "",
+        "**Documents are generated, not written.** Reports, the data dictionary, the "
+        "commercial pack and this README all build from pipeline output, because "
+        "hand-written figures go stale silently — this file claimed 26 tests while the "
+        f"suite held {c['tests']}.",
+        "",
+        "## Caveats, stated",
+        "",
+        f"{named} junction positions are fixed by an exact name match against JDA's scheme "
+        f"and confirmed by chainage along the survey drawing; {inferred} are placed by "
+        "position in that sequence and labelled inferred throughout.",
+        "",
+        "The severity weighting in the constraint atlas is a judgement, not a measurement. "
+        "Half the PCU correction is unresolvable because the survey's class scheme lumps "
+        "roughly half the stream into one column, so those figures are published as bands.",
+        "",
+        "Critical-gap values are from literature rather than measured here; they are "
+        "Raff-derived and so likely biased high, which makes the U-turn finding "
+        "conservative. Detection accuracy is unverified until footage exists — the "
+        "pipeline and its gates are built and self-tested, and no accuracy figure is "
+        "claimed.",
+        "",
+        "Rupee figures are banded and the value of time is a policy input, not a "
+        "measurement. Substituting the authority's own approved rates changes one table.",
+    ]
+    return "\n".join(md)
+
+
 def implementation_plan(c):
     meta, cap, sen = c["meta"], c["cap"], c["sen"]
     md = [
@@ -657,6 +765,8 @@ def capability_statement(c):
 if __name__ == "__main__":
     SERVICE.mkdir(parents=True, exist_ok=True)
     c = context()
+    rm = readme(c)
+    (ROOT / "README.md").write_text(rm)
     docs = {
         "01_master_implementation_plan.md": implementation_plan(c),
         "02_commercial_pack.md": commercial_pack(c),
@@ -665,9 +775,10 @@ if __name__ == "__main__":
     for name, body in docs.items():
         (SERVICE / name).write_text(body)
 
-    joined = "\n".join(docs.values())
+    joined = "\n".join(docs.values()) + rm
     checks = [
         ("all three documents written", all(len(v) > 3000 for v in docs.values())),
+        ("README generated", len(rm) > 2000),
         (f"test count bound ({c['tests']})", str(c["tests"]) in joined),
         ("design-life finding present",
          str(c["cap"].get("design_life_first_failure_med", "x")) in joined),
@@ -686,4 +797,5 @@ if __name__ == "__main__":
           f"**{sum(g for _n, g in checks)} of {len(checks)}**")
     for name, body in docs.items():
         print(f"  out/service/{name:<38}{len(body):>7,} chars")
+    print(f"  README.md{'':<32}{len(rm):>7,} chars")
     print(f"\n  {len(c['built'])} of {len(DELIVERABLES)} deliverables exist on disk.")

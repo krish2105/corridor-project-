@@ -92,3 +92,68 @@ def test_no_placeholder_text_anywhere(docs):
     joined = "\n".join(docs.values())
     for token in ("TODO", "TBD", "XXX", "lorem", "FIXME"):
         assert token not in joined
+
+
+# --- README ------------------------------------------------------------------
+def test_readme_names_only_modules_that_exist():
+    """The documented run order is the first thing anyone follows. It must work."""
+    from src.config import ROOT
+    from src.service_docs import PIPELINE_ORDER
+    for module, _desc in PIPELINE_ORDER:
+        assert (ROOT / "src" / f"{module}.py").exists(), module
+
+
+def test_readme_run_order_respects_dependencies():
+    """capacity feeds delay, delay feeds economics, and exports come after all of them."""
+    from src.service_docs import PIPELINE_ORDER
+    order = [m for m, _ in PIPELINE_ORDER]
+    assert order.index("capacity") < order.index("delay")
+    assert order.index("delay") < order.index("economics")
+    assert order.index("economics") < order.index("export")
+    assert order.index("export") < order.index("reports")
+    assert order.index("reports") < order.index("service_docs")
+
+
+def test_readme_carries_the_full_findings_table(c):
+    """Regression: the README's table stopped at the audit, understating by five findings."""
+    from src.service_docs import readme
+    rm = readme(c)
+    assert str(c["cap"]["design_life_first_failure_med"]) in rm
+    assert str(c["dly"]["spillback_count"]) in rm
+    assert str(c["eco"]["annual_cost_crore"][1]) in rm
+    assert str(c["tests"]) in rm
+
+
+def test_readme_on_disk_matches_what_the_generator_produces(c):
+    """
+    If these diverge, someone edited the output instead of the generator.
+
+    Note the self-reference: the README states the test count, so ADDING a test makes
+    this fail until `uv run python src/service_docs.py` is re-run. That is deliberate —
+    it is the same relationship a lockfile has to a manifest, and it is what stops the
+    figure going stale the way "26 tests" did. Regenerating is the fix, not an exemption.
+    """
+    from src.config import ROOT
+    from src.service_docs import readme
+    on_disk = (ROOT / "README.md").read_text()
+    assert on_disk == readme(c)
+
+
+def test_readme_states_the_errata_count_from_the_document_itself(c):
+    from src.config import ROOT
+    from src.service_docs import readme
+    actual = (ROOT / "docs" / "jaipur_corridor_study.md").read_text().count("ERRATUM")
+    assert f"correcting {actual} defects" in readme(c)
+
+
+def test_superseded_docs_say_so_at_the_top():
+    """
+    docs/inputs_models_stack.md describes a six-arm roundabout, not this corridor.
+    Anyone following its input list would collect the wrong things.
+    """
+    from src.config import ROOT
+    doc = (ROOT / "docs" / "inputs_models_stack.md").read_text()
+    assert "SUPERSEDED" in doc[:400]
+    runbook = (ROOT / "docs" / "setup_runbook.md").read_text()
+    i = runbook.find("# PROMPT ORDER")
+    assert i > 0 and "SUPERSEDED" in runbook[i:i + 400]

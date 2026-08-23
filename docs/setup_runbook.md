@@ -130,6 +130,13 @@ Check what you're on:
 
 # PROMPT ORDER
 
+> **SUPERSEDED.** The session table below describes the original build order, written
+> before the survey data arrived and while a roundabout was the subject. Every phase it
+> lists is now delivered or explicitly not required, and the module layout it implies is
+> not the one in `src/`. `CLAUDE.md` carries the current layout and verification gates.
+> Kept for provenance.
+
+
 **The DWG changes the sequence.** Probing the CAD now moves ahead of building the network, because if that survey is georeferenced you'll use it instead of OSM — sub-metre accuracy instead of 5–10 m.
 
 | # | Session | Needs | Model | Effort |

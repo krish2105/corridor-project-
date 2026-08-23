@@ -1,3 +1,23 @@
+> # SUPERSEDED — roundabout pilot
+>
+> **This document describes a different project.** It was written for a single six-arm
+> roundabout (Mahima / Vande Mataram Circle) before the JDA survey data arrived, and its
+> Parts 1–4 — the input list, the session ordering, the "exact circle coordinates", the
+> five-input plan — do not apply to the corridor. The supplied data is six four-arm
+> junctions on New Sanganer Road with twelve movements each and no roundabout.
+>
+> **What governs instead:** `CLAUDE.md` for the rules and the module layout,
+> `docs/data_dictionary.md` for the published fields, and `out/service/` for scope and
+> deliverables. The inputs still outstanding are listed in the master implementation plan.
+>
+> **What is still valid here:** Part 3 (camera settings and the thermal limit) and
+> Part 5 (the stack decisions). Both carried over to the corridor unchanged, and Part 3
+> is the basis of the field plan.
+>
+> Kept for provenance. Do not follow Parts 1, 2 or 4.
+
+---
+
 # Inputs, Models, and Tech Stack
 ### Mahima / Vande Mataram Circle pilot
 

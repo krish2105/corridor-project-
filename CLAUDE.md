@@ -198,9 +198,10 @@ corridor/
 │   └── extracted/    # the 12 TMC workbooks
 ├── docs/
 │   ├── jaipur_corridor_study.md      # full methodology — the reference
-│   ├── sessions_v2_roundabout.md     # superseded roundabout plan
-│   ├── inputs_models_stack.md        # inputs, models, stack decisions
-│   └── setup_runbook.md              # environment setup
+│   ├── data_dictionary.md            # generated — every published field, with units
+│   ├── sessions_v2_roundabout.md     # SUPERSEDED — roundabout plan, provenance only
+│   ├── inputs_models_stack.md        # SUPERSEDED except Parts 3 and 5 (camera, stack)
+│   └── setup_runbook.md              # environment setup; its PROMPT ORDER is superseded
 ├── data/
 │   ├── raw/          # video, downloaded OSM
 │   ├── gcps/         # ground control points
@@ -246,6 +247,7 @@ corridor/
 ├── web/              # Next.js dashboard
 ├── tests/
 └── out/              # deliverables, audit report, static JSON
+    └── service/      # generated — implementation plan, commercial pack, capability
 ```
 
 ## Reference
