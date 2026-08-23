@@ -32,9 +32,9 @@ type Series = {
                  mean_residual_pct: number; worst_residual_pct: number }[];
 };
 
-export default function Exhibits({ safety, profiles, exhibits, sensitivity, capacity, standards }: {
+export default function Exhibits({ safety, profiles, exhibits, sensitivity, capacity, standards, scheme }: {
   safety: never; profiles: never; exhibits: never; sensitivity: never; capacity: never;
-  standards: never;
+  standards: never; scheme: never;
 }) {
   const [prof, setProf] = useState<Series | null>(null);
   const [exh, setExh] = useState<Series | null>(null);
@@ -85,7 +85,7 @@ export default function Exhibits({ safety, profiles, exhibits, sensitivity, capa
             </p>
           </Reveal>
           <div style={{ marginTop: "1.4rem" }}>
-            <Reveal delay={.1}><Standards s={standards} /></Reveal>
+            <Reveal delay={.1}><Standards s={standards} gap={scheme as never} /></Reveal>
           </div>
         </section>
       )}

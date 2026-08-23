@@ -381,6 +381,25 @@ FIELDS.update({
 })
 
 
+FIELDS.update({
+    "t_c_optimistic": "Composition-weighted critical gap, optimistic end, seconds.",
+    "t_c_conservative": "The same at the conservative end.",
+    "t_c_required": "The critical gap at which this bay would exactly serve its demand. "
+                    "The question about an unmeasured input is not whether it is right "
+                    "but how wrong it would have to be to change the answer.",
+    "margin_s": "t_c_optimistic minus t_c_required. Positive means the bay would need a "
+                "gap SHORTER than we already assume before it could serve the demand.",
+    "works_at_our_optimistic": "Whether this bay serves its demand at our optimistic gap.",
+    "gap_required_median_s": "Median t_c_required across the corridor.",
+    "gap_ours_median_s": "Median of our optimistic weighted gaps.",
+    "gap_margin_s": "The difference between them.",
+    "irc_sp41_car_gap_s": "IRC:SP:41-1994 App III Table III-2 passenger-car critical gap, "
+                          "four-lane crossing under stop control, large-city adjustment "
+                          "applied. Our weighted gaps sit below it because two-wheelers "
+                          "are half the stream, so our figures favour the scheme.",
+    "gap_source": "Where the critical gaps come from and what they are benchmarked against.",
+})
+
 def _is_data_keyed(d):
     if not isinstance(d, dict) or not d:
         return False

@@ -261,5 +261,120 @@
  "no_gap_vc_threshold": 3.0,
  "forced_uturns_per_hour": 3780.5543432524278,
  "s1_serviceable": 0,
- "n_junctions": 6
+ "n_junctions": 6,
+ "gap_benchmark": [
+  {
+   "junction": "TMC-01",
+   "approach": "Mansarover Metro",
+   "t_c_optimistic": 3.64,
+   "t_c_conservative": 4.87,
+   "t_c_required": 3.82,
+   "margin_s": -0.18,
+   "works_at_our_optimistic": true
+  },
+  {
+   "junction": "TMC-01",
+   "approach": "Sanganer Stadium",
+   "t_c_optimistic": 3.64,
+   "t_c_conservative": 4.87,
+   "t_c_required": 2.55,
+   "margin_s": 1.09,
+   "works_at_our_optimistic": false
+  },
+  {
+   "junction": "TMC-02",
+   "approach": "Mansarover Metro",
+   "t_c_optimistic": 3.54,
+   "t_c_conservative": 4.74,
+   "t_c_required": 2.53,
+   "margin_s": 1.01,
+   "works_at_our_optimistic": false
+  },
+  {
+   "junction": "TMC-02",
+   "approach": "Sanganer Stadium",
+   "t_c_optimistic": 3.54,
+   "t_c_conservative": 4.74,
+   "t_c_required": 5.88,
+   "margin_s": -2.34,
+   "works_at_our_optimistic": true
+  },
+  {
+   "junction": "TMC-03",
+   "approach": "Mansarover Metro",
+   "t_c_optimistic": 3.47,
+   "t_c_conservative": 4.65,
+   "t_c_required": 2.59,
+   "margin_s": 0.88,
+   "works_at_our_optimistic": false
+  },
+  {
+   "junction": "TMC-03",
+   "approach": "Sanganer Stadium",
+   "t_c_optimistic": 3.47,
+   "t_c_conservative": 4.65,
+   "t_c_required": 2.67,
+   "margin_s": 0.8,
+   "works_at_our_optimistic": false
+  },
+  {
+   "junction": "TMC-04",
+   "approach": "Mansarover Metro",
+   "t_c_optimistic": 3.5,
+   "t_c_conservative": 4.7,
+   "t_c_required": 2.32,
+   "margin_s": 1.18,
+   "works_at_our_optimistic": false
+  },
+  {
+   "junction": "TMC-04",
+   "approach": "Sanganer Stadium",
+   "t_c_optimistic": 3.5,
+   "t_c_conservative": 4.7,
+   "t_c_required": 2.65,
+   "margin_s": 0.85,
+   "works_at_our_optimistic": false
+  },
+  {
+   "junction": "TMC-05",
+   "approach": "Mansarover Metro",
+   "t_c_optimistic": 3.52,
+   "t_c_conservative": 4.73,
+   "t_c_required": 2.62,
+   "margin_s": 0.9,
+   "works_at_our_optimistic": false
+  },
+  {
+   "junction": "TMC-05",
+   "approach": "Sanganer Stadium",
+   "t_c_optimistic": 3.52,
+   "t_c_conservative": 4.73,
+   "t_c_required": 1.62,
+   "margin_s": 1.9,
+   "works_at_our_optimistic": false
+  },
+  {
+   "junction": "TMC-06",
+   "approach": "Mansarover Metro",
+   "t_c_optimistic": 3.55,
+   "t_c_conservative": 4.76,
+   "t_c_required": 3.56,
+   "margin_s": -0.01,
+   "works_at_our_optimistic": true
+  },
+  {
+   "junction": "TMC-06",
+   "approach": "Sanganer Stadium",
+   "t_c_optimistic": 3.55,
+   "t_c_conservative": 4.76,
+   "t_c_required": 2.08,
+   "margin_s": 1.47,
+   "works_at_our_optimistic": false
+  }
+ ],
+ "gap_required_median_s": 2.6,
+ "gap_ours_median_s": 3.53,
+ "gap_margin_s": 0.93,
+ "irc_sp41_car_gap_s": 5.5,
+ "gap_source": "composition-weighted from literature; benchmarked against IRC:SP:41-1994 Appendix III Table III-2 passenger-car value"
 }

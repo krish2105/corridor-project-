@@ -208,3 +208,42 @@ def test_capacity_is_not_scaled_by_width_twice():
 def test_a_narrower_carriageway_gets_less_capacity():
     base, bw = ASSUMPTIONS["base_capacity_pcu_per_dir"], ASSUMPTIONS["base_width_per_dir_m"]
     assert round(base * (7.0 / bw)) < round(base * (7.2 / bw)) < base
+
+
+# --- critical gap, benchmarked ------------------------------------------------
+def test_capacity_falls_as_the_critical_gap_rises():
+    """The monotonicity the breakpoint bisection depends on."""
+    from src.scheme_test import gap_capacity
+    assert gap_capacity(2500, 5.5, 2.2) < gap_capacity(2500, 3.5, 2.2)
+
+
+def test_the_breakpoint_gap_is_the_gap_that_exactly_serves_demand():
+    from src.scheme_test import breakpoint_gap, gap_capacity
+    demand, conflicting, tf = 400.0, 2800.0, 2.2
+    t = breakpoint_gap(demand, conflicting, tf)
+    assert gap_capacity(conflicting, t, tf) == pytest.approx(demand, rel=0.01)
+
+
+def test_the_composition_weighted_gap_sits_below_the_irc_car_value():
+    """
+    The per-CLASS gaps are not all below the IRC passenger-car figure, and should not be:
+    a truck needs a longer gap than a car. The property that matters is the
+    composition-WEIGHTED gap, which sits below it because two-wheelers are half this
+    stream and accept shorter gaps.
+
+    A lower gap means MORE bay capacity, so our weighted numbers are the generous end for
+    the scheme. The U-turn finding cannot be attacked as too pessimistic about gaps.
+    """
+    from src.scheme_test import CRITICAL_GAP_S, IRC_SP41_APPLIED, weighted_gap
+    share = {"TWO_W": 0.49, "CAR_BUCKET": 0.48, "AUTO_TRK_BUS": 0.03}
+    assert weighted_gap(share, 0) < IRC_SP41_APPLIED          # optimistic
+    assert weighted_gap(share, 1) < IRC_SP41_APPLIED          # conservative
+    # heavier classes must still need longer gaps than a car
+    assert CRITICAL_GAP_S["TWO_W"][0] < CRITICAL_GAP_S["CAR_BUCKET"][0]
+    assert CRITICAL_GAP_S["AUTO_TRK_BUS"][1] > CRITICAL_GAP_S["CAR_BUCKET"][1]
+
+
+def test_the_irc_benchmark_records_its_adjustment():
+    from src.scheme_test import IRC_SP41_CAR_GAP_S, IRC_SP41_LARGE_CITY_ADJ, IRC_SP41_APPLIED
+    assert IRC_SP41_APPLIED == IRC_SP41_CAR_GAP_S + IRC_SP41_LARGE_CITY_ADJ
+    assert IRC_SP41_LARGE_CITY_ADJ < 0

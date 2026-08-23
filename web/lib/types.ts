@@ -100,6 +100,11 @@ export type Corridor = {
     series_available: string[];
   } | null;
   scheme: {
+    gap_benchmark?: { junction: string; approach: string; t_c_optimistic: number;
+                      t_c_conservative: number; t_c_required: number; margin_s: number;
+                      works_at_our_optimistic: boolean }[];
+    gap_required_median_s?: number; gap_ours_median_s?: number; gap_margin_s?: number;
+    irc_sp41_car_gap_s?: number; gap_source?: string;
     no_gap_vc_threshold: number; fails_conservative: number; fails_optimistic: number;
     no_viable_gap: number; forced_uturns_per_hour: number;
     s1_serviceable: number; n_junctions: number;

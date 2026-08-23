@@ -22,7 +22,14 @@ type S = {
 };
 const nf = new Intl.NumberFormat("en-US");
 
-export default function Standards({ s }: { s: S }) {
+type Gap = {
+  gap_benchmark?: { junction: string; approach: string; t_c_optimistic: number;
+                    t_c_required: number; margin_s: number; works_at_our_optimistic: boolean }[];
+  gap_required_median_s?: number; gap_ours_median_s?: number; gap_margin_s?: number;
+  irc_sp41_car_gap_s?: number;
+};
+
+export default function Standards({ s, gap }: { s: S; gap?: Gap }) {
   return (
     <div className="stack">
       <div className="card">
@@ -80,6 +87,68 @@ export default function Standards({ s }: { s: S }) {
           settled the question. The correction is not our interpretation of the standard.</p>
         </div>
       </div>
+
+      {gap?.gap_benchmark && (
+        <div className="card">
+          <header>
+            <h3>The critical gap, benchmarked against the code</h3>
+            <span className="tag">{gap.gap_margin_s}s margin</span>
+          </header>
+          <div className="body">
+            <p className="col">The critical gap is the one input we did not measure, so
+            the useful question is not whether it is right but <strong>how wrong it would
+            have to be to change the answer</strong>. A lower gap means more bay capacity,
+            which favours the scheme.</p>
+
+            <div className="scope">
+              <div><span className="k num">{gap.gap_ours_median_s}s</span>
+                <span className="l">our weighted gap, optimistic</span></div>
+              <div><span className="k num" style={{ color: "var(--defect)" }}>
+                {gap.gap_required_median_s}s</span>
+                <span className="l">needed for the bays to work</span></div>
+              <div><span className="k num" style={{ color: "var(--ok)" }}>
+                {gap.gap_margin_s}s</span><span className="l">margin</span></div>
+              <div><span className="k num">{gap.irc_sp41_car_gap_s}s</span>
+                <span className="l">IRC:SP:41 passenger car</span></div>
+            </div>
+
+            <div className="tscroll">
+              <table>
+                <thead><tr><th>Junction</th><th>Approach</th>
+                  <th className="num">Ours</th><th className="num">Needed</th>
+                  <th className="num">Margin</th></tr></thead>
+                <tbody>
+                  {gap.gap_benchmark.map((r, i) => (
+                    <tr key={i}>
+                      <td>{r.junction}</td><td>{r.approach}</td>
+                      <td className="num">{r.t_c_optimistic.toFixed(2)}</td>
+                      <td className="num">{r.t_c_required.toFixed(2)}</td>
+                      <td className={"num " + (r.margin_s > 0 ? "bad" : "good")}>
+                        {r.margin_s > 0 ? "+" : ""}{r.margin_s.toFixed(2)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <p className="col" style={{ borderLeft: "3px solid var(--ok)", paddingLeft: ".9rem" }}>
+              <strong>Our gaps are the generous end, not the pessimistic one.</strong>{" "}
+              IRC:SP:41 Appendix III Table III-2 gives {gap.irc_sp41_car_gap_s}s for a
+              passenger car crossing a four-lane road under stop control, with the
+              large-city adjustment applied. Our composition-weighted figure sits below
+              that because two-wheelers are half this stream and accept shorter gaps.
+              Substituting the code&rsquo;s car value makes the finding{" "}
+              <em>stronger</em> &mdash; so the U-turn conclusion cannot be attacked as
+              being too pessimistic about gap acceptance.
+            </p>
+
+            <p className="src">Positive margin means that approach needs a gap
+            <em> shorter</em> than we already assume before its bay could serve the
+            demand. These values are literature, not measured on this corridor; a field
+            measurement is the outstanding item.</p>
+          </div>
+        </div>
+      )}
 
       <div className="card">
         <header><h3>Measured against the code</h3></header>

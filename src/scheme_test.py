@@ -77,6 +77,53 @@ ASSUMPTIONS = {
 }
 
 
+
+# IRC:SP:41-1994 Appendix III Table III-2, "Basic Critical Gap (secs) for Passenger Cars".
+# Crossing a 4-lane road under Stop control at roughly 48 km/h is about 6.0 s, with a
+# -0.5 s adjustment where population exceeds 2.5 lakh. Jaipur qualifies.
+#
+# This is a PASSENGER CAR value. Our composition-weighted gaps come out lower, because
+# two-wheelers are half this stream and accept shorter gaps. Lower critical gap means
+# MORE bay capacity, so our weighted numbers are the generous end for the scheme, and
+# substituting the code's car value makes the finding stronger rather than weaker. That
+# asymmetry is worth publishing: it means the U-turn conclusion cannot be attacked by
+# arguing the gaps are too pessimistic.
+IRC_SP41_CAR_GAP_S = 6.0
+IRC_SP41_LARGE_CITY_ADJ = -0.5
+IRC_SP41_APPLIED = IRC_SP41_CAR_GAP_S + IRC_SP41_LARGE_CITY_ADJ
+
+
+def breakpoint_gap(demand, conflicting, t_f, lo=0.05, hi=12.0):
+    """
+    The critical gap at which a bay would exactly serve its demand.
+
+    Answers the question that matters about a value we did not measure: not "is it
+    right" but "how wrong would it have to be to change the answer". Capacity falls
+    monotonically with t_c, so a bisection is exact.
+    """
+    for _ in range(200):
+        mid = (lo + hi) / 2
+        if gap_capacity(conflicting, mid, t_f) > demand:
+            lo = mid
+        else:
+            hi = mid
+    return (lo + hi) / 2
+
+
+def gap_benchmark(uturns, t_f_opt, t_f_cons):
+    """Our weighted gaps, the IRC car value, and the gap each bay would need."""
+    rows = []
+    for u in uturns:
+        need = breakpoint_gap(u["uturn_demand"], u["conflicting_flow"], t_f_opt)
+        rows.append(dict(junction=u["junction"], approach=u["approach"],
+                         t_c_optimistic=round(u["t_c_lo"], 2),
+                         t_c_conservative=round(u["t_c_hi"], 2),
+                         t_c_required=round(need, 2),
+                         margin_s=round(u["t_c_lo"] - need, 2),
+                         works_at_our_optimistic=need >= u["t_c_lo"]))
+    return rows
+
+
 def cap_ok(sc):
     """Junctions returned under planning capacity by the elevated scheme."""
     return int((sc.s2_vc < 1.0).sum())
@@ -252,4 +299,37 @@ if __name__ == "__main__":
         forced_uturns_per_hour=float(tot_forced),
         s1_serviceable=n_ok_s1, n_junctions=len(sc),
     ), indent=1, default=str))
+    # --- how wrong would the critical gap have to be? -------------------------
+    bench = gap_benchmark(res.to_dict("records") if hasattr(res, "to_dict") else res,
+                          FOLLOW_UP_S[0], FOLLOW_UP_S[1])
+    import statistics as _st
+    med_need = _st.median(r["t_c_required"] for r in bench)
+    med_opt = _st.median(r["t_c_optimistic"] for r in bench)
+    print("\n=== The critical gap is the value we did not measure ===")
+    print("  So the question is not whether it is right, but how wrong it would have to")
+    print("  be to change the answer. Lower gap = more bay capacity = better for the scheme.\n")
+    print(f"  {'junction':<10}{'approach':<20}{'ours (opt)':>11}{'needed':>9}{'margin':>9}")
+    print("  " + "-" * 60)
+    for r in bench:
+        print(f"  {r['junction']:<10}{r['approach'][:19]:<20}{r['t_c_optimistic']:>11.2f}"
+              f"{r['t_c_required']:>9.2f}{r['margin_s']:>9.2f}")
+    print(f"\n  median gap required for the bays to work : {med_need:.2f} s")
+    print(f"  our already-optimistic weighted value     : {med_opt:.2f} s")
+    print(f"  margin                                    : {med_opt - med_need:.2f} s")
+    print(f"\n  IRC:SP:41 App III Table III-2 passenger-car value, 4-lane crossing,")
+    print(f"  Stop control, large-city adjustment applied: {IRC_SP41_APPLIED} s")
+    print("  Our weighted gaps sit BELOW that because two-wheelers are half the stream.")
+    print("  Substituting the code's car value makes the finding stronger, not weaker,")
+    print("  so the conclusion cannot be attacked as too pessimistic on gaps.")
+
+    payload = json.loads((OUT_DATA / "scheme_test.json").read_text())
+    payload["gap_benchmark"] = bench
+    payload["gap_required_median_s"] = round(med_need, 2)
+    payload["gap_ours_median_s"] = round(med_opt, 2)
+    payload["gap_margin_s"] = round(med_opt - med_need, 2)
+    payload["irc_sp41_car_gap_s"] = IRC_SP41_APPLIED
+    payload["gap_source"] = ("composition-weighted from literature; benchmarked against "
+                             "IRC:SP:41-1994 Appendix III Table III-2 passenger-car value")
+    (OUT_DATA / "scheme_test.json").write_text(json.dumps(payload, indent=1))
+
     print(f"\nwritten: {OUT_DATA/'scheme_test.json'}")

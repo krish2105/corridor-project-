@@ -41,8 +41,10 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `auto` | PCU factor for auto-rickshaws. |
 | `band_high_pct` | High end of the PCU correction band, %. |
 | `band_low_pct` | Low end of the PCU correction band, %. |
+| `base_capacity_pcu_per_dir` | Tabulated capacity per direction at the base width, PCU/hour. Scaled by measured width, not by lane count. |
 | `base_pcu` | Corridor peak PCU on the survey's own factors, before correction. |
 | `base_total` | Total conflict points at a four-arm junction, from geometry. |
+| `base_width_per_dir_m` | Carriageway width per direction the tabulated capacity applies to, metres. |
 | `base_year` | Year the survey and all present-day figures refer to. |
 | `bays_planned_by_jda` | U-turn bays in the published scheme. |
 | `benefit_to_first_failure_crore` | Undiscounted benefit over the years the relief lasts. |
@@ -52,7 +54,7 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `cap_optimistic` | Bay capacity at the optimistic gap, veh/hour. |
 | `capacity` | Approach capacity, PCU/hour, lanes x lane capacity. |
 | `capacity_pcu_hr` | That approach's capacity, PCU/hour. |
-| `capacity_pcu_per_lane_hr` | Assumed lane capacity, PCU/lane/hour. |
+| `capacity_source` | The document and table the capacity comes from. |
 | `car` | PCU factor for cars. |
 | `category` | Constraint category. |
 | `caveat` | What the figure is NOT. Read before quoting it. |

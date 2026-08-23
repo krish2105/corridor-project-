@@ -802,7 +802,7 @@ export default function Page() {
           Kept in their own component so this file stays navigable. */}
       <Exhibits safety={d.safety as never} profiles={d.profiles as never}
                 exhibits={d.exhibits as never} sensitivity={sen as never}
-                capacity={cp as never} standards={d.standards as never} />
+                capacity={cp as never} standards={d.standards as never} scheme={sc as never} />
 
       {/* CHECK THE WORK */}
       <section>
