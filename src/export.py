@@ -86,6 +86,11 @@ def _economics():
     return json.loads(p.read_text()) if p.exists() else None
 
 
+def _standards():
+    p = OUT_DATA / "standards.json"
+    return json.loads(p.read_text()) if p.exists() else None
+
+
 def _safety():
     p = OUT_DATA / "safety.json"
     return json.loads(p.read_text()) if p.exists() else None
@@ -234,7 +239,8 @@ def _write_web_layers(webdir):
                   OUT_DATA / "capacity.json", OUT_DATA / "sensitivity.json",
                   OUT_DATA / "delay.json", OUT_DATA / "economics.json",
                   OUT_DATA / "safety.json", OUT_DATA / "profiles.json",
-                  OUT_DATA / "exhibits.json"):
+                  OUT_DATA / "exhibits.json",
+                  OUT_DATA / "standards.json"):
         if src_f.exists():
             _sh.copy(src_f, webdir / src_f.name)
 
@@ -360,6 +366,7 @@ def build():
         delay=_delay(),
         economics=_economics(),
         safety=_safety(),
+        standards=_standards(),
         profiles=_profiles(),
         exhibits=_exhibits(),
         junctions=junctions,

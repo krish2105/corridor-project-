@@ -1,0 +1,71 @@
+{
+ "jda_turning_claim_pct": 50.0,
+ "measured_turning_pct": 29.6,
+ "claim_overstatement": 1.7,
+ "jmrc_dpr_pcu": {
+  "two wheeler": 0.75,
+  "car": 1.0,
+  "auto": 2.0,
+  "truck": 2.2,
+  "MAV": 3.7,
+  "LCV": 1.4
+ },
+ "survey_pcu": {
+  "two wheeler": 0.5,
+  "MAV": 4.5
+ },
+ "interchange_warrant_pcu": 10000,
+ "interchange": [
+  {
+   "junction": "TMC-01",
+   "corridor_arms_pcu": 7280,
+   "floor_vs_warrant": 0.73
+  },
+  {
+   "junction": "TMC-02",
+   "corridor_arms_pcu": 6115,
+   "floor_vs_warrant": 0.61
+  },
+  {
+   "junction": "TMC-03",
+   "corridor_arms_pcu": 7507,
+   "floor_vs_warrant": 0.75
+  },
+  {
+   "junction": "TMC-04",
+   "corridor_arms_pcu": 6703,
+   "floor_vs_warrant": 0.67
+  },
+  {
+   "junction": "TMC-05",
+   "corridor_arms_pcu": 9864,
+   "floor_vs_warrant": 0.99
+  },
+  {
+   "junction": "TMC-06",
+   "corridor_arms_pcu": 7363,
+   "floor_vs_warrant": 0.74
+  }
+ ],
+ "zebra_ceiling_pcu_dir": 1250,
+ "zebra_over": 12,
+ "zebra_total": 12,
+ "median": {
+  "openings": 30,
+  "gaps": 29,
+  "closer_than_500m": 29,
+  "closest_m": 4,
+  "median_gap_m": 173,
+  "within_18_20m": 4,
+  "widths_checked": 30
+ },
+ "surveys_required_by_sp90": 7,
+ "surveys_run": 1,
+ "pedestrian_row_in_sp41_table_3_1": true,
+ "pedestrian_row_filled": false,
+ "unverified": [
+  "IRC:SP:84 clause 2.14 read from the 2014 edition; a 2019 edition exists and was not checked",
+  "IRC:103 zebra ceiling is from a revision draft, not the published 2022 edition, whose scan has no text layer",
+  "the 50% turning claim is news reporting, not a JDA document"
+ ]
+}

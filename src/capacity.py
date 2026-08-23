@@ -49,8 +49,31 @@ ASSUMPTIONS = {
     "phf_applied": True,
 }
 
-# Indo-HCM / IRC volume-capacity to Level of Service, urban arterial.
-LOS_BANDS = [(0.40, "A"), (0.60, "B"), (0.75, "C"), (0.90, "D"), (1.00, "E")]
+# Volume-capacity to Level of Service, MULTILANE DIVIDED URBAN ROAD.
+#
+# These were previously 0.40 / 0.60 / 0.75 / 0.90 and labelled "Indo-HCM / IRC". That
+# label was not supportable. A search of IRC:106-1990, draft IRC:106 (2022), IRC:92-1985
+# and 2017, IRC:SP:41-1994, IRC:SP:90-2010 and Indo-HCM chapters 2, 3, 5 and 6 found no
+# Indian standard publishing that set. The old bands were optimistic by a full grade in
+# several windows - most damagingly they reported v/c 0.86-0.90 as D when it is E, which
+# is the band meaning "at or near capacity, no usable gaps".
+#
+# Source: draft IRC:106 (2022), 1st Revision, Table 9, "LOS of Multilane Divided Urban
+# Roads based on V/C Ratio". DRAFT, not the published 1990 edition - stated wherever a
+# letter is published. IRC:106-1990 itself gives no v/c bands at all; its only v/c anchor
+# is clause 8.1, "normally LOS C be adopted for design of urban roads... volume will be
+# around 0.70 times the maximum capacity", which agrees with the C ceiling below.
+LOS_BANDS = [(0.30, "A"), (0.45, "B"), (0.70, "C"), (0.85, "D"), (1.00, "E")]
+LOS_SOURCE = "draft IRC:106 (2022) Table 9, multilane divided urban road"
+
+# A v/c-derived letter is a MIDBLOCK measure. Indo-HCM Chapter 5 defines an urban road
+# segment as the length between two controlled intersections, and for junctions Chapter 6
+# uses CONTROL DELAY (Table 6.7: A <=20 s/PCU ... F >130), warning that there is no
+# one-to-one correspondence between delay and v/c. We cannot compute control delay - it
+# needs signal timings the survey does not contain - so what is published is the v/c and
+# its midblock letter, labelled as such, and never a junction LOS letter.
+LOS_CAVEAT = ("midblock measure; Indo-HCM grades junctions on control delay, which needs "
+              "signal timings this survey does not contain")
 
 # Every corridor approach exceeds v/c 1.0 against the IRC:106 planning capacity, by
 # 1.25 to 2.41. Sustained flow above capacity is not physically possible, so the

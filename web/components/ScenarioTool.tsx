@@ -1,5 +1,5 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 /**
  * Change the assumptions and watch the conclusions.
@@ -58,8 +58,14 @@ export default function ScenarioTool(p: Props) {
     };
   }, [uplift, laneCap, lanes, gap, growth, p]);
 
-  // record the combination the moment it is viewed
-  if (!seen.has(key)) setTimeout(() => setSeen((s) => new Set(s).add(key)), 0);
+  // Record the combination once it has been viewed.
+  //
+  // In useEffect, not in render. The first version fired a setTimeout from the render
+  // body, which React correctly warns about: a side effect during render can update a
+  // component that has not mounted, and in StrictMode it runs twice.
+  useEffect(() => {
+    setSeen((s) => (s.has(key) ? s : new Set(s).add(key)));
+  }, [key]);
 
   const held =
     (result.uturnFails ?? 0) > 0 &&

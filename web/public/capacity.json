@@ -231,7 +231,7 @@
    "residual_pcu": 1420,
    "vc_before": 1.38,
    "vc_after": 0.59,
-   "los_after": "B"
+   "los_after": "C"
   },
   {
    "junction": "TMC-01",
@@ -241,7 +241,7 @@
    "residual_pcu": 1696,
    "vc_before": 1.65,
    "vc_after": 0.71,
-   "los_after": "C"
+   "los_after": "D"
   },
   {
    "junction": "TMC-02",
@@ -261,7 +261,7 @@
    "residual_pcu": 948,
    "vc_before": 1.25,
    "vc_after": 0.39,
-   "los_after": "A"
+   "los_after": "B"
   },
   {
    "junction": "TMC-03",
@@ -271,7 +271,7 @@
    "residual_pcu": 847,
    "vc_before": 1.56,
    "vc_after": 0.35,
-   "los_after": "A"
+   "los_after": "B"
   },
   {
    "junction": "TMC-03",
@@ -281,7 +281,7 @@
    "residual_pcu": 849,
    "vc_before": 1.57,
    "vc_after": 0.35,
-   "los_after": "A"
+   "los_after": "B"
   },
   {
    "junction": "TMC-04",
@@ -291,7 +291,7 @@
    "residual_pcu": 1127,
    "vc_before": 1.46,
    "vc_after": 0.47,
-   "los_after": "B"
+   "los_after": "C"
   },
   {
    "junction": "TMC-04",
@@ -311,7 +311,7 @@
    "residual_pcu": 1231,
    "vc_before": 2.41,
    "vc_after": 0.51,
-   "los_after": "B"
+   "los_after": "C"
   },
   {
    "junction": "TMC-05",
@@ -321,7 +321,7 @@
    "residual_pcu": 870,
    "vc_before": 1.7,
    "vc_after": 0.36,
-   "los_after": "A"
+   "los_after": "B"
   },
   {
    "junction": "TMC-06",

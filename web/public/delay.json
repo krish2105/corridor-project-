@@ -220,14 +220,14 @@
    "approach": "from Mansarover Metro",
    "vc": 0.59,
    "mean_delay_min": 0.0,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-01",
    "approach": "from Sanganer Stadium",
    "vc": 0.71,
    "mean_delay_min": 0.0,
-   "los": "C"
+   "los": "D"
   },
   {
    "junction": "TMC-02",
@@ -241,28 +241,28 @@
    "approach": "from Sanganer Stadium",
    "vc": 0.4,
    "mean_delay_min": 0.0,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-03",
    "approach": "from Mansarover Metro",
    "vc": 0.35,
    "mean_delay_min": 0.0,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-03",
    "approach": "from Sanganer Stadium",
    "vc": 0.35,
    "mean_delay_min": 0.0,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-04",
    "approach": "from Mansarover Metro",
    "vc": 0.47,
    "mean_delay_min": 0.0,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-04",
@@ -276,14 +276,14 @@
    "approach": "from Mansarover Metro",
    "vc": 0.51,
    "mean_delay_min": 0.0,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-05",
    "approach": "from Sanganer Stadium",
    "vc": 0.36,
    "mean_delay_min": 0.0,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-06",

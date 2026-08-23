@@ -191,7 +191,7 @@
    "s1_uturn_vc_opt": 1.9354315515723384,
    "s1_works": false,
    "s2_vc": 0.71,
-   "s2_los": "C",
+   "s2_los": "D",
    "through_pct": 57.2
   },
   {
@@ -203,7 +203,7 @@
    "s1_uturn_vc_opt": 2.035395996955214,
    "s1_works": false,
    "s2_vc": 0.39,
-   "s2_los": "A",
+   "s2_los": "B",
    "through_pct": 68.3
   },
   {
@@ -215,7 +215,7 @@
    "s1_uturn_vc_opt": 2.299658214916832,
    "s1_works": false,
    "s2_vc": 0.35,
-   "s2_los": "A",
+   "s2_los": "B",
    "through_pct": 77.4
   },
   {
@@ -239,7 +239,7 @@
    "s1_uturn_vc_opt": 21.015151787322466,
    "s1_works": false,
    "s2_vc": 0.36,
-   "s2_los": "A",
+   "s2_los": "B",
    "through_pct": 78.7
   },
   {

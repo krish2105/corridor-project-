@@ -75,13 +75,20 @@ def los_grid(bins, day, capacities):
     return pd.DataFrame(rows)
 
 
-def cumulative(bins, day, junction, arm, capacity):
+def cumulative(bins, day, junction, arm, capacity, band=(0.85, 1.20)):
     """
     Newell's cumulative arrival-departure curves for one approach.
 
     Departures are capped at capacity, which is what makes the curves separate. The
     queue never discharges below zero: once a queue exists, departures run AT capacity
     until it clears, which is the whole behaviour a mean-delay figure throws away.
+
+    ARRIVALS ARE MEASURED. DEPARTURES ARE ASSUMED.
+    A(t) is a running sum of counted vehicles. D(t) needs a discharge rate, which a
+    classified count does not contain - it is the one contestable line on the figure. So
+    it is drawn as a BAND across a capacity range rather than a single line, which puts
+    the assumption on the page where a reader can argue with it instead of burying it
+    inside an averaged delay figure. Same discipline as the PCU bands.
     """
     ser = hourly_pcu(bins, day, junction, arm)
     if ser is None:
@@ -94,19 +101,28 @@ def cumulative(bins, day, junction, arm, capacity):
     # fifteen-minute bin can discharge a quarter of it. Comparing a per-bin arrival
     # against an hourly capacity lets everything through and reports no queue at all,
     # which is what this did on an approach running at v/c 2.41.
-    per_bin_capacity = capacity * BIN_HOURS
-    dep, queue, carried = [], [], 0.0
-    for v in per_bin:
-        want = v + carried
-        served = min(want, per_bin_capacity)
-        carried = want - served
-        dep.append(served)
-        queue.append(carried)
-    departures = pd.Series(dep, index=per_bin.index).cumsum()
+    def discharge(mult):
+        cap_bin = capacity * mult * BIN_HOURS
+        dep, queue, carried = [], [], 0.0
+        for v in per_bin:
+            want = v + carried
+            served = min(want, cap_bin)
+            carried = want - served
+            dep.append(served)
+            queue.append(carried)
+        return (pd.Series(dep, index=per_bin.index).cumsum(), queue)
+
+    mid, q_mid = discharge(1.0)
+    lo, q_lo = discharge(band[0])          # slower discharge: longer queue
+    hi, q_hi = discharge(band[1])          # faster discharge: shorter queue
     return pd.DataFrame(dict(t=[t.strftime("%H:%M") for t in per_bin.index],
                              arrivals=arrivals.round(0).values,
-                             departures=departures.round(0).values,
-                             queue=[round(q) for q in queue]))
+                             departures=mid.round(0).values,
+                             dep_low=lo.round(0).values,
+                             dep_high=hi.round(0).values,
+                             queue=[round(q) for q in q_mid],
+                             queue_low=[round(q) for q in q_hi],
+                             queue_high=[round(q) for q in q_lo]))
 
 
 if __name__ == "__main__":
@@ -154,7 +170,11 @@ if __name__ == "__main__":
         r = cum.iloc[i]
         print(f"  {r.t:<8}{r.arrivals:>10,.0f}{r.departures:>10,.0f}{r.queue:>9,.0f}")
     peak_q = cum["queue"].max()
-    print(f"\n  peak queue {peak_q:,.0f} PCU; final unserved {cum['queue'].iloc[-1]:,.0f} PCU")
+    print(f"\n  peak queue {peak_q:,.0f} PCU, band {cum['queue_low'].max():,.0f} to "
+          f"{cum['queue_high'].max():,.0f}; final unserved {cum['queue'].iloc[-1]:,.0f} PCU")
+    print("  Arrivals are MEASURED. The departure curve is the one assumption on this")
+    print("  figure, so it is drawn as a band across a discharge range rather than a")
+    print("  line - the assumption goes on the page instead of inside an averaged number.")
     print("  The vertical gap between the curves is the queue at that moment, the")
     print("  horizontal gap is the delay to a vehicle arriving then, and the area")
     print("  between them is total delay. All three are read off one picture.")
@@ -169,6 +189,9 @@ if __name__ == "__main__":
         mean_hours_over=round(float(over.mean()), 2),
         cumulative=dict(junction=binding["junction"], approach=binding["approach"],
                         capacity=binding["capacity"], peak_queue_pcu=int(peak_q),
+                        peak_queue_band=[int(cum["queue_low"].max()),
+                                         int(cum["queue_high"].max())],
+                        discharge_band=[0.85, 1.20],
                         series=cum.to_dict("records")),
     ), indent=1))
     print(f"\nwritten: {OUT_DATA/'profiles.json'}")

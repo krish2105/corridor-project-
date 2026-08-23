@@ -23,11 +23,31 @@ from src.scheme_test import (CRITICAL_GAP_S, FOLLOW_UP_S, NO_GAP_VC, gap_capacit
 
 # --- level of service --------------------------------------------------------
 @pytest.mark.parametrize("vc,grade", [
-    (0.10, "A"), (0.40, "A"), (0.41, "B"), (0.60, "B"),
-    (0.75, "C"), (0.90, "D"), (1.00, "E"), (1.01, "F"), (2.41, "F"),
+    (0.10, "A"), (0.30, "A"), (0.31, "B"), (0.45, "B"),
+    (0.46, "C"), (0.70, "C"), (0.71, "D"), (0.85, "D"),
+    (0.86, "E"), (1.00, "E"), (1.01, "F"), (2.41, "F"),
 ])
 def test_los_bands(vc, grade):
+    """
+    Draft IRC:106 (2022) Table 9, multilane divided urban road.
+
+    These were 0.40/0.60/0.75/0.90 and labelled "Indo-HCM / IRC" until a search of
+    IRC:106-1990, draft IRC:106 (2022), IRC:92, IRC:SP:41, IRC:SP:90 and Indo-HCM
+    chapters 2, 3, 5 and 6 found no Indian standard publishing that set. The old bands
+    reported v/c 0.86-0.90 as D when it is E.
+    """
     assert los(vc) == grade
+
+
+def test_the_los_bands_name_their_source():
+    from src.capacity import LOS_SOURCE
+    assert "IRC:106" in LOS_SOURCE and "draft" in LOS_SOURCE.lower()
+
+
+def test_a_v_c_letter_is_labelled_a_midblock_measure():
+    """Indo-HCM grades junctions on control delay, which this survey cannot support."""
+    from src.capacity import LOS_CAVEAT
+    assert "midblock" in LOS_CAVEAT and "control delay" in LOS_CAVEAT
 
 
 def test_los_bands_are_monotonic():

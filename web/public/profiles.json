@@ -150,7 +150,7 @@
    "hour": "12:30",
    "pcu": 2132,
    "vc": 0.888,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-01",
@@ -158,7 +158,7 @@
    "hour": "12:45",
    "pcu": 2099,
    "vc": 0.875,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-01",
@@ -166,7 +166,7 @@
    "hour": "13:00",
    "pcu": 2064,
    "vc": 0.86,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-01",
@@ -190,7 +190,7 @@
    "hour": "13:45",
    "pcu": 1799,
    "vc": 0.749,
-   "los": "C"
+   "los": "D"
   },
   {
    "junction": "TMC-01",
@@ -198,7 +198,7 @@
    "hour": "14:00",
    "pcu": 1750,
    "vc": 0.729,
-   "los": "C"
+   "los": "D"
   },
   {
    "junction": "TMC-01",
@@ -206,7 +206,7 @@
    "hour": "14:15",
    "pcu": 1703,
    "vc": 0.71,
-   "los": "C"
+   "los": "D"
   },
   {
    "junction": "TMC-01",
@@ -214,7 +214,7 @@
    "hour": "14:30",
    "pcu": 1683,
    "vc": 0.701,
-   "los": "C"
+   "los": "D"
   },
   {
    "junction": "TMC-01",
@@ -222,7 +222,7 @@
    "hour": "14:45",
    "pcu": 1687,
    "vc": 0.703,
-   "los": "C"
+   "los": "D"
   },
   {
    "junction": "TMC-01",
@@ -238,7 +238,7 @@
    "hour": "15:15",
    "pcu": 1730,
    "vc": 0.721,
-   "los": "C"
+   "los": "D"
   },
   {
    "junction": "TMC-01",
@@ -246,7 +246,7 @@
    "hour": "15:30",
    "pcu": 1711,
    "vc": 0.713,
-   "los": "C"
+   "los": "D"
   },
   {
    "junction": "TMC-01",
@@ -254,7 +254,7 @@
    "hour": "15:45",
    "pcu": 1764,
    "vc": 0.735,
-   "los": "C"
+   "los": "D"
   },
   {
    "junction": "TMC-01",
@@ -262,7 +262,7 @@
    "hour": "16:00",
    "pcu": 1791,
    "vc": 0.746,
-   "los": "C"
+   "los": "D"
   },
   {
    "junction": "TMC-01",
@@ -294,7 +294,7 @@
    "hour": "17:00",
    "pcu": 2126,
    "vc": 0.886,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-01",
@@ -374,7 +374,7 @@
    "hour": "19:30",
    "pcu": 2159,
    "vc": 0.9,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-01",
@@ -390,7 +390,7 @@
    "hour": "20:00",
    "pcu": 1793,
    "vc": 0.747,
-   "los": "C"
+   "los": "D"
   },
   {
    "junction": "TMC-01",
@@ -406,7 +406,7 @@
    "hour": "20:30",
    "pcu": 1430,
    "vc": 0.596,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-01",
@@ -414,7 +414,7 @@
    "hour": "20:45",
    "pcu": 1414,
    "vc": 0.589,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-01",
@@ -422,7 +422,7 @@
    "hour": "21:00",
    "pcu": 1355,
    "vc": 0.565,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-01",
@@ -430,7 +430,7 @@
    "hour": "21:15",
    "pcu": 1355,
    "vc": 0.565,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-01",
@@ -438,7 +438,7 @@
    "hour": "21:30",
    "pcu": 1293,
    "vc": 0.539,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-01",
@@ -446,7 +446,7 @@
    "hour": "21:45",
    "pcu": 1182,
    "vc": 0.492,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-01",
@@ -454,7 +454,7 @@
    "hour": "22:00",
    "pcu": 1138,
    "vc": 0.474,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-01",
@@ -470,7 +470,7 @@
    "hour": "22:30",
    "pcu": 1106,
    "vc": 0.461,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-01",
@@ -478,7 +478,7 @@
    "hour": "22:45",
    "pcu": 1156,
    "vc": 0.482,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-01",
@@ -486,7 +486,7 @@
    "hour": "23:00",
    "pcu": 1096,
    "vc": 0.457,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-01",
@@ -502,7 +502,7 @@
    "hour": "23:30",
    "pcu": 836,
    "vc": 0.348,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-01",
@@ -702,7 +702,7 @@
    "hour": "05:45",
    "pcu": 748,
    "vc": 0.311,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-01",
@@ -710,7 +710,7 @@
    "hour": "06:00",
    "pcu": 904,
    "vc": 0.377,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-01",
@@ -718,7 +718,7 @@
    "hour": "06:15",
    "pcu": 1113,
    "vc": 0.464,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-01",
@@ -726,7 +726,7 @@
    "hour": "06:30",
    "pcu": 1246,
    "vc": 0.519,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-01",
@@ -734,7 +734,7 @@
    "hour": "06:45",
    "pcu": 1433,
    "vc": 0.597,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-01",
@@ -902,7 +902,7 @@
    "hour": "12:45",
    "pcu": 2141,
    "vc": 0.892,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-01",
@@ -910,7 +910,7 @@
    "hour": "13:00",
    "pcu": 2082,
    "vc": 0.868,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-01",
@@ -918,7 +918,7 @@
    "hour": "13:15",
    "pcu": 2085,
    "vc": 0.869,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-01",
@@ -926,7 +926,7 @@
    "hour": "13:30",
    "pcu": 2102,
    "vc": 0.876,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-01",
@@ -934,7 +934,7 @@
    "hour": "13:45",
    "pcu": 2128,
    "vc": 0.887,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-01",
@@ -950,7 +950,7 @@
    "hour": "14:15",
    "pcu": 2138,
    "vc": 0.891,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-01",
@@ -958,7 +958,7 @@
    "hour": "14:30",
    "pcu": 2067,
    "vc": 0.861,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-01",
@@ -990,7 +990,7 @@
    "hour": "15:30",
    "pcu": 1774,
    "vc": 0.739,
-   "los": "C"
+   "los": "D"
   },
   {
    "junction": "TMC-01",
@@ -1014,7 +1014,7 @@
    "hour": "16:15",
    "pcu": 2073,
    "vc": 0.864,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-01",
@@ -1102,7 +1102,7 @@
    "hour": "19:00",
    "pcu": 2112,
    "vc": 0.88,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-01",
@@ -1126,7 +1126,7 @@
    "hour": "19:45",
    "pcu": 1704,
    "vc": 0.71,
-   "los": "C"
+   "los": "D"
   },
   {
    "junction": "TMC-01",
@@ -1182,7 +1182,7 @@
    "hour": "21:30",
    "pcu": 1296,
    "vc": 0.54,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-01",
@@ -1190,7 +1190,7 @@
    "hour": "21:45",
    "pcu": 1264,
    "vc": 0.527,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-01",
@@ -1206,7 +1206,7 @@
    "hour": "22:15",
    "pcu": 913,
    "vc": 0.38,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-01",
@@ -1214,7 +1214,7 @@
    "hour": "22:30",
    "pcu": 910,
    "vc": 0.379,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-01",
@@ -1222,7 +1222,7 @@
    "hour": "22:45",
    "pcu": 908,
    "vc": 0.378,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-01",
@@ -1230,7 +1230,7 @@
    "hour": "23:00",
    "pcu": 863,
    "vc": 0.36,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-01",
@@ -1238,7 +1238,7 @@
    "hour": "23:15",
    "pcu": 810,
    "vc": 0.337,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-01",
@@ -1422,7 +1422,7 @@
    "hour": "05:00",
    "pcu": 725,
    "vc": 0.302,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-01",
@@ -1430,7 +1430,7 @@
    "hour": "05:15",
    "pcu": 898,
    "vc": 0.374,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-01",
@@ -1446,7 +1446,7 @@
    "hour": "05:45",
    "pcu": 1246,
    "vc": 0.519,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-01",
@@ -1454,7 +1454,7 @@
    "hour": "06:00",
    "pcu": 1382,
    "vc": 0.576,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-01",
@@ -1678,7 +1678,7 @@
    "hour": "13:45",
    "pcu": 2140,
    "vc": 0.891,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-02",
@@ -1686,7 +1686,7 @@
    "hour": "14:00",
    "pcu": 2143,
    "vc": 0.893,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-02",
@@ -1694,7 +1694,7 @@
    "hour": "14:15",
    "pcu": 2083,
    "vc": 0.868,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-02",
@@ -1702,7 +1702,7 @@
    "hour": "14:30",
    "pcu": 2099,
    "vc": 0.875,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-02",
@@ -1742,7 +1742,7 @@
    "hour": "15:45",
    "pcu": 2070,
    "vc": 0.863,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-02",
@@ -1758,7 +1758,7 @@
    "hour": "16:15",
    "pcu": 2072,
    "vc": 0.863,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-02",
@@ -1774,7 +1774,7 @@
    "hour": "16:45",
    "pcu": 2062,
    "vc": 0.859,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-02",
@@ -1790,7 +1790,7 @@
    "hour": "17:15",
    "pcu": 2149,
    "vc": 0.895,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-02",
@@ -1902,7 +1902,7 @@
    "hour": "20:45",
    "pcu": 1763,
    "vc": 0.735,
-   "los": "C"
+   "los": "D"
   },
   {
    "junction": "TMC-02",
@@ -1934,7 +1934,7 @@
    "hour": "21:45",
    "pcu": 1431,
    "vc": 0.596,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-02",
@@ -1942,7 +1942,7 @@
    "hour": "22:00",
    "pcu": 1374,
    "vc": 0.573,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-02",
@@ -1950,7 +1950,7 @@
    "hour": "22:15",
    "pcu": 1310,
    "vc": 0.546,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-02",
@@ -1958,7 +1958,7 @@
    "hour": "22:30",
    "pcu": 1216,
    "vc": 0.507,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-02",
@@ -1966,7 +1966,7 @@
    "hour": "22:45",
    "pcu": 1134,
    "vc": 0.473,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-02",
@@ -1990,7 +1990,7 @@
    "hour": "23:30",
    "pcu": 953,
    "vc": 0.397,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-02",
@@ -1998,7 +1998,7 @@
    "hour": "23:45",
    "pcu": 897,
    "vc": 0.374,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-02",
@@ -2006,7 +2006,7 @@
    "hour": "00:00",
    "pcu": 810,
    "vc": 0.338,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-02",
@@ -2142,7 +2142,7 @@
    "hour": "04:15",
    "pcu": 740,
    "vc": 0.309,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-02",
@@ -2150,7 +2150,7 @@
    "hour": "04:30",
    "pcu": 800,
    "vc": 0.333,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-02",
@@ -2158,7 +2158,7 @@
    "hour": "04:45",
    "pcu": 808,
    "vc": 0.336,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-02",
@@ -2166,7 +2166,7 @@
    "hour": "05:00",
    "pcu": 839,
    "vc": 0.35,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-02",
@@ -2174,7 +2174,7 @@
    "hour": "05:15",
    "pcu": 881,
    "vc": 0.367,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-02",
@@ -2198,7 +2198,7 @@
    "hour": "06:00",
    "pcu": 1118,
    "vc": 0.466,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-02",
@@ -2206,7 +2206,7 @@
    "hour": "06:15",
    "pcu": 1200,
    "vc": 0.5,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-02",
@@ -2214,7 +2214,7 @@
    "hour": "06:30",
    "pcu": 1281,
    "vc": 0.534,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-02",
@@ -2246,7 +2246,7 @@
    "hour": "08:15",
    "pcu": 1753,
    "vc": 0.73,
-   "los": "C"
+   "los": "D"
   },
   {
    "junction": "TMC-02",
@@ -2254,7 +2254,7 @@
    "hour": "08:30",
    "pcu": 2053,
    "vc": 0.856,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-02",
@@ -2326,7 +2326,7 @@
    "hour": "10:45",
    "pcu": 2141,
    "vc": 0.892,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-02",
@@ -2334,7 +2334,7 @@
    "hour": "11:00",
    "pcu": 2088,
    "vc": 0.87,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-02",
@@ -2350,7 +2350,7 @@
    "hour": "11:30",
    "pcu": 2065,
    "vc": 0.86,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-02",
@@ -2358,7 +2358,7 @@
    "hour": "11:45",
    "pcu": 2068,
    "vc": 0.862,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-02",
@@ -2374,7 +2374,7 @@
    "hour": "12:15",
    "pcu": 2077,
    "vc": 0.866,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-02",
@@ -2390,7 +2390,7 @@
    "hour": "12:45",
    "pcu": 2153,
    "vc": 0.897,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-02",
@@ -2414,7 +2414,7 @@
    "hour": "13:30",
    "pcu": 2103,
    "vc": 0.876,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-02",
@@ -2422,7 +2422,7 @@
    "hour": "13:45",
    "pcu": 2140,
    "vc": 0.892,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-02",
@@ -2430,7 +2430,7 @@
    "hour": "14:00",
    "pcu": 2144,
    "vc": 0.894,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-02",
@@ -2438,7 +2438,7 @@
    "hour": "14:15",
    "pcu": 2062,
    "vc": 0.859,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-02",
@@ -2478,7 +2478,7 @@
    "hour": "15:30",
    "pcu": 2054,
    "vc": 0.856,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-02",
@@ -2486,7 +2486,7 @@
    "hour": "15:45",
    "pcu": 2079,
    "vc": 0.866,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-02",
@@ -2494,7 +2494,7 @@
    "hour": "16:00",
    "pcu": 2130,
    "vc": 0.887,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-02",
@@ -2630,7 +2630,7 @@
    "hour": "20:15",
    "pcu": 2120,
    "vc": 0.883,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-02",
@@ -2646,7 +2646,7 @@
    "hour": "20:45",
    "pcu": 1782,
    "vc": 0.743,
-   "los": "C"
+   "los": "D"
   },
   {
    "junction": "TMC-02",
@@ -2670,7 +2670,7 @@
    "hour": "21:30",
    "pcu": 1434,
    "vc": 0.598,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-02",
@@ -2678,7 +2678,7 @@
    "hour": "21:45",
    "pcu": 1389,
    "vc": 0.579,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-02",
@@ -2686,7 +2686,7 @@
    "hour": "22:00",
    "pcu": 1343,
    "vc": 0.559,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-02",
@@ -2694,7 +2694,7 @@
    "hour": "22:15",
    "pcu": 1320,
    "vc": 0.55,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-02",
@@ -2702,7 +2702,7 @@
    "hour": "22:30",
    "pcu": 1221,
    "vc": 0.509,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-02",
@@ -2710,7 +2710,7 @@
    "hour": "22:45",
    "pcu": 1109,
    "vc": 0.462,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-02",
@@ -2726,7 +2726,7 @@
    "hour": "23:15",
    "pcu": 956,
    "vc": 0.399,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-02",
@@ -2734,7 +2734,7 @@
    "hour": "23:30",
    "pcu": 835,
    "vc": 0.348,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-02",
@@ -2742,7 +2742,7 @@
    "hour": "23:45",
    "pcu": 797,
    "vc": 0.332,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-02",
@@ -2750,7 +2750,7 @@
    "hour": "00:00",
    "pcu": 755,
    "vc": 0.314,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-02",
@@ -2942,7 +2942,7 @@
    "hour": "06:00",
    "pcu": 751,
    "vc": 0.313,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-02",
@@ -2950,7 +2950,7 @@
    "hour": "06:15",
    "pcu": 851,
    "vc": 0.354,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-02",
@@ -2966,7 +2966,7 @@
    "hour": "06:45",
    "pcu": 1152,
    "vc": 0.48,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-02",
@@ -2974,7 +2974,7 @@
    "hour": "07:00",
    "pcu": 1262,
    "vc": 0.526,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-03",
@@ -3414,7 +3414,7 @@
    "hour": "21:30",
    "pcu": 1726,
    "vc": 0.719,
-   "los": "C"
+   "los": "D"
   },
   {
    "junction": "TMC-03",
@@ -3462,7 +3462,7 @@
    "hour": "23:00",
    "pcu": 1314,
    "vc": 0.547,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-03",
@@ -3470,7 +3470,7 @@
    "hour": "23:15",
    "pcu": 1239,
    "vc": 0.516,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-03",
@@ -3486,7 +3486,7 @@
    "hour": "23:45",
    "pcu": 896,
    "vc": 0.373,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-03",
@@ -3494,7 +3494,7 @@
    "hour": "00:00",
    "pcu": 877,
    "vc": 0.366,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-03",
@@ -3502,7 +3502,7 @@
    "hour": "00:15",
    "pcu": 742,
    "vc": 0.309,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-03",
@@ -3598,7 +3598,7 @@
    "hour": "03:15",
    "pcu": 754,
    "vc": 0.314,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-03",
@@ -3606,7 +3606,7 @@
    "hour": "03:30",
    "pcu": 842,
    "vc": 0.351,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-03",
@@ -3614,7 +3614,7 @@
    "hour": "03:45",
    "pcu": 835,
    "vc": 0.348,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-03",
@@ -3622,7 +3622,7 @@
    "hour": "04:00",
    "pcu": 882,
    "vc": 0.368,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-03",
@@ -3630,7 +3630,7 @@
    "hour": "04:15",
    "pcu": 903,
    "vc": 0.376,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-03",
@@ -3654,7 +3654,7 @@
    "hour": "05:00",
    "pcu": 1212,
    "vc": 0.505,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-03",
@@ -3662,7 +3662,7 @@
    "hour": "05:15",
    "pcu": 1398,
    "vc": 0.583,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-03",
@@ -3678,7 +3678,7 @@
    "hour": "05:45",
    "pcu": 1755,
    "vc": 0.731,
-   "los": "C"
+   "los": "D"
   },
   {
    "junction": "TMC-03",
@@ -4134,7 +4134,7 @@
    "hour": "20:45",
    "pcu": 2077,
    "vc": 0.865,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-03",
@@ -4222,7 +4222,7 @@
    "hour": "23:30",
    "pcu": 1264,
    "vc": 0.527,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-03",
@@ -4238,7 +4238,7 @@
    "hour": "00:00",
    "pcu": 868,
    "vc": 0.362,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-03",
@@ -4246,7 +4246,7 @@
    "hour": "00:15",
    "pcu": 773,
    "vc": 0.322,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-03",
@@ -4254,7 +4254,7 @@
    "hour": "00:30",
    "pcu": 794,
    "vc": 0.331,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-03",
@@ -4262,7 +4262,7 @@
    "hour": "00:45",
    "pcu": 767,
    "vc": 0.319,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-03",
@@ -4270,7 +4270,7 @@
    "hour": "01:00",
    "pcu": 745,
    "vc": 0.31,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-03",
@@ -4390,7 +4390,7 @@
    "hour": "04:45",
    "pcu": 764,
    "vc": 0.318,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-03",
@@ -4398,7 +4398,7 @@
    "hour": "05:00",
    "pcu": 785,
    "vc": 0.327,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-03",
@@ -4406,7 +4406,7 @@
    "hour": "05:15",
    "pcu": 808,
    "vc": 0.337,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-03",
@@ -4414,7 +4414,7 @@
    "hour": "05:30",
    "pcu": 897,
    "vc": 0.374,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-03",
@@ -4430,7 +4430,7 @@
    "hour": "06:00",
    "pcu": 1096,
    "vc": 0.457,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-03",
@@ -4438,7 +4438,7 @@
    "hour": "06:15",
    "pcu": 1243,
    "vc": 0.518,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-03",
@@ -4462,7 +4462,7 @@
    "hour": "07:00",
    "pcu": 1773,
    "vc": 0.739,
-   "los": "C"
+   "los": "D"
   },
   {
    "junction": "TMC-04",
@@ -4942,7 +4942,7 @@
    "hour": "22:45",
    "pcu": 1383,
    "vc": 0.576,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-04",
@@ -4950,7 +4950,7 @@
    "hour": "23:00",
    "pcu": 1271,
    "vc": 0.529,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-04",
@@ -4958,7 +4958,7 @@
    "hour": "23:15",
    "pcu": 1156,
    "vc": 0.482,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-04",
@@ -4974,7 +4974,7 @@
    "hour": "23:45",
    "pcu": 877,
    "vc": 0.366,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-04",
@@ -4982,7 +4982,7 @@
    "hour": "00:00",
    "pcu": 815,
    "vc": 0.339,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-04",
@@ -5126,7 +5126,7 @@
    "hour": "04:30",
    "pcu": 778,
    "vc": 0.324,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-04",
@@ -5134,7 +5134,7 @@
    "hour": "04:45",
    "pcu": 845,
    "vc": 0.352,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-04",
@@ -5142,7 +5142,7 @@
    "hour": "05:00",
    "pcu": 906,
    "vc": 0.378,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-04",
@@ -5166,7 +5166,7 @@
    "hour": "05:45",
    "pcu": 1160,
    "vc": 0.483,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-04",
@@ -5174,7 +5174,7 @@
    "hour": "06:00",
    "pcu": 1301,
    "vc": 0.542,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-04",
@@ -5182,7 +5182,7 @@
    "hour": "06:15",
    "pcu": 1416,
    "vc": 0.59,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-04",
@@ -5654,7 +5654,7 @@
    "hour": "21:45",
    "pcu": 1683,
    "vc": 0.701,
-   "los": "C"
+   "los": "D"
   },
   {
    "junction": "TMC-04",
@@ -5678,7 +5678,7 @@
    "hour": "22:30",
    "pcu": 1307,
    "vc": 0.544,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-04",
@@ -5686,7 +5686,7 @@
    "hour": "22:45",
    "pcu": 1193,
    "vc": 0.497,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-04",
@@ -5702,7 +5702,7 @@
    "hour": "23:15",
    "pcu": 912,
    "vc": 0.38,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-04",
@@ -5710,7 +5710,7 @@
    "hour": "23:30",
    "pcu": 801,
    "vc": 0.334,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-04",
@@ -5902,7 +5902,7 @@
    "hour": "05:30",
    "pcu": 743,
    "vc": 0.309,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-04",
@@ -5910,7 +5910,7 @@
    "hour": "05:45",
    "pcu": 805,
    "vc": 0.336,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-04",
@@ -5918,7 +5918,7 @@
    "hour": "06:00",
    "pcu": 884,
    "vc": 0.369,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-04",
@@ -5934,7 +5934,7 @@
    "hour": "06:30",
    "pcu": 1246,
    "vc": 0.519,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-04",
@@ -5942,7 +5942,7 @@
    "hour": "06:45",
    "pcu": 1403,
    "vc": 0.585,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-04",
@@ -6126,7 +6126,7 @@
    "hour": "13:15",
    "pcu": 2095,
    "vc": 0.873,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-05",
@@ -6150,7 +6150,7 @@
    "hour": "14:00",
    "pcu": 2061,
    "vc": 0.859,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-05",
@@ -6350,7 +6350,7 @@
    "hour": "20:15",
    "pcu": 2051,
    "vc": 0.855,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-05",
@@ -6358,7 +6358,7 @@
    "hour": "20:30",
    "pcu": 1771,
    "vc": 0.738,
-   "los": "C"
+   "los": "D"
   },
   {
    "junction": "TMC-05",
@@ -6374,7 +6374,7 @@
    "hour": "21:00",
    "pcu": 1276,
    "vc": 0.532,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-05",
@@ -6390,7 +6390,7 @@
    "hour": "21:30",
    "pcu": 843,
    "vc": 0.351,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-05",
@@ -6646,7 +6646,7 @@
    "hour": "05:30",
    "pcu": 775,
    "vc": 0.323,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-05",
@@ -6654,7 +6654,7 @@
    "hour": "05:45",
    "pcu": 955,
    "vc": 0.398,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-05",
@@ -6662,7 +6662,7 @@
    "hour": "06:00",
    "pcu": 1218,
    "vc": 0.507,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-05",
@@ -6678,7 +6678,7 @@
    "hour": "06:30",
    "pcu": 1702,
    "vc": 0.709,
-   "los": "C"
+   "los": "D"
   },
   {
    "junction": "TMC-05",
@@ -7094,7 +7094,7 @@
    "hour": "20:15",
    "pcu": 2154,
    "vc": 0.897,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-05",
@@ -7118,7 +7118,7 @@
    "hour": "21:00",
    "pcu": 1356,
    "vc": 0.565,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-05",
@@ -7126,7 +7126,7 @@
    "hour": "21:15",
    "pcu": 1086,
    "vc": 0.453,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-05",
@@ -7134,7 +7134,7 @@
    "hour": "21:30",
    "pcu": 811,
    "vc": 0.338,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-05",
@@ -7390,7 +7390,7 @@
    "hour": "05:30",
    "pcu": 727,
    "vc": 0.303,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-05",
@@ -7406,7 +7406,7 @@
    "hour": "06:00",
    "pcu": 1279,
    "vc": 0.533,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-05",
@@ -7422,7 +7422,7 @@
    "hour": "06:30",
    "pcu": 1767,
    "vc": 0.736,
-   "los": "C"
+   "los": "D"
   },
   {
    "junction": "TMC-05",
@@ -7830,7 +7830,7 @@
    "hour": "20:00",
    "pcu": 1756,
    "vc": 0.732,
-   "los": "C"
+   "los": "D"
   },
   {
    "junction": "TMC-06",
@@ -7838,7 +7838,7 @@
    "hour": "20:15",
    "pcu": 1691,
    "vc": 0.705,
-   "los": "C"
+   "los": "D"
   },
   {
    "junction": "TMC-06",
@@ -7870,7 +7870,7 @@
    "hour": "21:15",
    "pcu": 1398,
    "vc": 0.582,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-06",
@@ -7878,7 +7878,7 @@
    "hour": "21:30",
    "pcu": 1333,
    "vc": 0.555,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-06",
@@ -7886,7 +7886,7 @@
    "hour": "21:45",
    "pcu": 1235,
    "vc": 0.515,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-06",
@@ -7894,7 +7894,7 @@
    "hour": "22:00",
    "pcu": 1122,
    "vc": 0.468,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-06",
@@ -7910,7 +7910,7 @@
    "hour": "22:30",
    "pcu": 924,
    "vc": 0.385,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-06",
@@ -7918,7 +7918,7 @@
    "hour": "22:45",
    "pcu": 828,
    "vc": 0.345,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-06",
@@ -7926,7 +7926,7 @@
    "hour": "23:00",
    "pcu": 763,
    "vc": 0.318,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-06",
@@ -8126,7 +8126,7 @@
    "hour": "05:15",
    "pcu": 794,
    "vc": 0.331,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-06",
@@ -8134,7 +8134,7 @@
    "hour": "05:30",
    "pcu": 913,
    "vc": 0.381,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-06",
@@ -8150,7 +8150,7 @@
    "hour": "06:00",
    "pcu": 1262,
    "vc": 0.526,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-06",
@@ -8398,7 +8398,7 @@
    "hour": "14:30",
    "pcu": 2132,
    "vc": 0.888,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-06",
@@ -8406,7 +8406,7 @@
    "hour": "14:45",
    "pcu": 2086,
    "vc": 0.869,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-06",
@@ -8414,7 +8414,7 @@
    "hour": "15:00",
    "pcu": 2086,
    "vc": 0.869,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-06",
@@ -8422,7 +8422,7 @@
    "hour": "15:15",
    "pcu": 2068,
    "vc": 0.862,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-06",
@@ -8430,7 +8430,7 @@
    "hour": "15:30",
    "pcu": 2049,
    "vc": 0.854,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-06",
@@ -8446,7 +8446,7 @@
    "hour": "16:00",
    "pcu": 2064,
    "vc": 0.86,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-06",
@@ -8454,7 +8454,7 @@
    "hour": "16:15",
    "pcu": 2107,
    "vc": 0.878,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-06",
@@ -8590,7 +8590,7 @@
    "hour": "20:30",
    "pcu": 2132,
    "vc": 0.888,
-   "los": "D"
+   "los": "E"
   },
   {
    "junction": "TMC-06",
@@ -8638,7 +8638,7 @@
    "hour": "22:00",
    "pcu": 1792,
    "vc": 0.747,
-   "los": "C"
+   "los": "D"
   },
   {
    "junction": "TMC-06",
@@ -8646,7 +8646,7 @@
    "hour": "22:15",
    "pcu": 1714,
    "vc": 0.714,
-   "los": "C"
+   "los": "D"
   },
   {
    "junction": "TMC-06",
@@ -8670,7 +8670,7 @@
    "hour": "23:00",
    "pcu": 1430,
    "vc": 0.596,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-06",
@@ -8678,7 +8678,7 @@
    "hour": "23:15",
    "pcu": 1353,
    "vc": 0.564,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-06",
@@ -8686,7 +8686,7 @@
    "hour": "23:30",
    "pcu": 1306,
    "vc": 0.544,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-06",
@@ -8694,7 +8694,7 @@
    "hour": "23:45",
    "pcu": 1242,
    "vc": 0.517,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-06",
@@ -8702,7 +8702,7 @@
    "hour": "00:00",
    "pcu": 1174,
    "vc": 0.489,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-06",
@@ -8718,7 +8718,7 @@
    "hour": "00:30",
    "pcu": 944,
    "vc": 0.393,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-06",
@@ -8726,7 +8726,7 @@
    "hour": "00:45",
    "pcu": 826,
    "vc": 0.344,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-06",
@@ -8830,7 +8830,7 @@
    "hour": "04:00",
    "pcu": 741,
    "vc": 0.309,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-06",
@@ -8838,7 +8838,7 @@
    "hour": "04:15",
    "pcu": 816,
    "vc": 0.34,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-06",
@@ -8846,7 +8846,7 @@
    "hour": "04:30",
    "pcu": 902,
    "vc": 0.376,
-   "los": "A"
+   "los": "B"
   },
   {
    "junction": "TMC-06",
@@ -8894,7 +8894,7 @@
    "hour": "06:00",
    "pcu": 1103,
    "vc": 0.459,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-06",
@@ -8902,7 +8902,7 @@
    "hour": "06:15",
    "pcu": 1230,
    "vc": 0.512,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-06",
@@ -8910,7 +8910,7 @@
    "hour": "06:30",
    "pcu": 1382,
    "vc": 0.576,
-   "los": "B"
+   "los": "C"
   },
   {
    "junction": "TMC-06",
@@ -8926,15 +8926,15 @@
    "hour": "07:00",
    "pcu": 1716,
    "vc": 0.715,
-   "los": "C"
+   "los": "D"
   }
  ],
  "los_distribution": {
-  "A": 314,
-  "B": 98,
-  "C": 84,
-  "D": 106,
-  "E": 113,
+  "A": 248,
+  "B": 96,
+  "C": 125,
+  "D": 83,
+  "E": 163,
   "F": 401
  },
  "approach_hours_total": 1116,
@@ -8960,564 +8960,944 @@
   "approach": "from Mansarover Metro",
   "capacity": 2400,
   "peak_queue_pcu": 11416,
+  "peak_queue_band": [
+   6402,
+   15811
+  ],
+  "discharge_band": [
+   0.85,
+   1.2
+  ],
   "series": [
    {
     "t": "08:00",
     "arrivals": 761.0,
     "departures": 600.0,
-    "queue": 161
+    "dep_low": 510.0,
+    "dep_high": 720.0,
+    "queue": 161,
+    "queue_low": 41,
+    "queue_high": 251
    },
    {
     "t": "08:15",
     "arrivals": 1611.0,
     "departures": 1200.0,
-    "queue": 411
+    "dep_low": 1020.0,
+    "dep_high": 1440.0,
+    "queue": 411,
+    "queue_low": 171,
+    "queue_high": 591
    },
    {
     "t": "08:30",
     "arrivals": 2619.0,
     "departures": 1800.0,
-    "queue": 819
+    "dep_low": 1530.0,
+    "dep_high": 2160.0,
+    "queue": 819,
+    "queue_low": 459,
+    "queue_high": 1089
    },
    {
     "t": "08:45",
     "arrivals": 3741.0,
     "departures": 2400.0,
-    "queue": 1341
+    "dep_low": 2040.0,
+    "dep_high": 2880.0,
+    "queue": 1341,
+    "queue_low": 861,
+    "queue_high": 1701
    },
    {
     "t": "09:00",
     "arrivals": 5010.0,
     "departures": 3000.0,
-    "queue": 2010
+    "dep_low": 2550.0,
+    "dep_high": 3600.0,
+    "queue": 2010,
+    "queue_low": 1410,
+    "queue_high": 2460
    },
    {
     "t": "09:15",
     "arrivals": 6365.0,
     "departures": 3600.0,
-    "queue": 2765
+    "dep_low": 3060.0,
+    "dep_high": 4320.0,
+    "queue": 2765,
+    "queue_low": 2045,
+    "queue_high": 3305
    },
    {
     "t": "09:30",
     "arrivals": 7725.0,
     "departures": 4200.0,
-    "queue": 3525
+    "dep_low": 3570.0,
+    "dep_high": 5040.0,
+    "queue": 3525,
+    "queue_low": 2685,
+    "queue_high": 4155
    },
    {
     "t": "09:45",
     "arrivals": 9169.0,
     "departures": 4800.0,
-    "queue": 4369
+    "dep_low": 4080.0,
+    "dep_high": 5760.0,
+    "queue": 4369,
+    "queue_low": 3409,
+    "queue_high": 5089
    },
    {
     "t": "10:00",
     "arrivals": 10538.0,
     "departures": 5400.0,
-    "queue": 5138
+    "dep_low": 4590.0,
+    "dep_high": 6480.0,
+    "queue": 5138,
+    "queue_low": 4058,
+    "queue_high": 5948
    },
    {
     "t": "10:15",
     "arrivals": 11788.0,
     "departures": 6000.0,
-    "queue": 5788
+    "dep_low": 5100.0,
+    "dep_high": 7200.0,
+    "queue": 5788,
+    "queue_low": 4588,
+    "queue_high": 6688
    },
    {
     "t": "10:30",
     "arrivals": 13005.0,
     "departures": 6600.0,
-    "queue": 6405
+    "dep_low": 5610.0,
+    "dep_high": 7920.0,
+    "queue": 6405,
+    "queue_low": 5085,
+    "queue_high": 7395
    },
    {
     "t": "10:45",
     "arrivals": 14092.0,
     "departures": 7200.0,
-    "queue": 6892
+    "dep_low": 6120.0,
+    "dep_high": 8640.0,
+    "queue": 6892,
+    "queue_low": 5452,
+    "queue_high": 7972
    },
    {
     "t": "11:00",
     "arrivals": 15106.0,
     "departures": 7800.0,
-    "queue": 7306
+    "dep_low": 6630.0,
+    "dep_high": 9360.0,
+    "queue": 7306,
+    "queue_low": 5746,
+    "queue_high": 8476
    },
    {
     "t": "11:15",
     "arrivals": 16112.0,
     "departures": 8400.0,
-    "queue": 7712
+    "dep_low": 7140.0,
+    "dep_high": 10080.0,
+    "queue": 7712,
+    "queue_low": 6032,
+    "queue_high": 8972
    },
    {
     "t": "11:30",
     "arrivals": 17029.0,
     "departures": 9000.0,
-    "queue": 8029
+    "dep_low": 7650.0,
+    "dep_high": 10800.0,
+    "queue": 8029,
+    "queue_low": 6229,
+    "queue_high": 9379
    },
    {
     "t": "11:45",
     "arrivals": 17867.0,
     "departures": 9600.0,
-    "queue": 8267
+    "dep_low": 8160.0,
+    "dep_high": 11520.0,
+    "queue": 8267,
+    "queue_low": 6347,
+    "queue_high": 9707
    },
    {
     "t": "12:00",
     "arrivals": 18642.0,
     "departures": 10200.0,
-    "queue": 8442
+    "dep_low": 8670.0,
+    "dep_high": 12240.0,
+    "queue": 8442,
+    "queue_low": 6402,
+    "queue_high": 9972
    },
    {
     "t": "12:15",
     "arrivals": 19354.0,
     "departures": 10800.0,
-    "queue": 8554
+    "dep_low": 9180.0,
+    "dep_high": 12960.0,
+    "queue": 8554,
+    "queue_low": 6394,
+    "queue_high": 10174
    },
    {
     "t": "12:30",
     "arrivals": 20005.0,
     "departures": 11400.0,
-    "queue": 8605
+    "dep_low": 9690.0,
+    "dep_high": 13680.0,
+    "queue": 8605,
+    "queue_low": 6325,
+    "queue_high": 10315
    },
    {
     "t": "12:45",
     "arrivals": 20616.0,
     "departures": 12000.0,
-    "queue": 8616
+    "dep_low": 10200.0,
+    "dep_high": 14400.0,
+    "queue": 8616,
+    "queue_low": 6216,
+    "queue_high": 10416
    },
    {
     "t": "13:00",
     "arrivals": 21168.0,
     "departures": 12600.0,
-    "queue": 8568
+    "dep_low": 10710.0,
+    "dep_high": 15120.0,
+    "queue": 8568,
+    "queue_low": 6048,
+    "queue_high": 10458
    },
    {
     "t": "13:15",
     "arrivals": 21692.0,
     "departures": 13200.0,
-    "queue": 8492
+    "dep_low": 11220.0,
+    "dep_high": 15840.0,
+    "queue": 8492,
+    "queue_low": 5852,
+    "queue_high": 10472
    },
    {
     "t": "13:30",
     "arrivals": 22198.0,
     "departures": 13800.0,
-    "queue": 8398
+    "dep_low": 11730.0,
+    "dep_high": 16560.0,
+    "queue": 8398,
+    "queue_low": 5638,
+    "queue_high": 10468
    },
    {
     "t": "13:45",
     "arrivals": 22682.0,
     "departures": 14400.0,
-    "queue": 8282
+    "dep_low": 12240.0,
+    "dep_high": 17280.0,
+    "queue": 8282,
+    "queue_low": 5402,
+    "queue_high": 10442
    },
    {
     "t": "14:00",
     "arrivals": 23197.0,
     "departures": 15000.0,
-    "queue": 8197
+    "dep_low": 12750.0,
+    "dep_high": 18000.0,
+    "queue": 8197,
+    "queue_low": 5197,
+    "queue_high": 10447
    },
    {
     "t": "14:15",
     "arrivals": 23747.0,
     "departures": 15600.0,
-    "queue": 8147
+    "dep_low": 13260.0,
+    "dep_high": 18720.0,
+    "queue": 8147,
+    "queue_low": 5027,
+    "queue_high": 10487
    },
    {
     "t": "14:30",
     "arrivals": 24329.0,
     "departures": 16200.0,
-    "queue": 8129
+    "dep_low": 13770.0,
+    "dep_high": 19440.0,
+    "queue": 8129,
+    "queue_low": 4889,
+    "queue_high": 10559
    },
    {
     "t": "14:45",
     "arrivals": 24967.0,
     "departures": 16800.0,
-    "queue": 8167
+    "dep_low": 14280.0,
+    "dep_high": 20160.0,
+    "queue": 8167,
+    "queue_low": 4807,
+    "queue_high": 10687
    },
    {
     "t": "15:00",
     "arrivals": 25652.0,
     "departures": 17400.0,
-    "queue": 8252
+    "dep_low": 14790.0,
+    "dep_high": 20880.0,
+    "queue": 8252,
+    "queue_low": 4772,
+    "queue_high": 10862
    },
    {
     "t": "15:15",
     "arrivals": 26377.0,
     "departures": 18000.0,
-    "queue": 8377
+    "dep_low": 15300.0,
+    "dep_high": 21600.0,
+    "queue": 8377,
+    "queue_low": 4777,
+    "queue_high": 11077
    },
    {
     "t": "15:30",
     "arrivals": 27114.0,
     "departures": 18600.0,
-    "queue": 8514
+    "dep_low": 15810.0,
+    "dep_high": 22320.0,
+    "queue": 8514,
+    "queue_low": 4794,
+    "queue_high": 11304
    },
    {
     "t": "15:45",
     "arrivals": 27865.0,
     "departures": 19200.0,
-    "queue": 8665
+    "dep_low": 16320.0,
+    "dep_high": 23040.0,
+    "queue": 8665,
+    "queue_low": 4825,
+    "queue_high": 11545
    },
    {
     "t": "16:00",
     "arrivals": 28601.0,
     "departures": 19800.0,
-    "queue": 8801
+    "dep_low": 16830.0,
+    "dep_high": 23760.0,
+    "queue": 8801,
+    "queue_low": 4841,
+    "queue_high": 11771
    },
    {
     "t": "16:15",
     "arrivals": 29292.0,
     "departures": 20400.0,
-    "queue": 8892
+    "dep_low": 17340.0,
+    "dep_high": 24480.0,
+    "queue": 8892,
+    "queue_low": 4812,
+    "queue_high": 11952
    },
    {
     "t": "16:30",
     "arrivals": 29974.0,
     "departures": 21000.0,
-    "queue": 8974
+    "dep_low": 17850.0,
+    "dep_high": 25200.0,
+    "queue": 8974,
+    "queue_low": 4774,
+    "queue_high": 12124
    },
    {
     "t": "16:45",
     "arrivals": 30642.0,
     "departures": 21600.0,
-    "queue": 9042
+    "dep_low": 18360.0,
+    "dep_high": 25920.0,
+    "queue": 9042,
+    "queue_low": 4722,
+    "queue_high": 12282
    },
    {
     "t": "17:00",
     "arrivals": 31292.0,
     "departures": 22200.0,
-    "queue": 9092
+    "dep_low": 18870.0,
+    "dep_high": 26640.0,
+    "queue": 9092,
+    "queue_low": 4652,
+    "queue_high": 12422
    },
    {
     "t": "17:15",
     "arrivals": 31976.0,
     "departures": 22800.0,
-    "queue": 9176
+    "dep_low": 19380.0,
+    "dep_high": 27360.0,
+    "queue": 9176,
+    "queue_low": 4616,
+    "queue_high": 12596
    },
    {
     "t": "17:30",
     "arrivals": 32664.0,
     "departures": 23400.0,
-    "queue": 9264
+    "dep_low": 19890.0,
+    "dep_high": 28080.0,
+    "queue": 9264,
+    "queue_low": 4584,
+    "queue_high": 12774
    },
    {
     "t": "17:45",
     "arrivals": 33392.0,
     "departures": 24000.0,
-    "queue": 9392
+    "dep_low": 20400.0,
+    "dep_high": 28800.0,
+    "queue": 9392,
+    "queue_low": 4592,
+    "queue_high": 12992
    },
    {
     "t": "18:00",
     "arrivals": 34215.0,
     "departures": 24600.0,
-    "queue": 9615
+    "dep_low": 20910.0,
+    "dep_high": 29520.0,
+    "queue": 9615,
+    "queue_low": 4695,
+    "queue_high": 13305
    },
    {
     "t": "18:15",
     "arrivals": 35154.0,
     "departures": 25200.0,
-    "queue": 9954
+    "dep_low": 21420.0,
+    "dep_high": 30240.0,
+    "queue": 9954,
+    "queue_low": 4914,
+    "queue_high": 13734
    },
    {
     "t": "18:30",
     "arrivals": 36182.0,
     "departures": 25800.0,
-    "queue": 10382
+    "dep_low": 21930.0,
+    "dep_high": 30960.0,
+    "queue": 10382,
+    "queue_low": 5222,
+    "queue_high": 14252
    },
    {
     "t": "18:45",
     "arrivals": 37180.0,
     "departures": 26400.0,
-    "queue": 10780
+    "dep_low": 22440.0,
+    "dep_high": 31680.0,
+    "queue": 10780,
+    "queue_low": 5500,
+    "queue_high": 14740
    },
    {
     "t": "19:00",
     "arrivals": 38099.0,
     "departures": 27000.0,
-    "queue": 11099
+    "dep_low": 22950.0,
+    "dep_high": 32400.0,
+    "queue": 11099,
+    "queue_low": 5699,
+    "queue_high": 15149
    },
    {
     "t": "19:15",
     "arrivals": 38888.0,
     "departures": 27600.0,
-    "queue": 11288
+    "dep_low": 23460.0,
+    "dep_high": 33120.0,
+    "queue": 11288,
+    "queue_low": 5768,
+    "queue_high": 15428
    },
    {
     "t": "19:30",
     "arrivals": 39578.0,
     "departures": 28200.0,
-    "queue": 11378
+    "dep_low": 23970.0,
+    "dep_high": 33840.0,
+    "queue": 11378,
+    "queue_low": 5738,
+    "queue_high": 15608
    },
    {
     "t": "19:45",
     "arrivals": 40216.0,
     "departures": 28800.0,
-    "queue": 11416
+    "dep_low": 24480.0,
+    "dep_high": 34560.0,
+    "queue": 11416,
+    "queue_low": 5656,
+    "queue_high": 15736
    },
    {
     "t": "20:00",
     "arrivals": 40798.0,
     "departures": 29400.0,
-    "queue": 11398
+    "dep_low": 24990.0,
+    "dep_high": 35280.0,
+    "queue": 11398,
+    "queue_low": 5518,
+    "queue_high": 15808
    },
    {
     "t": "20:15",
     "arrivals": 41311.0,
     "departures": 30000.0,
-    "queue": 11311
+    "dep_low": 25500.0,
+    "dep_high": 36000.0,
+    "queue": 11311,
+    "queue_low": 5311,
+    "queue_high": 15811
    },
    {
     "t": "20:30",
     "arrivals": 41753.0,
     "departures": 30600.0,
-    "queue": 11153
+    "dep_low": 26010.0,
+    "dep_high": 36720.0,
+    "queue": 11153,
+    "queue_low": 5033,
+    "queue_high": 15743
    },
    {
     "t": "20:45",
     "arrivals": 42139.0,
     "departures": 31200.0,
-    "queue": 10938
+    "dep_low": 26520.0,
+    "dep_high": 37440.0,
+    "queue": 10938,
+    "queue_low": 4698,
+    "queue_high": 15618
    },
    {
     "t": "21:00",
     "arrivals": 42458.0,
     "departures": 31800.0,
-    "queue": 10658
+    "dep_low": 27030.0,
+    "dep_high": 38160.0,
+    "queue": 10658,
+    "queue_low": 4298,
+    "queue_high": 15428
    },
    {
     "t": "21:15",
     "arrivals": 42724.0,
     "departures": 32400.0,
-    "queue": 10324
+    "dep_low": 27540.0,
+    "dep_high": 38880.0,
+    "queue": 10324,
+    "queue_low": 3844,
+    "queue_high": 15184
    },
    {
     "t": "21:30",
     "arrivals": 42935.0,
     "departures": 33000.0,
-    "queue": 9935
+    "dep_low": 28050.0,
+    "dep_high": 39600.0,
+    "queue": 9935,
+    "queue_low": 3335,
+    "queue_high": 14885
    },
    {
     "t": "21:45",
     "arrivals": 43101.0,
     "departures": 33600.0,
-    "queue": 9501
+    "dep_low": 28560.0,
+    "dep_high": 40320.0,
+    "queue": 9501,
+    "queue_low": 2781,
+    "queue_high": 14541
    },
    {
     "t": "22:00",
     "arrivals": 43226.0,
     "departures": 34200.0,
-    "queue": 9026
+    "dep_low": 29070.0,
+    "dep_high": 41040.0,
+    "queue": 9026,
+    "queue_low": 2186,
+    "queue_high": 14156
    },
    {
     "t": "22:15",
     "arrivals": 43334.0,
     "departures": 34800.0,
-    "queue": 8534
+    "dep_low": 29580.0,
+    "dep_high": 41760.0,
+    "queue": 8534,
+    "queue_low": 1574,
+    "queue_high": 13754
    },
    {
     "t": "22:30",
     "arrivals": 43435.0,
     "departures": 35400.0,
-    "queue": 8035
+    "dep_low": 30090.0,
+    "dep_high": 42480.0,
+    "queue": 8035,
+    "queue_low": 955,
+    "queue_high": 13345
    },
    {
     "t": "22:45",
     "arrivals": 43535.0,
     "departures": 36000.0,
-    "queue": 7535
+    "dep_low": 30600.0,
+    "dep_high": 43200.0,
+    "queue": 7535,
+    "queue_low": 335,
+    "queue_high": 12935
    },
    {
     "t": "23:00",
     "arrivals": 43636.0,
     "departures": 36600.0,
-    "queue": 7036
+    "dep_low": 31110.0,
+    "dep_high": 43636.0,
+    "queue": 7036,
+    "queue_low": 0,
+    "queue_high": 12526
    },
    {
     "t": "23:15",
     "arrivals": 43721.0,
     "departures": 37200.0,
-    "queue": 6521
+    "dep_low": 31620.0,
+    "dep_high": 43721.0,
+    "queue": 6521,
+    "queue_low": 0,
+    "queue_high": 12101
    },
    {
     "t": "23:30",
     "arrivals": 43790.0,
     "departures": 37800.0,
-    "queue": 5990
+    "dep_low": 32130.0,
+    "dep_high": 43790.0,
+    "queue": 5990,
+    "queue_low": 0,
+    "queue_high": 11660
    },
    {
     "t": "23:45",
     "arrivals": 43839.0,
     "departures": 38400.0,
-    "queue": 5439
+    "dep_low": 32640.0,
+    "dep_high": 43839.0,
+    "queue": 5439,
+    "queue_low": 0,
+    "queue_high": 11199
    },
    {
     "t": "00:00",
     "arrivals": 43875.0,
     "departures": 39000.0,
-    "queue": 4875
+    "dep_low": 33150.0,
+    "dep_high": 43875.0,
+    "queue": 4875,
+    "queue_low": 0,
+    "queue_high": 10725
    },
    {
     "t": "00:15",
     "arrivals": 43904.0,
     "departures": 39600.0,
-    "queue": 4304
+    "dep_low": 33660.0,
+    "dep_high": 43904.0,
+    "queue": 4304,
+    "queue_low": 0,
+    "queue_high": 10244
    },
    {
     "t": "00:30",
     "arrivals": 43929.0,
     "departures": 40200.0,
-    "queue": 3729
+    "dep_low": 34170.0,
+    "dep_high": 43929.0,
+    "queue": 3729,
+    "queue_low": 0,
+    "queue_high": 9759
    },
    {
     "t": "00:45",
     "arrivals": 43952.0,
     "departures": 40800.0,
-    "queue": 3152
+    "dep_low": 34680.0,
+    "dep_high": 43952.0,
+    "queue": 3152,
+    "queue_low": 0,
+    "queue_high": 9272
    },
    {
     "t": "01:00",
     "arrivals": 43972.0,
     "departures": 41400.0,
-    "queue": 2572
+    "dep_low": 35190.0,
+    "dep_high": 43972.0,
+    "queue": 2572,
+    "queue_low": 0,
+    "queue_high": 8782
    },
    {
     "t": "01:15",
     "arrivals": 43990.0,
     "departures": 42000.0,
-    "queue": 1990
+    "dep_low": 35700.0,
+    "dep_high": 43990.0,
+    "queue": 1990,
+    "queue_low": 0,
+    "queue_high": 8290
    },
    {
     "t": "01:30",
     "arrivals": 44010.0,
     "departures": 42600.0,
-    "queue": 1410
+    "dep_low": 36210.0,
+    "dep_high": 44010.0,
+    "queue": 1410,
+    "queue_low": 0,
+    "queue_high": 7800
    },
    {
     "t": "01:45",
     "arrivals": 44028.0,
     "departures": 43200.0,
-    "queue": 828
+    "dep_low": 36720.0,
+    "dep_high": 44028.0,
+    "queue": 828,
+    "queue_low": 0,
+    "queue_high": 7308
    },
    {
     "t": "02:00",
     "arrivals": 44048.0,
     "departures": 43800.0,
-    "queue": 248
+    "dep_low": 37230.0,
+    "dep_high": 44048.0,
+    "queue": 248,
+    "queue_low": 0,
+    "queue_high": 6818
    },
    {
     "t": "02:15",
     "arrivals": 44069.0,
     "departures": 44069.0,
-    "queue": 0
+    "dep_low": 37740.0,
+    "dep_high": 44069.0,
+    "queue": 0,
+    "queue_low": 0,
+    "queue_high": 6329
    },
    {
     "t": "02:30",
     "arrivals": 44089.0,
     "departures": 44089.0,
-    "queue": 0
+    "dep_low": 38250.0,
+    "dep_high": 44089.0,
+    "queue": 0,
+    "queue_low": 0,
+    "queue_high": 5839
    },
    {
     "t": "02:45",
     "arrivals": 44110.0,
     "departures": 44110.0,
-    "queue": 0
+    "dep_low": 38760.0,
+    "dep_high": 44110.0,
+    "queue": 0,
+    "queue_low": 0,
+    "queue_high": 5350
    },
    {
     "t": "03:00",
     "arrivals": 44132.0,
     "departures": 44132.0,
-    "queue": 0
+    "dep_low": 39270.0,
+    "dep_high": 44132.0,
+    "queue": 0,
+    "queue_low": 0,
+    "queue_high": 4862
    },
    {
     "t": "03:15",
     "arrivals": 44155.0,
     "departures": 44155.0,
-    "queue": 0
+    "dep_low": 39780.0,
+    "dep_high": 44155.0,
+    "queue": 0,
+    "queue_low": 0,
+    "queue_high": 4375
    },
    {
     "t": "03:30",
     "arrivals": 44179.0,
     "departures": 44179.0,
-    "queue": 0
+    "dep_low": 40290.0,
+    "dep_high": 44179.0,
+    "queue": 0,
+    "queue_low": 0,
+    "queue_high": 3889
    },
    {
     "t": "03:45",
     "arrivals": 44206.0,
     "departures": 44206.0,
-    "queue": 0
+    "dep_low": 40800.0,
+    "dep_high": 44206.0,
+    "queue": 0,
+    "queue_low": 0,
+    "queue_high": 3406
    },
    {
     "t": "04:00",
     "arrivals": 44240.0,
     "departures": 44240.0,
-    "queue": 0
+    "dep_low": 41310.0,
+    "dep_high": 44240.0,
+    "queue": 0,
+    "queue_low": 0,
+    "queue_high": 2930
    },
    {
     "t": "04:15",
     "arrivals": 44282.0,
     "departures": 44282.0,
-    "queue": 0
+    "dep_low": 41820.0,
+    "dep_high": 44282.0,
+    "queue": 0,
+    "queue_low": 0,
+    "queue_high": 2462
    },
    {
     "t": "04:30",
     "arrivals": 44334.0,
     "departures": 44334.0,
-    "queue": 0
+    "dep_low": 42330.0,
+    "dep_high": 44334.0,
+    "queue": 0,
+    "queue_low": 0,
+    "queue_high": 2004
    },
    {
     "t": "04:45",
     "arrivals": 44414.0,
     "departures": 44414.0,
-    "queue": 0
+    "dep_low": 42840.0,
+    "dep_high": 44414.0,
+    "queue": 0,
+    "queue_low": 0,
+    "queue_high": 1574
    },
    {
     "t": "05:00",
     "arrivals": 44516.0,
     "departures": 44516.0,
-    "queue": 0
+    "dep_low": 43350.0,
+    "dep_high": 44516.0,
+    "queue": 0,
+    "queue_low": 0,
+    "queue_high": 1166
    },
    {
     "t": "05:15",
     "arrivals": 44654.0,
     "departures": 44654.0,
-    "queue": 0
+    "dep_low": 43860.0,
+    "dep_high": 44654.0,
+    "queue": 0,
+    "queue_low": 0,
+    "queue_high": 794
    },
    {
     "t": "05:30",
     "arrivals": 44848.0,
     "departures": 44848.0,
-    "queue": 0
+    "dep_low": 44370.0,
+    "dep_high": 44848.0,
+    "queue": 0,
+    "queue_low": 0,
+    "queue_high": 478
    },
    {
     "t": "05:45",
     "arrivals": 45087.0,
     "departures": 45087.0,
-    "queue": 0
+    "dep_low": 44880.0,
+    "dep_high": 45087.0,
+    "queue": 0,
+    "queue_low": 0,
+    "queue_high": 207
    },
    {
     "t": "06:00",
     "arrivals": 45391.0,
     "departures": 45391.0,
-    "queue": 0
+    "dep_low": 45390.0,
+    "dep_high": 45391.0,
+    "queue": 0,
+    "queue_low": 0,
+    "queue_high": 1
    },
    {
     "t": "06:15",
     "arrivals": 45761.0,
     "departures": 45761.0,
-    "queue": 0
+    "dep_low": 45761.0,
+    "dep_high": 45761.0,
+    "queue": 0,
+    "queue_low": 0,
+    "queue_high": 0
    },
    {
     "t": "06:30",
     "arrivals": 46187.0,
     "departures": 46187.0,
-    "queue": 0
+    "dep_low": 46187.0,
+    "dep_high": 46187.0,
+    "queue": 0,
+    "queue_low": 0,
+    "queue_high": 0
    },
    {
     "t": "06:45",
     "arrivals": 46669.0,
     "departures": 46669.0,
-    "queue": 0
+    "dep_low": 46669.0,
+    "dep_high": 46669.0,
+    "queue": 0,
+    "queue_low": 0,
+    "queue_high": 0
    },
    {
     "t": "07:00",
     "arrivals": 47215.0,
     "departures": 47215.0,
-    "queue": 0
+    "dep_low": 47179.0,
+    "dep_high": 47215.0,
+    "queue": 0,
+    "queue_low": 0,
+    "queue_high": 36
    }
   ]
  }

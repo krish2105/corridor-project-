@@ -77,6 +77,13 @@ Physical ordering of the six junctions along the corridor is **derived from the 
 
 ### The survey's class scheme, and what can be corrected
 
+**The scheme is not the contractor's invention.** It is IRC:SP:41-1994 Table 3.1,
+"Intersection Design Data" — the standard proforma for an intersection survey, including
+its ten classes and its static PCU factors. That matters twice over: the factors are
+defensible as a starting point, and Table 3.1 also carries a **PEDESTRIAN Nos.** row that
+this survey left empty. Clause 3.1(iv) requires it in urban areas with substantial
+pedestrian movement. The omission is at clause level, not a matter of judgement.
+
 The JDA sheets use a 10-column scheme that does **not** map cleanly onto IRC:106.
 Five columns are composites mixing classes with different PCU values. Correct only what
 maps 1:1; publish a sensitivity band for the rest. Never invent a point estimate for a
@@ -91,9 +98,9 @@ composite.
 | F | Tractor Trailor, Truck Trailor Units (3 Axle & MAV) | 4.5 | MAV + TRACTOR | Partly |
 | H | Cycle | 0.5 | CYCLE | **Yes** |
 | I | Cycle Rickshaw | 1.5 | CYCLE_RIK | **Yes** |
-| J | Hand Cart | 3.0 | *not in IRC:106* | No |
+| J | Hand Cart | 3.0 | HAND_CART, IRC:106-1990 Table 1 at 2.0 (5%) / 3.0 (10%+) | **Yes** |
 | K | Horse Drawn | 4.0 | ANIMAL | **Yes** |
-| L | Bullock Corts | — | ANIMAL | zero counts |
+| L | Bullock Corts | 8.0 | ANIMAL | zero counts in this survey |
 
 **There is no E-rickshaw column.** The label exists in the workbook string table but no
 column carries it. Flag this as a stated gap in every output — e-rickshaws are a

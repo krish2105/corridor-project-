@@ -65,6 +65,18 @@ export type Corridor = {
     approaches: { junction: string; approach: string; hours_over: number;
                   excess_pcu: number }[];
   } | null;
+  standards: {
+    jda_turning_claim_pct: number; measured_turning_pct: number; claim_overstatement: number;
+    jmrc_dpr_pcu: Record<string, number>; survey_pcu: Record<string, number>;
+    interchange_warrant_pcu: number;
+    interchange: { junction: string; corridor_arms_pcu: number; floor_vs_warrant: number }[];
+    zebra_ceiling_pcu_dir: number; zebra_over: number; zebra_total: number;
+    median: { openings: number; gaps: number; closer_than_500m: number; closest_m: number;
+              median_gap_m: number; within_18_20m: number; widths_checked: number };
+    surveys_required_by_sp90: number; surveys_run: number;
+    pedestrian_row_in_sp41_table_3_1: boolean; pedestrian_row_filled: boolean;
+    unverified: string[];
+  } | null;
   safety: {
     base_counts: Record<string, number>; base_total: number;
     junctions: { junction: string; jda_name: string; today_points: number;

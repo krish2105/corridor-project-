@@ -496,7 +496,7 @@
     "residual_pcu": 1420,
     "vc_before": 1.38,
     "vc_after": 0.59,
-    "los_after": "B"
+    "los_after": "C"
    },
    {
     "junction": "TMC-01",
@@ -506,7 +506,7 @@
     "residual_pcu": 1696,
     "vc_before": 1.65,
     "vc_after": 0.71,
-    "los_after": "C"
+    "los_after": "D"
    },
    {
     "junction": "TMC-02",
@@ -526,7 +526,7 @@
     "residual_pcu": 948,
     "vc_before": 1.25,
     "vc_after": 0.39,
-    "los_after": "A"
+    "los_after": "B"
    },
    {
     "junction": "TMC-03",
@@ -536,7 +536,7 @@
     "residual_pcu": 847,
     "vc_before": 1.56,
     "vc_after": 0.35,
-    "los_after": "A"
+    "los_after": "B"
    },
    {
     "junction": "TMC-03",
@@ -546,7 +546,7 @@
     "residual_pcu": 849,
     "vc_before": 1.57,
     "vc_after": 0.35,
-    "los_after": "A"
+    "los_after": "B"
    },
    {
     "junction": "TMC-04",
@@ -556,7 +556,7 @@
     "residual_pcu": 1127,
     "vc_before": 1.46,
     "vc_after": 0.47,
-    "los_after": "B"
+    "los_after": "C"
    },
    {
     "junction": "TMC-04",
@@ -576,7 +576,7 @@
     "residual_pcu": 1231,
     "vc_before": 2.41,
     "vc_after": 0.51,
-    "los_after": "B"
+    "los_after": "C"
    },
    {
     "junction": "TMC-05",
@@ -586,7 +586,7 @@
     "residual_pcu": 870,
     "vc_before": 1.7,
     "vc_after": 0.36,
-    "los_after": "A"
+    "los_after": "B"
    },
    {
     "junction": "TMC-06",
@@ -922,7 +922,7 @@
     "s1_uturn_vc_opt": 1.9354315515723384,
     "s1_works": false,
     "s2_vc": 0.71,
-    "s2_los": "C",
+    "s2_los": "D",
     "through_pct": 57.2
    },
    {
@@ -934,7 +934,7 @@
     "s1_uturn_vc_opt": 2.035395996955214,
     "s1_works": false,
     "s2_vc": 0.39,
-    "s2_los": "A",
+    "s2_los": "B",
     "through_pct": 68.3
    },
    {
@@ -946,7 +946,7 @@
     "s1_uturn_vc_opt": 2.299658214916832,
     "s1_works": false,
     "s2_vc": 0.35,
-    "s2_los": "A",
+    "s2_los": "B",
     "through_pct": 77.4
    },
    {
@@ -970,7 +970,7 @@
     "s1_uturn_vc_opt": 21.015151787322466,
     "s1_works": false,
     "s2_vc": 0.36,
-    "s2_los": "A",
+    "s2_los": "B",
     "through_pct": 78.7
    },
    {
@@ -1666,14 +1666,14 @@
     "approach": "from Mansarover Metro",
     "vc": 0.59,
     "mean_delay_min": 0.0,
-    "los": "B"
+    "los": "C"
    },
    {
     "junction": "TMC-01",
     "approach": "from Sanganer Stadium",
     "vc": 0.71,
     "mean_delay_min": 0.0,
-    "los": "C"
+    "los": "D"
    },
    {
     "junction": "TMC-02",
@@ -1687,28 +1687,28 @@
     "approach": "from Sanganer Stadium",
     "vc": 0.4,
     "mean_delay_min": 0.0,
-    "los": "A"
+    "los": "B"
    },
    {
     "junction": "TMC-03",
     "approach": "from Mansarover Metro",
     "vc": 0.35,
     "mean_delay_min": 0.0,
-    "los": "A"
+    "los": "B"
    },
    {
     "junction": "TMC-03",
     "approach": "from Sanganer Stadium",
     "vc": 0.35,
     "mean_delay_min": 0.0,
-    "los": "A"
+    "los": "B"
    },
    {
     "junction": "TMC-04",
     "approach": "from Mansarover Metro",
     "vc": 0.47,
     "mean_delay_min": 0.0,
-    "los": "B"
+    "los": "C"
    },
    {
     "junction": "TMC-04",
@@ -1722,14 +1722,14 @@
     "approach": "from Mansarover Metro",
     "vc": 0.51,
     "mean_delay_min": 0.0,
-    "los": "B"
+    "los": "C"
    },
    {
     "junction": "TMC-05",
     "approach": "from Sanganer Stadium",
     "vc": 0.36,
     "mean_delay_min": 0.0,
-    "los": "A"
+    "los": "B"
    },
    {
     "junction": "TMC-06",
@@ -2041,13 +2041,84 @@
   "mean_change_pct": 24.6,
   "pedestrian_column_present": false
  },
+ "standards": {
+  "jda_turning_claim_pct": 50.0,
+  "measured_turning_pct": 29.6,
+  "claim_overstatement": 1.7,
+  "jmrc_dpr_pcu": {
+   "two wheeler": 0.75,
+   "car": 1.0,
+   "auto": 2.0,
+   "truck": 2.2,
+   "MAV": 3.7,
+   "LCV": 1.4
+  },
+  "survey_pcu": {
+   "two wheeler": 0.5,
+   "MAV": 4.5
+  },
+  "interchange_warrant_pcu": 10000,
+  "interchange": [
+   {
+    "junction": "TMC-01",
+    "corridor_arms_pcu": 7280,
+    "floor_vs_warrant": 0.73
+   },
+   {
+    "junction": "TMC-02",
+    "corridor_arms_pcu": 6115,
+    "floor_vs_warrant": 0.61
+   },
+   {
+    "junction": "TMC-03",
+    "corridor_arms_pcu": 7507,
+    "floor_vs_warrant": 0.75
+   },
+   {
+    "junction": "TMC-04",
+    "corridor_arms_pcu": 6703,
+    "floor_vs_warrant": 0.67
+   },
+   {
+    "junction": "TMC-05",
+    "corridor_arms_pcu": 9864,
+    "floor_vs_warrant": 0.99
+   },
+   {
+    "junction": "TMC-06",
+    "corridor_arms_pcu": 7363,
+    "floor_vs_warrant": 0.74
+   }
+  ],
+  "zebra_ceiling_pcu_dir": 1250,
+  "zebra_over": 12,
+  "zebra_total": 12,
+  "median": {
+   "openings": 30,
+   "gaps": 29,
+   "closer_than_500m": 29,
+   "closest_m": 4,
+   "median_gap_m": 173,
+   "within_18_20m": 4,
+   "widths_checked": 30
+  },
+  "surveys_required_by_sp90": 7,
+  "surveys_run": 1,
+  "pedestrian_row_in_sp41_table_3_1": true,
+  "pedestrian_row_filled": false,
+  "unverified": [
+   "IRC:SP:84 clause 2.14 read from the 2014 edition; a 2019 edition exists and was not checked",
+   "IRC:103 zebra ceiling is from a revision draft, not the published 2022 edition, whose scan has no text layer",
+   "the 50% turning claim is news reporting, not a JDA document"
+  ]
+ },
  "profiles": {
   "los_distribution": {
-   "A": 314,
-   "B": 98,
-   "C": 84,
-   "D": 106,
-   "E": 113,
+   "A": 248,
+   "B": 96,
+   "C": 125,
+   "D": 83,
+   "E": 163,
    "F": 401
   },
   "approach_hours_total": 1116,

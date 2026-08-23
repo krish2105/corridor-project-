@@ -25,6 +25,8 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 
 | Field | Meaning |
 |---|---|
+| `LCV` | PCU factor for light commercial vehicles. |
+| `MAV` | PCU factor for multi-axle vehicles. |
 | `alignment_km` | Length of the surveyed alignment. |
 | `analysis_date` | Survey day the figures come from. Day two is derived; see the audit. |
 | `annual_benefit_crore` | [low, high] difference between the two. |
@@ -36,6 +38,7 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `approaches_ok_after_grade_separation` | Approaches under capacity on opening. |
 | `arms` | Arm names, clockwise from north. |
 | `assumption_driven` | Whether any single assumption changes the conclusion. |
+| `auto` | PCU factor for auto-rickshaws. |
 | `band_high_pct` | High end of the PCU correction band, %. |
 | `band_low_pct` | Low end of the PCU correction band, %. |
 | `base_pcu` | Corridor peak PCU on the survey's own factors, before correction. |
@@ -50,13 +53,17 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `capacity` | Approach capacity, PCU/hour, lanes x lane capacity. |
 | `capacity_pcu_hr` | That approach's capacity, PCU/hour. |
 | `capacity_pcu_per_lane_hr` | Assumed lane capacity, PCU/lane/hour. |
+| `car` | PCU factor for cars. |
 | `category` | Constraint category. |
 | `caveat` | What the figure is NOT. Read before quoting it. |
 | `cells_checked` | Cells re-derived when checking stored totals. |
 | `chainage_m` | Distance along the alignment from its start, metres. |
 | `change_pct` | Change in crossing exposure between the two schemes, %. |
 | `city` | City. |
+| `claim_overstatement` | The ratio between the two. |
 | `classification` | Width band this opening falls in. |
+| `closer_than_500m` | Spacings below the IRC:SP:84 built-up minimum. |
+| `closest_m` | Smallest spacing, metres. |
 | `cls` | Vehicle class code. |
 | `cluster` | Cluster id. |
 | `code` | Junction code. |
@@ -66,6 +73,7 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `conflicting_flow` | Opposing through movement the U-turn must cross, veh/hour. |
 | `conflicting_stream` | Which movement the U-turn must cross. |
 | `corridor` | Corridor-level aggregates. |
+| `corridor_arms_pcu` | Peak PCU on the two corridor approaches. A FLOOR on all-arm volume: the cross-street arms are counted but unmeasured. |
 | `corridor_km` | Length of the surveyed alignment between the end junctions. |
 | `corridor_order` | Junction order along the alignment, from chainage. |
 | `corridor_through_pct` | Through share used for the relief calculation, %. |
@@ -96,6 +104,7 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `fails_optimistic` | Approaches they cannot serve even optimistically. |
 | `features` | Geometry features extracted. |
 | `files_affected` | Workbooks containing at least one discrepancy. |
+| `floor_vs_warrant` | That floor as a multiple of the interchange warrant. |
 | `follow_up_s` | Follow-up headway band, seconds. |
 | `footprint` | Footprint scale tested. |
 | `footprint_scale` | Scale applied to the vehicle footprints tested. |
@@ -103,6 +112,7 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `frac` | ok divided by total. |
 | `free_flow_kmh` | Free-flow speed used for journey time, km/h. |
 | `free_flow_min` | Through journey time at the free-flow speed. |
+| `gaps` | Spacings between consecutive openings. |
 | `greater` | Series where day two exceeds day one. |
 | `growth_high_pct` | High growth scenario. |
 | `growth_low_pct` | Low growth scenario, % per year. |
@@ -113,12 +123,14 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `horizon_year` | End of the stated design horizon. |
 | `hours_over` | Hours per day this approach is over capacity. Counted, not assumed. |
 | `identical` | Series reproducing the previous day to the exact vehicle. |
+| `interchange_warrant_pcu` | IRC:SP:90-2010 threshold above which an interchange is justified, PCU/hr across all arms. |
 | `irc_high` | IRC:106 factor at or above 10% share. |
 | `irc_low` | IRC:106 factor at or below 5% share. |
 | `irc_point` | Interpolated factor at the observed share. null for composites. |
 | `jam_packing` | Packing efficiency of a jammed queue. |
 | `jda_name` | The authority's own name for the junction in its scheme documents. |
 | `jda_scheme` | The authority's scheme as described in its documents. |
+| `jda_turning_claim_pct` | JDA's stated basis for the scheme: the share of traffic it says is turning. News reporting, not a JDA document. |
 | `junction` | Survey code, TMC-01 to TMC-06. |
 | `junctions_worse` | Junctions where crossing exposure rises under the scheme. |
 | `label` | Human-readable name. |
@@ -146,6 +158,8 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `mean_change_pct` | Mean change in crossing exposure across the corridor, %. |
 | `mean_delay_min` | Mean delay per arriving vehicle, minutes. |
 | `mean_hours_over` | Mean of hours_over across approaches. |
+| `measured_turning_pct` | The turning share the commissioned survey actually shows. |
+| `median_gap_m` | Median spacing between openings, metres. |
 | `median_openings` | Median gaps found. |
 | `merging` | Points where two streams join. |
 | `method` | How the figure was produced. |
@@ -171,6 +185,7 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `observed_vs_planning_ratio` | Counted flow divided by the planning-stage assumption. |
 | `of` | Approaches assessed. |
 | `ok` | Approaches under capacity in that combination. |
+| `openings` | Median openings found in the survey drawing. |
 | `order` | Junction order along the corridor. |
 | `order_best` | Best-scoring order from flow continuity. |
 | `order_conclusive` | Whether the margin is large enough to call. |
@@ -195,6 +210,8 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `peak_start` | As `peak`. |
 | `peak_veh` | Peak-hour vehicles. |
 | `pedestrian_column_present` | Whether the survey counts pedestrians at all. It does not. |
+| `pedestrian_row_filled` | Whether the survey filled it. It did not. |
+| `pedestrian_row_in_sp41_table_3_1` | Whether the proforma this survey was written from carries a pedestrian row. It does. |
 | `phf` | Peak hour factor: peak hour over four times the busiest 15 minutes. |
 | `phf_applied` | Whether a peak hour factor was applied. |
 | `pier_radius_m` | Half-footprint used when testing a pier position, metres. |
@@ -242,6 +259,8 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `survey_dates` | Dates as stated in the workbooks. |
 | `survey_design` | What the survey design was against IRC:SP:19. |
 | `surveyed_factor` | The static PCU factor the survey applied. |
+| `surveys_required_by_sp90` | Traffic surveys IRC:SP:90 cl. 5.6 requires. |
+| `surveys_run` | How many this programme ran. |
 | `swing` | Size of that swing, in approaches. |
 | `swing_high_pct` | The same at the IRC:106 high value, %. |
 | `swing_low_pct` | Effect on corridor PCU of correcting this class to the IRC:106 low value, %. Negative means the survey overstated it. |
@@ -261,7 +280,10 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `total_delay_pcu_hr` | Delay accumulated over the analysis period, PCU-hours. |
 | `total_excess_pcu_day` | Corridor sum of excess_pcu. |
 | `transects` | How many cross-sections the width was measured on. Fewer is weaker. |
+| `truck` | PCU factor for trucks. |
+| `two wheeler` | PCU factor for two-wheelers in the cited document. |
 | `understate` | Discrepancies where the stored total was too low. |
+| `unverified` | Clauses that could not be checked against a primary source. |
 | `uplift` | PCU uplift tested, %. |
 | `uplift_floor_pct` | Minimum PCU correction, %. The floor, not the estimate. |
 | `uplift_pct` | PCU correction for one junction, %. |
@@ -282,9 +304,14 @@ Generated 2026-08-23 from the files in `out/data`. The field list is read from t
 | `veh_class` | Vehicle class code. |
 | `vot_status` | That value of time is a policy input, not a measurement. |
 | `width_m` | Carriageway width, metres, ONE direction. Measured, not assumed. |
+| `widths_checked` | Openings whose width was measurable. |
+| `within_18_20m` | Openings within the IRC:SP:84 18-20 m length rule. |
 | `working_days` | [low, high] equivalent working days per year. |
 | `worst_direction` | Which of southbound/northbound is slower. |
 | `years_to_first_failure` | Years from the base year to design_life_first_failure_med. |
+| `zebra_ceiling_pcu_dir` | IRC:103 draft: above this, pedestrian delay passes 45 s and a zebra crossing shall not be provided. |
+| `zebra_over` | Approaches above that ceiling. |
+| `zebra_total` | Approaches assessed for it. |
 
 ## Reading the bands
 

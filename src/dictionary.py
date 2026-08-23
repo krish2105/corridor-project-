@@ -342,6 +342,41 @@ FIELDS.update({
     "speed_flow": "Why a speed-flow diagram is deliberately absent.",
 })
 
+FIELDS.update({
+    # standards compliance
+    "jda_turning_claim_pct": "JDA's stated basis for the scheme: the share of traffic it "
+                             "says is turning. News reporting, not a JDA document.",
+    "measured_turning_pct": "The turning share the commissioned survey actually shows.",
+    "claim_overstatement": "The ratio between the two.",
+    "interchange_warrant_pcu": "IRC:SP:90-2010 threshold above which an interchange is "
+                               "justified, PCU/hr across all arms.",
+    "corridor_arms_pcu": "Peak PCU on the two corridor approaches. A FLOOR on all-arm "
+                         "volume: the cross-street arms are counted but unmeasured.",
+    "floor_vs_warrant": "That floor as a multiple of the interchange warrant.",
+    "zebra_ceiling_pcu_dir": "IRC:103 draft: above this, pedestrian delay passes 45 s and "
+                             "a zebra crossing shall not be provided.",
+    "zebra_over": "Approaches above that ceiling.",
+    "zebra_total": "Approaches assessed for it.",
+    "openings": "Median openings found in the survey drawing.",
+    "gaps": "Spacings between consecutive openings.",
+    "closer_than_500m": "Spacings below the IRC:SP:84 built-up minimum.",
+    "closest_m": "Smallest spacing, metres.",
+    "median_gap_m": "Median spacing between openings, metres.",
+    "within_18_20m": "Openings within the IRC:SP:84 18-20 m length rule.",
+    "widths_checked": "Openings whose width was measurable.",
+    "surveys_required_by_sp90": "Traffic surveys IRC:SP:90 cl. 5.6 requires.",
+    "surveys_run": "How many this programme ran.",
+    "pedestrian_row_in_sp41_table_3_1": "Whether the proforma this survey was written "
+                                        "from carries a pedestrian row. It does.",
+    "pedestrian_row_filled": "Whether the survey filled it. It did not.",
+    "unverified": "Clauses that could not be checked against a primary source.",
+    "two wheeler": "PCU factor for two-wheelers in the cited document.",
+    "car": "PCU factor for cars.", "auto": "PCU factor for auto-rickshaws.",
+    "truck": "PCU factor for trucks.", "MAV": "PCU factor for multi-axle vehicles.",
+    "LCV": "PCU factor for light commercial vehicles.",
+})
+
+
 def _is_data_keyed(d):
     if not isinstance(d, dict) or not d:
         return False
