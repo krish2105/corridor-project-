@@ -23,182 +23,182 @@
   {
    "junction": "TMC-01",
    "approach": "from Mansarover Metro",
-   "vc": 1.38,
+   "vc": 1.28,
    "los": "F",
-   "queue_pcu": 917,
-   "queue_vehicles": 1051,
-   "queue_m": 1088,
+   "queue_pcu": 725,
+   "queue_vehicles": 831,
+   "queue_m": 860,
    "storage_m": 1884,
    "upstream": "TMC-02",
    "spillback": false,
    "minutes_to_spillback": null,
-   "mean_delay_min": 8.3,
-   "total_delay_pcu_hr": 458
+   "mean_delay_min": 6.6,
+   "total_delay_pcu_hr": 362
   },
   {
    "junction": "TMC-01",
    "approach": "from Sanganer Stadium",
-   "vc": 1.65,
+   "vc": 1.53,
    "los": "F",
-   "queue_pcu": 1563,
-   "queue_vehicles": 1791,
-   "queue_m": 1853,
+   "queue_pcu": 1371,
+   "queue_vehicles": 1571,
+   "queue_m": 1626,
    "storage_m": null,
    "upstream": null,
    "spillback": false,
    "minutes_to_spillback": null,
-   "mean_delay_min": 11.8,
-   "total_delay_pcu_hr": 781
+   "mean_delay_min": 10.4,
+   "total_delay_pcu_hr": 685
   },
   {
    "junction": "TMC-02",
    "approach": "from Mansarover Metro",
-   "vc": 1.3,
+   "vc": 1.22,
    "los": "F",
-   "queue_pcu": 726,
-   "queue_vehicles": 858,
-   "queue_m": 816,
+   "queue_pcu": 570,
+   "queue_vehicles": 673,
+   "queue_m": 641,
    "storage_m": 393,
    "upstream": "TMC-03",
    "spillback": true,
-   "minutes_to_spillback": 28.9,
-   "mean_delay_min": 7.0,
-   "total_delay_pcu_hr": 363
+   "minutes_to_spillback": 36.8,
+   "mean_delay_min": 5.5,
+   "total_delay_pcu_hr": 285
   },
   {
    "junction": "TMC-02",
    "approach": "from Sanganer Stadium",
-   "vc": 1.25,
+   "vc": 1.17,
    "los": "F",
-   "queue_pcu": 590,
-   "queue_vehicles": 697,
-   "queue_m": 663,
+   "queue_pcu": 434,
+   "queue_vehicles": 513,
+   "queue_m": 488,
    "storage_m": 1884,
    "upstream": "TMC-01",
    "spillback": false,
    "minutes_to_spillback": null,
-   "mean_delay_min": 5.9,
-   "total_delay_pcu_hr": 295
+   "mean_delay_min": 4.4,
+   "total_delay_pcu_hr": 217
   },
   {
    "junction": "TMC-03",
    "approach": "from Mansarover Metro",
-   "vc": 1.56,
+   "vc": 1.47,
    "los": "F",
-   "queue_pcu": 1350,
-   "queue_vehicles": 1690,
-   "queue_m": 1508,
+   "queue_pcu": 1194,
+   "queue_vehicles": 1495,
+   "queue_m": 1333,
    "storage_m": 2332,
    "upstream": "TMC-04",
    "spillback": false,
    "minutes_to_spillback": null,
-   "mean_delay_min": 10.8,
-   "total_delay_pcu_hr": 675
+   "mean_delay_min": 9.6,
+   "total_delay_pcu_hr": 597
   },
   {
    "junction": "TMC-03",
    "approach": "from Sanganer Stadium",
-   "vc": 1.57,
+   "vc": 1.47,
    "los": "F",
-   "queue_pcu": 1357,
-   "queue_vehicles": 1700,
-   "queue_m": 1516,
+   "queue_pcu": 1201,
+   "queue_vehicles": 1504,
+   "queue_m": 1342,
    "storage_m": 393,
    "upstream": "TMC-02",
    "spillback": true,
-   "minutes_to_spillback": 15.5,
-   "mean_delay_min": 10.8,
-   "total_delay_pcu_hr": 679
+   "minutes_to_spillback": 17.6,
+   "mean_delay_min": 9.6,
+   "total_delay_pcu_hr": 601
   },
   {
    "junction": "TMC-04",
    "approach": "from Mansarover Metro",
-   "vc": 1.46,
+   "vc": 1.35,
    "los": "F",
-   "queue_pcu": 1110,
-   "queue_vehicles": 1363,
-   "queue_m": 1216,
+   "queue_pcu": 918,
+   "queue_vehicles": 1127,
+   "queue_m": 1006,
    "storage_m": 190,
    "upstream": "TMC-05",
    "spillback": true,
-   "minutes_to_spillback": 9.4,
-   "mean_delay_min": 9.5,
-   "total_delay_pcu_hr": 555
+   "minutes_to_spillback": 11.4,
+   "mean_delay_min": 7.8,
+   "total_delay_pcu_hr": 459
   },
   {
    "junction": "TMC-04",
    "approach": "from Sanganer Stadium",
-   "vc": 1.33,
+   "vc": 1.23,
    "los": "F",
-   "queue_pcu": 794,
-   "queue_vehicles": 975,
-   "queue_m": 870,
+   "queue_pcu": 602,
+   "queue_vehicles": 739,
+   "queue_m": 659,
    "storage_m": 2332,
    "upstream": "TMC-03",
    "spillback": false,
    "minutes_to_spillback": null,
-   "mean_delay_min": 7.5,
-   "total_delay_pcu_hr": 397
+   "mean_delay_min": 5.7,
+   "total_delay_pcu_hr": 301
   },
   {
    "junction": "TMC-05",
    "approach": "from Mansarover Metro",
-   "vc": 2.41,
+   "vc": 2.29,
    "los": "F",
-   "queue_pcu": 3377,
-   "queue_vehicles": 4271,
-   "queue_m": 3964,
+   "queue_pcu": 3257,
+   "queue_vehicles": 4119,
+   "queue_m": 3823,
    "storage_m": 539,
    "upstream": "TMC-06",
    "spillback": true,
-   "minutes_to_spillback": 8.2,
-   "mean_delay_min": 17.5,
-   "total_delay_pcu_hr": 1689
+   "minutes_to_spillback": 8.5,
+   "mean_delay_min": 16.9,
+   "total_delay_pcu_hr": 1629
   },
   {
    "junction": "TMC-05",
    "approach": "from Sanganer Stadium",
-   "vc": 1.7,
+   "vc": 1.62,
    "los": "F",
-   "queue_pcu": 1686,
-   "queue_vehicles": 2132,
-   "queue_m": 1979,
+   "queue_pcu": 1566,
+   "queue_vehicles": 1981,
+   "queue_m": 1838,
    "storage_m": 190,
    "upstream": "TMC-04",
    "spillback": true,
-   "minutes_to_spillback": 5.8,
-   "mean_delay_min": 12.4,
-   "total_delay_pcu_hr": 843
+   "minutes_to_spillback": 6.2,
+   "mean_delay_min": 11.5,
+   "total_delay_pcu_hr": 783
   },
   {
    "junction": "TMC-06",
    "approach": "from Mansarover Metro",
-   "vc": 1.58,
+   "vc": 1.51,
    "los": "F",
-   "queue_pcu": 1397,
-   "queue_vehicles": 1752,
-   "queue_m": 1733,
+   "queue_pcu": 1277,
+   "queue_vehicles": 1601,
+   "queue_m": 1584,
    "storage_m": null,
    "upstream": null,
    "spillback": false,
    "minutes_to_spillback": null,
-   "mean_delay_min": 11.0,
-   "total_delay_pcu_hr": 698
+   "mean_delay_min": 10.1,
+   "total_delay_pcu_hr": 638
   },
   {
    "junction": "TMC-06",
    "approach": "from Sanganer Stadium",
-   "vc": 1.49,
+   "vc": 1.42,
    "los": "F",
-   "queue_pcu": 1166,
-   "queue_vehicles": 1462,
-   "queue_m": 1446,
+   "queue_pcu": 1046,
+   "queue_vehicles": 1311,
+   "queue_m": 1298,
    "storage_m": 539,
    "upstream": "TMC-05",
    "spillback": true,
-   "minutes_to_spillback": 22.4,
-   "mean_delay_min": 9.8,
-   "total_delay_pcu_hr": 583
+   "minutes_to_spillback": 24.9,
+   "mean_delay_min": 8.8,
+   "total_delay_pcu_hr": 523
   }
  ],
  "spillback_count": 6,
@@ -206,102 +206,102 @@
  "n_approaches": 12,
  "corridor_km": 5.34,
  "free_flow_min": 8.0,
- "peak_delay_min": 64.1,
+ "peak_delay_min": 56.5,
  "direction_delay_min": {
-  "southbound": 64.1,
-  "northbound": 58.2
+  "southbound": 56.5,
+  "northbound": 50.4
  },
  "worst_direction": "southbound",
- "peak_journey_min": 72.1,
- "effective_kmh": 4.4,
+ "peak_journey_min": 64.5,
+ "effective_kmh": 5.0,
  "after_grade_separation": [
   {
    "junction": "TMC-01",
    "approach": "from Mansarover Metro",
-   "vc": 0.59,
+   "vc": 0.55,
    "mean_delay_min": 0.0,
    "los": "C"
   },
   {
    "junction": "TMC-01",
    "approach": "from Sanganer Stadium",
-   "vc": 0.71,
+   "vc": 0.65,
    "mean_delay_min": 0.0,
-   "los": "D"
+   "los": "C"
   },
   {
    "junction": "TMC-02",
+   "approach": "from Mansarover Metro",
+   "vc": 0.39,
+   "mean_delay_min": 0.0,
+   "los": "B"
+  },
+  {
+   "junction": "TMC-02",
+   "approach": "from Sanganer Stadium",
+   "vc": 0.37,
+   "mean_delay_min": 0.0,
+   "los": "B"
+  },
+  {
+   "junction": "TMC-03",
+   "approach": "from Mansarover Metro",
+   "vc": 0.33,
+   "mean_delay_min": 0.0,
+   "los": "B"
+  },
+  {
+   "junction": "TMC-03",
+   "approach": "from Sanganer Stadium",
+   "vc": 0.33,
+   "mean_delay_min": 0.0,
+   "los": "B"
+  },
+  {
+   "junction": "TMC-04",
+   "approach": "from Mansarover Metro",
+   "vc": 0.43,
+   "mean_delay_min": 0.0,
+   "los": "B"
+  },
+  {
+   "junction": "TMC-04",
+   "approach": "from Sanganer Stadium",
+   "vc": 0.4,
+   "mean_delay_min": 0.0,
+   "los": "B"
+  },
+  {
+   "junction": "TMC-05",
+   "approach": "from Mansarover Metro",
+   "vc": 0.49,
+   "mean_delay_min": 0.0,
+   "los": "C"
+  },
+  {
+   "junction": "TMC-05",
+   "approach": "from Sanganer Stadium",
+   "vc": 0.35,
+   "mean_delay_min": 0.0,
+   "los": "B"
+  },
+  {
+   "junction": "TMC-06",
    "approach": "from Mansarover Metro",
    "vc": 0.41,
    "mean_delay_min": 0.0,
    "los": "B"
   },
   {
-   "junction": "TMC-02",
-   "approach": "from Sanganer Stadium",
-   "vc": 0.4,
-   "mean_delay_min": 0.0,
-   "los": "B"
-  },
-  {
-   "junction": "TMC-03",
-   "approach": "from Mansarover Metro",
-   "vc": 0.35,
-   "mean_delay_min": 0.0,
-   "los": "B"
-  },
-  {
-   "junction": "TMC-03",
-   "approach": "from Sanganer Stadium",
-   "vc": 0.35,
-   "mean_delay_min": 0.0,
-   "los": "B"
-  },
-  {
-   "junction": "TMC-04",
-   "approach": "from Mansarover Metro",
-   "vc": 0.47,
-   "mean_delay_min": 0.0,
-   "los": "C"
-  },
-  {
-   "junction": "TMC-04",
-   "approach": "from Sanganer Stadium",
-   "vc": 0.43,
-   "mean_delay_min": 0.0,
-   "los": "B"
-  },
-  {
-   "junction": "TMC-05",
-   "approach": "from Mansarover Metro",
-   "vc": 0.51,
-   "mean_delay_min": 0.0,
-   "los": "C"
-  },
-  {
-   "junction": "TMC-05",
-   "approach": "from Sanganer Stadium",
-   "vc": 0.36,
-   "mean_delay_min": 0.0,
-   "los": "B"
-  },
-  {
-   "junction": "TMC-06",
-   "approach": "from Mansarover Metro",
-   "vc": 0.43,
-   "mean_delay_min": 0.0,
-   "los": "B"
-  },
-  {
    "junction": "TMC-06",
    "approach": "from Sanganer Stadium",
-   "vc": 0.4,
+   "vc": 0.38,
    "mean_delay_min": 0.0,
    "los": "B"
   }
  ],
  "through_journey_min_after": 8.0,
- "saving_min_per_trip": 64.1,
+ "saving_min_per_trip": 56.5,
  "spacing": {
   "TMC-06": {
    "chainage_m": 1177.7532761548255,

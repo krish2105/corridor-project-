@@ -181,3 +181,30 @@ def test_classify_orders_the_bands_by_width():
 def test_a_junction_mouth_is_not_reported_as_a_u_turn_opening():
     """A 40 m gap is where a side road meets the corridor, not a U-turn bay."""
     assert classify(40.0) == "wide / junction mouth"
+
+
+# --- capacity basis ----------------------------------------------------------
+def test_capacity_comes_from_a_tabulated_code_value():
+    """
+    Regression. Capacity was 1200 PCU/lane/hr labelled "IRC:106 urban arterial capacity".
+    IRC:106-1990 does not publish that figure; IRC:92-2017 Table 6.3 and Indo-HCM Table
+    5.4 both give 2700 PCU/h per direction at 7.5 m. Worse than being unsourced, 1200 was
+    LOWER than the code value, so it raised every v/c we publish — an error that
+    flattered our own conclusion.
+    """
+    assert ASSUMPTIONS["base_capacity_pcu_per_dir"] == 2700
+    assert ASSUMPTIONS["base_width_per_dir_m"] == 7.5
+    assert "IRC:92-2017" in ASSUMPTIONS["capacity_source"]
+
+
+def test_capacity_is_not_scaled_by_width_twice():
+    """
+    Deriving lanes from width and then also scaling a per-lane capacity by width counts
+    the same adjustment twice. Capacity scales the per-DIRECTION figure only.
+    """
+    assert "capacity_pcu_per_lane_hr" not in ASSUMPTIONS
+
+
+def test_a_narrower_carriageway_gets_less_capacity():
+    base, bw = ASSUMPTIONS["base_capacity_pcu_per_dir"], ASSUMPTIONS["base_width_per_dir_m"]
+    assert round(base * (7.0 / bw)) < round(base * (7.2 / bw)) < base

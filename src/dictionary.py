@@ -255,7 +255,11 @@ FIELDS.update({
     "growth_pct": "Growth rate applied, % per year.",
     "lane_width_m": "Assumed lane width, metres.",
     "shy_distance_m": "Kerb and median clearance deducted, metres.",
-    "capacity_pcu_per_lane_hr": "Assumed lane capacity, PCU/lane/hour.",
+    "base_capacity_pcu_per_dir": "Tabulated capacity per direction at the base width, "
+                                 "PCU/hour. Scaled by measured width, not by lane count.",
+    "base_width_per_dir_m": "Carriageway width per direction the tabulated capacity "
+                            "applies to, metres.",
+    "capacity_source": "The document and table the capacity comes from.",
     "lane_capacity_pcu": "Lane capacity tested, PCU per lane.",
     "lanes_per_direction": "Lanes per direction tested.",
     "phf_applied": "Whether a peak hour factor was applied.",

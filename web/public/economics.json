@@ -61,107 +61,107 @@
   {
    "junction": "TMC-01",
    "approach": "from Mansarover Metro",
-   "hours_over": 5.0,
-   "excess_pcu": 1840.7125000000003,
+   "hours_over": 3.25,
+   "excess_pcu": 1082.0750000000003,
    "max_pcu_hr": 3317.0
   },
   {
    "junction": "TMC-01",
    "approach": "from Sanganer Stadium",
-   "hours_over": 3.75,
-   "excess_pcu": 2716.7625000000007,
+   "hours_over": 2.75,
+   "excess_pcu": 2107.1000000000004,
    "max_pcu_hr": 3962.75
   },
   {
    "junction": "TMC-02",
    "approach": "from Mansarover Metro",
-   "hours_over": 5.5,
-   "excess_pcu": 1369.1500000000005,
+   "hours_over": 3.5,
+   "excess_pcu": 651.9750000000003,
    "max_pcu_hr": 3125.55
   },
   {
    "junction": "TMC-02",
    "approach": "from Sanganer Stadium",
-   "hours_over": 3.0,
-   "excess_pcu": 875.6750000000004,
+   "hours_over": 1.75,
+   "excess_pcu": 488.1750000000002,
    "max_pcu_hr": 2989.8
   },
   {
    "junction": "TMC-03",
    "approach": "from Mansarover Metro",
-   "hours_over": 10.25,
-   "excess_pcu": 5778.7750000000015,
+   "hours_over": 8.25,
+   "excess_pcu": 4350.15,
    "max_pcu_hr": 3749.75
   },
   {
    "junction": "TMC-03",
    "approach": "from Sanganer Stadium",
-   "hours_over": 10.5,
-   "excess_pcu": 5240.924999999997,
+   "hours_over": 8.0,
+   "excess_pcu": 3848.7249999999995,
    "max_pcu_hr": 3757.0499999999997
   },
   {
    "junction": "TMC-04",
    "approach": "from Mansarover Metro",
-   "hours_over": 10.5,
-   "excess_pcu": 6045.275,
+   "hours_over": 9.25,
+   "excess_pcu": 4161.3875,
    "max_pcu_hr": 3509.6499999999996
   },
   {
    "junction": "TMC-04",
    "approach": "from Sanganer Stadium",
-   "hours_over": 12.5,
-   "excess_pcu": 5631.074999999999,
+   "hours_over": 10.5,
+   "excess_pcu": 3348.4125,
    "max_pcu_hr": 3193.8
   },
   {
    "junction": "TMC-05",
    "approach": "from Mansarover Metro",
-   "hours_over": 10.25,
-   "excess_pcu": 11902.624999999998,
+   "hours_over": 10.0,
+   "excess_pcu": 10692.25,
    "max_pcu_hr": 5777.45
   },
   {
    "junction": "TMC-05",
    "approach": "from Sanganer Stadium",
-   "hours_over": 11.0,
-   "excess_pcu": 9590.750000000002,
+   "hours_over": 10.25,
+   "excess_pcu": 8318.512500000004,
    "max_pcu_hr": 4086.15
   },
   {
    "junction": "TMC-06",
    "approach": "from Mansarover Metro",
-   "hours_over": 9.75,
-   "excess_pcu": 5455.625000000001,
+   "hours_over": 9.0,
+   "excess_pcu": 4322.775,
    "max_pcu_hr": 3796.85
   },
   {
    "junction": "TMC-06",
    "approach": "from Sanganer Stadium",
-   "hours_over": 8.25,
-   "excess_pcu": 3922.0,
+   "hours_over": 7.5,
+   "excess_pcu": 2987.175000000001,
    "max_pcu_hr": 3565.8
   }
  ],
- "total_excess_pcu_day": 60369,
- "mean_hours_over": 8.35,
+ "total_excess_pcu_day": 46359,
+ "mean_hours_over": 7.0,
  "pcu_per_vehicle": 0.82,
- "delay_veh_hr_day": 36804,
+ "delay_veh_hr_day": 28262,
  "annual_cost_crore": [
-  176,
-  417
+  135,
+  320
  ],
  "annual_cost_after_crore": [
-  47,
-  111
+  35,
+  83
  ],
  "annual_benefit_crore": [
-  129,
-  306
+  100,
+  237
  ],
  "benefit_to_first_failure_crore": [
-  776,
-  1837
+  801,
+  1896
  ],
- "years_to_first_failure": 6
+ "years_to_first_failure": 8
 }

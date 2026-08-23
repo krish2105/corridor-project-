@@ -43,9 +43,23 @@ ASSUMPTIONS = {
     "growth_high_pct": 8.0,
     "lane_width_m": 3.5,
     "shy_distance_m": 1.0,
-    # IRC:106 urban arterial capacity, PCU/hour per direction on a divided carriageway.
-    # Indo-HCM supersedes this for detailed work; these are the planning-level values.
-    "capacity_pcu_per_lane_hr": 1200,
+    # Capacity per DIRECTION, scaled from a tabulated base by measured width.
+    #
+    # This was 1200 PCU/lane/hr labelled "IRC:106 urban arterial capacity". Two problems.
+    # IRC:106-1990 does not publish that figure; IRC:92-2017 Table 6.3 and Indo-HCM
+    # Table 5.4 both give a four-lane divided urban road at 7.5 m per direction as
+    # 5400 PCU/h total, 2700 per direction, 1350 per lane. And 1200 is LOWER than the
+    # code value, which lowers capacity, which raises v/c - it made every ratio we publish
+    # harsher on the scheme than the standard supports. An error that flatters our own
+    # conclusion is the one to find first.
+    #
+    # Capacity is now the tabulated per-direction figure scaled by the ratio of measured
+    # width to the 7.5 m base, rather than a lane count multiplied by a per-lane value.
+    # Deriving lanes from width and then also scaling per-lane capacity by width would
+    # count the same adjustment twice.
+    "base_capacity_pcu_per_dir": 2700,
+    "base_width_per_dir_m": 7.5,
+    "capacity_source": "IRC:92-2017 Table 6.3 / Indo-HCM Table 5.4, four-lane divided urban",
     "phf_applied": True,
 }
 
@@ -297,7 +311,9 @@ if __name__ == "__main__":
     cap = {}
     for code, (w, n) in widths.items():
         ln = lanes_from_width(w)
-        c = (ln or 0) * ASSUMPTIONS["capacity_pcu_per_lane_hr"]
+        # tabulated per-direction capacity, scaled by measured width against the base
+        c = round(ASSUMPTIONS["base_capacity_pcu_per_dir"]
+                  * (w / ASSUMPTIONS["base_width_per_dir_m"]))
         cap[code] = c
         print(f"  {code:<10}{(f'{w:.1f}' if w else '--'):>9}{n:>11}{(ln or '--'):>11}{c:>12,}")
 

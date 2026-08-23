@@ -352,8 +352,10 @@ def capacity_report():
         "## 2. Basis of assessment",
         "",
         _table(["Parameter", "Value", "Source"], [
-            ["Lane capacity", f"{a['capacity_pcu_per_lane_hr']} PCU/lane/hr",
-             "Indo-HCM 2017, urban arterial, mixed traffic"],
+            ["Capacity, per direction",
+             f"{a['base_capacity_pcu_per_dir']:,} PCU/hr at {a['base_width_per_dir_m']} m, "
+             "scaled by measured width",
+             a["capacity_source"]],
             ["Lane width", f"{a['lane_width_m']} m", "IRC:86 urban arterial"],
             ["Shy distance", f"{a['shy_distance_m']} m", "kerb and median clearance"],
             ["Peak hour factor", "applied" if a["phf_applied"] else "not applied",

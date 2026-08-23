@@ -15,9 +15,9 @@ The pipeline parses every cell, recomputes every stored total from its component
 | **223 stored totals** disagree with their components | 180 understate, 43 overstate; all recorded, none silently corrected |
 | **JDA's U-turn bays cannot carry the demand** | A right turn becomes a U-turn under signal-free running, so the bays inherit the recorded right-turn volume. At a composition-weighted critical gap: 11 of 12 approaches unservable, 9 even optimistically. 3,781 veh/hr would force across opposing traffic |
 | An elevated through-carriageway **is justified on opening** | Through movements 57–79%; carrying them over the junctions returns all 12 corridor approaches to acceptable operation |
-| **…and does not last its own design horizon** | Growing residual turning demand at 6%, the first approach is back over capacity in 2032 and 0 of 12 still hold at 2046. This argues against our own recommendation and is reported anyway |
-| **The corridor does not queue, it locks** | 6 of 12 approaches queue past the junction behind them inside the peak hour. A through trip takes 72.1 minutes against 8.0 at free flow — an effective 4.4 km/h |
-| **The delay already has a measurable annual cost** | Approaches are over capacity 8.3 hours a day, counted from the survey's own intervals. Valued at an occupancy-weighted value of time that is ₹176–417 crore a year |
+| **…and does not last its own design horizon** | Growing residual turning demand at 6%, the first approach is back over capacity in 2034 and 0 of 12 still hold at 2046. This argues against our own recommendation and is reported anyway |
+| **The corridor does not queue, it locks** | 6 of 12 approaches queue past the junction behind them inside the peak hour. A through trip takes 64.5 minutes against 8.0 at free flow — an effective 5.0 km/h |
+| **The delay already has a measurable annual cost** | Approaches are over capacity 7.0 hours a day, counted from the survey's own intervals. Valued at an occupancy-weighted value of time that is ₹135–320 crore a year |
 
 Design rule throughout: **never trust a stored total.** Everything is recomputed, and discrepancies go to a register rather than being absorbed.
 
@@ -29,7 +29,7 @@ Source data is not in this repo — the workbooks and CAD are the client's. Plac
 
 ```bash
 uv sync
-uv run pytest                     # 304 tests
+uv run pytest                     # 307 tests
 uv run python src/inspect_tmc.py   # raw workbook structure, no reshaping
 uv run python src/audit.py         # -> out/audit_report.md
 uv run python src/atlas.py         # -> out/corridor_constraint_atlas.pdf
@@ -56,7 +56,7 @@ Every module runs standalone and prints its own verification metric. A module th
 - `docs/data_dictionary.md` — every field in every published file, with units. Generated, so a field added without a description fails a test.
 - `docs/jaipur_corridor_study.md` — the methodology, with inline `ERRATUM` blocks correcting 9 defects in its own worked code.
 
-**Documents are generated, not written.** Reports, the data dictionary, the commercial pack and this README all build from pipeline output, because hand-written figures go stale silently — this file claimed 26 tests while the suite held 304.
+**Documents are generated, not written.** Reports, the data dictionary, the commercial pack and this README all build from pipeline output, because hand-written figures go stale silently — this file claimed 26 tests while the suite held 307.
 
 ## Caveats, stated
 

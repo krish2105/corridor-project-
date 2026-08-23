@@ -67,16 +67,16 @@ Removing the through movement from the at-grade surface — the elevated option 
 
 | Junction | Approach | Through % | Peak PCU | Residual | v/c before | v/c after | LOS after |
 |---|---|---|---|---|---|---|---|
-| TMC-01 | Mansarover Metro | 57.2% | 3,317 | 1,420 | 1.38 | 0.59 | B |
-| TMC-01 | Sanganer Stadium | 57.2% | 3,963 | 1,696 | 1.65 | 0.71 | C |
+| TMC-01 | Mansarover Metro | 57.2% | 3,317 | 1,420 | 1.38 | 0.59 | C |
+| TMC-01 | Sanganer Stadium | 57.2% | 3,963 | 1,696 | 1.65 | 0.71 | D |
 | TMC-02 | Mansarover Metro | 68.3% | 3,126 | 991 | 1.30 | 0.41 | B |
-| TMC-02 | Sanganer Stadium | 68.3% | 2,990 | 948 | 1.25 | 0.39 | A |
-| TMC-03 | Mansarover Metro | 77.4% | 3,750 | 847 | 1.56 | 0.35 | A |
-| TMC-03 | Sanganer Stadium | 77.4% | 3,757 | 849 | 1.57 | 0.35 | A |
-| TMC-04 | Mansarover Metro | 67.9% | 3,510 | 1,127 | 1.46 | 0.47 | B |
+| TMC-02 | Sanganer Stadium | 68.3% | 2,990 | 948 | 1.25 | 0.39 | B |
+| TMC-03 | Mansarover Metro | 77.4% | 3,750 | 847 | 1.56 | 0.35 | B |
+| TMC-03 | Sanganer Stadium | 77.4% | 3,757 | 849 | 1.57 | 0.35 | B |
+| TMC-04 | Mansarover Metro | 67.9% | 3,510 | 1,127 | 1.46 | 0.47 | C |
 | TMC-04 | Sanganer Stadium | 67.9% | 3,194 | 1,025 | 1.33 | 0.43 | B |
-| TMC-05 | Mansarover Metro | 78.7% | 5,777 | 1,231 | 2.41 | 0.51 | B |
-| TMC-05 | Sanganer Stadium | 78.7% | 4,086 | 870 | 1.70 | 0.36 | A |
+| TMC-05 | Mansarover Metro | 78.7% | 5,777 | 1,231 | 2.41 | 0.51 | C |
+| TMC-05 | Sanganer Stadium | 78.7% | 4,086 | 870 | 1.70 | 0.36 | B |
 | TMC-06 | Mansarover Metro | 72.9% | 3,797 | 1,029 | 1.58 | 0.43 | B |
 | TMC-06 | Sanganer Stadium | 72.9% | 3,566 | 966 | 1.49 | 0.40 | B |
 

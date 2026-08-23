@@ -134,6 +134,11 @@ def build():
         CAPRATIO=f"{capd.get('observed_vs_planning_ratio', 0):.2f}",
         CAPOK=str(capd.get("approaches_ok_after_grade_separation", 0)),
         CAPN=str(len(capd.get("relief", []))),
+        CAPPCU="{:,}".format(round(sum(v["capacity_pcu_hr"] for v in capd.get("widths", {}).values())
+                                   / max(1, len(capd.get("widths", {})))))
+                if capd.get("widths") else "",
+        CAPPERLANE="{:,}".format(round(max((j["pcu_pt"] for j in capd.get("junctions", [])),
+                                           default=0) / 2)),
         QSPILL=str(dlyd.get("spillback_count", "")),
         QN=str(dlyd.get("n_approaches", "")),
         QSOON=str(min([a["minutes_to_spillback"] for a in dlyd.get("approaches", [])
