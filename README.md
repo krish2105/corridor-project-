@@ -29,7 +29,7 @@ Source data is not in this repo — the workbooks and CAD are the client's. Plac
 
 ```bash
 uv sync
-uv run pytest                     # 328 tests
+uv run pytest                     # 332 tests
 uv run python src/inspect_tmc.py   # raw workbook structure, no reshaping
 uv run python src/audit.py         # -> out/audit_report.md
 uv run python src/atlas.py         # -> out/corridor_constraint_atlas.pdf
@@ -56,7 +56,7 @@ Every module runs standalone and prints its own verification metric. A module th
 - `docs/data_dictionary.md` — every field in every published file, with units. Generated, so a field added without a description fails a test.
 - `docs/jaipur_corridor_study.md` — the methodology, with inline `ERRATUM` blocks correcting 9 defects in its own worked code.
 
-**Documents are generated, not written.** Reports, the data dictionary, the commercial pack and this README all build from pipeline output, because hand-written figures go stale silently — this file claimed 26 tests while the suite held 328.
+**Documents are generated, not written.** Reports, the data dictionary, the commercial pack and this README all build from pipeline output, because hand-written figures go stale silently — this file claimed 26 tests while the suite held 332.
 
 ## Caveats, stated
 
@@ -64,6 +64,6 @@ Every module runs standalone and prints its own verification metric. A module th
 
 The severity weighting in the constraint atlas is a judgement, not a measurement. Half the PCU correction is unresolvable because the survey's class scheme lumps roughly half the stream into one column, so those figures are published as bands.
 
-Critical-gap values are from literature rather than measured here; they are Raff-derived and so likely biased high, which makes the U-turn finding conservative. Detection accuracy is unverified until footage exists — the pipeline and its gates are built and self-tested, and no accuracy figure is claimed.
+Critical-gap values are from literature rather than measured here. They are not conservative — an earlier version of this pack said they were, and that was withdrawn; they sit mid-pack against the four-lane median-opening evidence, and the same test is published across twelve bases. Detection accuracy is unverified until footage exists — the pipeline and its gates are built and self-tested, and no accuracy figure is claimed.
 
 Rupee figures are banded and the value of time is a policy input, not a measurement. Substituting the authority's own approved rates changes one table.

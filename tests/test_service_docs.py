@@ -162,3 +162,20 @@ def test_superseded_docs_say_so_at_the_top():
     runbook = (ROOT / "docs" / "setup_runbook.md").read_text()
     i = runbook.find("# PROMPT ORDER")
     assert i > 0 and "SUPERSEDED" in runbook[i:i + 400]
+
+
+def test_a_filtered_pytest_run_cannot_overwrite_the_published_test_count():
+    """
+    The collection hook writes out/data/testcount.json, which service_docs.py publishes as
+    a headline figure. It used to write on EVERY run, so `pytest tests/test_x.py` recorded
+    that file's handful of tests as the project's count and the next document build shipped
+    it. CI runs a filtered step, so this had a scheduled cause. The hook must bail out on
+    any filtered invocation.
+    """
+    import inspect
+    import conftest
+    src = inspect.getsource(conftest.pytest_collection_finish)
+    for opt in ("keyword", "markexpr", "file_or_dir"):
+        assert opt in src, f"the hook does not check for a {opt} filter"
+    assert "return" in src.split("filtered")[-1][:200], (
+        "the hook detects a filtered run but does not bail out of it")

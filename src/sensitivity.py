@@ -38,11 +38,28 @@ from src.tmc_parse import parse_all
 # The space. Each axis runs from most favourable to the proposed scheme, to least.
 AXES = dict(
     pcu_uplift_pct=[14.9, 30.0, 44.0, 74.8],
-    lane_capacity_pcu=[1200, 1500, 1800],       # IRC planning -> generous
+    # Was [1200, 1500, 1800] labelled "IRC planning -> generous". 1200 PCU/lane is the
+    # unsourced figure capacity.py documents as retired, and no IRC table carries it;
+    # IRC:92-2017 Table 6.3 gives 2700 PCU/dir on a four-lane divided urban road, which
+    # is ~1350/lane. The axis now brackets that rather than sitting entirely below it -
+    # an axis whose every value is under the real capacity tests a different road, not
+    # the sensitivity of this one.
+    lane_capacity_pcu=[1100, 1350, 1600],       # adverse -> IRC:92-2017 -> generous
     lanes_per_direction=[2, 3],                 # geometric -> observed stream count
     critical_gap=["optimistic", "conservative"],
     growth_pct=[4.0, 6.0, 8.0],
 )
+
+# growth_pct is swept by the dashboard's scenario tool, which walks the whole 144-cell
+# space interactively, and it drives design life in capacity.py. It does NOT bear on the
+# three conclusions this module publishes, which is why none of their grids include it.
+#
+# That distinction was previously collapsed: the module printed "144 combinations, each
+# conclusion is evaluated across all of them" directly above a line saying only one
+# assumption bore on conclusion 1. The space is 144; the conclusions run across less.
+GROWTH_HANDLED_IN = ("swept interactively by the dashboard scenario tool and used for "
+                     "design life in capacity.py; it does not bear on the three "
+                     "conclusions tested here, so none of their grids sweep it")
 
 # The queue conclusion has its own assumptions, which none of the axes above touch.
 # Packing and footprint both scale queue LENGTH; lane capacity scales the excess that
@@ -51,7 +68,10 @@ AXES = dict(
 QUEUE_AXES = dict(
     jam_packing=[0.85, 0.75, 0.65],       # denser packing -> shorter queue -> less spillback
     footprint_scale=[0.8, 1.0, 1.2],      # uncertainty in the vehicle dimensions used
-    lane_capacity_pcu=[1800, 1500, 1200],
+    # centred on the ~1,296 PCU/lane that capacity.py's 2,592 PCU/dir implies over two
+    # lanes, so the middle of the axis reproduces the published queue rather than
+    # sitting a quarter away from it. Was [1800, 1500, 1200], centred on nothing.
+    lane_capacity_pcu=[1600, 1296, 1000],
 )
 
 
@@ -67,12 +87,20 @@ def spillback_verdict(packing, fscale, lane_cap):
     from src.delay import JAM_PACKING
     d = json.loads((OUT_DATA / "delay.json").read_text())
     LANES = 2                      # matches the measured widths in capacity.py
-    base_cap = 1200.0 * LANES      # the capacity delay.py divided by
     spills = total = 0
     for a in d["approaches"]:
         if a["storage_m"] is None:      # corridor ends have no junction behind them
             continue
         total += 1
+        # The divisor delay.py ACTUALLY used, per approach, published by delay.py itself.
+        #
+        # This was hardcoded as 1200 PCU/lane with a comment claiming it matched delay.py.
+        # It did not. delay.py takes each junction's measured-width capacity from
+        # capacity.json - about 2,592 PCU/dir - and 1,200/lane is the unsourced figure
+        # capacity.py documents as retired. The grid was rebuilding demand from a number
+        # the project had already withdrawn, so its centre point did not reproduce the
+        # published queue result it was meant to be testing the sensitivity of.
+        base_cap = float(a["capacity_pcu_hr"])
         demand = a["vc"] * base_cap
         # lane_cap is PER LANE, so the comparison capacity is lanes x lane_cap.
         # Treating it as a total makes every value on the axis look worse than the
@@ -144,7 +172,22 @@ if __name__ == "__main__":
     n = 1
     for v in AXES.values():
         n *= len(v)
-    print(f"\n  {n} combinations. Each conclusion is evaluated across all of them.\n")
+    # State the grid each conclusion is ACTUALLY run across, not the cartesian product of
+    # every axis declared. The two differ, and claiming the larger one overstates the
+    # work: "144 combinations, each conclusion evaluated across all of them" was printed
+    # directly above a line saying only one assumption bore on conclusion 1.
+    n_uturn = len(AXES["critical_gap"])
+    n_elev = len(AXES["pcu_uplift_pct"]) * len(AXES["lane_capacity_pcu"]) \
+        * len(AXES["lanes_per_direction"])
+    n_queue = 1
+    for v in QUEUE_AXES.values():
+        n_queue *= len(v)
+    print(f"\n  {n} combinations across the five axes above. Each conclusion is run across")
+    print("  the axes that bear on IT, which is fewer - stated per conclusion below:")
+    print(f"    conclusion 1, U-turn capacity   {n_uturn:>3}  (critical gap only)")
+    print(f"    conclusion 2, elevated relief   {n_elev:>3}  (uplift x lane capacity x lanes)")
+    print(f"    conclusion 3, queue spillback   {n_queue:>3}  (its own grid, see below)")
+    print(f"  growth rate is swept by no conclusion grid: {GROWTH_HANDLED_IN}.\n")
 
     # --- conclusion 1: can the U-turn bays serve the demand? ---------------
     print("=== Conclusion 1 — the U-turn bays cannot carry the demand ===")
@@ -252,6 +295,8 @@ if __name__ == "__main__":
     p = OUT_DATA / "sensitivity.json"
     p.write_text(json.dumps(dict(
         axes=AXES, combinations=n,
+        combinations_uturn=n_uturn, combinations_elevated=n_elev,
+        combinations_queue=n_queue, growth_handled_in=GROWTH_HANDLED_IN,
         uturn={k: dict(fails=v[0], of=v[1]) for k, v in u.items()},
         uturn_robust=bool(best[0] > best[1] / 2),
         elevated=[{k: (v if not hasattr(v, "item") else v.item()) for k, v in r.items()}

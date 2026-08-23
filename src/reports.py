@@ -267,9 +267,12 @@ def validation_report():
              NOT_MEASURED, "large disagreement withdraws the estimate"],
         ]),
         "",
-        f"The literature values are Raff-derived and therefore likely biased high, which "
-        f"makes the present U-turn finding conservative. Measured values would be expected "
-        f"to worsen it, not relieve it. The finding as it stands is that "
+        f"The literature values are not measured at this corridor, and they are not "
+        f"conservative either — an earlier version of this report claimed they were, on "
+        f"the grounds that they were Raff-derived and so biased high. That was withdrawn. "
+        f"They are composition-weighted from field studies and sit mid-pack against the "
+        f"four-lane median-opening evidence, so measurement could move the finding in "
+        f"either direction. The finding as it stands is that "
         f"{s_test['fails_conservative']} of {len(s_test['uturns'])} approaches fail; "
         "measurement is capable of changing that number and this report will state the "
         "revised figure whichever way it moves.",
@@ -541,8 +544,10 @@ def capacity_report():
         "- Composite vehicle classes prevent a point PCU estimate. Bands are reported "
         "throughout and no band is collapsed to its midpoint.",
         "- Critical gap values are from literature, not measured at this corridor. They "
-        "are Raff-derived and therefore likely biased high, which makes the U-turn "
-        "finding **conservative** — measured values would tend to worsen it, not improve it.",
+        "are **not** conservative: an earlier version of this report said so, and it was "
+        "withdrawn. They sit mid-pack against the four-lane median-opening studies that "
+        "match this geometry, so measurement could move the finding either way. The same "
+        "test is published across twelve bases so the reader can pick one.",
         "- E-rickshaw has no IRC PCU factor and no column in the survey. It is excluded "
         "rather than assumed, and its absence understates demand by an unknown amount.",
         "- Three of the six junction positions are inferred from the scheme description "

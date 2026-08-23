@@ -100,7 +100,7 @@ composite.
 | I | Cycle Rickshaw | 1.5 | CYCLE_RIK | **Yes** |
 | J | Hand Cart | 3.0 | HAND_CART, IRC:106-1990 Table 1 at 2.0 (5%) / 3.0 (10%+) | **Yes** |
 | K | Horse Drawn | 4.0 | ANIMAL | **Yes** |
-| L | Bullock Corts | 8.0 | ANIMAL | zero counts in this survey |
+| L | Bullock Corts | 8.0 | ANIMAL | **Yes** — 142 counted (TMC-03/04/05), not zero |
 
 **There is no E-rickshaw column.** The label exists in the workbook string table but no
 column carries it. Flag this as a stated gap in every output — e-rickshaws are a
@@ -110,7 +110,7 @@ material share of Jaipur traffic and their absence biases the count downward.
 - PCU factors are **share-dependent** (IRC:106). Interpolate linearly between the 5% and
   10% values based on that class's share of the stream. Do not hardcode a single value.
 - The survey used **static** factors. That is the central audit finding: 2W is carried at
-  0.50 while 2W is ~47% of the stream, where IRC:106 requires 0.75.
+  0.50 while 2W is ~49% of the stream, where IRC:106 requires 0.75.
 - E_RIK has no official PCU. Use 1.0/1.2 and **flag it as an assumption in output**.
 - Corrections run both ways. 2W is understated; Cycle (0.50 vs IRC 0.40) and the MAV
   bucket (4.5 vs IRC 3.7) are mildly overstated. Report the net, not just the favourable half.

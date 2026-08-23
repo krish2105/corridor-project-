@@ -265,9 +265,11 @@ def readme(c):
         "Half the PCU correction is unresolvable because the survey's class scheme lumps "
         "roughly half the stream into one column, so those figures are published as bands.",
         "",
-        "Critical-gap values are from literature rather than measured here; they are "
-        "Raff-derived and so likely biased high, which makes the U-turn finding "
-        "conservative. Detection accuracy is unverified until footage exists — the "
+        "Critical-gap values are from literature rather than measured here. They are not "
+        "conservative — an earlier version of this pack said they were, and that was "
+        "withdrawn; they sit mid-pack against the four-lane median-opening evidence, and "
+        "the same test is published across twelve bases. Detection accuracy is "
+        "unverified until footage exists — the "
         "pipeline and its gates are built and self-tested, and no accuracy figure is "
         "claimed.",
         "",
@@ -750,9 +752,10 @@ def capability_statement(c):
         "- Structural, geotechnical and DPR authorship are out of scope.",
         "- Detection accuracy on this camera is **unverified** until footage exists. The "
         "pipeline and its gates are built and self-tested; no accuracy figure is claimed.",
-        "- Critical-gap values are from literature, not measured at this corridor. They "
-        "are Raff-derived and likely biased high, which makes the U-turn finding "
-        "conservative — stated in every output that uses them.",
+        "- Critical-gap values are from literature, not measured at this corridor, and "
+        "are **not** conservative — an earlier version of this pack claimed they were and "
+        "it was withdrawn. They sit mid-pack against the matched four-lane evidence, and "
+        "the finding is published across twelve bases rather than one.",
         f"- {sum(1 for v in JUNCTION_COORDS.values() if v[4] != 'name match')} of "
         f"{len(JUNCTION_COORDS)} junction positions are inferred pending the survey "
         "location schedule, and are labelled as such on every map, table and page.",

@@ -8,6 +8,8 @@ import CumulativeQueue from "./CumulativeQueue";
 import Tornado from "./Tornado";
 import LosHeatmap from "./LosHeatmap";
 import ScenarioTool from "./ScenarioTool";
+
+type Sch = { gap_evidence_spread?: { label: string; t_c: number }[] };
 import VolumeFlow from "./VolumeFlow";
 import Reveal from "./Reveal";
 
@@ -223,7 +225,13 @@ export default function Exhibits({ safety, profiles, exhibits, sensitivity, capa
             <Reveal delay={.1}>
               <ScenarioTool axes={sen.axes} elevated={sen.elevated} queue={sen.queue}
                             uturn={sen.uturn} designLife={cap.design_life}
-                            baseYear={cap.assumptions.base_year} horizon={cap.horizon_year} />
+                            baseYear={cap.assumptions.base_year} horizon={cap.horizon_year}
+                            gapSeconds={{
+                              optimistic: (scheme as unknown as Sch).gap_evidence_spread?.find(
+                                (b) => b.label === "ours, optimistic")?.t_c ?? 0,
+                              conservative: (scheme as unknown as Sch).gap_evidence_spread?.find(
+                                (b) => b.label === "ours, conservative")?.t_c ?? 0,
+                            }} />
             </Reveal>
           </div>
         </section>

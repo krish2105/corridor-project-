@@ -199,8 +199,25 @@ if __name__ == "__main__":
     print(f"bins parsed        : {len(bins):,}   (expected {exp:,})")
     print(f"junctions          : {bins.junction.nunique()}   dates: {sorted(bins.date.unique())}")
     print(f"vehicle classes    : {bins.veh_class.nunique()}")
-    print(f"movements per junc : "
-          f"{bins[bins.kind=='movement'].groupby('junction').movement.count().div(96*10).unique()}")
+    # CLAUDE.md's gate is "exactly 12 per junction (4 arms x L/S/R), no U-turns".
+    # This used to divide the movement row count by 96 bins x 10 classes and print the
+    # result - which is 24, because it never divided by the TWO survey days. It reported
+    # a number that failed its own gate, under a label saying it was the gate, and
+    # nothing compared it to 12.
+    mv = bins[bins.kind == "movement"]
+    # a "movement" here is an ARM x TURN pair - 4 arms x L/S/R. The `movement` column
+    # alone holds only the turn, so counting it returns 3.
+    per = (mv.drop_duplicates(["junction", "date", "arm_from", "movement"])
+             .groupby(["junction", "date"]).size())
+    print(f"movements per junc : {sorted(per.unique())} per junction per day "
+          f"(expected [12]) over {mv.date.nunique()} days")
+    bad = per[per != 12]
+    if len(bad):
+        print(f"  GATE FAILED - {len(bad)} junction-days are not 12 movements:")
+        print(bad.to_string())
+    else:
+        print(f"  GATE PASSED - all {len(per)} junction-days carry exactly 12 movements, "
+              f"no U-turns")
     print()
     print(f"MISMATCH REGISTER  : {len(mism):,} discrepancies between stored and derived")
     if len(mism):

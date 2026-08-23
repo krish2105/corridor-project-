@@ -206,6 +206,15 @@ footer{padding-block:2.5rem 4rem;border-top:1px solid var(--rule);color:var(--mu
 .gapev-notes .k{font-family:"IBM Plex Mono",monospace;font-size:.6rem;letter-spacing:.08em;
   text-transform:uppercase;color:var(--faint);margin-right:.45rem}
 
+/* source attributions -----------------------------------------------------
+   `.src` was used on four blocks and styled by nothing, so every provenance
+   note rendered as ordinary body prose - indistinguishable from the finding it
+   was qualifying. On a page whose whole argument is "here is where each number
+   came from", that is the one thing that must not read like the claim itself. */
+.src{font-size:.72rem;line-height:1.55;color:var(--muted);margin-top:.6rem;
+  padding-left:.75rem;border-left:2px solid var(--rule);max-width:62ch}
+.src em{font-style:italic}
+
 /* readout + interactive grids ------------------------------------------- */
 .readout{background:var(--sunk);border:1px solid var(--rule);border-radius:4px;
   padding:.6rem .75rem;margin-top:.7rem;transition:border-color .15s}

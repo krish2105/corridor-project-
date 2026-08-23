@@ -171,8 +171,23 @@ def pytest_collection_finish(session):
     BUILD time to learn their own test count. It worked, but a document build that spawns
     a test runner is slow, and it breaks anywhere pytest is not installed - which is any
     environment that only wants to render the deliverables.
+
+    ONLY A FULL RUN MAY WRITE IT. A filtered run - `pytest tests/test_x.py`, `-k`, `-m`,
+    or a single node id - collects a handful of tests, and this hook happily recorded that
+    handful as the project's test count. The next document build then published "1 tests"
+    or "15 tests" as a headline figure in client-facing deliverables. It happened three
+    times, and each time it looked like a stale README rather than a corrupting write. CI
+    itself runs a filtered step, so the corruption had a scheduled cause.
     """
     from src.config import OUT_DATA
+    cfg = session.config
+    filtered = (bool(cfg.getoption("keyword", default=""))
+                or bool(cfg.getoption("markexpr", default=""))
+                or bool(cfg.getoption("file_or_dir", default=[]))
+                or bool(getattr(cfg.option, "last_failed", False))
+                or bool(getattr(cfg.option, "failed_first", False)))
+    if filtered:
+        return
     try:
         OUT_DATA.mkdir(parents=True, exist_ok=True)
         (OUT_DATA / "testcount.json").write_text(json.dumps(

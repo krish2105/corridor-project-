@@ -25,6 +25,8 @@ type Props = {
   designLife: DL[];
   baseYear: number;
   horizon: number;
+  /** the seconds each critical-gap mode actually means, so the control can say so */
+  gapSeconds: { optimistic: number; conservative: number };
 };
 
 function failureYear(vc: number, growthPct: number, base: number) {
@@ -33,6 +35,7 @@ function failureYear(vc: number, growthPct: number, base: number) {
 }
 
 export default function ScenarioTool(p: Props) {
+  const gapS = p.gapSeconds;
   const [uplift, setUplift] = useState(p.axes.pcu_uplift_pct[0] as number);
   const [laneCap, setLaneCap] = useState(p.axes.lane_capacity_pcu[0] as number);
   const [lanes, setLanes] = useState(p.axes.lanes_per_direction[0] as number);
@@ -107,8 +110,12 @@ export default function ScenarioTool(p: Props) {
                set={setLaneCap as never} fmt={(v) => `${v} PCU`} />
           <Row label="Lanes per dir" values={p.axes.lanes_per_direction} value={lanes}
                set={setLanes as never} />
+          {/* "optimistic"/"conservative" alone tells the reader nothing about what
+              they are choosing between - name the seconds each one means. */}
           <Row label="Critical gap" values={p.axes.critical_gap} value={gap}
-               set={setGap as never} />
+               set={setGap as never}
+               fmt={(v) => `${v} \u00b7 ${v === "optimistic"
+                 ? gapS.optimistic.toFixed(2) : gapS.conservative.toFixed(2)}s`} />
           <Row label="Growth" values={p.axes.growth_pct} value={growth}
                set={setGrowth as never} fmt={(v) => `${v}%/yr`} />
         </div>

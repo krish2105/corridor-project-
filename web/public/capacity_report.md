@@ -145,7 +145,7 @@ Excluded entirely: vehicle operating cost, fuel, emissions, accident cost, relia
 Both were re-run across **144 combinations** of PCU uplift, lane capacity, effective lane count, critical gap and growth rate.
 
 - **U-turn scheme fails:** holds. Robust across the grid.
-- **Grade separation relieves on opening:** all 12 approaches pass in **23 of 24** combinations.
+- **Grade separation relieves on opening:** all 12 approaches pass in **21 of 24** combinations.
 
 No single assumption dominates the outcome — the swing across the grid is negligible, so naming a most-influential parameter would overstate what the analysis shows.
 
@@ -153,7 +153,7 @@ No single assumption dominates the outcome — the swing across the grid is negl
 
 - The survey covers **one day**, not the two the workbooks present. Day two is derived from day one; see the integrity audit report.
 - Composite vehicle classes prevent a point PCU estimate. Bands are reported throughout and no band is collapsed to its midpoint.
-- Critical gap values are from literature, not measured at this corridor. They are Raff-derived and therefore likely biased high, which makes the U-turn finding **conservative** — measured values would tend to worsen it, not improve it.
+- Critical gap values are from literature, not measured at this corridor. They are **not** conservative: an earlier version of this report said so, and it was withdrawn. They sit mid-pack against the four-lane median-opening studies that match this geometry, so measurement could move the finding either way. The same test is published across twelve bases so the reader can pick one.
 - E-rickshaw has no IRC PCU factor and no column in the survey. It is excluded rather than assumed, and its absence understates demand by an unknown amount.
 - Three of the six junction positions are inferred from the scheme description and are labelled as such. The survey location schedule would confirm them.
 - **TMC-01 width is measured from 5 transects against a typical 30.** The surveyed drawing runs 6.52 km and TMC-01 sits 1 m from its end, so a width band around that junction falls largely outside the drawing. Its width figure rests on fewer measurements than the others and should be treated as the least certain of the six.

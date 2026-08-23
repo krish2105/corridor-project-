@@ -32,36 +32,86 @@ def _load(name):
 
 
 # --- the sensitivity grid must contain the published baseline ----------------
+def _anchor_lane_cap(d):
+    """The per-lane capacity the published delay actually used. Derived, never hardcoded."""
+    caps = {a["capacity_pcu_hr"] for a in d["approaches"] if a["storage_m"] is not None}
+    assert caps, "delay.json must publish the capacity each queue was derived from"
+    return sum(caps) / len(caps) / 2          # two lanes per direction
+
+
 def test_sensitivity_grid_reproduces_the_published_spillback_count():
     """
-    Regression. lane_capacity_pcu is PER LANE and was compared against a total, so the
-    grid's baseline cell disagreed with delay.py and the reported range was wrong.
-    At packing = JAM_PACKING, footprint = 1.0 and 1200 PCU/lane the grid must return
-    exactly what delay.py published.
+    Regression, twice over.
+
+    First: lane_capacity_pcu is PER LANE and was compared against a total, so the grid's
+    baseline cell disagreed with delay.py and the reported range was wrong.
+
+    Then, worse and quieter: the fix pinned the anchor at a hardcoded 1200 PCU/lane, and
+    at that value the rescale factor is identically 1 by construction — so this test
+    passed for ANY baseline, including the retired 1200 that delay.py had never used. It
+    could not fail. The anchor is now DERIVED from the capacity delay.py publishes, so
+    the assertion has something real to bite on.
     """
     from src.delay import JAM_PACKING
     from src.sensitivity import spillback_verdict
     d = _load("delay")
-    spills, total = spillback_verdict(JAM_PACKING, 1.0, 1200)
+    spills, total = spillback_verdict(JAM_PACKING, 1.0, _anchor_lane_cap(d))
     published = sum(1 for a in d["approaches"]
                     if a["spillback"] and a["storage_m"] is not None)
-    assert spills == published
+    assert spills == published, (
+        f"grid centre says {spills} spill back, delay.py published {published}")
     assert total == sum(1 for a in d["approaches"] if a["storage_m"] is not None)
+
+
+def test_the_sensitivity_axis_brackets_the_published_capacity():
+    """
+    An axis whose values all sit to one side of the real baseline does not test
+    sensitivity — it tests a different scenario. The published per-lane capacity must lie
+    inside the range the grid sweeps.
+    """
+    from src.sensitivity import AXES, QUEUE_AXES
+    d = _load("delay")
+    anchor = _anchor_lane_cap(d)
+    # BOTH grids sweep a lane-capacity axis, and both must bracket the real value. Only
+    # the queue axis was checked at first, and the main grid was found sitting entirely
+    # below the published capacity while still being labelled "IRC planning".
+    for name, axis in (("AXES", AXES["lane_capacity_pcu"]),
+                       ("QUEUE_AXES", QUEUE_AXES["lane_capacity_pcu"])):
+        assert min(axis) <= anchor <= max(axis), (
+            f"{name}: published capacity {anchor:.0f} PCU/lane sits outside the swept "
+            f"axis {sorted(axis)}")
+
+
+def test_no_module_rebuilds_demand_from_the_retired_lane_capacity():
+    """
+    capacity.py retired 1200 PCU/lane as unsourced and replaced it with IRC:92-2017's
+    2700 PCU/dir. sensitivity.py went on rebuilding demand from 1200 for a while, with a
+    comment claiming it matched delay.py. Nothing may reintroduce it as a baseline.
+    """
+    import re
+    from pathlib import Path
+    src = Path(__file__).resolve().parent.parent / "src"
+    for mod in ("sensitivity.py", "delay.py"):
+        text = (src / mod).read_text()
+        for m in re.finditer(r"(base_cap|baseline)\s*=\s*([0-9.]+)", text):
+            assert False, f"{mod}: baseline hardcoded as {m.group(2)}; read it from the data"
 
 
 def test_denser_packing_never_increases_spillback():
     from src.sensitivity import spillback_verdict
-    _load("delay")
-    loose, _ = spillback_verdict(0.65, 1.0, 1200)
-    dense, _ = spillback_verdict(0.85, 1.0, 1200)
+    d = _load("delay")
+    c = _anchor_lane_cap(d)
+    loose, _ = spillback_verdict(0.65, 1.0, c)
+    dense, _ = spillback_verdict(0.85, 1.0, c)
     assert dense <= loose
 
 
 def test_more_capacity_never_increases_spillback():
     from src.sensitivity import spillback_verdict
-    _load("delay")
-    lean, _ = spillback_verdict(0.75, 1.0, 1200)
-    generous, _ = spillback_verdict(0.75, 1.0, 1800)
+    d = _load("delay")
+    c = _anchor_lane_cap(d)
+    lean, _ = spillback_verdict(0.75, 1.0, c * 0.8)
+    generous, _ = spillback_verdict(0.75, 1.0, c * 1.4)
     assert generous <= lean
 
 

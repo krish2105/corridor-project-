@@ -231,8 +231,12 @@ def test_the_composition_weighted_gap_sits_below_the_irc_car_value():
     composition-WEIGHTED gap, which sits below it because two-wheelers are half this
     stream and accept shorter gaps.
 
-    A lower gap means MORE bay capacity, so our weighted numbers are the generous end for
-    the scheme. The U-turn finding cannot be attacked as too pessimistic about gaps.
+    That is arithmetic, not conservatism. An earlier version of this test read the gap
+    between the two as proof the U-turn finding "cannot be attacked as too pessimistic",
+    which compared a mixed-traffic weighted mean against a single-class car value and
+    called the composition difference caution. Withdrawn — what the weighted gap must do
+    is stay consistent with its own inputs, which is what is asserted here. Where our gap
+    actually sits against matched evidence is the job of the twelve-basis spread.
     """
     from src.scheme_test import CRITICAL_GAP_S, IRC_SP41_APPLIED, weighted_gap
     share = {"TWO_W": 0.49, "CAR_BUCKET": 0.48, "AUTO_TRK_BUS": 0.03}
@@ -241,6 +245,33 @@ def test_the_composition_weighted_gap_sits_below_the_irc_car_value():
     # heavier classes must still need longer gaps than a car
     assert CRITICAL_GAP_S["TWO_W"][0] < CRITICAL_GAP_S["CAR_BUCKET"][0]
     assert CRITICAL_GAP_S["AUTO_TRK_BUS"][1] > CRITICAL_GAP_S["CAR_BUCKET"][1]
+
+
+def test_no_module_still_claims_our_gaps_are_the_generous_end():
+    """
+    The "our gaps are the generous end for the scheme" framing was withdrawn: it ran in
+    our own favour and did not survive the four-lane median-opening evidence. It had
+    already leaked into scheme_test.py, reports.py and service_docs.py once. This asserts
+    it does not come back — in code or in anything those modules publish.
+    """
+    import re
+    from pathlib import Path
+    root = Path(__file__).resolve().parent.parent
+    banned = re.compile(r"generous end|biased high|cannot be attacked as too pessimistic"
+                        r"|makes the U-turn finding conservative", re.I)
+    for rel in ("src/scheme_test.py", "src/reports.py", "src/service_docs.py"):
+        text = (root / rel).read_text()
+        # the withdrawal itself may quote the phrase; only flag it outside that context
+        for m in banned.finditer(text):
+            line_start = text.rfind("\n", 0, m.start()) + 1
+            window = text[max(0, m.start() - 700):m.end() + 200]
+            # the phrase is allowed where it is being withdrawn, negated, or quoted as
+            # the thing that was wrong — not where it is being asserted
+            ok = r"withdraw|retract|earlier version|no longer|wrong|neither|not conservative|moved twice"
+            assert re.search(ok, window, re.I), (
+                f"{rel}:{text[:m.start()].count(chr(10)) + 1} still asserts the retracted "
+                f"framing: {text[line_start:m.end() + 60]!r}"
+            )
 
 
 def test_the_irc_benchmark_records_its_adjustment():

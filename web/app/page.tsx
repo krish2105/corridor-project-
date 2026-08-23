@@ -363,7 +363,8 @@ export default function Page() {
           <Reveal delay={.14}>
             <div className="card" style={{ marginTop: "1.1rem" }}>
               <header><span className="chip fixed">Feasible</span>
-                <h3>An elevated structure has room; the argument is about five pinch points</h3></header>
+                <h3>An elevated structure has room; the argument is about{" "}
+                  {c2.stations - c2.hard_free} pinch points</h3></header>
               <div className="body">
                 <p className="col">Walking the <strong>{c2.corridor_km} km</strong> alignment
                 at 25 m stations and counting what falls inside an {c2.pier_radius_m} m pier

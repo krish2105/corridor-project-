@@ -32,7 +32,7 @@ NO_GAP_VC guard in scheme_test.py, for the same reason.
 
 STORAGE IS BY AREA, NOT BY CAR LENGTHS
 Converting a queue to metres via "6.5 m per car" is wrong on this corridor. Two-wheelers
-are 47% of the stream and queue two and three abreast in a lane, filling gaps a car
+are 49% of the stream and queue two and three abreast in a lane, filling gaps a car
 cannot. So the queue is converted to vehicles by class using the observed composition,
 each class occupies its own footprint, and the total area is divided by the MEASURED
 carriageway width. Packing is imperfect, so a jam packing efficiency is applied and
@@ -187,6 +187,11 @@ if __name__ == "__main__":
         shown, spills = spillback(qm, gap)
         t_spill = minutes_to_spillback(gap, qm)
         rows.append(dict(junction=code, approach=j["approach"], vc=round(q["vc"], 2),
+                         # publish the capacity this queue was actually derived from.
+                         # sensitivity.py rescales these rows, and without the real
+                         # divisor it has to guess one - which it did, at a value
+                         # capacity.py had already retired.
+                         capacity_pcu_hr=round(j["capacity"]),
                          los=j["los_pt"], queue_pcu=round(q["queue_pcu"]),
                          queue_vehicles=round(veh), queue_m=round(qm),
                          storage_m=None if gap is None else round(gap),

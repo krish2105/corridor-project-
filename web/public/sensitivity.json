@@ -7,9 +7,9 @@
    74.8
   ],
   "lane_capacity_pcu": [
-   1200,
-   1500,
-   1800
+   1100,
+   1350,
+   1600
   ],
   "lanes_per_direction": [
    2,
@@ -26,6 +26,10 @@
   ]
  },
  "combinations": 144,
+ "combinations_uturn": 2,
+ "combinations_elevated": 24,
+ "combinations_queue": 27,
+ "growth_handled_in": "swept interactively by the dashboard scenario tool and used for design life in capacity.py; it does not bear on the three conclusions tested here, so none of their grids sweep it",
  "uturn": {
   "optimistic": {
    "fails": 11,
@@ -40,7 +44,7 @@
  "elevated": [
   {
    "uplift": 14.9,
-   "lane_cap": 1200,
+   "lane_cap": 1100,
    "lanes": 2,
    "ok": 12,
    "total": 12,
@@ -48,7 +52,7 @@
   },
   {
    "uplift": 14.9,
-   "lane_cap": 1200,
+   "lane_cap": 1100,
    "lanes": 3,
    "ok": 12,
    "total": 12,
@@ -56,7 +60,7 @@
   },
   {
    "uplift": 14.9,
-   "lane_cap": 1500,
+   "lane_cap": 1350,
    "lanes": 2,
    "ok": 12,
    "total": 12,
@@ -64,7 +68,7 @@
   },
   {
    "uplift": 14.9,
-   "lane_cap": 1500,
+   "lane_cap": 1350,
    "lanes": 3,
    "ok": 12,
    "total": 12,
@@ -72,7 +76,7 @@
   },
   {
    "uplift": 14.9,
-   "lane_cap": 1800,
+   "lane_cap": 1600,
    "lanes": 2,
    "ok": 12,
    "total": 12,
@@ -80,7 +84,7 @@
   },
   {
    "uplift": 14.9,
-   "lane_cap": 1800,
+   "lane_cap": 1600,
    "lanes": 3,
    "ok": 12,
    "total": 12,
@@ -88,7 +92,7 @@
   },
   {
    "uplift": 30.0,
-   "lane_cap": 1200,
+   "lane_cap": 1100,
    "lanes": 2,
    "ok": 12,
    "total": 12,
@@ -96,7 +100,7 @@
   },
   {
    "uplift": 30.0,
-   "lane_cap": 1200,
+   "lane_cap": 1100,
    "lanes": 3,
    "ok": 12,
    "total": 12,
@@ -104,7 +108,7 @@
   },
   {
    "uplift": 30.0,
-   "lane_cap": 1500,
+   "lane_cap": 1350,
    "lanes": 2,
    "ok": 12,
    "total": 12,
@@ -112,7 +116,7 @@
   },
   {
    "uplift": 30.0,
-   "lane_cap": 1500,
+   "lane_cap": 1350,
    "lanes": 3,
    "ok": 12,
    "total": 12,
@@ -120,7 +124,7 @@
   },
   {
    "uplift": 30.0,
-   "lane_cap": 1800,
+   "lane_cap": 1600,
    "lanes": 2,
    "ok": 12,
    "total": 12,
@@ -128,7 +132,7 @@
   },
   {
    "uplift": 30.0,
-   "lane_cap": 1800,
+   "lane_cap": 1600,
    "lanes": 3,
    "ok": 12,
    "total": 12,
@@ -136,15 +140,15 @@
   },
   {
    "uplift": 44.0,
-   "lane_cap": 1200,
+   "lane_cap": 1100,
    "lanes": 2,
-   "ok": 12,
+   "ok": 11,
    "total": 12,
-   "frac": 1.0
+   "frac": 0.9166666666666666
   },
   {
    "uplift": 44.0,
-   "lane_cap": 1200,
+   "lane_cap": 1100,
    "lanes": 3,
    "ok": 12,
    "total": 12,
@@ -152,7 +156,7 @@
   },
   {
    "uplift": 44.0,
-   "lane_cap": 1500,
+   "lane_cap": 1350,
    "lanes": 2,
    "ok": 12,
    "total": 12,
@@ -160,7 +164,7 @@
   },
   {
    "uplift": 44.0,
-   "lane_cap": 1500,
+   "lane_cap": 1350,
    "lanes": 3,
    "ok": 12,
    "total": 12,
@@ -168,7 +172,7 @@
   },
   {
    "uplift": 44.0,
-   "lane_cap": 1800,
+   "lane_cap": 1600,
    "lanes": 2,
    "ok": 12,
    "total": 12,
@@ -176,7 +180,7 @@
   },
   {
    "uplift": 44.0,
-   "lane_cap": 1800,
+   "lane_cap": 1600,
    "lanes": 3,
    "ok": 12,
    "total": 12,
@@ -184,7 +188,7 @@
   },
   {
    "uplift": 74.8,
-   "lane_cap": 1200,
+   "lane_cap": 1100,
    "lanes": 2,
    "ok": 10,
    "total": 12,
@@ -192,7 +196,7 @@
   },
   {
    "uplift": 74.8,
-   "lane_cap": 1200,
+   "lane_cap": 1100,
    "lanes": 3,
    "ok": 12,
    "total": 12,
@@ -200,15 +204,15 @@
   },
   {
    "uplift": 74.8,
-   "lane_cap": 1500,
+   "lane_cap": 1350,
    "lanes": 2,
-   "ok": 12,
+   "ok": 11,
    "total": 12,
-   "frac": 1.0
+   "frac": 0.9166666666666666
   },
   {
    "uplift": 74.8,
-   "lane_cap": 1500,
+   "lane_cap": 1350,
    "lanes": 3,
    "ok": 12,
    "total": 12,
@@ -216,7 +220,7 @@
   },
   {
    "uplift": 74.8,
-   "lane_cap": 1800,
+   "lane_cap": 1600,
    "lanes": 2,
    "ok": 12,
    "total": 12,
@@ -224,14 +228,14 @@
   },
   {
    "uplift": 74.8,
-   "lane_cap": 1800,
+   "lane_cap": 1600,
    "lanes": 3,
    "ok": 12,
    "total": 12,
    "frac": 1.0
   }
  ],
- "elevated_all_pass_combinations": 23,
+ "elevated_all_pass_combinations": 21,
  "elevated_total_combinations": 24,
  "queue_axes": {
   "jam_packing": [
@@ -245,204 +249,204 @@
    1.2
   ],
   "lane_capacity_pcu": [
-   1800,
-   1500,
-   1200
+   1600,
+   1296,
+   1000
   ]
  },
  "queue": [
   {
    "packing": 0.85,
    "footprint": 0.8,
-   "lane_cap": 1800,
-   "spillback": 2,
-   "total": 10
-  },
-  {
-   "packing": 0.85,
-   "footprint": 0.8,
-   "lane_cap": 1500,
+   "lane_cap": 1600,
    "spillback": 4,
    "total": 10
   },
   {
    "packing": 0.85,
    "footprint": 0.8,
-   "lane_cap": 1200,
+   "lane_cap": 1296,
+   "spillback": 6,
+   "total": 10
+  },
+  {
+   "packing": 0.85,
+   "footprint": 0.8,
+   "lane_cap": 1000,
    "spillback": 6,
    "total": 10
   },
   {
    "packing": 0.85,
    "footprint": 1.0,
-   "lane_cap": 1800,
-   "spillback": 2,
-   "total": 10
-  },
-  {
-   "packing": 0.85,
-   "footprint": 1.0,
-   "lane_cap": 1500,
+   "lane_cap": 1600,
    "spillback": 4,
    "total": 10
   },
   {
    "packing": 0.85,
    "footprint": 1.0,
-   "lane_cap": 1200,
+   "lane_cap": 1296,
+   "spillback": 6,
+   "total": 10
+  },
+  {
+   "packing": 0.85,
+   "footprint": 1.0,
+   "lane_cap": 1000,
    "spillback": 6,
    "total": 10
   },
   {
    "packing": 0.85,
    "footprint": 1.2,
-   "lane_cap": 1800,
-   "spillback": 2,
+   "lane_cap": 1600,
+   "spillback": 4,
    "total": 10
   },
   {
    "packing": 0.85,
    "footprint": 1.2,
-   "lane_cap": 1500,
-   "spillback": 5,
+   "lane_cap": 1296,
+   "spillback": 6,
    "total": 10
   },
   {
    "packing": 0.85,
    "footprint": 1.2,
-   "lane_cap": 1200,
+   "lane_cap": 1000,
    "spillback": 6,
    "total": 10
   },
   {
    "packing": 0.75,
    "footprint": 0.8,
-   "lane_cap": 1800,
-   "spillback": 2,
-   "total": 10
-  },
-  {
-   "packing": 0.75,
-   "footprint": 0.8,
-   "lane_cap": 1500,
+   "lane_cap": 1600,
    "spillback": 4,
    "total": 10
   },
   {
    "packing": 0.75,
    "footprint": 0.8,
-   "lane_cap": 1200,
+   "lane_cap": 1296,
+   "spillback": 6,
+   "total": 10
+  },
+  {
+   "packing": 0.75,
+   "footprint": 0.8,
+   "lane_cap": 1000,
    "spillback": 6,
    "total": 10
   },
   {
    "packing": 0.75,
    "footprint": 1.0,
-   "lane_cap": 1800,
-   "spillback": 2,
-   "total": 10
-  },
-  {
-   "packing": 0.75,
-   "footprint": 1.0,
-   "lane_cap": 1500,
+   "lane_cap": 1600,
    "spillback": 4,
    "total": 10
   },
   {
    "packing": 0.75,
    "footprint": 1.0,
-   "lane_cap": 1200,
+   "lane_cap": 1296,
+   "spillback": 6,
+   "total": 10
+  },
+  {
+   "packing": 0.75,
+   "footprint": 1.0,
+   "lane_cap": 1000,
    "spillback": 6,
    "total": 10
   },
   {
    "packing": 0.75,
    "footprint": 1.2,
-   "lane_cap": 1800,
-   "spillback": 2,
-   "total": 10
-  },
-  {
-   "packing": 0.75,
-   "footprint": 1.2,
-   "lane_cap": 1500,
+   "lane_cap": 1600,
    "spillback": 5,
    "total": 10
   },
   {
    "packing": 0.75,
    "footprint": 1.2,
-   "lane_cap": 1200,
+   "lane_cap": 1296,
    "spillback": 6,
    "total": 10
   },
   {
-   "packing": 0.65,
-   "footprint": 0.8,
-   "lane_cap": 1800,
-   "spillback": 2,
+   "packing": 0.75,
+   "footprint": 1.2,
+   "lane_cap": 1000,
+   "spillback": 7,
    "total": 10
   },
   {
    "packing": 0.65,
    "footprint": 0.8,
-   "lane_cap": 1500,
+   "lane_cap": 1600,
    "spillback": 4,
    "total": 10
   },
   {
    "packing": 0.65,
    "footprint": 0.8,
-   "lane_cap": 1200,
+   "lane_cap": 1296,
+   "spillback": 6,
+   "total": 10
+  },
+  {
+   "packing": 0.65,
+   "footprint": 0.8,
+   "lane_cap": 1000,
    "spillback": 6,
    "total": 10
   },
   {
    "packing": 0.65,
    "footprint": 1.0,
-   "lane_cap": 1800,
-   "spillback": 2,
+   "lane_cap": 1600,
+   "spillback": 4,
    "total": 10
   },
   {
    "packing": 0.65,
    "footprint": 1.0,
-   "lane_cap": 1500,
+   "lane_cap": 1296,
+   "spillback": 6,
+   "total": 10
+  },
+  {
+   "packing": 0.65,
+   "footprint": 1.0,
+   "lane_cap": 1000,
+   "spillback": 6,
+   "total": 10
+  },
+  {
+   "packing": 0.65,
+   "footprint": 1.2,
+   "lane_cap": 1600,
    "spillback": 5,
    "total": 10
   },
   {
    "packing": 0.65,
-   "footprint": 1.0,
-   "lane_cap": 1200,
+   "footprint": 1.2,
+   "lane_cap": 1296,
    "spillback": 6,
    "total": 10
   },
   {
    "packing": 0.65,
    "footprint": 1.2,
-   "lane_cap": 1800,
-   "spillback": 2,
-   "total": 10
-  },
-  {
-   "packing": 0.65,
-   "footprint": 1.2,
-   "lane_cap": 1500,
-   "spillback": 5,
-   "total": 10
-  },
-  {
-   "packing": 0.65,
-   "footprint": 1.2,
-   "lane_cap": 1200,
-   "spillback": 6,
+   "lane_cap": 1000,
+   "spillback": 8,
    "total": 10
   }
  ],
- "queue_spillback_min": 2,
- "queue_spillback_max": 6,
+ "queue_spillback_min": 4,
+ "queue_spillback_max": 8,
  "queue_robust": true,
  "most_influential": null,
  "swing": 0,

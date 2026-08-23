@@ -37,7 +37,10 @@ jobs:
         run: uv run pytest tests/test_stack_claims.py -q
 
       - name: Audit dependencies for known vulnerabilities
-        run: uv run --with pip-audit pip-audit --strict || true
+        # `|| true` was here, which made the step incapable of failing - it would
+        # print vulnerabilities and pass. A dependency audit that cannot fail is a
+        # green tick, not an audit. It fails now; pin or waive a finding deliberately.
+        run: uv run --with pip-audit pip-audit --strict
 
   web:
     name: dashboard build

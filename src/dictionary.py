@@ -430,6 +430,14 @@ FIELDS.update({
                            "divided, right turn minor-to-major. SECONDARY source.",
     "indo_hcm_gap_source": "Where those Indo-HCM figures came from, and why they are "
                            "marked secondary.",
+    "combinations_uturn": ("How many assumption combinations the U-turn conclusion is "
+                           "actually run across - not the size of the whole space."),
+    "combinations_elevated": ("How many combinations the elevated-relief conclusion is run "
+                              "across: PCU uplift x lane capacity x lanes per direction."),
+    "combinations_queue": ("How many combinations the queue-spillback conclusion is run "
+                           "across, on its own grid of packing, footprint and capacity."),
+    "growth_handled_in": ("Where the growth-rate assumption is varied, given it is not an "
+                          "axis in this module."),
     "followup_ratio_convention": ("The tf = 0.6 x tc rule of thumb. A convention stated as "
                                   "an assumption in Indian studies, not a code relation; "
                                   "published here to show where our follow-up departs from "

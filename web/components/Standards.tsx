@@ -131,15 +131,17 @@ export default function Standards({ s, gap }: { s: S; gap?: Gap }) {
               </table>
             </div>
 
-            <p className="col" style={{ borderLeft: "3px solid var(--ok)", paddingLeft: ".9rem" }}>
-              <strong>Our gaps are the generous end, not the pessimistic one.</strong>{" "}
+            <p className="col" style={{ borderLeft: "3px solid var(--accent)", paddingLeft: ".9rem" }}>
+              <strong>Withdrawn: we used to call our gaps the generous end.</strong>{" "}
               IRC:SP:41 Appendix III Table III-2 gives {gap.irc_sp41_car_gap_s}s for a
               passenger car crossing a four-lane road under stop control, with the
-              large-city adjustment applied. Our composition-weighted figure sits below
-              that because two-wheelers are half this stream and accept shorter gaps.
-              Substituting the code&rsquo;s car value makes the finding{" "}
-              <em>stronger</em> &mdash; so the U-turn conclusion cannot be attacked as
-              being too pessimistic about gap acceptance.
+              large-city adjustment applied, and our composition-weighted figure sits
+              below it. We read that gap as conservatism. It is mostly arithmetic: a
+              mixed-traffic weighted mean sits below a single-class car value because
+              two-wheelers are half this stream, not because we were being careful.
+              Against the four-lane median-opening studies that match this geometry our
+              gap sits mid-pack, which is why the same test is published across twelve
+              bases above rather than defended at one.
             </p>
 
             <p className="src">Positive margin means that approach needs a gap

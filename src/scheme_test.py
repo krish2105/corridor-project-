@@ -97,12 +97,18 @@ ASSUMPTIONS = {
 # Crossing a 4-lane road under Stop control at roughly 48 km/h is about 6.0 s, with a
 # -0.5 s adjustment where population exceeds 2.5 lakh. Jaipur qualifies.
 #
-# This is a PASSENGER CAR value. Our composition-weighted gaps come out lower, because
-# two-wheelers are half this stream and accept shorter gaps. Lower critical gap means
-# MORE bay capacity, so our weighted numbers are the generous end for the scheme, and
-# substituting the code's car value makes the finding stronger rather than weaker. That
-# asymmetry is worth publishing: it means the U-turn conclusion cannot be attacked by
-# arguing the gaps are too pessimistic.
+# This is a PASSENGER CAR value, and it is one basis among the twelve in GAP_EVIDENCE,
+# not a benchmark our numbers are validated against.
+#
+# An earlier version of this comment argued that because our composition-weighted gaps
+# come out below this car value, they are "the generous end for the scheme" and the
+# finding therefore cannot be attacked as too pessimistic. That is withdrawn. It compared
+# a mixed-traffic weighted gap against a single-class car gap and read the difference as
+# conservatism, when the difference is mostly just composition - two-wheelers are half
+# this stream and accept shorter gaps, so a lower weighted mean is arithmetic, not
+# caution. Against the four-lane median-opening studies that actually match this geometry
+# our gap sits mid-pack, which is what GAP_DIRECTION_NOTE records and what the published
+# spread lets a reader check for themselves.
 IRC_SP41_CAR_GAP_S = 6.0
 IRC_SP41_LARGE_CITY_ADJ = -0.5
 IRC_SP41_APPLIED = IRC_SP41_CAR_GAP_S + IRC_SP41_LARGE_CITY_ADJ

@@ -73,6 +73,9 @@ Generated 2026-08-24 from the files in `out/data`. The field list is read from t
 | `cluster` | Cluster id. |
 | `code` | Junction code. |
 | `combinations` | Grid size for the capacity and scheme conclusions. |
+| `combinations_elevated` | How many combinations the elevated-relief conclusion is run across: PCU uplift x lane capacity x lanes per direction. |
+| `combinations_queue` | How many combinations the queue-spillback conclusion is run across, on its own grid of packing, footprint and capacity. |
+| `combinations_uturn` | How many assumption combinations the U-turn conclusion is actually run across - not the size of the whole space. |
 | `composition` | Share of each vehicle class. |
 | `conclusion` | Which conclusion this row belongs to. |
 | `conflicting_flow` | Opposing through movement the U-turn must cross, veh/hour. |
@@ -134,6 +137,7 @@ Generated 2026-08-24 from the files in `out/data`. The field list is read from t
 | `gaps` | Spacings between consecutive openings. |
 | `geometric_match` | How closely the source geometry matches this corridor. |
 | `greater` | Series where day two exceeds day one. |
+| `growth_handled_in` | Where the growth-rate assumption is varied, given it is not an axis in this module. |
 | `growth_high_pct` | High growth scenario. |
 | `growth_low_pct` | Low growth scenario, % per year. |
 | `growth_med_pct` | Medium growth scenario. |
