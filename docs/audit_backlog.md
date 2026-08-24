@@ -60,17 +60,24 @@ worse than no gate, because it reads as verified.
   are **2** such cells (`Total Slow`). Register 223 → 225, and the gate now reports a
   computed count instead of a literal.
 
-### Tier 2 — published claims that may not match the data
-- **`pitch_template.html`** — "a ₹50-crore programme", unbanded and unsourced. Directly
-  violates the economics gate ("every rupee figure banded").
-- **`reports.py`** — validation report's gate table lists only the car-bucket critical gap,
-  omitting the two-wheeler value that actually moved.
-- **`page.tsx`** — remaining hardcoded prose figures not derivable from `corridor.json`,
-  one reportedly contradicting it; and the grid maximum labelled as the central-assumption
-  value.
-- **`service_docs.py`** — `PIPELINE_ORDER` (the README run order) reportedly omits five
-  modules and runs `export` before `reports`, which would give a clean run four 404
-  download links. Easy to verify: fresh clone, follow the README, click the links.
+### ~~Tier 2 — published claims that may not match the data~~ — DONE (commit 4816b22)
+- ~~**`pitch_template.html`** — "a ₹50-crore programme", unbanded and unsourced.~~ FIXED,
+  real. Our own invention, in a deliverable arguing that unsourced figures should not be
+  trusted. Replaced with the banded ₹135–320 crore/yr we actually hold; withdrawal stated
+  in the text. A test now rejects any rupee figure that is neither banded nor cited.
+- ~~**`reports.py`** — gate table omitted the two-wheeler critical gap.~~ FIXED, real. 2W
+  is 49% of the stream so the weighted gap moves with it, and 2.8 → 3.5 s was the change.
+  The omitted row was the consequential one.
+- ~~**`page.tsx`** — the grid maximum labelled as the central-assumption value.~~ FIXED,
+  real, and it ran in our favour: 8 approaches quoted where the central cell gives 6.
+  `queue_spillback_central` now published, asserting the packing axis centre really is
+  `delay.py`'s `JAM_PACKING`; reproduces delay.py at 6 of 10. Both figures now shown.
+- ~~**`service_docs.py`** — `PIPELINE_ORDER` gave a clean run four 404 download links.~~
+  FIXED, real. The dependency is genuinely circular — `reports.py` loads `corridor.json`
+  which only `export` writes, and `export` publishes the markdown `reports` produces — so
+  both export passes are now named. Eight missing modules added. A pre-existing test
+  asserted the broken half. `export` now warns instead of skipping in silence. All four
+  links verified 200 live.
 
 ### Tier 3 — coverage the deliverable claims but doesn't have
 - **46 of ~330 tests skip on a clean checkout** because they read gitignored `out/`. Every
