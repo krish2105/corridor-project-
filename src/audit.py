@@ -128,6 +128,50 @@ def check_balance(bins):
     return t
 
 
+def pcu_interval_check(fixed, source=None, dirs=None):
+    """
+    Do the static factors reproduce every fifteen-minute row's own stored PCU?
+
+    Returns (rows_checked, rows_failed, worst_delta, worst_where).
+
+    Lifted out of check_pcu deliberately. This is the evidence for the project's central
+    claim - that the survey used a fixed PCU per class regardless of composition - and it
+    could not be exercised without running two hundred lines of unrelated report first.
+    That is why audit.py sat at 7% coverage with its most important gate untested.
+
+    If every class carries a fixed factor then for EVERY row of EVERY sheet the stored
+    Grand Total (PCU's) equals the class counts dotted with those factors. One row where
+    it does not is a counter-example, and the static-PCU claim goes with it.
+    """
+    source = SOURCE if source is None else source
+    dirs = SURVEY_DIRS if dirs is None else dirs
+    checked = failed = 0
+    worst = (0.0, None)
+    for d in dirs:
+        for path in sorted((source / d).glob("*.xlsx")):
+            wb = load_workbook(path, data_only=True)
+            for name in wb.sheetnames:
+                ws = wb[name]
+                if num(ws.cell(row=ROW_TOTAL_VEH, column=COL_GRAND).value) is None:
+                    continue                      # not a count sheet
+                for r in ROW_BINS:
+                    stored = num(ws.cell(row=r, column=COL_PCU).value)
+                    if stored is None:
+                        continue
+                    pred = 0.0
+                    for col, code in CLASS_COLS.items():
+                        if code in fixed:
+                            pred += (num(ws.cell(row=r, column=col).value) or 0) * fixed[code]
+                    checked += 1
+                    delta = abs(pred - stored)
+                    if delta > 0.005:             # tolerance for workbook rounding
+                        failed += 1
+                        if delta > worst[0]:
+                            worst = (delta, f"{path.name} {name} row {r}")
+            wb.close()
+    return checked, failed, worst[0], worst[1]
+
+
 def check_pcu(bins):
     say("## D — PCU method: are the factors static?\n")
     day = (bins.groupby(["junction", "date", "sheet", "veh_class"], as_index=False)["count"].sum())
@@ -169,30 +213,8 @@ def check_pcu(bins):
     # counts on that row dotted with those factors. One row where it does not is a
     # counter-example and the static-PCU claim goes with it.
     fixed = {c: sorted(v)[0] for c, v in factors.items() if len(v) == 1}
-    checked = failed = 0
-    worst = (0.0, None)
-    for d in SURVEY_DIRS:
-        for path in sorted((SOURCE / d).glob("*.xlsx")):
-            wb = load_workbook(path, data_only=True)
-            for name in wb.sheetnames:
-                ws = wb[name]
-                if num(ws.cell(row=ROW_TOTAL_VEH, column=COL_GRAND).value) is None:
-                    continue                      # not a count sheet
-                for r in ROW_BINS:
-                    stored = num(ws.cell(row=r, column=COL_PCU).value)
-                    if stored is None:
-                        continue
-                    pred = 0.0
-                    for col, code in CLASS_COLS.items():
-                        if code in fixed:
-                            pred += (num(ws.cell(row=r, column=col).value) or 0) * fixed[code]
-                    checked += 1
-                    delta = abs(pred - stored)
-                    if delta > 0.005:             # tolerance for workbook rounding
-                        failed += 1
-                        if delta > worst[0]:
-                            worst = (delta, f"{path.name} {name} row {r}")
-            wb.close()
+    checked, failed, worst_delta, worst_where = pcu_interval_check(fixed)
+    worst = (worst_delta, worst_where)
 
     interval_const = checked > 0 and failed == 0
     say(f"Interval-level test: the static factors above are applied to each class count "
@@ -249,6 +271,42 @@ def check_pcu(bins):
     return o
 
 
+def workbook_rolling_peaks(source=None, dirs=None):
+    """
+    Each workbook's OWN rolling-hour maximum, read from its TOTAL_IN sheet.
+
+    The peak-hour gate is "re-derived from 15-min bins matches the workbook's own
+    rolling-hour sheets". Everything else in check_peak re-derives; this is the half that
+    reads THEIR answer, and ROW_HOURS had been declared in tmc_parse.py and opened by no
+    module at all. Extracted so it can be exercised without generating a whole report.
+    """
+    source = SOURCE if source is None else source
+    dirs = SURVEY_DIRS if dirs is None else dirs
+    rows = []
+    for d in dirs:
+        for path in sorted((source / d).glob("*.xlsx")):
+            wb = load_workbook(path, data_only=True)
+            if "TOTAL_IN" not in wb.sheetnames:
+                wb.close()
+                continue
+            ws = wb["TOTAL_IN"]
+            best_v, best_lab = -1, None
+            for r in ROW_HOURS:
+                v = num(ws.cell(row=r, column=COL_GRAND).value)
+                if v is None:
+                    continue
+                if v > best_v:
+                    best_v = v
+                    lab = ws.cell(row=r, column=1).value
+                    best_lab = str(lab).strip() if lab is not None else f"row {r}"
+            wb.close()
+            if best_lab is None:
+                continue
+            rows.append(dict(workbook=path.stem[:18], wb_peak_window=best_lab,
+                             wb_peak_veh=best_v))
+    return rows
+
+
 def check_peak(bins):
     say("## E — Peak hour: re-derived vs the workbook's stated peaks\n")
     say("Peak hour is the four consecutive 15-min bins with the highest combined volume. "
@@ -291,28 +349,8 @@ def check_peak(bins):
     # busiest hour of the survey, and that is worth knowing before any capacity number is
     # quoted from it.
     say("### Against the workbooks' own rolling-hour sheets\n")
-    rowsr = []
-    for d in SURVEY_DIRS:
-        for path in sorted((SOURCE / d).glob("*.xlsx")):
-            wb = load_workbook(path, data_only=True)
-            if "TOTAL_IN" not in wb.sheetnames:
-                wb.close()
-                continue
-            ws = wb["TOTAL_IN"]
-            best_v, best_lab = -1, None
-            for r in ROW_HOURS:
-                v = num(ws.cell(row=r, column=COL_GRAND).value)
-                if v is None:
-                    continue
-                if v > best_v:
-                    best_v = v
-                    lab = ws.cell(row=r, column=1).value
-                    best_lab = str(lab).strip() if lab is not None else f"row {r}"
-            wb.close()
-            if best_lab is None:
-                continue
-            rowsr.append(dict(workbook=path.stem[:18], wb_peak_window=best_lab,
-                              wb_peak_veh=best_v))
+    rowsr = workbook_rolling_peaks()
+
     if rowsr:
         r = pd.DataFrame(rowsr)
         say(r.to_markdown(index=False, floatfmt=("", "", ",.0f")))

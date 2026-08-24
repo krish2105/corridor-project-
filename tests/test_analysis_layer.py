@@ -202,10 +202,14 @@ def test_pcu_gate_tests_intervals_not_just_day_totals():
     """
     import inspect
     from src import audit
-    src = inspect.getsource(audit.check_pcu)
+    # the check now lives in its own function so it can be exercised directly; check_pcu
+    # must still call it, or the report would print a gate it never ran
+    src = inspect.getsource(audit.pcu_interval_check)
     assert "ROW_BINS" in src, "the PCU gate never iterates the 15-minute rows"
     assert "COL_PCU" in src, "the PCU gate never reads the per-interval stored PCU"
-    assert "rows tested" in src
+    assert "pcu_interval_check" in inspect.getsource(audit.check_pcu), (
+        "check_pcu no longer runs the interval test it reports on")
+    assert "rows tested" in inspect.getsource(audit.check_pcu)
 
 
 def test_peak_gate_reads_the_workbooks_own_rolling_hour_sheets():
@@ -217,8 +221,11 @@ def test_peak_gate_reads_the_workbooks_own_rolling_hour_sheets():
     """
     import inspect
     from src import audit
+    assert "ROW_HOURS" in inspect.getsource(audit.workbook_rolling_peaks), (
+        "the peak gate still never opens the rolling-hour rows")
     src = inspect.getsource(audit.check_peak)
-    assert "ROW_HOURS" in src, "the peak gate still never opens the rolling-hour rows"
+    assert "workbook_rolling_peaks" in src, (
+        "check_peak no longer reads the workbooks' own answer")
     assert "rolling-hour" in src
 
 

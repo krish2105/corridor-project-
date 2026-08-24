@@ -257,3 +257,70 @@ def published():
                 return json.loads(p.read_text())
         pytest.skip(f"{name}.json is not in out/data or web/public")
     return _load
+
+
+@pytest.fixture(scope="session")
+def synth_workbook(tmp_path_factory):
+    """
+    A workbook with the JDA sheet geometry and synthetic counts.
+
+    audit.py's two hardest gates - the PCU-constancy test across all 96 intervals and the
+    peak-hour comparison against the workbooks' own rolling-hour sheets - both open .xlsx
+    files directly. That is why audit.py sat at 7% coverage: neither could run without a
+    workbook, and the real ones are client data that never enters this repo.
+
+    Built to the same geometry inspect_tmc verified: rows 8-103 are the 96 fifteen-minute
+    bins, 104/105 the day totals, 114-206 the 93 rolling hours, columns B-F fast classes,
+    G Total Fast, H-L slow, M Total Slow, N Grand Total, O Grand Total PCU. Counts are
+    synthetic; the STRUCTURE is real, which is the part the gates read.
+    """
+    from openpyxl import Workbook
+    from src.tmc_parse import (CLASS_COLS, FAST_COLS, SLOW_COLS, ROW_BINS, ROW_HOURS,
+                               ROW_TOTAL_VEH, ROW_TOTAL_PCU, COL_TOTAL_FAST,
+                               COL_TOTAL_SLOW, COL_GRAND, COL_PCU)
+    from src.pcu import SURVEYED
+
+    d = tmp_path_factory.mktemp("wb")
+    path = d / "01_TMC (11-05-2026).xlsx"
+    wb = Workbook()
+    wb.remove(wb.active)
+    # one movement sheet and the approach total, enough for both gates
+    # IN_1 is what check_pcu back-solves the factors from; TOTAL_IN is what the
+    # peak gate reads its rolling hours from; V_1 is a movement sheet.
+    for name in ("V_1", "IN_1", "TOTAL_IN"):
+        ws = wb.create_sheet(name)
+        for i, r in enumerate(ROW_BINS):
+            # a peak in the 09:00 hour so the rolling-hour maximum is unambiguous
+            base = 200 if 4 <= i < 8 else 100
+            fast = slow = 0.0
+            pcu = 0.0
+            for col, code in CLASS_COLS.items():
+                n = base if col in FAST_COLS else base // 4
+                ws.cell(row=r, column=col, value=n)
+                pcu += n * SURVEYED[code]
+                if col in FAST_COLS:
+                    fast += n
+                else:
+                    slow += n
+            ws.cell(row=r, column=COL_TOTAL_FAST, value=fast)
+            ws.cell(row=r, column=COL_TOTAL_SLOW, value=slow)
+            ws.cell(row=r, column=COL_GRAND, value=fast + slow)
+            ws.cell(row=r, column=COL_PCU, value=round(pcu, 6))
+        # day totals, derived so nothing is a mismatch by construction
+        for col in list(CLASS_COLS) + [COL_TOTAL_FAST, COL_TOTAL_SLOW, COL_GRAND, COL_PCU]:
+            ws.cell(row=ROW_TOTAL_VEH, column=col,
+                    value=sum(ws.cell(row=r, column=col).value or 0 for r in ROW_BINS))
+        for col, code in CLASS_COLS.items():
+            v = ws.cell(row=ROW_TOTAL_VEH, column=col).value
+            ws.cell(row=ROW_TOTAL_PCU, column=col, value=round(v * SURVEYED[code], 6))
+        # the rolling-hour block: 93 windows of four consecutive bins
+        bins = list(ROW_BINS)
+        for k, r in enumerate(ROW_HOURS):
+            if k + 3 >= len(bins):
+                break
+            tot = sum(ws.cell(row=bins[k + j], column=COL_GRAND).value for j in range(4))
+            ws.cell(row=r, column=1, value=f"W{k:02d}")
+            ws.cell(row=r, column=COL_GRAND, value=tot)
+    wb.save(path)
+    wb.close()
+    return path

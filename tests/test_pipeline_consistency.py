@@ -221,10 +221,14 @@ def test_web_public_matches_out_data():
     # browser - constraint_profile is thinned to (chainage, score, hard) triples so the
     # page does not ship the full atlas. Those are not drift and must not be compared.
     RESHAPED = {"constraint_profile.json"}
+    # testcount.json is written BY the run that would compare it, so its two copies are
+    # always one step apart whenever a test is added. Comparing it here asks the suite to
+    # agree with a number it is in the middle of changing.
+    SELF_REFERENTIAL = {"testcount.json"}
 
     drifted = []
     for src in sorted(OUT_DATA.glob("*.json")):
-        if src.name in RESHAPED:
+        if src.name in RESHAPED or src.name in SELF_REFERENTIAL:
             continue
         dst = webpub / src.name
         if not dst.exists():
