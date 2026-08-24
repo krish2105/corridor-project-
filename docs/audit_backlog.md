@@ -10,11 +10,14 @@ Status as of commit `7b40697`: **all five tiers done**. 366 tests pass locally; 
 checkout runs **344 pass / 19 skip / 0 fail** (was 290 / 53 / 7). Dashboard builds clean
 and is deployed.
 
-**Still open, deliberately:** `audit.py` (7%) and `export.py` (0%) coverage. Both are
-IO-shaped over the client workbooks and need a synthetic workbook fixture to exercise
-meaningfully; tests that import them and assert nothing would move the number and prove
-nothing. Everything else outstanding is in the blocked list at the bottom and needs your
-input, not more code.
+**Nothing is open.** `audit.py` and `export.py` — the two left in the Tier 3 commit — are
+now covered: 7% → 34% and 0% → 30%, overall 34% → 37%, on 390 tests. A `synth_workbook`
+fixture builds the real JDA sheet geometry with synthetic counts, which made the PCU and
+peak-hour gates testable without client data entering the repo. Two more gates were
+extracted to be reachable at all (`pcu_interval_check`, `workbook_rolling_peaks`).
+
+Everything else outstanding is in the blocked list at the bottom and needs your input,
+not more code.
 
 ---
 
@@ -94,9 +97,9 @@ worse than no gate, because it reads as verified.
   / 7 fail → **341 pass / 18 skip / 0 fail**. New `test_web_public_matches_out_data` guard
   stops the two copies drifting.
 - ~~`standards.py` and `profiles.py` at 0% coverage.~~ FIXED — 35% and 44%, testing the
-  warrants and the cumulative-queue band rather than chasing the number. `audit.py` (7%)
-  and `export.py` (0%) remain: both are IO-shaped over client workbooks and would need a
-  synthetic workbook fixture to exercise meaningfully. **Still open.**
+  warrants and the cumulative-queue band rather than chasing the number. `audit.py` and
+  `export.py` followed in commit 8a7b65e — 34% and 30% — via a `synth_workbook` fixture
+  carrying the real sheet geometry. **All four done.**
 - ~~The 12-basis gap spread has no test.~~ FIXED — extracted as `gap_evidence_spread()`.
   Tests assert it is monotonic in the critical gap, covers every declared basis with
   provenance, and that our own two values are neither the lowest nor highest basis (else
