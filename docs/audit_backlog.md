@@ -6,7 +6,15 @@ lead, not a fact. Reproduce it before fixing it.** Two findings were already ref
 `useGridCursor.ts` is committed, and the README test count already matched — those
 auditors read a working tree from before the last commit.
 
-Status as of commit `9ded4e6`: 332 tests pass, dashboard builds clean, deployed.
+Status as of commit `7b40697`: **all five tiers done**. 366 tests pass locally; a clean
+checkout runs **344 pass / 19 skip / 0 fail** (was 290 / 53 / 7). Dashboard builds clean
+and is deployed.
+
+**Still open, deliberately:** `audit.py` (7%) and `export.py` (0%) coverage. Both are
+IO-shaped over the client workbooks and need a synthetic workbook fixture to exercise
+meaningfully; tests that import them and assert nothing would move the number and prove
+nothing. Everything else outstanding is in the blocked list at the bottom and needs your
+input, not more code.
 
 ---
 
@@ -116,12 +124,23 @@ worse than no gate, because it reads as verified.
 - ~~Scenario tool lane-count buttons are 35px~~ FIXED — `min-width:44px` added; height alone left short labels narrow.
 - ~~Indo-HCM corroboration fields~~ MOSTLY STALE — two of three were already surfaced. `follow_up_measured_s` now shown beside the gap spread.
 - ~~The static HTML report and D6 carry none of the 12-basis spread~~ FIXED for D6 — full table, holds-in count, merge-not-crossing assumption and where our value sits.
-- ~~Data dictionary still lists 22 described-but-absent fields~~ FIXED — the checker recorded a table's columns but never the table; container keys now recorded, which surfaced 36 genuinely undocumented fields (all described). Four published files were missing from the list entirely. Gate 5 of 5, phantom count 22 → 17.### Tier 5 — housekeeping
-- **CLAUDE.md Layout** omits six modules that exist and names a `data/gcps/` that doesn't.
-- **`phase6_field_plan.md`** is hand-written, referenced by nothing, published nowhere, and
-  asks the enumerator to photograph two GCP types `homography.py` can't resolve.
-- **`pytest-cov`** — lead claims it's declared but never imported, failing the stack-claims
-  gate. **Verify this one carefully**: the auditor may have added it themselves mid-run.
+- ~~Data dictionary still lists 22 described-but-absent fields~~ FIXED — the checker recorded a table's columns but never the table; container keys now recorded, which surfaced 36 genuinely undocumented fields (all described). Four published files were missing from the list entirely. Gate 5 of 5, phantom count 22 → 17.
+
+### ~~Tier 5 — housekeeping~~ — DONE (commit 7b40697)
+- ~~CLAUDE.md Layout omits six modules and names a `data/gcps/` that doesn't exist.~~
+  FIXED, both real. Six added — four of them produce published dashboard sections, so a
+  third of the analysis layer was invisible to anyone navigating by the map. `data/gcps/`
+  marked NOT YET CREATED, which is what it is: a pending input. Two tests keep both true.
+- ~~`phase6_field_plan.md` is orphaned and asks for GCP types the code can't resolve.~~
+  FIXED. It asked for a kerb corner — no CAD layer, so no surveyed coordinate to match it
+  to — omitted two types the code does resolve, and said "6 photographs" above a list of
+  five. This is a document an enumerator carries to site. The list is now generated from
+  `GCP_LAYERS`, with a test asserting the ask matches the code in both directions.
+  Registered as D11; `_status()` now uses each deliverable's own qualifier instead of
+  returning D8's wording ("awaiting footage") for everything.
+- ~~`pytest-cov` declared but never imported.~~ ALREADY FIXED in Tier 3 — declared and
+  carved out of the declared-but-unused check, because a pytest plugin is loaded by entry
+  point and imported by nothing.
 
 ---
 
