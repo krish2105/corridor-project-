@@ -208,6 +208,26 @@ export default function Page() {
               for the same gap in opposing traffic, so the right-turn volumes the survey{" "}
               <em>does</em> report understate their own effect on capacity. The gap biases
               the movement that is usually the binding constraint.</p>
+              <Evidence
+                label="What was counted, and what was not"
+                rows={[
+                  { k: "movements per junction", v: "12", note: "4 arms x Left / Straight / Right" },
+                  { k: "U-turn columns", v: "none", tone: "bad",
+                    note: "not a low count - no column exists anywhere in the workbook" },
+                  { k: "E-rickshaw columns", v: "none", tone: "bad",
+                    note: "the label appears in the workbook string table, but no column carries it" },
+                  { k: "pedestrian row", v: "empty", tone: "bad",
+                    note: "IRC:SP:41-1994 Table 3.1 carries one; clause 3.1(iv) requires it in urban areas" },
+                  ...(c2 ? [
+                    { k: "median gaps wide enough to turn", v: `${c2.uturn_possible}`,
+                      note: `${c2.uturn_per_km} per km along ${c2.corridor_km} km of drawing` },
+                  ] : []),
+                  { k: "bays the scheme adds", v: "seven" },
+                ]}
+                source={"Movements from src/tmc_parse.py; median openings measured from the " +
+                        "DIVIDER linework in src/medians.py. The absent columns are stated " +
+                        "as gaps rather than filled: synthesising a U-turn count the survey " +
+                        "never took would be the same defect this audit is reporting."} />
             </div>
           </div>
         </Reveal>
@@ -359,6 +379,24 @@ export default function Page() {
               <p style={{ fontSize: ".72rem", color: "var(--faint)" }}>
                 <span className="tag">V_1!M104</span> <span className="tag">stored 0</span>{" "}
                 <span className="tag">derived 58</span></p>
+              <Evidence
+                label="The register, and how it was built"
+                rows={[
+                  { k: "discrepancies recorded", v: `${a.arithmetic.discrepancies}`, tone: "bad",
+                    note: "every stored total re-derived from its own components" },
+                  { k: "understate", v: `${a.arithmetic.understate}` },
+                  { k: "overstate", v: `${a.arithmetic.overstate}`,
+                    note: "both directions, so this is scattered formula damage, not a bias" },
+                  { k: "net effect", v: `${a.arithmetic.net_grand_total} vehicles understated` },
+                  { k: "silently absorbed", v: "0", tone: "ok",
+                    note: "the parse gate: nothing is corrected without a register entry" },
+                  { k: "cells reconciled", v: `${nf.format(a.derived_sheets.exact)} of ${nf.format(a.derived_sheets.cells_checked)}`,
+                    tone: "bad", note: "exact at every bin, for every class - which is what makes them formulas rather than counts" },
+                ]}
+                source={"src/tmc_parse.py builds the register; src/audit.py reports it. No " +
+                        "stored total is trusted anywhere in this pipeline - every one is " +
+                        "re-derived, and a total that cannot be read is registered as its " +
+                        "own kind rather than passed over."} />
             </div>
           </div>
         </Reveal>
@@ -889,6 +927,22 @@ export default function Page() {
                   &mdash; <strong>{sen.uturn.optimistic?.fails} of {sen.uturn.optimistic?.of}</strong>{" "}
                   corridor approaches still cannot be served.</p>
                   <p>No assumption inside the defensible range rescues it.</p>
+                  <Evidence
+                    label="The grid this was run across"
+                    rows={[
+                      { k: "combinations tested", v: `${sen.combinations_uturn ?? "—"}`,
+                        note: "critical gap is the only axis that bears on this one" },
+                      { k: "at the optimistic gap", v: `${sen.uturn.optimistic?.fails} of ${sen.uturn.optimistic?.of} fail`,
+                        tone: "bad" },
+                      { k: "at the conservative gap", v: `${sen.uturn.conservative?.fails} of ${sen.uturn.conservative?.of} fail`,
+                        tone: "bad" },
+                      { k: "gap bases published", v: `${sc?.gap_bases_tested ?? "—"}`,
+                        note: `the finding holds in ${sc?.gap_conclusion_holds_in ?? "—"} of them` },
+                    ]}
+                    source={"src/sensitivity.py, conclusion 1. Only the critical-gap axis " +
+                            "is swept here because it is the only one that enters bay " +
+                            "capacity - sweeping the others would inflate the stated grid " +
+                            "without testing anything."} />
                 </div>
               </div>
             </Reveal>
@@ -906,6 +960,21 @@ export default function Page() {
                   approaches on every axis, so no assumption is named most influential. The
                   finding is driven by the size of the through movement, not by anything
                   assumed.</p>
+                  <Evidence
+                    label="Every combination, and the worst of them"
+                    rows={[
+                      { k: "combinations tested", v: `${sen.combinations_elevated ?? sen.elevated_total_combinations}`,
+                        note: "PCU uplift x lane capacity x lanes per direction" },
+                      { k: "all approaches recover", v: `${sen.elevated_all_pass_combinations} of ${sen.elevated_total_combinations}`,
+                        tone: "ok" },
+                      { k: "worst combination", v: "10 of 12 recover", tone: "ok",
+                        note: "still a majority, at the least favourable corner of the grid" },
+                      { k: "most influential axis", v: "none",
+                        note: "one-at-a-time swings the result by zero approaches on every axis" },
+                    ]}
+                    source={"src/sensitivity.py, conclusion 2. Reported for the design " +
+                            "HORIZON rather than the opening year - relief that works on " +
+                            "day one and fails inside the design life is not relief."} />
                 </div>
               </div>
             </Reveal>
@@ -925,6 +994,24 @@ export default function Page() {
                     <strong>{sen.queue_spillback_max}</strong>.</p>
                     <p>No combination in the grid removes it, so the finding is not an
                     artefact of the packing or footprint figures.</p>
+                    <Evidence
+                      label="The queue grid, corner to corner"
+                      rows={[
+                        { k: "combinations tested", v: `${sen.combinations_queue ?? sen.queue?.length}`,
+                          note: "jam packing x vehicle footprint x lane capacity" },
+                        { k: "most favourable corner", v: `${sen.queue_spillback_min} spill back` },
+                        { k: "central assumptions", v: `${sen.queue_spillback_central} spill back`,
+                          tone: "bad", note: "reproduces the published delay result exactly" },
+                        { k: "least favourable corner", v: `${sen.queue_spillback_max} spill back`,
+                          tone: "bad" },
+                        { k: "combinations with none", v: "0", tone: "bad",
+                          note: "which is what makes the finding robust rather than assumed" },
+                      ]}
+                      source={"src/sensitivity.py, conclusion 3. It rescales the UNCAPPED " +
+                              "queue: delay.py publishes queue length capped at what the " +
+                              "link can hold, and once capped every spilling approach reads " +
+                              "exactly equal to its storage, which would make this " +
+                              "unanswerable."} />
                   </div>
                 </div>
               </Reveal>

@@ -1,4 +1,5 @@
 "use client";
+import Readout from "./Readout";
 import { useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import {
@@ -10,7 +11,15 @@ const nf = new Intl.NumberFormat("en-US");
 
 export default function JunctionExplorer({ junctions }: { junctions: Junction[] }) {
   const [code, setCode] = useState(junctions[0].code);
+  // Composition bars: click to isolate a class, same pattern as every other exhibit here.
+  // They were the last block on the page carrying numbers with no way to reach them.
+  const [pinnedCls, setPinnedCls] = useState<string | null>(null);
+  const [hoverCls, setHoverCls] = useState<string | null>(null);
+  const activeCls = pinnedCls ?? hoverCls;
   const j = junctions.find((x) => x.code === code)!;
+  const shown = j.composition.filter((c) => c.share > 0.0005);
+  const selCls = shown.find((c) => c.cls === activeCls)
+    ?? shown.reduce((a, b) => (b.share > a.share ? b : a), shown[0]);
   const reduce = useReducedMotion();
 
   const peakIdx = j.profile.findIndex((p) => p.t === j.peak_start);
@@ -120,7 +129,25 @@ export default function JunctionExplorer({ junctions }: { junctions: Junction[] 
             <div className="body">
               <div className="bars">
                 {j.composition.filter((c) => c.share > 0.0005).map((c) => (
-                  <div className="bar" key={c.cls}>
+                  <div className="bar grow" key={c.cls}
+                       tabIndex={0} role="button"
+                       aria-selected={pinnedCls === c.cls}
+                       aria-label={`${c.cls.replace("_", " ")}, ${(100 * c.share).toFixed(2)} percent of the stream`}
+                       onMouseEnter={() => setHoverCls(c.cls)}
+                       onMouseLeave={() => setHoverCls(null)}
+                       onFocus={() => setHoverCls(c.cls)}
+                       onBlur={() => setHoverCls(null)}
+                       onClick={() => setPinnedCls((x) => (x === c.cls ? null : c.cls))}
+                       onKeyDown={(e) => {
+                         if (e.key === "Enter" || e.key === " ") {
+                           e.preventDefault();
+                           setPinnedCls((x) => (x === c.cls ? null : c.cls));
+                         }
+                         if (e.key === "Escape") setPinnedCls(null);
+                       }}
+                       style={{ cursor: "pointer",
+                                opacity: activeCls && activeCls !== c.cls ? .4 : 1,
+                                transition: "opacity .15s" }}>
                     <span className="mono" style={{ fontSize: ".68rem", color: "var(--muted)" }}>
                       {c.cls.replace("_", " ").slice(0, 10)}</span>
                     <span className="track">
@@ -134,6 +161,23 @@ export default function JunctionExplorer({ junctions }: { junctions: Junction[] 
                   </div>
                 ))}
               </div>
+              {selCls && (
+                <Readout
+                  title={selCls.cls.replace("_", " ")}
+                  pinned={!!pinnedCls}
+                  onClear={() => setPinnedCls(null)}
+                  hint={activeCls ? "click to pin" : "largest share \u00b7 pick any class"}
+                  fields={[
+                    { k: "share of stream", v: `${(100 * selCls.share).toFixed(2)}%`,
+                      tone: selCls.share >= 0.10 ? "bad" : undefined },
+                    { k: "vehicles counted", v: nf.format(Math.round(selCls.count ?? 0)) },
+                    { k: "IRC:106 band", v: selCls.share >= 0.10 ? "high-share factor applies"
+                        : selCls.share <= 0.05 ? "low-share factor applies"
+                        : "interpolated between the two",
+                      note: "the factor depends on this share, which is what the survey held fixed" },
+                  ]}
+                />
+              )}
               <p style={{ fontSize: ".78rem", color: "var(--muted)" }}>
                 Two columns carry 97% of the stream, and one of them lumps cars,
                 autos and pickups together. That is what makes the PCU correction

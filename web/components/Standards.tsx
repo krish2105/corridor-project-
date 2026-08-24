@@ -1,4 +1,5 @@
 "use client";
+import Evidence from "./Evidence";
 
 /**
  * The corridor measured against the codes that govern it.
@@ -54,6 +55,21 @@ export default function Standards({ s, gap }: { s: S; gap?: Gap }) {
           <p className="src">The 50% figure is news reporting of a JDA statement
           (Patrika, 7 April 2026), not a JDA document. We could find no published DPR,
           board resolution or cost breakdown for the scheme.</p>
+          <Evidence
+            label="How the turning share was measured"
+            rows={[
+              { k: "JDA's stated figure", v: `${s.jda_turning_claim_pct}%`, tone: "bad",
+                note: "attributed to a JDA statement in news reporting, not a JDA document" },
+              { k: "measured from the survey", v: `${s.measured_turning_pct}%`,
+                note: "left plus right, as a share of all movements, across all six junctions" },
+              { k: "overstatement", v: `${s.claim_overstatement}x`, tone: "bad" },
+              { k: "going straight through", v: `${(100 - s.measured_turning_pct).toFixed(1)}%`,
+                tone: "ok", note: "the movement the scheme does not serve" },
+            ]}
+            source={"Measured in src/analyse.py from the twelve movement sheets per " +
+                    "junction - the same survey JDA commissioned. We hold no DPR, board " +
+                    "resolution or cost breakdown for the scheme, so the 50% is compared " +
+                    "as reported rather than as sourced."} />
         </div>
       </div>
 

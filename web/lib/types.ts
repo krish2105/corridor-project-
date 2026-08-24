@@ -135,6 +135,8 @@ export type Corridor = {
               spillback: number; total: number }[];
     queue_spillback_min?: number | null; queue_spillback_max?: number | null;
     queue_spillback_central?: number | null;
+    combinations_uturn?: number; combinations_elevated?: number;
+    combinations_queue?: number;
     queue_robust?: boolean | null;
     combinations: number; uturn_robust: boolean;
     uturn: Record<string, { fails: number; of: number }>;

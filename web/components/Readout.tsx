@@ -11,7 +11,7 @@
  * nothing about what the grid contains, so when nothing is selected it shows the cell
  * worth looking at first — normally the worst one.
  */
-export type Field = { k: string; v: string; tone?: "bad" | "ok" };
+export type Field = { k: string; v: string; tone?: "bad" | "ok"; note?: string };
 
 export default function Readout({
   title, fields, pinned, onClear, hint,
@@ -30,7 +30,10 @@ export default function Readout({
         {fields.map((f) => (
           <div key={f.k}>
             <dt>{f.k}</dt>
-            <dd className={f.tone ?? ""}>{f.v}</dd>
+            <dd className={f.tone ?? ""}>
+              {f.v}
+              {f.note && <em>{f.note}</em>}
+            </dd>
           </div>
         ))}
       </dl>

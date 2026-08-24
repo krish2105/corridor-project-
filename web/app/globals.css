@@ -273,6 +273,8 @@ footer{padding-block:2.5rem 4rem;border-top:1px solid var(--rule);color:var(--mu
 .readout-fields dd{margin:0;font-size:.84rem;font-variant-numeric:tabular-nums;
   color:var(--ink)}
 .readout-fields dd.bad{color:var(--defect)} .readout-fields dd.ok{color:var(--ok)}
+.readout-fields dd em{display:block;font-style:normal;font-size:.68rem;
+  color:var(--muted);margin-top:.1rem;font-variant-numeric:normal;max-width:26ch}
 
 /* a cell the reader can actually reach: pointer, focus ring, pinned marker */
 .gcell{cursor:pointer;outline:none;position:relative}
@@ -300,6 +302,8 @@ tr.grow:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
   .evid-toggle{min-height:44px}
   /* A selectable table row can meet 44px, so it does. */
   tr.grow td, tr.grow th, .enh-row td, .enh-row th{padding-block:.72rem}
+  /* a sortable header is a control, so it meets the target size too */
+  .enh-th{padding-block:.8rem}
   /* A heatmap cell cannot: 93 columns at 44px is a 4,000px grid nobody can read, and
      the density IS the exhibit. These are 33x34, which clears the WCAG 2.2 AA target
      minimum of 24x24 (SC 2.5.8) rather than the 44px enhanced figure, and every cell

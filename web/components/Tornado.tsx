@@ -1,4 +1,6 @@
 "use client";
+import { useState } from "react";
+import Readout from "./Readout";
 
 /**
  * How far each PCU assumption moves corridor demand, sorted, both directions.
@@ -16,6 +18,14 @@ export default function Tornado({ t }: {
   t: { base_pcu: number; net_low_pct: number; net_high_pct: number; classes: Row[] };
 }) {
   const rows = t.classes.filter((r) => r.magnitude >= 0.05);
+  // The bars carried their numbers in a native `title` tooltip - no touch, no keyboard,
+  // no way to hold one while reading. Same defect removed from the data grids earlier;
+  // it survived here because a bar does not look like a control.
+  const [pinned, setPinned] = useState<string | null>(null);
+  const [hover, setHover] = useState<string | null>(null);
+  const activeCls = pinned ?? hover;
+  const sel = rows.find((r) => r.veh_class === activeCls)
+    ?? rows.reduce((a, b) => (b.magnitude > a.magnitude ? b : a), rows[0]);
   const max = Math.max(...rows.map((r) => Math.max(Math.abs(r.swing_low_pct), Math.abs(r.swing_high_pct))));
   const half = 50;                       // centre of the plot, in %
 
@@ -34,8 +44,27 @@ export default function Tornado({ t }: {
             const negative = Math.min(lo, hi) < 0;
             return (
               <div key={r.veh_class}
+                   className="grow"
+                   tabIndex={0}
+                   role="button"
+                   aria-selected={pinned === r.veh_class}
+                   aria-label={`${r.veh_class.replace("_", " ")}, swings corridor demand ${lo}% to ${hi}%`}
+                   onMouseEnter={() => setHover(r.veh_class)}
+                   onMouseLeave={() => setHover(null)}
+                   onFocus={() => setHover(r.veh_class)}
+                   onBlur={() => setHover(null)}
+                   onClick={() => setPinned((x) => (x === r.veh_class ? null : r.veh_class))}
+                   onKeyDown={(e) => {
+                     if (e.key === "Enter" || e.key === " ") {
+                       e.preventDefault();
+                       setPinned((x) => (x === r.veh_class ? null : r.veh_class));
+                     }
+                     if (e.key === "Escape") setPinned(null);
+                   }}
                    style={{ display: "grid", gridTemplateColumns: "8.5rem 1fr 5.5rem",
-                            gap: ".7rem", alignItems: "center" }}>
+                            gap: ".7rem", alignItems: "center", cursor: "pointer",
+                            opacity: activeCls && activeCls !== r.veh_class ? .35 : 1,
+                            transition: "opacity .15s" }}>
                 <span className="mono" style={{ fontSize: ".67rem", color: "var(--muted)" }}>
                   {r.veh_class.replace("_", " ")}
                 </span>
@@ -46,8 +75,7 @@ export default function Tornado({ t }: {
                   <span style={{ position: "absolute", left: `${left}%`, width: `${Math.max(width, 0.6)}%`,
                                  top: 3, bottom: 3, borderRadius: 2,
                                  background: negative ? "var(--ok)" : "var(--defect)",
-                                 opacity: r.exact ? 1 : .55 }}
-                        title={`${r.veh_class}: ${lo > 0 ? "+" : ""}${lo}% to ${hi > 0 ? "+" : ""}${hi}%`} />
+                                 opacity: r.exact ? 1 : .55 }} />
                 </div>
                 <span className="num" style={{ fontSize: ".7rem", color: "var(--muted)" }}>
                   {lo === hi ? `${lo > 0 ? "+" : ""}${lo}%` : `${lo > 0 ? "+" : ""}${lo}…${hi > 0 ? "+" : ""}${hi}%`}
@@ -56,6 +84,26 @@ export default function Tornado({ t }: {
             );
           })}
         </div>
+
+        {sel && (
+          <Readout
+            title={sel.veh_class.replace("_", " ")}
+            pinned={!!pinned}
+            onClear={() => setPinned(null)}
+            hint={activeCls ? "click to pin" : "largest swing \u00b7 pick any bar"}
+            fields={[
+              { k: "share of stream", v: `${sel.share_pct}%` },
+              { k: "factor the survey used", v: `${sel.surveyed_factor}` },
+              { k: "IRC:106 range", v: sel.irc_low != null && sel.irc_high != null
+                  ? `${sel.irc_low} \u2013 ${sel.irc_high}` : "no 1:1 mapping",
+                tone: sel.exact ? undefined : "bad" },
+              { k: "swings corridor demand", v: `${sel.swing_low_pct > 0 ? "+" : ""}${sel.swing_low_pct}% to ${sel.swing_high_pct > 0 ? "+" : ""}${sel.swing_high_pct}%`,
+                tone: sel.swing_high_pct > 0 ? "bad" : "ok" },
+              { k: "correctable", v: sel.exact ? "yes, 1:1 onto IRC:106" : "no \u2014 composite column",
+                tone: sel.exact ? "ok" : "bad" },
+            ]}
+          />
+        )}
 
         <p className="col">Solid bars are classes that map one-to-one onto IRC:106, where
         the correction is exact. Faded bars are the survey&rsquo;s composite columns
