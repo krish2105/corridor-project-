@@ -49,6 +49,7 @@ export type Corridor = {
     corridor_km: number; free_flow_min: number; peak_delay_min: number;
     peak_journey_min: number; effective_kmh: number; worst_direction: string;
     direction_delay_min: Record<string, number>;
+    assumptions?: { free_flow_kmh?: number; [k: string]: unknown };
     spillback_count: number; oversaturated_count: number; n_approaches: number;
     through_journey_min_after: number; saving_min_per_trip: number;
     approaches: { junction: string; approach: string; vc: number; queue_vehicles: number;
@@ -59,6 +60,7 @@ export type Corridor = {
   economics: {
     annual_cost_crore: number[]; annual_cost_after_crore: number[];
     annual_benefit_crore: number[]; benefit_to_first_failure_crore: number[] | null;
+    pcu_per_vehicle: number;
     years_to_first_failure: number | null; mean_hours_over: number;
     delay_veh_hr_day: number; total_excess_pcu_day: number;
     assumptions: { vot_status: string; working_days: number[]; excluded: string[] };

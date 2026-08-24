@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Rail from "@/components/Rail";
+import EnhanceTables from "@/components/EnhanceTables";
 import ThemeToggle from "@/components/ThemeToggle";
 
 export const metadata: Metadata = {
@@ -33,6 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
         <ThemeToggle />
         <Rail />
+        <EnhanceTables />
         {children}
       </body>
     </html>

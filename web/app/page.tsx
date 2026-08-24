@@ -8,6 +8,7 @@ import PierProfile from "@/components/PierProfile";
 import Downloads from "@/components/Downloads";
 import Exhibits from "@/components/Exhibits";
 import GapEvidence from "@/components/GapEvidence";
+import Evidence from "@/components/Evidence";
 import type { Corridor } from "@/lib/types";
 
 const nf = new Intl.NumberFormat("en-US");
@@ -140,6 +141,23 @@ export default function Page() {
               them differ &mdash; values redistributed, total pinned. Of the series that do
               move, {a.day2.greater} rise and {a.day2.smaller} fall. Under independent counting
               that split is <strong>p &asymp; 2&times;10<sup>&minus;39</sup></strong>.</p>
+              <Evidence
+                label="The arithmetic behind that probability"
+                rows={[
+                  { k: "series compared", v: `${a.day2.series}`,
+                    note: "movement x class daily totals, both days" },
+                  { k: "identical to day one", v: `${a.day2.identical}`,
+                    note: "total pinned, 15-min bins underneath redistributed", tone: "bad" },
+                  { k: "higher on day two", v: `${a.day2.greater}` },
+                  { k: "lower on day two", v: `${a.day2.smaller}`, tone: "bad" },
+                  { k: "expected split if counted", v: "roughly half each way",
+                    note: "two independent counts of the same road" },
+                  { k: "observed split", v: `${a.day2.greater} up, ${a.day2.smaller} down`,
+                    note: "a sign test on this gives p ~ 2e-39", tone: "bad" },
+                ]}
+                source={"Computed in src/audit.py (check_day2) from the twelve V_ movement " +
+                        "sheets only — the approach and total sheets are formulas over " +
+                        "those, so including them would count each observation three times."} />
               <p className="col">In the two dominant classes, only <strong>0.21%</strong> of
               13,158 live bins fall on day two. Traffic does not rise at every approach of
               every junction in every quarter-hour.</p>
@@ -605,6 +623,25 @@ export default function Page() {
                 <strong>{dl.saving_min_per_trip} minutes per trip</strong>. Treat the peak
                 figure as a floor: it sums independent queues, and {dl.spillback_count} of
                 them are not independent.</p>
+                <Evidence
+                  label="How the journey time was built"
+                  rows={[
+                    { k: "corridor length", v: `${dl.corridor_km} km`,
+                      note: "chainage along the surveyed alignment" },
+                    { k: "free-flow running", v: `${dl.free_flow_min} min`,
+                      note: `at ${dl.assumptions?.free_flow_kmh ?? 40} km/h, no junction delay` },
+                    { k: "at the surveyed peak", v: `${dl.peak_journey_min} min`, tone: "bad",
+                      note: `${dl.worst_direction}, summing each junction's queue delay` },
+                    { k: "delay added", v: `${dl.peak_delay_min} min`, tone: "bad" },
+                    { k: "effective speed", v: `${dl.effective_kmh} km/h`, tone: "bad",
+                      note: "the whole corridor, end to end, at the peak" },
+                    { k: "why it is a floor", v: `${dl.spillback_count} of ${dl.n_approaches} queues spill back`,
+                      note: "a queue that reaches the junction behind it is no longer independent, so the true figure is worse than the sum" },
+                  ]}
+                  source={"Deterministic oversaturation queueing in src/delay.py. Departures " +
+                          "are capped at each junction's measured-width capacity from " +
+                          "capacity.json; nothing here assumes a discharge rate the survey " +
+                          "does not support."} />
               </div>
             </div>
           </Reveal>
@@ -642,6 +679,29 @@ export default function Page() {
                     JDA&rsquo;s rates is a one-line change. Excluded entirely:{" "}
                     {ec.assumptions.excluded.join(", ")}, all of which would raise it.
                   </p>
+                  <Evidence
+                    label="Every input to the rupee figure"
+                    rows={[
+                      { k: "excess PCU per day", v: `${nf.format(Math.round(ec.total_excess_pcu_day))}`,
+                        note: "demand above capacity, summed over the oversaturated hours" },
+                      { k: "hours over capacity", v: `${ec.mean_hours_over} per day`,
+                        note: "mean across approaches, measured from the 96 survey intervals" },
+                      { k: "delay", v: `${nf.format(Math.round(ec.delay_veh_hr_day))} veh-hr/day`,
+                        tone: "bad" },
+                      { k: "PCU per vehicle", v: `${ec.pcu_per_vehicle}`,
+                        note: "from the corrected composition, not assumed" },
+                      { k: "working days", v: `${ec.assumptions.working_days?.join("–") ?? "—"}`,
+                        note: "banded, because the count is a policy input too" },
+                      { k: "cost, do nothing", v: `₹${ec.annual_cost_crore.join("–")} crore/yr`,
+                        tone: "bad" },
+                      { k: "cost, grade separated", v: `₹${ec.annual_cost_after_crore.join("–")} crore/yr` },
+                      { k: "benefit", v: `₹${ec.annual_benefit_crore.join("–")} crore/yr`, tone: "ok" },
+                      { k: "value of time", v: "a policy input, not a result",
+                        note: "every band above is the same delay priced at the low and high published rates" },
+                    ]}
+                    source={"src/economics.py. The delay is measured from the survey; the " +
+                            "rate is not ours to set, so every figure is a band across the " +
+                            "published range rather than a point off a rate JDA has not adopted."} />
                 </div>
               </div>
             </Reveal>
