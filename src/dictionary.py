@@ -35,6 +35,12 @@ FILES = {
     "atlas.geojson":    "Constraint geometry: buildings, utilities, drainage, trees, medians.",
     "median_openings.geojson": "Every median gap with width and classification.",
     "junction_candidates.geojson": "All signal clusters considered when placing the six junctions.",
+    # These four were generated, published and read by the dashboard, but absent from
+    # this list - so none of their fields were ever checked for a description.
+    "safety.json":      "Conflict points and flow-weighted exposure, counted from geometry.",
+    "profiles.json":    "Level of service by approach and hour, and peak spreading.",
+    "exhibits.json":    "Volume-flow, tornado, continuity and flow-raster series.",
+    "standards.json":   "The corridor measured against the codes it is built under.",
 }
 
 # Units are stated because a number without one is not checkable.
@@ -436,6 +442,44 @@ FIELDS.update({
     "queue_model_in_regime": ("False once the queue reaches the junction behind it. Past "
                               "that point the deterministic model is outside the regime "
                               "where its output means anything."),
+    # Container fields — tables and sections. Previously invisible to the checker, which
+    # recorded only a table's columns and never the table itself.
+    "junctions": "Per-junction rows. One entry for each of the six.",
+    "approaches": "Per-approach rows. Two corridor approaches at each junction.",
+    "movements": "The twelve arm x turn movements at a junction.",
+    "uturns": "Per-approach U-turn demand against gap-acceptance bay capacity.",
+    "relief": "What an elevated through-carriageway returns to each approach.",
+    "design_life": "Years until each approach exceeds capacity, by growth rate.",
+    "growth": "Demand multiple at the horizon, one row per growth rate.",
+    "scenarios": "Pre-computed cells of the assumption grid the scenario tool walks.",
+    "elevated": "Approaches returned under capacity, per assumption combination.",
+    "queue": "Spillback count per combination of packing, footprint and lane capacity.",
+    "factors": "Back-solved PCU factor per class, one row per workbook.",
+    "classes": "Vehicle classes with their counts and shares.",
+    "continuity": "Southbound outflow against next-junction inflow, per link.",
+    "link": "One corridor link, between two consecutive junctions.",
+    "links": "The five links between the six junctions, in corridor order.",
+    "los_grid": "Level of service for every approach at every rolling hour.",
+    "volume_flow": "Peak-hour movement volumes for the volume-flow diagram.",
+    "flow_raster": "Through flow per link per fifteen-minute bin.",
+    "gap_benchmark": "Per-approach critical gap needed against the gap we assume.",
+    "interchange": "Each junction's corridor-arm total against the interchange warrant.",
+    "hour": "Rolling-hour label, one per fifteen-minute step.",
+    "veh": "Vehicle count, as counted rather than converted to PCU.",
+    "daily_in": "Vehicles entering the junction over the surveyed day.",
+    "daily_out": "Vehicles leaving the junction over the surveyed day.",
+    "arrivals": "Cumulative PCU arriving at the stop line. Measured.",
+    "departures": "Cumulative PCU discharged. ASSUMED - the contestable line.",
+    "dep_low": "Departure curve at the slow end of the discharge band.",
+    "dep_high": "Departure curve at the fast end of the discharge band.",
+    "queue_low": "Queue at the fast discharge - the shorter of the pair.",
+    "queue_high": "Queue at the slow discharge - the longer of the pair.",
+    "discharge_band": "The capacity multipliers the departure band is drawn across.",
+    "peak_queue_pcu": "Largest queue on the cumulative curve, in PCU.",
+    "peak_queue_band": "That peak across the discharge band, low to high.",
+    "after_grade_separation": "Approach state once the through movement is elevated.",
+    "mean_residual_pct": "Mean continuity mismatch across links, as a share of flow.",
+    "worst_residual_pct": "Largest single-link continuity mismatch.",
     "queue_spillback_central": ("Spillback count at the CENTRAL assumptions - the cell "
                                 "that reproduces delay.py. Published separately because "
                                 "the grid maximum was being quoted as if it were this."),
@@ -476,6 +520,12 @@ def _record_fields(obj, out):
     if isinstance(obj, dict):
         for k, v in obj.items():
             if isinstance(v, list) and v and isinstance(v[0], dict):
+                # BOTH the container and its columns. Recording only the columns meant a
+                # reviewer could look up `gap_evidence_spread` and be told it does not
+                # exist, while the gate counted it among 22 "described but absent"
+                # fields. The container is a published field; it just happens to be a
+                # table rather than a scalar.
+                out.add(k)
                 out |= set(v[0])                       # a table: its columns are fields
             elif isinstance(v, dict):
                 if _is_data_keyed(v):

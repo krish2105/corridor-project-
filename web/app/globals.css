@@ -254,7 +254,10 @@ tr.grow:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
    deliberate and stays, so the minimum is raised only where the pointer is coarse.
    Padding rather than height so the label stays vertically centred. */
 @media (pointer: coarse){
+  /* min-WIDTH too: the scenario tool's lane-count buttons are labelled "2" and
+     "3", so height alone left them ~35px wide - a 44pt-tall sliver. */
   .picker button, .themetoggle, .lyr, .gapev-btn{min-height:44px}
+  .picker button, .themetoggle{min-width:44px}
   /* A selectable table row can meet 44px, so it does. */
   tr.grow td, tr.grow th{padding-block:.72rem}
   /* A heatmap cell cannot: 93 columns at 44px is a 4,000px grid nobody can read, and

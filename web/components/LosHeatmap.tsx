@@ -20,10 +20,27 @@ import Readout from "./Readout";
  */
 type Cell = { junction: string; approach: string; hour: string; pcu: number; vc: number; los: string };
 
+/*
+ * The LOS ramp is FIXED, not theme-derived, and every pair clears WCAG AA.
+ *
+ * A and F used to take var(--ok) and var(--defect), which flip with the theme while B–E
+ * stayed hardcoded. Two things broke in dark mode. Four of the six grades fell below
+ * 4.5:1 — A at 2.08, F at 2.40 — and worse, --defect resolves to a LIGHT red in dark, so
+ * F rendered lighter than E and the ramp inverted at exactly the grade that matters most.
+ * The worst level of service looked milder than the one above it.
+ *
+ * A data encoding is not chrome: these cells carry their own ground and should read the
+ * same in both themes. Measured contrasts, identical light and dark:
+ *   A 7.12   B 4.68   C 6.27   D 4.91   E 8.10   F 11.96
+ * Luminance from C down to F descends monotonically, so severity now reads as intensity
+ * on the half of the scale where it matters.
+ */
 const RAMP: Record<string, string> = {
-  A: "var(--ok)", B: "#5E9E78", C: "#C8A93A", D: "#C8791A", E: "#B4442E", F: "var(--defect)",
+  A: "#2C6249", B: "#4A7F5E", C: "#B8952B", D: "#A85E12", E: "#8E3020", F: "#6B1710",
 };
-const INK: Record<string, string> = { A: "#fff", B: "#fff", C: "#14181A", D: "#fff", E: "#fff", F: "#fff" };
+const INK: Record<string, string> = {
+  A: "#fff", B: "#fff", C: "#14181A", D: "#fff", E: "#fff", F: "#fff",
+};
 const MEANING: Record<string, string> = {
   A: "free flow", B: "reasonably free", C: "stable", D: "approaching unstable",
   E: "at capacity", F: "over capacity",

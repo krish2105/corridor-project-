@@ -106,8 +106,15 @@ export default function Standards({ s, gap }: { s: S; gap?: Gap }) {
               <div><span className="k num" style={{ color: "var(--defect)" }}>
                 {gap.gap_required_median_s}s</span>
                 <span className="l">needed for the bays to work</span></div>
-              <div><span className="k num" style={{ color: "var(--ok)" }}>
-                {gap.gap_margin_s}s</span><span className="l">margin</span></div>
+              {/* Same rule as the rows below. This tile was hardcoded green while the
+                  table coloured the identical quantity red, because a POSITIVE margin is
+                  bad: it means the approach needs a gap shorter than we already assume
+                  before its bay could serve the demand. The summary was contradicting
+                  the detail directly beneath it. */}
+              <div><span className="k num"
+                        style={{ color: (gap.gap_margin_s ?? 0) > 0 ? "var(--defect)" : "var(--ok)" }}>
+                {(gap.gap_margin_s ?? 0) > 0 ? "+" : ""}{gap.gap_margin_s}s</span>
+                <span className="l">margin &mdash; positive means the bay cannot work</span></div>
               <div><span className="k num">{gap.irc_sp41_car_gap_s}s</span>
                 <span className="l">IRC:SP:41 passenger car</span></div>
             </div>

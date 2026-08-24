@@ -605,6 +605,43 @@ def capacity_report():
         "junction's inflow - separated the leading candidates by too small a margin to "
         "call, and was reported as inconclusive. The surveyed geometry answers it directly.",
         "",
+    ]
+
+    # THE GAP SPREAD BELONGS IN THE TECHNICAL DELIVERABLE, NOT ONLY THE DASHBOARD.
+    #
+    # The critical gap is the most attackable number here - we chose it and it is not
+    # measured on this corridor - and the whole answer to that is the spread across every
+    # published basis. It reached the Next.js page and nothing else, so the reader most
+    # likely to challenge it, the one holding this report, could not see it.
+    spread = s.get("gap_evidence_spread") or []
+    if spread:
+        md += [
+            "## The critical gap, across every published basis",
+            "",
+            "The critical gap is the single most attackable input in this report: it was "
+            "chosen from the literature, not measured on this corridor. Rather than "
+            "defend one value, the servability test is re-run on every basis reachable.",
+            "",
+            _table(["Basis", "t_c (s)", "t_f (s)", "Unservable", "Geometric match"],
+                   [[r["label"], f"{r['t_c']:.2f}", f"{r['t_f']:.2f}",
+                     f"{r['unservable']} of {r['of']}", r["geometric_match"]]
+                    for r in spread],
+                   align=["---", "---:", "---:", "---:", "---"]),
+            "",
+            f"The finding holds in **{s.get('gap_conclusion_holds_in')} of "
+            f"{s.get('gap_bases_tested')}** bases. Where it does not, that basis uses the "
+            "traditional Raff method, which the authors who published it recommend "
+            "against for mixed traffic. It is reported rather than omitted.",
+            "",
+            f"**The U-turn is modelled as a {s.get('uturn_analogue', 'merge')}.** A merge "
+            "needs a smaller gap than a crossing does, so this choice sets the whole "
+            "scale and is the load-bearing assumption behind every number above.",
+            "",
+            f"**Where ours sits.** {s.get('gap_direction_note', '')}",
+            "",
+        ]
+
+    md += [
         "---",
         "",
         f"Prepared from the JDA classified turning-movement survey dated "

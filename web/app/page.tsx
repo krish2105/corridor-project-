@@ -714,7 +714,8 @@ export default function Page() {
                   holdsIn={sc.gap_conclusion_holds_in}
                   ours={sc.two_wheeler_gap_basis}
                   analogue={sc.uturn_analogue}
-                  direction={sc.gap_direction_note} />
+                  direction={sc.gap_direction_note}
+                  followUpMeasured={sc.follow_up_measured_s} />
               </div>
             </div>
           </Reveal>

@@ -162,6 +162,31 @@ No single assumption dominates the outcome — the swing across the grid is negl
 
 This resolves a question the flow data could not. Deriving the order from corridor continuity - matching each junction's southbound outflow to the next junction's inflow - separated the leading candidates by too small a margin to call, and was reported as inconclusive. The surveyed geometry answers it directly.
 
+## The critical gap, across every published basis
+
+The critical gap is the single most attackable input in this report: it was chosen from the literature, not measured on this corridor. Rather than defend one value, the servability test is re-run on every basis reachable.
+
+| Basis | t_c (s) | t_f (s) | Unservable | Geometric match |
+|---|---:|---:|---:|---|
+| Kerala median openings, traditional/Raff | 2.05 | 1.23 | 1 of 12 | median openings, but the paper states carriageway width only and never lane count - reading it as four-lane was our inference, not theirs |
+| Kerala median openings, merging behaviour | 2.80 | 1.70 | 9 of 12 | median openings, lane count not stated in the paper |
+| Khan 2022 thesis, four-lane median openings, modified Raff / binary logit | 3.36 | 2.04 | 9 of 12 | closest of all: four-lane divided median openings, and the only source with a MEASURED four-lane follow-up time (2.04 s, two-wheelers, Table 8.2) |
+| Mohan & Chandra 2020, RT from minor, 4-lane divided | 3.50 | 2.10 | 9 of 12 | four-lane divided major, but a junction movement not a median opening |
+| Datta & Bhuyan 2014, four-lane median openings, prob. equilibrium | 3.79 | 2.17 | 10 of 12 | closest by road type: median openings explicitly on four-lane divided |
+| ours, optimistic | 3.87 | 2.00 | 11 of 12 | none stated |
+| Khan 2022 thesis, four-lane median openings, occupancy time / SVM | 4.26 | 2.04 | 11 of 12 | closest of all: four-lane divided median openings, authors' preferred methods |
+| Gupta et al. 2018, four-lane median openings, Varanasi | 4.45 | 2.50 | 11 of 12 | closest overall: four-lane divided median openings, carriageway 7.03-8.90 m per direction against this corridor's ~7 m |
+| CSIR-CRRI NH-8 design recommendation | 4.50 | 2.70 | 11 of 12 | the only Indian DESIGN value for a median opening, but inter-urban NH not urban |
+| ours, conservative | 5.03 | 3.00 | 11 of 12 | none stated |
+| Datta & Bhuyan 2014, four-lane median openings, INAFOGA | 5.09 | 3.00 | 11 of 12 | closest by road type: median openings explicitly on four-lane divided |
+| IRC:SP:41 Table III-2, RT from major, 4-lane, 48 kmph | 5.50 | 3.00 | 11 of 12 | four-lane, but HCM 1985 in metric with no Indian calibration |
+
+The finding holds in **11 of 12** bases. Where it does not, that basis uses the traditional Raff method, which the authors who published it recommend against for mixed traffic. It is reported rather than omitted.
+
+**The U-turn is modelled as a merge into the opposing stream, not a crossing of it.** A merge needs a smaller gap than a crossing does, so this choice sets the whole scale and is the load-bearing assumption behind every number above.
+
+**Where ours sits.** our gap sits mid-pack in the Indian field evidence - above the Kerala openings, below Gupta, CSIR-CRRI and IRC:SP:41 - so the finding rests on neither the generous nor the punitive end
+
 ---
 
 Prepared from the JDA classified turning-movement survey dated 2026-05-11. Method, standards and acceptance gates are set out in the accompanying method statement.

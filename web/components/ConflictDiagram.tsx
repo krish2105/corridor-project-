@@ -22,6 +22,7 @@ type Safety = {
   base_counts: Record<string, number>; base_total: number;
   junctions: Row[]; junctions_worse: number; mean_change_pct: number;
   pedestrian_column_present: boolean;
+  caveat?: string;
 };
 
 export default function ConflictDiagram({ s }: { s: Safety }) {
@@ -70,6 +71,8 @@ export default function ConflictDiagram({ s }: { s: Safety }) {
             {s.mean_change_pct > 0 ? "+" : ""}{s.mean_change_pct}%</span>
             <span className="l">crossing exposure</span></div>
         </div>
+
+        {s.caveat && <p className="src">{s.caveat[0].toUpperCase() + s.caveat.slice(1)}.</p>}
 
         <p className="col">Counted from geometry rather than quoted: each movement is a
         chord across the junction, offset to the left of the centreline because India

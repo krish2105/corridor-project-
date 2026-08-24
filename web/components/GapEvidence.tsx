@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 
 type Basis = {
   label: string; t_c: number; t_f: number;
@@ -13,10 +13,14 @@ type Basis = {
    value, the reader re-runs the finding on every published basis reachable and sees
    for themselves where it holds and where it does not. */
 export default function GapEvidence({
-  spread, holdsIn, ours, analogue, direction,
+  spread, holdsIn, ours, analogue, direction, followUpMeasured,
 }: {
   spread: Basis[]; holdsIn: number; ours: string; analogue: string; direction: string;
+  followUpMeasured?: number[];
 }) {
+  // Motion writes inline transforms, which a stylesheet's prefers-reduced-motion rule
+  // cannot override — the cells have to opt out in JS or they animate regardless.
+  const reduced = useReducedMotion();
   const [sel, setSel] = useState(
     Math.max(0, spread.findIndex(b => b.label.startsWith("ours, optimistic"))));
   const b = spread[sel];
@@ -49,8 +53,9 @@ export default function GapEvidence({
                opacity would override that inline and flatten the distinction. */
             <motion.span key={i}
               className={"gapev-cell" + (i < b.unservable ? " bad" : "")}
-              initial={{ scaleY: .3 }} animate={{ scaleY: 1 }}
-              transition={{ duration: .18, delay: i * .012 }} />
+              initial={reduced ? false : { scaleY: .3 }}
+              animate={{ scaleY: 1 }}
+              transition={reduced ? { duration: 0 } : { duration: .18, delay: i * .012 }} />
           ))}
         </div>
         <p className="gapev-verdict">
@@ -78,6 +83,13 @@ export default function GapEvidence({
           gap than a crossing does, so this choice sets the whole scale.</p>
         <p><span className="k">Where ours sits</span> {direction}.</p>
         <p><span className="k">Two-wheeler basis</span> {ours}.</p>
+        {followUpMeasured?.length && (
+          <p><span className="k">Follow-up headway</span> our band was assumed before any
+            measurement was found. Every Indian value that exists falls inside it &mdash;{" "}
+            {followUpMeasured.map((v) => `${v.toFixed(2)}s`).join(", ")} &mdash; and the
+            optimistic end is pinned to the lowest, which is the only one measured on
+            four-lane median openings.</p>
+        )}
       </div>
     </div>
   );
