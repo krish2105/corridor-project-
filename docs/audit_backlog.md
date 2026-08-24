@@ -108,23 +108,15 @@ worse than no gate, because it reads as verified.
   the declared-but-unused check, since a pytest plugin is loaded by entry point and
   imported by nothing. Overall coverage now measurable: **34%**.
 
-### Tier 4 — dashboard polish
-- **`GapEvidence` and `Rail` animate under `prefers-reduced-motion`** — the CSS escape
-  hatch can't reach Motion. Gate them behind `useReducedMotion()`.
-- **LOS heatmap** — check white-on-light contrast at LOS B in dark theme, and whether the
-  severity ramp inverts at F.
-- **`Standards.tsx`** colours the aggregate gap margin green while the per-row renderer
-  colours the same quantity red.
-- **`safety.caveat`** is published but never reaches the reader.
-- **Scenario tool lane-count buttons** are 35px under `(pointer: coarse)`.
-- **Indo-HCM corroboration fields** (`indo_hcm_no_uturn_chapter`, `csir_crri_design_gap_s`,
-  `follow_up_measured_s`) are published but absent from `types.ts` and every component.
-- **The static HTML report and D6 carry none of the 12-basis spread** the Next.js
-  dashboard publishes. Same finding, two surfaces.
-- **Data dictionary** still lists 22 described-but-absent fields (incl. `gap_evidence_spread`)
-  because the checker only walks top-level keys and these are nested. Make it recurse.
-
-### Tier 5 — housekeeping
+### ~~Tier 4 — dashboard polish~~ — DONE (commit 8a383ad)
+- ~~`GapEvidence` and `Rail` animate under `prefers-reduced-motion`~~ FIXED — Motion writes inline transforms that beat any stylesheet rule; both now gate on `useReducedMotion()`.
+- ~~LOS heatmap~~ FIXED, and worse than reported: 4 of 6 grades failed AA in dark and F rendered LIGHTER than E, inverting severity. Ramp now fixed in both themes, all pairs 4.68–11.96.
+- ~~`Standards.tsx` colours the aggregate gap margin green~~ FIXED — tile now uses the same rule as the rows; a positive margin is bad and says so.
+- ~~`safety.caveat` is published but never reaches the reader~~ FIXED — rendered above the conflict count, where the not-a-crash-prediction disclaimer belongs.
+- ~~Scenario tool lane-count buttons are 35px~~ FIXED — `min-width:44px` added; height alone left short labels narrow.
+- ~~Indo-HCM corroboration fields~~ MOSTLY STALE — two of three were already surfaced. `follow_up_measured_s` now shown beside the gap spread.
+- ~~The static HTML report and D6 carry none of the 12-basis spread~~ FIXED for D6 — full table, holds-in count, merge-not-crossing assumption and where our value sits.
+- ~~Data dictionary still lists 22 described-but-absent fields~~ FIXED — the checker recorded a table's columns but never the table; container keys now recorded, which surfaced 36 genuinely undocumented fields (all described). Four published files were missing from the list entirely. Gate 5 of 5, phantom count 22 → 17.### Tier 5 — housekeeping
 - **CLAUDE.md Layout** omits six modules that exist and names a `data/gcps/` that doesn't.
 - **`phase6_field_plan.md`** is hand-written, referenced by nothing, published nowhere, and
   asks the enumerator to photograph two GCP types `homography.py` can't resolve.
