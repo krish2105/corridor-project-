@@ -25,10 +25,29 @@ const WHY: Record<string, string> = {
   rail: "level crossing; separate approval regime",
 };
 
+/* Sections the page cannot render without. The cast below is a promise TypeScript
+   cannot keep: `tsc` checks the declaration, not the bytes on disk, so a section the
+   pipeline stops emitting type-checks clean and then fails at prerender as
+   "Cannot read properties of undefined (reading '1')" — which is what happened when an
+   axis was removed upstream. Naming the missing section turns that into one line. */
+const REQUIRED_SECTIONS = [
+  "meta", "audit", "constraints", "capacity", "scheme", "sensitivity",
+  "delay", "economics", "safety", "standards", "junctions", "corridor",
+] as const;
+
 function load(): Corridor {
   // Same file the Artifact page renders from, so both show identical figures.
   const p = path.join(process.cwd(), "public", "corridor.json");
-  return JSON.parse(fs.readFileSync(p, "utf8"));
+  const raw = JSON.parse(fs.readFileSync(p, "utf8")) as Record<string, unknown>;
+  const missing = REQUIRED_SECTIONS.filter(
+    (k) => raw[k] === undefined || raw[k] === null);
+  if (missing.length) {
+    throw new Error(
+      `corridor.json is missing ${missing.length} required section(s): ` +
+      `${missing.join(", ")}. Re-run src/export.py and copy out/data/corridor.json ` +
+      `to web/public/.`);
+  }
+  return raw as unknown as Corridor;
 }
 
 export default function Page() {

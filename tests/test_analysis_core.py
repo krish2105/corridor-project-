@@ -374,3 +374,52 @@ def test_the_model_difference_from_indo_hcm_is_stated_not_hidden():
     """Indo-HCM adds geometric factors a and b we cannot apply; that is recorded."""
     from src.scheme_test import INDO_HCM_FORM_DIFFERS
     assert "a = 1" in INDO_HCM_FORM_DIFFERS and "b = 0" in INDO_HCM_FORM_DIFFERS
+
+
+# --- the gap spread is the sensitivity argument; it must be testable ---------
+def _fake_uturns(n=12, demand=300.0, conflicting=1800.0):
+    return [dict(uturn_demand=demand, conflicting_flow=conflicting) for _ in range(n)]
+
+
+def test_gap_spread_is_monotonic_in_the_critical_gap():
+    """
+    A longer critical gap means fewer acceptable gaps, so it can never make MORE
+    approaches servable. If this ever inverts, the capacity formula is wrong and every
+    number in the spread with it.
+
+    Testable at all only because gap_evidence_spread() was lifted out of __main__ — the
+    calculation whose entire purpose is to show how sensitive the finding is to an
+    assumption could not itself be exercised while it sat inline in the driver.
+    """
+    from src.scheme_test import gap_evidence_spread
+    rows = gap_evidence_spread(_fake_uturns(), 3.87, 5.03, 12)
+    assert rows == sorted(rows, key=lambda r: r["t_c"]), "spread is not sorted by t_c"
+    unserv = [r["unservable"] for r in rows]
+    assert unserv == sorted(unserv), (
+        f"a longer gap made more approaches servable: {unserv}")
+
+
+def test_gap_spread_covers_every_declared_basis():
+    from src.scheme_test import gap_evidence_spread, GAP_EVIDENCE
+    rows = gap_evidence_spread(_fake_uturns(), 3.87, 5.03, 12)
+    assert len(rows) == len(GAP_EVIDENCE)
+    assert {r["label"] for r in rows} == {e[0] for e in GAP_EVIDENCE}
+    for r in rows:
+        assert r["source"] and r["geometric_match"], f"{r['label']} lacks provenance"
+        assert 0 <= r["unservable"] <= r["of"]
+        assert r["no_viable_gap"] <= r["unservable"], (
+            "a movement past the degeneracy threshold must also count as unservable")
+
+
+def test_our_own_values_appear_in_the_spread_and_are_not_the_extremes():
+    """
+    The spread exists to show our gap is not cherry-picked. If ours were the lowest or
+    highest basis in it, publishing the spread would be decoration.
+    """
+    from src.scheme_test import gap_evidence_spread
+    rows = gap_evidence_spread(_fake_uturns(), 3.87, 5.03, 12)
+    labels = [r["label"] for r in rows]
+    ours = [i for i, l in enumerate(labels) if l.startswith("ours,")]
+    assert len(ours) == 2, "both of our values should be in the spread"
+    assert min(ours) > 0, "our optimistic gap is the lowest basis published"
+    assert max(ours) < len(rows) - 1, "our conservative gap is the highest basis published"

@@ -79,23 +79,34 @@ worse than no gate, because it reads as verified.
   asserted the broken half. `export` now warns instead of skipping in silence. All four
   links verified 200 live.
 
-### Tier 3 — coverage the deliverable claims but doesn't have
-- **46 of ~330 tests skip on a clean checkout** because they read gitignored `out/`. Every
-  check binding the published numbers to each other is therefore absent from CI. Fix by
-  committing a small synthetic fixture set, or by generating outputs in CI from synthetic
-  input.
-- **`audit.py`, `export.py`, `standards.py`, `profiles.py` have 0% coverage** — no test
-  imports them.
-- **The 12-basis gap spread has no test** and can't have one: it's computed inline in
-  `scheme_test.py`'s `__main__`. Extract to a function, then test it.
-- **Corridor ordering** is only exercised in its degenerate two-junction case; the chainage
-  that actually decided the published order is asserted by nothing.
-- **`testcount.json` is written at collection**, so a count is recorded even if the suite
-  then goes red. Move the write to `pytest_sessionfinish` and only on green.
-- **`corridor.json` is cast to `Corridor` without validation**, so the web CI job can't
-  catch a shape regression from the pipeline.
-- **Coverage can't be measured in CI**: `pytest-cov` is undeclared, and
-  `test_everything_declared_is_used` rejects it if added. Needs a dev-dependency carve-out.
+### ~~Tier 3 — coverage the deliverable claims but doesn't have~~ — DONE
+- ~~46 of ~330 tests skip on a clean checkout.~~ FIXED — it was 56. No synthetic fixture
+  needed: 11 of 14 `out/data` files are already committed under `web/public` for the
+  dashboard build, so the loaders fall back there. Clean checkout went 290 pass / 53 skip
+  / 7 fail → **341 pass / 18 skip / 0 fail**. New `test_web_public_matches_out_data` guard
+  stops the two copies drifting.
+- ~~`standards.py` and `profiles.py` at 0% coverage.~~ FIXED — 35% and 44%, testing the
+  warrants and the cumulative-queue band rather than chasing the number. `audit.py` (7%)
+  and `export.py` (0%) remain: both are IO-shaped over client workbooks and would need a
+  synthetic workbook fixture to exercise meaningfully. **Still open.**
+- ~~The 12-basis gap spread has no test.~~ FIXED — extracted as `gap_evidence_spread()`.
+  Tests assert it is monotonic in the critical gap, covers every declared basis with
+  provenance, and that our own two values are neither the lowest nor highest basis (else
+  publishing the spread would be decoration).
+- ~~Corridor ordering only exercised in the degenerate two-junction case.~~ FIXED — a
+  four-junction chain with unambiguous continuity now exercises it, plus assertions that
+  the published order is still reported as inconclusive (1.2% margin) and that chainage
+  places all six junctions with the three inferred ones still labelled.
+- ~~`testcount.json` written at collection, so a red suite still published a count.~~
+  FIXED — moved to `pytest_sessionfinish` behind `exitstatus == 0`, and published to
+  `web/public` so a clean checkout renders the same README.
+- ~~`corridor.json` cast to `Corridor` without validation.~~ FIXED — `load()` checks the
+  twelve required sections and fails the build naming what is missing and how to fix it,
+  instead of surfacing as "Cannot read properties of undefined". Verified by removing a
+  section.
+- ~~Coverage can't be measured in CI.~~ FIXED — `pytest-cov` declared and carved out of
+  the declared-but-unused check, since a pytest plugin is loaded by entry point and
+  imported by nothing. Overall coverage now measurable: **34%**.
 
 ### Tier 4 — dashboard polish
 - **`GapEvidence` and `Rail` animate under `prefers-reduced-motion`** — the CSS escape

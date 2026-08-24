@@ -422,6 +422,40 @@ def scenarios(bins, day, res):
     return pd.DataFrame(out)
 
 
+def gap_evidence_spread(uturns, t_c_ours, t_c_ours_conservative, of):
+    """
+    Re-run the servability test on every published critical-gap basis.
+
+    The single most attackable number in this audit is the critical gap, because we chose
+    it and it is not measured on this corridor. So rather than defend one value, the same
+    test runs across every basis reachable and the reader picks.
+
+    Lifted out of __main__ deliberately. It sat inline in the driver, which meant the one
+    calculation whose whole purpose is to show how sensitive the finding is to an
+    assumption could not itself be tested — the same trap as the pipeline's
+    "all stages passed" line.
+    """
+    spread = []
+    for label, tc, tf, src, match in GAP_EVIDENCE:
+        t_c = tc if tc is not None else (t_c_ours if "optimistic" in label
+                                         else t_c_ours_conservative)
+        t_f = tf if tf is not None else (FOLLOW_UP_S[0] if "optimistic" in label
+                                         else FOLLOW_UP_S[1])
+        fails = nogap = 0
+        for u in uturns:
+            c = gap_capacity(u["conflicting_flow"], t_c, t_f)
+            vc = u["uturn_demand"] / c if c else 99
+            if vc > 1.0:
+                fails += 1
+            if vc >= NO_GAP_VC:
+                nogap += 1
+        spread.append(dict(label=label, t_c=round(t_c, 2), t_f=round(t_f, 2),
+                           unservable=fails, no_viable_gap=nogap,
+                           of=of, source=src, geometric_match=match))
+    spread.sort(key=lambda r: r["t_c"])
+    return spread
+
+
 if __name__ == "__main__":
     bins, _ = parse_all()
     day = sorted(bins.date.unique())[0]
@@ -575,24 +609,9 @@ if __name__ == "__main__":
                              "IRC:SP:41-1994 Appendix III Table III-2 passenger-car value "
                              "and Indo-HCM 2017 base gaps")
     # --- the method spread, and where the conclusion changes -------------------
-    spread = []
-    for label, tc, tf, src, match in GAP_EVIDENCE:
-        t_c = tc if tc is not None else (med_opt if "optimistic" in label else
-                                         _st.median(r["t_c_conservative"] for r in bench))
-        t_f = tf if tf is not None else (FOLLOW_UP_S[0] if "optimistic" in label
-                                         else FOLLOW_UP_S[1])
-        fails = nogap = 0
-        for u in res.to_dict("records") if hasattr(res, "to_dict") else res:
-            c = gap_capacity(u["conflicting_flow"], t_c, t_f)
-            vc = u["uturn_demand"] / c if c else 99
-            if vc > 1.0:
-                fails += 1
-            if vc >= NO_GAP_VC:
-                nogap += 1
-        spread.append(dict(label=label, t_c=round(t_c, 2), t_f=round(t_f, 2),
-                           unservable=fails, no_viable_gap=nogap,
-                           of=len(bench), source=src, geometric_match=match))
-    spread.sort(key=lambda r: r["t_c"])
+    spread = gap_evidence_spread(
+        res.to_dict("records") if hasattr(res, "to_dict") else res,
+        med_opt, _st.median(r["t_c_conservative"] for r in bench), len(bench))
 
     print("\n=== The critical gap is method-dependent by 2.4x. So publish the spread. ===")
     print("  Bhatt, Gore & Shah (2022) measured the same vehicle at the same junction at")

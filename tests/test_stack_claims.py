@@ -29,7 +29,12 @@ ALIAS = {"cv2": "opencv-python", "yaml": "pyyaml", "PIL": "pillow"}
 
 # Declared but never imported, legitimately: pandas loads these itself when asked for
 # Parquet and for markdown tables. Removing them breaks to_parquet / to_markdown.
-IMPLICIT = {"pyarrow", "tabulate"}
+IMPLICIT = {"pyarrow", "tabulate",
+            # pytest-cov is a pytest PLUGIN: pytest loads it by entry point and nothing
+            # imports it by name, so the declared-but-unused check rejected it and
+            # coverage could not be measured in CI at all. Four analysis modules sat at
+            # 0% behind that. A plugin is used by being installed.
+            "pytest-cov", "pytest_cov"}
 
 # Evaluated and not used. Naming any of these in a deliverable is a false claim.
 # ezdxf: cannot practically open a 198 MB DXF; dxf_inventory streams group codes instead.

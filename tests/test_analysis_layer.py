@@ -220,3 +220,68 @@ def test_peak_gate_reads_the_workbooks_own_rolling_hour_sheets():
     src = inspect.getsource(audit.check_peak)
     assert "ROW_HOURS" in src, "the peak gate still never opens the rolling-hour rows"
     assert "rolling-hour" in src
+
+
+# --- corridor ordering: the real case, not just the degenerate one ----------
+def test_corridor_order_resolves_a_four_junction_chain():
+    """
+    The existing ordering tests use the two-junction fixture, where any algorithm returns
+    the right answer because there is only one chain to find. The published corridor has
+    six. This builds a four-junction chain with unambiguous continuity — southbound
+    outflow at n feeds the Mansarover inflow at n+1 — and asserts the order comes back.
+    """
+    import pandas as pd
+    from src.analyse import corridor_order, NORTH, SOUTH
+    day = pd.Timestamp("2026-05-11").date()
+    chain = ["TMC-01", "TMC-02", "TMC-03", "TMC-04"]
+    # flow decays down the chain, so only one ordering fits the continuity
+    flows = [4000, 3000, 2000, 1000]
+    rows = []
+    for code, f in zip(chain, flows):
+        for arm, n in ((NORTH, f), (SOUTH, f)):
+            for mvt in ("Straight", "Left", "Right"):
+                rows.append(dict(junction=code, date=day, kind="movement",
+                                 arm_from=arm, arm_to=SOUTH if arm == NORTH else NORTH,
+                                 movement=mvt, veh_class="TWO_W",
+                                 bin_start=pd.Timestamp("2026-05-11 09:00"),
+                                 count=n if mvt == "Straight" else 0))
+    best, cost, _top, margin, links = corridor_order(pd.DataFrame(rows), day)
+    assert sorted(best) == sorted(chain), "not every junction was placed"
+    assert len(links) == len(chain) - 1
+    assert list(best) in (chain, chain[::-1]), (
+        f"a monotonically decaying chain should order as {chain} or its reverse, got {best}")
+
+
+def test_the_published_order_is_reported_as_inconclusive_where_it_is(published):
+    """
+    Continuity did not settle the real corridor — the margin between the best and
+    runner-up orderings is about 1%, and chainage along the surveyed alignment resolved
+    it instead. That must stay on the page. An order presented as derived-from-counts
+    when the counts could not separate two candidates is the overclaim this audit exists
+    to object to.
+    """
+    c = published("corridor")["corridor"] if "corridor" in published("corridor") \
+        else published("corridor")
+    assert c["order_conclusive"] is False, (
+        "continuity is now reported as conclusive; if that is real the chainage "
+        "tie-break should be retired, and if not the claim is overstated")
+    assert c["order_margin_pct"] < 5, (
+        f"margin of {c['order_margin_pct']}% is not the near-tie the text describes")
+    assert len(c["order_candidates"]) > 1, "a tie needs its runner-up published"
+
+
+def test_chainage_places_every_junction_and_labels_inferred_ones(published):
+    """
+    Chainage is what actually decided the published order, and nothing asserted it. It
+    only counts as evidence for the three junctions matched by name — for the inferred
+    ones it restates the position that was inferred, so the labels must survive.
+    """
+    from src.reports import chainage
+    total, rows = chainage()
+    assert total > 0 and len(rows) == 6
+    ch = [r["chainage_m"] for r in rows]
+    assert ch == sorted(ch), "chainage rows are not in order along the alignment"
+    assert all(0 <= c <= total for c in ch), "a junction sits off the alignment"
+    assert any(r["confidence"] == "inferred" for r in rows), (
+        "every junction now reads as confirmed; three positions are still inferred "
+        "pending the survey location schedule")
