@@ -25,7 +25,8 @@ from openpyxl import load_workbook
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from src.config import SOURCE, OUT, PROCESSED, SURVEY_DIRS, JUNCTIONS
 from src.tmc_parse import (CLASS_COLS, CLASS_LABELS, FAST_COLS, SLOW_COLS,
-                           ROW_TOTAL_VEH, ROW_TOTAL_PCU, parse_all, num)
+                           ROW_TOTAL_VEH, ROW_TOTAL_PCU, ROW_BINS, ROW_HOURS, COL_PCU,
+                           COL_GRAND, parse_all, num)
 
 L = []                      # report lines
 def say(s=""):
@@ -154,7 +155,57 @@ def check_pcu(bins):
     say(fdf.to_markdown(index=False))
     say()
     allconst = all(len(v) == 1 for v in factors.values())
-    say(f"**GATE — factor constant across all 12 workbooks: "
+
+    # THE GATE IS "CONSTANT ACROSS ALL 96 INTERVALS", NOT "ACROSS 12 DAY TOTALS".
+    #
+    # The check above back-solves one ratio per workbook from the IN_1 day-total rows -
+    # twelve observations, one sheet each. That cannot establish what the gate asks. A
+    # day total is a SUM, so a factor that varied between intervals would still return a
+    # single ratio: the count-weighted average. Twelve such averages agreeing proves the
+    # averages agree, not that the underlying factor never moved.
+    #
+    # The interval test is direct. If every class carries a fixed factor, then for EVERY
+    # 15-minute row of EVERY sheet the stored Grand Total (PCU's) must equal the class
+    # counts on that row dotted with those factors. One row where it does not is a
+    # counter-example and the static-PCU claim goes with it.
+    fixed = {c: sorted(v)[0] for c, v in factors.items() if len(v) == 1}
+    checked = failed = 0
+    worst = (0.0, None)
+    for d in SURVEY_DIRS:
+        for path in sorted((SOURCE / d).glob("*.xlsx")):
+            wb = load_workbook(path, data_only=True)
+            for name in wb.sheetnames:
+                ws = wb[name]
+                if num(ws.cell(row=ROW_TOTAL_VEH, column=COL_GRAND).value) is None:
+                    continue                      # not a count sheet
+                for r in ROW_BINS:
+                    stored = num(ws.cell(row=r, column=COL_PCU).value)
+                    if stored is None:
+                        continue
+                    pred = 0.0
+                    for col, code in CLASS_COLS.items():
+                        if code in fixed:
+                            pred += (num(ws.cell(row=r, column=col).value) or 0) * fixed[code]
+                    checked += 1
+                    delta = abs(pred - stored)
+                    if delta > 0.005:             # tolerance for workbook rounding
+                        failed += 1
+                        if delta > worst[0]:
+                            worst = (delta, f"{path.name} {name} row {r}")
+            wb.close()
+
+    interval_const = checked > 0 and failed == 0
+    say(f"Interval-level test: the static factors above are applied to each class count "
+        f"on every 15-minute row and compared against that row's own stored "
+        f"`Grand Total (PCU's)`.\n")
+    say(f"- rows tested: **{checked:,}** across all sheets of all 12 workbooks")
+    say(f"- rows where the static factors do not reproduce the stored PCU: **{failed:,}**")
+    if failed:
+        say(f"- largest discrepancy: {worst[0]:.3f} PCU at {worst[1]}")
+    say()
+
+    allconst = allconst and interval_const
+    say(f"**GATE — factor constant across all {checked:,} intervals: "
         f"{'PASS' if allconst else 'FAIL'}.** "
         f"{'The survey uses a single fixed PCU per class, independent of composition.' if allconst else 'Claim withdrawn.'}\n")
 
@@ -227,6 +278,58 @@ def check_peak(bins):
     say("The workbooks state a Morning Peak of 0900-1000 and an Evening Peak of 1815-1915 "
         "for TMC-01. Those are stated per-junction constants in the `Table` sheet; the "
         "re-derived peaks above are computed per junction and per day from the bins.\n")
+
+    # THE GATE COMPARES AGAINST THE WORKBOOK'S OWN ROLLING-HOUR SHEETS.
+    #
+    # Everything above re-derives the peak from the 15-minute bins, which is half the
+    # gate. The workbooks carry their own answer - 93 rolling 60-minute windows per sheet
+    # at rows 114-206 - and nothing had ever opened them. ROW_HOURS was declared in
+    # tmc_parse.py and read by no module. So the section was titled "re-derived vs the
+    # workbook's stated peaks" while comparing the re-derivation against nothing.
+    #
+    # If our rolling maximum and theirs disagree, one of the two is wrong about the
+    # busiest hour of the survey, and that is worth knowing before any capacity number is
+    # quoted from it.
+    say("### Against the workbooks' own rolling-hour sheets\n")
+    rowsr = []
+    for d in SURVEY_DIRS:
+        for path in sorted((SOURCE / d).glob("*.xlsx")):
+            wb = load_workbook(path, data_only=True)
+            if "TOTAL_IN" not in wb.sheetnames:
+                wb.close()
+                continue
+            ws = wb["TOTAL_IN"]
+            best_v, best_lab = -1, None
+            for r in ROW_HOURS:
+                v = num(ws.cell(row=r, column=COL_GRAND).value)
+                if v is None:
+                    continue
+                if v > best_v:
+                    best_v = v
+                    lab = ws.cell(row=r, column=1).value
+                    best_lab = str(lab).strip() if lab is not None else f"row {r}"
+            wb.close()
+            if best_lab is None:
+                continue
+            rowsr.append(dict(workbook=path.stem[:18], wb_peak_window=best_lab,
+                              wb_peak_veh=best_v))
+    if rowsr:
+        r = pd.DataFrame(rowsr)
+        say(r.to_markdown(index=False, floatfmt=("", "", ",.0f")))
+        say()
+        ours = p.peak_hour_veh.tolist()
+        theirs = r.wb_peak_veh.tolist()
+        agree = sum(1 for a, b in zip(sorted(ours), sorted(theirs)) if abs(a - b) <= 1)
+        say(f"**GATE — re-derived peak volume matches the workbooks' own rolling-hour "
+            f"maximum: {agree} of {min(len(ours), len(theirs))} agree to within 1 "
+            f"vehicle.**\n")
+        if agree < min(len(ours), len(theirs)):
+            say("Where they differ, the two are not measuring the same thing and the "
+                "difference is reported rather than reconciled: our window is the four "
+                "consecutive 15-minute bins with the highest sum, theirs is whatever "
+                "their own rolling sheet maximises.\n")
+    else:
+        say("No rolling-hour rows could be read; the comparison is not available.\n")
     return p
 
 

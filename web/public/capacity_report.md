@@ -113,16 +113,16 @@ A volume-to-capacity ratio is not something anyone can act on. Deterministic ove
 |---|---|---|---|---|---|---|
 | TMC-01 | Mansarover Metro | 831 | 860 | 1,884 | 6.6 | no |
 | TMC-01 | Sanganer Stadium | 1,571 | 1,626 | n/a | 10.4 | leaves study area |
-| TMC-02 | Mansarover Metro | 673 | 641 | 393 | 5.5 | TMC-03 at 37 min |
+| TMC-02 | Mansarover Metro | 673 | 393 | 393 | 5.5 | TMC-03 at 37 min |
 | TMC-02 | Sanganer Stadium | 513 | 488 | 1,884 | 4.4 | no |
 | TMC-03 | Mansarover Metro | 1,495 | 1,333 | 2,332 | 9.6 | no |
-| TMC-03 | Sanganer Stadium | 1,504 | 1,342 | 393 | 9.6 | TMC-02 at 18 min |
-| TMC-04 | Mansarover Metro | 1,127 | 1,006 | 190 | 7.8 | TMC-05 at 11 min |
+| TMC-03 | Sanganer Stadium | 1,504 | 393 | 393 | 9.6 | TMC-02 at 18 min |
+| TMC-04 | Mansarover Metro | 1,127 | 190 | 190 | 7.8 | TMC-05 at 11 min |
 | TMC-04 | Sanganer Stadium | 739 | 659 | 2,332 | 5.7 | no |
-| TMC-05 | Mansarover Metro | 4,119 | 3,823 | 539 | 16.9 | TMC-06 at 8 min |
-| TMC-05 | Sanganer Stadium | 1,981 | 1,838 | 190 | 11.5 | TMC-04 at 6 min |
+| TMC-05 | Mansarover Metro | 4,119 | 539 | 539 | 16.9 | TMC-06 at 8 min |
+| TMC-05 | Sanganer Stadium | 1,981 | 190 | 190 | 11.5 | TMC-04 at 6 min |
 | TMC-06 | Mansarover Metro | 1,601 | 1,584 | n/a | 10.1 | leaves study area |
-| TMC-06 | Sanganer Stadium | 1,311 | 1,298 | 539 | 8.8 | TMC-05 at 25 min |
+| TMC-06 | Sanganer Stadium | 1,311 | 539 | 539 | 8.8 | TMC-05 at 25 min |
 
 **6 of 12 queues reach the junction behind them inside the peak hour.** No queue is reported longer than the road can physically hold: past the point where a queue blocks the junction upstream, the approaches stop being independent and the deterministic model has left the regime it is valid in. A metre figure beyond that would be a fiction dressed as a measurement.
 

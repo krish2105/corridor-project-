@@ -290,3 +290,32 @@ def test_auto_rickshaw_is_not_silently_mapped_to_car():
 def test_unmapped_coco_labels_are_flagged_not_guessed():
     from src.detect import COCO_TO_IRC
     assert COCO_TO_IRC.get("train", "UNMAPPED") == "UNMAPPED"
+
+
+# --- the parse gate must be able to report a number other than zero ----------
+def test_the_silently_absorbed_gate_is_not_a_hardcoded_zero():
+    """
+    The gate printed a literal 0, so it could not fail — while the code above it was
+    quietly dropping stored totals that could not be read at all, which is precisely a
+    silently-absorbed discrepancy. Two such cells exist in the real workbooks.
+    """
+    import re
+    from pathlib import Path
+    src = (Path(__file__).resolve().parent.parent / "src" / "tmc_parse.py").read_text()
+    assert not re.search(r'silently absorbed discrepancies:\s*0\s', src), (
+        "the gate still prints a literal 0")
+    assert "unreadable" in src, "unreadable stored totals are not registered"
+
+
+def test_an_unreadable_stored_total_is_registered_not_skipped():
+    """
+    `stored is None` used to fall through with no register row, making an unreadable cell
+    indistinguishable from one that agreed.
+    """
+    import inspect
+    from src import tmc_parse
+    src = inspect.getsource(tmc_parse.parse_workbook)
+    assert "if stored is None:" in src, "the None branch is gone"
+    none_branch = src.split("if stored is None:")[1][:400]
+    assert "mismatches.append" in none_branch, (
+        "an unreadable stored total still does not reach the register")

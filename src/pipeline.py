@@ -10,6 +10,13 @@ whether any of the rest can be believed.
 
 So the gates are enforced here rather than trusted to whoever is running it.
 
+AND A SKIPPED GATE IS NOT A PASSED GATE
+validate only runs when manual counts are supplied and critical_gap only when an event
+log is. For a while the driver printed "all stages passed their gates" unconditionally
+at the end, so a run without --manual skipped the only gate that says whether the counts
+are right and still reported that everything passed. The summary now names what ran and
+what did not, and refuses the word "all" unless it means it.
+
 FAIL AT THE FIRST GATE
 Each stage has a numeric threshold. A stage that fails stops the run and says so; it does
 not carry on and produce counts that then get quoted. A pipeline that completes on a
@@ -184,6 +191,30 @@ def run_critical_gap(work, events_csv, fresh=False):
     return _save(work, "critical_gap", res)
 
 
+def summarise(results, work):
+    """
+    What the run actually established, as opposed to what it attempted.
+
+    Kept out of __main__ deliberately. The claim this replaces - an unconditional
+    "all stages passed their gates" - was wrong precisely because it lived where no test
+    could reach it, and it went on being printed after runs that skipped the counts MAPE
+    gate entirely. A sentence asserting verification is itself something to verify.
+    """
+    sk = results.get("_skipped") or []
+    ran = [n for n in STAGES if n in results]
+    if not sk:
+        return f"\n  all {len(STAGES)} stages passed their gates. outputs in {work}"
+    out = [f"\n  {len(ran)} of {len(STAGES)} stages ran and passed their gates. "
+           f"outputs in {work}",
+           "  GATES THAT DID NOT RUN - their thresholds are unverified:"]
+    out += [f"    {name:<14} {why}" for name, why in sk]
+    if any(n == "validate" for n, _ in sk):
+        out.append("  No accuracy figure may be quoted from this run: the counts MAPE "
+                   "gate\n  is the one that says whether the rest can be believed, and "
+                   "it did not run.")
+    return "\n".join(out)
+
+
 def run(video, junction, gcps, manual=None, events=None, weights=None,
         work=None, fresh=False, max_frames=None):
     work = Path(work or PROCESSED / "phase6" / junction)
@@ -206,14 +237,24 @@ def run(video, junction, gcps, manual=None, events=None, weights=None,
     print(f"                 {d['n_tracks']:,} tracks on {d['device']}")
     c = step("count", run_count, work, d, junction, fresh)
     print(f"                 {c['stats']['resolution']:.1%} of tracks resolved")
+    skipped = []
     if manual:
         v = step("validate", run_validate, work, c, manual, fresh)
         print(f"                 total MAPE {v['total']['mape']:.1%} "
               f"({v['total']['verdict']})")
+    else:
+        skipped.append(("validate", "no manual counts given (--manual); the counts "
+                                    "MAPE gate did not run"))
     if events:
         g = step("critical_gap", run_critical_gap, work, events, fresh)
         if g.get("reportable"):
             print(f"                 t_c {g['mle_mean']:.2f} s from {g['n']} drivers")
+        elif g.get("n") is not None:
+            skipped.append(("critical_gap", f"only {g['n']} head-of-queue drivers, "
+                                            f"under the reportable minimum"))
+    else:
+        skipped.append(("critical_gap", "no event log given (--events)"))
+    results["_skipped"] = skipped
     return results, work
 
 
@@ -228,7 +269,7 @@ if __name__ == "__main__":
                             events=opt("--events"), weights=opt("--weights"),
                             fresh="--fresh" in a,
                             max_frames=int(opt("--max-frames", 0)) or None)
-            print(f"\n  all stages passed their gates. outputs in {work}")
+            print(summarise(res, work))
             print("  next: uv run python src/reports.py && uv run python src/export.py")
         except GateFailure as e:
             print(f"\n  STOPPED at a gate:\n    {e}")

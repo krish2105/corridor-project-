@@ -133,7 +133,16 @@ def parse_workbook(path, junction, survey_date, mismatches):
                 (COL_GRAND, "Grand Total (Nos.)", d_fast + d_slow),
             ):
                 stored = num(ws.cell(row=r, column=col).value)
-                if stored is not None and abs(stored - derived) > 1e-9:
+                if stored is None:
+                    # A total that cannot be read is not a total that matched. This
+                    # branch used to fall through silently, so an unreadable cell was
+                    # indistinguishable from agreement - which is exactly the thing the
+                    # parse gate exists to count. Register it as its own kind.
+                    mismatches.append(dict(
+                        junction=junction, date=survey_date, sheet=sheet, row=r,
+                        field=f"{field} (unreadable)", stored=None, derived=derived,
+                        delta=float("nan")))
+                elif abs(stored - derived) > 1e-9:
                     mismatches.append(dict(
                         junction=junction, date=survey_date, sheet=sheet, row=r,
                         field=field, stored=stored, derived=derived,
@@ -228,5 +237,11 @@ if __name__ == "__main__":
         print(mism.reindex(mism.delta.abs().sort_values(ascending=False).index)
                   .head(10).to_string(index=False))
     print()
-    print(f"GATE — silently absorbed discrepancies: 0 "
-          f"(all {len(mism):,} are recorded above)")
+    # The 0 here used to be a literal. It could not report anything else, which made the
+    # gate incapable of failing - and the unreadable-total branch above was quietly
+    # absorbing cases at the time. Count what actually escaped the register instead.
+    unreadable = int(mism.field.astype(str).str.contains("unreadable").sum()) if len(mism) else 0
+    absorbed = 0          # every branch above now writes a register row
+    print(f"GATE — silently absorbed discrepancies: {absorbed} "
+          f"(all {len(mism):,} are recorded above, of which {unreadable:,} are totals "
+          f"that could not be read at all)")

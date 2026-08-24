@@ -142,3 +142,33 @@ def test_validation_precedes_nothing_that_publishes():
 def test_gate_failure_is_its_own_exception():
     """So a caller can distinguish 'the gate said no' from 'the code broke'."""
     assert issubclass(GateFailure, Exception)
+
+
+# --- CLAUDE.md gate: no queue longer than the road can physically hold -------
+def test_no_published_queue_exceeds_the_storage_behind_it(published):
+    """
+    spillback() computes the capped length and the caller threw it away, publishing the
+    raw model output instead. delay.json carried a 3,823 m queue on a 539 m link — which
+    is close to the exact example spillback()'s own docstring gives as the thing not to
+    report. Six of ten approaches breached it.
+    """
+    d = published("delay")
+    bad = [a for a in d["approaches"]
+           if a["storage_m"] and a["queue_m"] > a["storage_m"]]
+    assert not bad, (
+        "queues longer than their link: "
+        + ", ".join(f"{a['junction']} {a['queue_m']}m > {a['storage_m']}m" for a in bad))
+
+
+def test_the_uncapped_queue_is_still_published_and_labelled(published):
+    """
+    Capping must not hide the magnitude. The raw model output stays available, flagged as
+    out of regime, so a reader can see how far past its own validity the model was pushed.
+    """
+    d = published("delay")
+    for a in d["approaches"]:
+        assert "queue_unconstrained_m" in a and "queue_model_in_regime" in a
+        if a["storage_m"] and a["queue_unconstrained_m"] > a["storage_m"]:
+            assert a["queue_model_in_regime"] is False, (
+                f"{a['junction']} is past spillback but is not flagged out of regime")
+            assert a["queue_m"] == a["storage_m"]

@@ -34,21 +34,31 @@ Status as of commit `9ded4e6`: 332 tests pass, dashboard builds clean, deployed.
 
 ## To build / fix next — ordered by consequence
 
-### Tier 1 — gates that report something other than what they check
+### ~~Tier 1 — gates that report something other than what they check~~ — DONE (commit below)
 These are the project's own acceptance criteria. A gate that passes without checking is
 worse than no gate, because it reads as verified.
 
-- **`pipeline.py`** prints "all stages passed their gates" after skipping the Counts MAPE
-  gate entirely. Either run it or say it was skipped.
-- **`delay.py`** — CLAUDE.md gate: "No queue reported longer than the road can physically
-  hold." Lead says uncapped queue lengths are published while the report asserts the
-  opposite two lines below the table. **Verify first**, then cap or restate.
-- **`audit.py`** — PCU-evidence gate is specified as "implied factor constant across all
-  96 intervals"; lead says constancy is checked on 12 day-total values from one sheet.
-- **`audit.py`** — peak-hour gate is specified as "re-derived from 15-min bins matches the
-  workbook's own rolling-hour sheets"; lead says those sheets are never read.
-- **`tmc_parse.py`** — parse gate's "0 silently absorbed" is a hardcoded literal, and
-  non-numeric stored totals may be skipped without a register entry.
+- ~~**`pipeline.py`** prints "all stages passed their gates" after skipping the Counts MAPE
+  gate.~~ FIXED. `summarise()` extracted from `__main__` so it is testable; names every
+  gate that did not run and refuses the word "all"; forbids quoting an accuracy figure
+  when validate was skipped.
+- ~~**`delay.py`** — uncapped queue lengths published.~~ FIXED, and it was real:
+  `spillback()` computed the cap and the caller discarded it, publishing a 3,823 m queue
+  on a 539 m link. 6 of 10 approaches breached. Now publishes the capped `queue_m`, plus
+  `queue_unconstrained_m` and `queue_model_in_regime` so the magnitude is not hidden.
+- ~~**`audit.py`** — PCU-evidence gate checked 12 day-totals, not 96 intervals.~~ FIXED.
+  Now applies the static factors to every class count on all **25,344** 15-minute rows
+  across every sheet of all 12 workbooks and compares against each row's own stored PCU.
+  0 failures — the static-PCU claim is true and is now proven to the standard the gate
+  asks for.
+- ~~**`audit.py`** — peak-hour gate never read the rolling-hour sheets.~~ FIXED, and it
+  was real: `ROW_HOURS` was declared in `tmc_parse.py` and read by no module. Now compares
+  against the workbooks' own 93 rolling-hour windows: **12 of 12 agree to within 1
+  vehicle.**
+- ~~**`tmc_parse.py`** — "0 silently absorbed" hardcoded; unreadable totals skipped.~~
+  FIXED, both real. An unreadable stored total fell through with no register row; there
+  are **2** such cells (`Total Slow`). Register 223 → 225, and the gate now reports a
+  computed count instead of a literal.
 
 ### Tier 2 — published claims that may not match the data
 - **`pitch_template.html`** — "a ₹50-crore programme", unbanded and unsourced. Directly

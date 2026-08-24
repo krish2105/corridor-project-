@@ -184,6 +184,12 @@ if __name__ == "__main__":
         upstream = spacing[code]["previous"] if "Mansarover" in j["approach"] \
             else spacing[code]["next"]
         veh, qm = queue_metres(q["queue_pcu"], shares, pcu_per_veh, width)
+        # `shown` is the capped length - what the link can physically hold. It was
+        # computed here and then thrown away: the row below published the RAW qm, so
+        # delay.json carried a 3,823 m queue on a 539 m link, which is the exact figure
+        # spillback()'s own docstring gives as the thing not to report. Both numbers are
+        # published now: the capped one as the queue, the raw one labelled for what it
+        # is - a deterministic model running past the regime where it means anything.
         shown, spills = spillback(qm, gap)
         t_spill = minutes_to_spillback(gap, qm)
         rows.append(dict(junction=code, approach=j["approach"], vc=round(q["vc"], 2),
@@ -193,7 +199,9 @@ if __name__ == "__main__":
                          # capacity.py had already retired.
                          capacity_pcu_hr=round(j["capacity"]),
                          los=j["los_pt"], queue_pcu=round(q["queue_pcu"]),
-                         queue_vehicles=round(veh), queue_m=round(qm),
+                         queue_vehicles=round(veh), queue_m=round(shown),
+                         queue_unconstrained_m=round(qm),
+                         queue_model_in_regime=not bool(spills),
                          storage_m=None if gap is None else round(gap),
                          upstream=upstream, spillback=bool(spills),
                          minutes_to_spillback=None if t_spill is None else round(t_spill, 1),

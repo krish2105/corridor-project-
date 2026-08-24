@@ -162,3 +162,40 @@ def test_annotation_accepts_the_classes_only_annotation_can_teach(tmp_path):
     r = from_cvat(xml, tmp_path / "o")
     assert r["boxes"] == 2
     assert r["dropped"] == 0
+
+
+# --- a skipped gate is not a passed gate -------------------------------------
+def test_pipeline_never_claims_all_gates_passed_when_one_was_skipped():
+    """
+    validate runs only when manual counts are supplied, and critical_gap only with an
+    event log. The driver used to print "all stages passed their gates" unconditionally,
+    so a run without --manual skipped the counts MAPE gate — the one its own docstring
+    calls "the only one that says whether any of the rest can be believed" — and still
+    reported that everything passed.
+    """
+    from src.pipeline import summarise, STAGES
+    out = summarise({"homography": 1, "detect": 1, "count": 1,
+                     "_skipped": [("validate", "no manual counts given")]}, "/tmp/w")
+    assert "all" not in out.split("outputs in")[0], (
+        "the summary still says 'all ... passed' after a stage was skipped")
+    assert "validate" in out and "did not run" in out.lower()
+    assert f"3 of {len(STAGES)}" in out
+
+
+def test_pipeline_says_all_passed_only_when_nothing_was_skipped():
+    from src.pipeline import summarise, STAGES
+    full = {n: 1 for n in STAGES}
+    out = summarise(full, "/tmp/w")
+    assert f"all {len(STAGES)} stages passed" in out
+    assert "did not run" not in out
+
+
+def test_a_skipped_validate_forbids_quoting_an_accuracy_figure():
+    """
+    The whole point of the counts gate. If it did not run, the summary must say plainly
+    that no accuracy figure may be quoted — not leave the reader to infer it.
+    """
+    from src.pipeline import summarise
+    out = summarise({"homography": 1, "_skipped": [("validate", "no manual counts")]},
+                    "/tmp/w")
+    assert "No accuracy figure may be quoted" in out

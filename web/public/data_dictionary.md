@@ -248,10 +248,12 @@ Generated 2026-08-24 from the files in `out/data`. The field list is read from t
 | `profile` | Pier-siting stations along the alignment. |
 | `queue_carryover` | Whether queues carrying between hours are modelled. |
 | `queue_m` | Queue length, metres, by vehicle footprint against the measured width. |
+| `queue_model_in_regime` | False once the queue reaches the junction behind it. Past that point the deterministic model is outside the regime where its output means anything. |
 | `queue_pcu` | Excess arrivals over the peak hour, PCU. |
 | `queue_robust` | Whether spillback survives every combination. |
 | `queue_spillback_max` | Most approaches spilling back. |
 | `queue_spillback_min` | Fewest approaches spilling back, across the queue grid. |
+| `queue_unconstrained_m` | What the deterministic model returns before the physical cap - published so the magnitude is not hidden, but it is not a queue the link can hold. |
 | `queue_vehicles` | That queue converted to vehicles using the observed composition. |
 | `ref_errors` | #REF! errors found in the flow-diagram sheets. |
 | `residual_pcu` | What remains at grade once the through movement is elevated. |

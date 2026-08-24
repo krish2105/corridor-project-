@@ -9,16 +9,17 @@ Every stored total in the source has been recomputed from its components. Where 
 
 ## A — Arithmetic: stored totals vs recomputed
 
-Discrepancies found: **223**. Every one is listed in the register; none is silently corrected.
+Discrepancies found: **225**. Every one is listed in the register; none is silently corrected.
 
 Separately, a positive check: the clockwise turn mapping used throughout this pipeline — LEFT lands on the next arm clockwise, as it must under left-hand traffic — was tested against the `Direction From/To` header that each of the **144** `V_` sheets states about itself. All 144 agree. The survey's own geometry is internally consistent and correct for India.
 
-| field                  |   count |   net_delta |
-|:-----------------------|--------:|------------:|
-| Grand Total (Nos.)     |     106 |        -157 |
-| Total Slow             |     104 |         -99 |
-| day Grand Total (Nos.) |       7 |        -157 |
-| day Total Slow         |       6 |         -99 |
+| field                   |   count |   net_delta |
+|:------------------------|--------:|------------:|
+| Grand Total (Nos.)      |     106 |        -157 |
+| Total Slow              |     104 |         -99 |
+| Total Slow (unreadable) |       2 |           0 |
+| day Grand Total (Nos.)  |       7 |        -157 |
+| day Total Slow          |       6 |         -99 |
 
 180 understate the true value and 43 overstate it, so this is scattered formula damage rather than a systematic bias. The net effect on the bin-level `Grand Total (Nos.)` is an understatement of **157 vehicles**.
 
@@ -94,7 +95,12 @@ Factors back-solved from every workbook's own `Total (Veh.)` and `Total (PCUs)` 
 | Horse Drawn                                         | HORSE_DRAWN  |      4   | yes        |
 | Bullock Corts                                       | BULLOCK      |      8   | yes        |
 
-**GATE — factor constant across all 12 workbooks: PASS.** The survey uses a single fixed PCU per class, independent of composition.
+Interval-level test: the static factors above are applied to each class count on every 15-minute row and compared against that row's own stored `Grand Total (PCU's)`.
+
+- rows tested: **25,344** across all sheets of all 12 workbooks
+- rows where the static factors do not reproduce the stored PCU: **0**
+
+**GATE — factor constant across all 25,344 intervals: PASS.** The survey uses a single fixed PCU per class, independent of composition.
 
 ### What IRC:106 requires instead
 
@@ -147,6 +153,25 @@ PHF range **0.931–0.984**.
 **This is itself a finding.** `docs/jaipur_corridor_study.md` §5.5 gives 0.85–0.92 as typical for an urban Indian arterial, and a PHF approaching 1.0 means flow is almost perfectly uniform across the four peak quarter-hours. Real mixed traffic at an uncontrolled Jaipur junction does not behave that way. Combined with finding F, it suggests the 15-minute series has been smoothed rather than observed. Peak-15 design values derived from this data will be understated.
 
 The workbooks state a Morning Peak of 0900-1000 and an Evening Peak of 1815-1915 for TMC-01. Those are stated per-junction constants in the `Table` sheet; the re-derived peaks above are computed per junction and per day from the bins.
+
+### Against the workbooks' own rolling-hour sheets
+
+| workbook           | wb_peak_window   |   wb_peak_veh |
+|:-------------------|:-----------------|--------------:|
+| 01_TMC (11-05-2026 | 0900 - 1000      |        11,107 |
+| 02_TMC (11-05-2026 | 0915 - 1015      |         9,476 |
+| 03_TMC (11-05-2026 | 1830 - 1930      |         9,695 |
+| 04_TMC (11-05-2026 | 0915 - 1015      |        10,876 |
+| 05_TMC (11-05-2026 | 0915 - 1015      |        12,433 |
+| 06_TMC (11-05-2026 | 0915 - 1015      |         9,403 |
+| 01_TMC (12-05-2026 | 0900 - 1000      |        11,362 |
+| 02_TMC (12-05-2026 | 0915 - 1015      |         9,658 |
+| 03_TMC (12-05-2026 | 1830 - 1930      |        10,068 |
+| 04_TMC (12-05-2026 | 0915 - 1015      |        11,113 |
+| 05_TMC (12-05-2026 | 0915 - 1015      |        12,770 |
+| 06_TMC (12-05-2026 | 0915 - 1015      |         9,755 |
+
+**GATE — re-derived peak volume matches the workbooks' own rolling-hour maximum: 12 of 12 agree to within 1 vehicle.**
 
 ---
 
@@ -214,7 +239,7 @@ Consequence: anyone reading the flow diagram concludes two-wheelers are 0.24% of
 
 | check | result |
 |---|---|
-| A arithmetic discrepancies recorded | 223 (0 absorbed silently) |
+| A arithmetic discrepancies recorded | 225 (0 absorbed silently) |
 | B movement-to-approach residuals | 0 (identity) |
 | B approach sheets independent | **no** — exact formula views of V_ sheets |
 | C corridor daily volume | 114,811-156,066 veh |

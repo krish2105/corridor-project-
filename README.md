@@ -12,7 +12,7 @@ The pipeline parses every cell, recomputes every stored total from its component
 | The scheme's key movement was **never counted** | JDA is converting this road to signal-free operation with seven U-turn bays. No U-turn column exists anywhere in the survey. The drawing shows 27 median gaps wide enough to turn through |
 | PCU **understated by at least 14.9%** | Static factors against a composition-dependent standard; two-wheelers at 49% of the stream carried at IRC:106's sub-5% value |
 | The flow diagram **reports the wrong classes** | 20-class header over 10-class data, shifted; two-wheelers appear under "Taxi"; 960 `#REF!` cells |
-| **223 stored totals** disagree with their components | 180 understate, 43 overstate; all recorded, none silently corrected |
+| **225 stored totals** disagree with their components | 180 understate, 43 overstate; all recorded, none silently corrected |
 | **JDA's U-turn bays cannot carry the demand** | A right turn becomes a U-turn under signal-free running, so the bays inherit the recorded right-turn volume. At a composition-weighted critical gap: 11 of 12 approaches unservable, 11 even optimistically. 3,923 veh/hr would force across opposing traffic |
 | An elevated through-carriageway **is justified on opening** | Through movements 57–79%; carrying them over the junctions returns all 12 corridor approaches to acceptable operation |
 | **…and does not last its own design horizon** | Growing residual turning demand at 6%, the first approach is back over capacity in 2034 and 0 of 12 still hold at 2046. This argues against our own recommendation and is reported anyway |
@@ -29,7 +29,7 @@ Source data is not in this repo — the workbooks and CAD are the client's. Plac
 
 ```bash
 uv sync
-uv run pytest                     # 332 tests
+uv run pytest                     # 341 tests
 uv run python src/inspect_tmc.py   # raw workbook structure, no reshaping
 uv run python src/audit.py         # -> out/audit_report.md
 uv run python src/atlas.py         # -> out/corridor_constraint_atlas.pdf
@@ -56,7 +56,7 @@ Every module runs standalone and prints its own verification metric. A module th
 - `docs/data_dictionary.md` — every field in every published file, with units. Generated, so a field added without a description fails a test.
 - `docs/jaipur_corridor_study.md` — the methodology, with inline `ERRATUM` blocks correcting 9 defects in its own worked code.
 
-**Documents are generated, not written.** Reports, the data dictionary, the commercial pack and this README all build from pipeline output, because hand-written figures go stale silently — this file claimed 26 tests while the suite held 332.
+**Documents are generated, not written.** Reports, the data dictionary, the commercial pack and this README all build from pipeline output, because hand-written figures go stale silently — this file claimed 26 tests while the suite held 341.
 
 ## Caveats, stated
 

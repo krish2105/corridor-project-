@@ -107,7 +107,12 @@ def spillback_verdict(packing, fscale, lane_cap):
         # baseline and the axis then appears to have no effect at all.
         excess = max(0.0, demand - lane_cap * LANES)
         base_excess = max(1e-9, demand - base_cap)
-        q = a["queue_m"] * (excess / base_excess) * (JAM_PACKING / packing) * fscale
+        # the UNCAPPED queue, deliberately. delay.py publishes queue_m capped at what the
+        # link can hold, which is right for reporting and wrong here: once capped, every
+        # spilling approach reads exactly equal to its storage and "would it still spill
+        # under other assumptions" becomes unanswerable. The raw model output is what
+        # rescales.
+        q = a["queue_unconstrained_m"] * (excess / base_excess) * (JAM_PACKING / packing) * fscale
         if q > a["storage_m"]:
             spills += 1
     return spills, total

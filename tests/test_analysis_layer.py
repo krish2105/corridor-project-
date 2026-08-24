@@ -189,3 +189,34 @@ def test_corridor_order_margin_is_a_number_even_when_orderings_tie(synth_bins, s
     import math
     _b, _c, _t, margin, _l = corridor_order(synth_bins, synth_day)
     assert margin is not None and not math.isnan(margin)
+
+
+# --- audit gates must check what they claim to check -------------------------
+def test_pcu_gate_tests_intervals_not_just_day_totals():
+    """
+    CLAUDE.md's gate is "implied factor per class constant across all 96 intervals". The
+    check back-solved one ratio per workbook from the IN_1 day-total rows — twelve
+    observations. A day total is a sum, so a factor that varied between intervals would
+    still yield a single count-weighted ratio; twelve of those agreeing proves nothing
+    about the intervals underneath.
+    """
+    import inspect
+    from src import audit
+    src = inspect.getsource(audit.check_pcu)
+    assert "ROW_BINS" in src, "the PCU gate never iterates the 15-minute rows"
+    assert "COL_PCU" in src, "the PCU gate never reads the per-interval stored PCU"
+    assert "rows tested" in src
+
+
+def test_peak_gate_reads_the_workbooks_own_rolling_hour_sheets():
+    """
+    The gate is "re-derived from 15-min bins matches the workbook's own rolling-hour
+    sheets". ROW_HOURS was declared in tmc_parse.py and read by no module, so the section
+    titled "re-derived vs the workbook's stated peaks" compared the re-derivation against
+    nothing at all.
+    """
+    import inspect
+    from src import audit
+    src = inspect.getsource(audit.check_peak)
+    assert "ROW_HOURS" in src, "the peak gate still never opens the rolling-hour rows"
+    assert "rolling-hour" in src

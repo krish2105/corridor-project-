@@ -430,6 +430,12 @@ FIELDS.update({
                            "divided, right turn minor-to-major. SECONDARY source.",
     "indo_hcm_gap_source": "Where those Indo-HCM figures came from, and why they are "
                            "marked secondary.",
+    "queue_unconstrained_m": ("What the deterministic model returns before the physical "
+                              "cap - published so the magnitude is not hidden, but it is "
+                              "not a queue the link can hold."),
+    "queue_model_in_regime": ("False once the queue reaches the junction behind it. Past "
+                              "that point the deterministic model is outside the regime "
+                              "where its output means anything."),
     "combinations_uturn": ("How many assumption combinations the U-turn conclusion is "
                            "actually run across - not the size of the whole space."),
     "combinations_elevated": ("How many combinations the elevated-relief conclusion is run "
