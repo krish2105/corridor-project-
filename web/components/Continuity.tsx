@@ -58,9 +58,9 @@ export default function Continuity({ links }: { links: Link[] }) {
           <ResponsiveContainer>
             <ComposedChart data={L.series} margin={{ top: 6, right: 10, bottom: 0, left: 4 }}>
               <CartesianGrid stroke="var(--rule)" vertical={false} />
-              <XAxis dataKey="t" interval={11} tick={{ fontSize: 10, fill: "var(--faint)" }}
+              <XAxis dataKey="t" interval={11} tick={{ fontSize: 11, fill: "var(--faint)" }}
                      tickLine={false} axisLine={{ stroke: "var(--rule)" }} />
-              <YAxis tick={{ fontSize: 10, fill: "var(--faint)" }} width={52}
+              <YAxis tick={{ fontSize: 11, fill: "var(--faint)" }} width={52}
                      tickLine={false} axisLine={false}
                      tickFormatter={(v: number) => nf.format(v)} />
               <Tooltip

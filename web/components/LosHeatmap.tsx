@@ -88,7 +88,10 @@ export default function LosHeatmap({ grid, junctions }: { grid: Cell[]; junction
                   Junction</th>
                 {hours.map((h, i) => (
                   <th key={h} className="num"
-                      style={{ padding: "0 2px", fontSize: ".54rem",
+                      /* 0.54rem rendered at 8.6px, which is not a readable size on a
+                         phone. Only every fourth label is visible, so each has four
+                         columns of room and can afford to be legible. */
+                      style={{ padding: "0 2px", fontSize: ".68rem",
                                color: i % 4 === 0 ? "var(--muted)" : "transparent" }}>
                     {h}
                   </th>

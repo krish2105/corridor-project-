@@ -37,12 +37,12 @@ export default function PierProfile() {
           <ResponsiveContainer>
             <ComposedChart data={data} margin={{ top: 6, right: 8, bottom: 0, left: 0 }}>
               <CartesianGrid stroke="var(--rule)" vertical={false} />
-              <XAxis dataKey="km" tick={{ fontSize: 10, fill: "var(--faint)" }}
+              <XAxis dataKey="km" tick={{ fontSize: 11, fill: "var(--faint)" }}
                 tickLine={false} axisLine={{ stroke: "var(--rule)" }}
                 tickFormatter={(v: number) => v.toFixed(1)}
                 label={{ value: "chainage (km)", position: "insideBottom", offset: -2,
                          fontSize: 10, fill: "var(--muted)" }} />
-              <YAxis tick={{ fontSize: 10, fill: "var(--faint)" }} tickLine={false}
+              <YAxis tick={{ fontSize: 11, fill: "var(--faint)" }} tickLine={false}
                 axisLine={false} width={34} />
               <Tooltip contentStyle={{ background: "var(--surface)",
                 border: "1px solid var(--rule)", borderRadius: 4, fontSize: 12,

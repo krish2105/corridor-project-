@@ -41,9 +41,9 @@ export default function CumulativeQueue({ c }: { c: C }) {
           <ResponsiveContainer>
             <ComposedChart data={data} margin={{ top: 6, right: 10, bottom: 0, left: 4 }}>
               <CartesianGrid stroke="var(--rule)" vertical={false} />
-              <XAxis dataKey="t" interval={11} tick={{ fontSize: 10, fill: "var(--faint)" }}
+              <XAxis dataKey="t" interval={11} tick={{ fontSize: 11, fill: "var(--faint)" }}
                      tickLine={false} axisLine={{ stroke: "var(--rule)" }} />
-              <YAxis tick={{ fontSize: 10, fill: "var(--faint)" }} width={58}
+              <YAxis tick={{ fontSize: 11, fill: "var(--faint)" }} width={58}
                      tickLine={false} axisLine={false}
                      tickFormatter={(v: number) => nf.format(v)} />
               <Tooltip

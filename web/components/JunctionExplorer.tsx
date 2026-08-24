@@ -95,9 +95,9 @@ export default function JunctionExplorer({ junctions }: { junctions: Junction[] 
                       </linearGradient>
                     </defs>
                     <CartesianGrid stroke="var(--rule)" vertical={false} />
-                    <XAxis dataKey="t" tick={{ fontSize: 10, fill: "var(--faint)" }}
+                    <XAxis dataKey="t" tick={{ fontSize: 11, fill: "var(--faint)" }}
                       interval={11} tickLine={false} axisLine={{ stroke: "var(--rule)" }} />
-                    <YAxis tick={{ fontSize: 10, fill: "var(--faint)" }}
+                    <YAxis tick={{ fontSize: 11, fill: "var(--faint)" }}
                       tickLine={false} axisLine={false} width={52}
                       tickFormatter={(v: number) => nf.format(v)} />
                     {peakIdx >= 0 && peakEnd && (
