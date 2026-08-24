@@ -251,6 +251,7 @@ Generated 2026-08-24 from the files in `out/data`. The field list is read from t
 | `queue_model_in_regime` | False once the queue reaches the junction behind it. Past that point the deterministic model is outside the regime where its output means anything. |
 | `queue_pcu` | Excess arrivals over the peak hour, PCU. |
 | `queue_robust` | Whether spillback survives every combination. |
+| `queue_spillback_central` | Spillback count at the CENTRAL assumptions - the cell that reproduces delay.py. Published separately because the grid maximum was being quoted as if it were this. |
 | `queue_spillback_max` | Most approaches spilling back. |
 | `queue_spillback_min` | Fewest approaches spilling back, across the queue grid. |
 | `queue_unconstrained_m` | What the deterministic model returns before the physical cap - published so the magnitude is not hidden, but it is not a queue the link can hold. |

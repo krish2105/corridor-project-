@@ -171,22 +171,49 @@ def proven_table(c):
 
 # Order matters: capacity feeds delay, delay feeds economics, and everything feeds the
 # exports. Listed here once so the README and anyone running the pipeline agree.
+# The order a clean checkout must actually run in.
+#
+# EXPORT RUNS TWICE, AND THAT IS NOT A MISTAKE.
+#
+# The dependency is genuinely circular. reports.py loads corridor.json, which only export
+# writes; export copies capacity_report.md, method_statement.md, validation_report.md and
+# data_dictionary.md into web/public for the download panel, and only reports and
+# dictionary write those. Each needs the other to have gone first.
+#
+# The order used to run export once, before reports. export guards every copy with
+# `if src_f.exists()`, so a clean clone following the README got no error and four dead
+# download links - and a pre-existing test asserted `export` before `reports`, locking
+# the broken half in. Naming both passes is the honest resolution: the first writes the
+# JSON the reports read, the second publishes the documents they produce. The second pass
+# is cheap and idempotent.
+#
+# Eight modules the pipeline needs were also missing from the list entirely.
 PIPELINE_ORDER = [
     ("inspect_tmc",  "raw workbook structure, no reshaping"),
+    ("tmc_parse",    "workbooks -> tidy frames; never trusts a stored total"),
     ("audit",        "-> out/audit_report.md"),
     ("atlas",        "-> out/corridor_constraint_atlas.pdf"),
     ("medians",      "U-turn feasibility from the DIVIDER linework"),
+    ("pcu",          "IRC:106 share-dependent PCU, bands for the composites"),
+    ("analyse",      "peak hour, TMC matrices, through/turning split"),
     ("capacity",     "measured widths, v/c, design life"),
     ("scheme_test",  "does the JDA U-turn scheme work?"),
     ("delay",        "queue, spillback, corridor journey time"),
     ("economics",    "cost of delay, banded"),
+    ("safety",       "conflict points and exposure, from geometry"),
+    ("profiles",     "LOS by approach-hour, peak spreading, cumulative queue"),
+    ("exhibits",     "volume-flow, tornado, continuity, flow raster"),
+    ("standards",    "the corridor against the codes it is built under"),
     ("sensitivity",  "every conclusion across its assumption grid"),
-    ("export",       "-> out/data/corridor.json"),
+    ("export",       "-> out/data/corridor.json   (pass 1: reports read this)"),
     ("reports",      "-> D6, D8, D9"),
     ("dictionary",   "-> docs/data_dictionary.md"),
+    ("export",       "-> web/public/   (pass 2: publishes the documents above)"),
     ("service_docs", "-> out/service/ and README.md"),
     ("build_page",   "-> out/corridor_audit.html"),
+    ("build_pitch",  "-> out/corridor_pitch.html"),
 ]
+
 
 
 def readme(c):

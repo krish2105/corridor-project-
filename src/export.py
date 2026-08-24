@@ -232,6 +232,7 @@ def _write_web_layers(webdir):
     # deliverables a reviewer can pull straight off the page. Cross-verification is the
     # product; making someone email for the data defeats it.
     import shutil as _sh
+    missing = []
     for src_f in (OUT / "audit_report.md", OUT / "corridor_constraint_atlas.pdf",
                   OUT / "capacity_report.md", OUT / "method_statement.md",
                   OUT / "validation_report.md", ROOT / "docs" / "data_dictionary.md",
@@ -243,6 +244,16 @@ def _write_web_layers(webdir):
                   OUT_DATA / "standards.json"):
         if src_f.exists():
             _sh.copy(src_f, webdir / src_f.name)
+        else:
+            # Silently skipping is how four dead download links reached the dashboard.
+            # The panel advertises each of these by name, so a missing one is a broken
+            # promise to the reader, not an optional extra.
+            missing.append(src_f.name)
+
+    if missing:
+        print(f"  WARNING - {len(missing)} advertised deliverable(s) were not on disk and")
+        print(f"  the dashboard will link to nothing for them: {', '.join(missing)}")
+        print("  run the producing module first; see PIPELINE_ORDER in service_docs.py")
 
     cand = OUT_DATA / "junction_candidates.geojson"
     if cand.exists():

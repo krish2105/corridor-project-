@@ -436,6 +436,9 @@ FIELDS.update({
     "queue_model_in_regime": ("False once the queue reaches the junction behind it. Past "
                               "that point the deterministic model is outside the regime "
                               "where its output means anything."),
+    "queue_spillback_central": ("Spillback count at the CENTRAL assumptions - the cell "
+                                "that reproduces delay.py. Published separately because "
+                                "the grid maximum was being quoted as if it were this."),
     "combinations_uturn": ("How many assumption combinations the U-turn conclusion is "
                            "actually run across - not the size of the whole space."),
     "combinations_elevated": ("How many combinations the elevated-relief conclusion is run "

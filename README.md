@@ -29,21 +29,30 @@ Source data is not in this repo — the workbooks and CAD are the client's. Plac
 
 ```bash
 uv sync
-uv run pytest                     # 341 tests
+uv run pytest                     # 344 tests
 uv run python src/inspect_tmc.py   # raw workbook structure, no reshaping
+uv run python src/tmc_parse.py     # workbooks -> tidy frames; never trusts a stored total
 uv run python src/audit.py         # -> out/audit_report.md
 uv run python src/atlas.py         # -> out/corridor_constraint_atlas.pdf
 uv run python src/medians.py       # U-turn feasibility from the DIVIDER linework
+uv run python src/pcu.py           # IRC:106 share-dependent PCU, bands for the composites
+uv run python src/analyse.py       # peak hour, TMC matrices, through/turning split
 uv run python src/capacity.py      # measured widths, v/c, design life
 uv run python src/scheme_test.py   # does the JDA U-turn scheme work?
 uv run python src/delay.py         # queue, spillback, corridor journey time
 uv run python src/economics.py     # cost of delay, banded
+uv run python src/safety.py        # conflict points and exposure, from geometry
+uv run python src/profiles.py      # LOS by approach-hour, peak spreading, cumulative queue
+uv run python src/exhibits.py      # volume-flow, tornado, continuity, flow raster
+uv run python src/standards.py     # the corridor against the codes it is built under
 uv run python src/sensitivity.py   # every conclusion across its assumption grid
-uv run python src/export.py        # -> out/data/corridor.json
+uv run python src/export.py        # -> out/data/corridor.json   (pass 1: reports read this)
 uv run python src/reports.py       # -> D6, D8, D9
 uv run python src/dictionary.py    # -> docs/data_dictionary.md
+uv run python src/export.py        # -> web/public/   (pass 2: publishes the documents above)
 uv run python src/service_docs.py  # -> out/service/ and README.md
 uv run python src/build_page.py    # -> out/corridor_audit.html
+uv run python src/build_pitch.py   # -> out/corridor_pitch.html
 npm run dev --prefix web          # dashboard on :3210
 ```
 
@@ -56,7 +65,7 @@ Every module runs standalone and prints its own verification metric. A module th
 - `docs/data_dictionary.md` — every field in every published file, with units. Generated, so a field added without a description fails a test.
 - `docs/jaipur_corridor_study.md` — the methodology, with inline `ERRATUM` blocks correcting 9 defects in its own worked code.
 
-**Documents are generated, not written.** Reports, the data dictionary, the commercial pack and this README all build from pipeline output, because hand-written figures go stale silently — this file claimed 26 tests while the suite held 341.
+**Documents are generated, not written.** Reports, the data dictionary, the commercial pack and this README all build from pipeline output, because hand-written figures go stale silently — this file claimed 26 tests while the suite held 344.
 
 ## Caveats, stated
 

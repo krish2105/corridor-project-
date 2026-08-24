@@ -255,6 +255,14 @@ def validation_report():
         "trusted alone.",
         "",
         _table(["Quantity", "Literature (opt / cons)", "Measured", "Effect"], [
+            # The two-wheeler row is the one that matters and it was missing. Two-wheelers
+            # are 49% of this stream, so the weighted gap moves with theirs; the car
+            # bucket alone was listed while the 2W value was the one that actually
+            # changed, 2.8 -> 3.5 s on the four-lane median-opening evidence.
+            ["Critical gap, two-wheeler",
+             f"{CRITICAL_GAP_S['TWO_W'][0]} / {CRITICAL_GAP_S['TWO_W'][1]} s",
+             NOT_MEASURED,
+             "49% of the stream - dominates the weighted gap"],
             ["Critical gap, car bucket",
              f"{CRITICAL_GAP_S['CAR_BUCKET'][0]} / {CRITICAL_GAP_S['CAR_BUCKET'][1]} s",
              f"{cg['mle_mean']:.2f} s" if cg and cg.get("reportable") else NOT_MEASURED,

@@ -115,7 +115,11 @@ def test_readme_run_order_respects_dependencies():
     assert order.index("capacity") < order.index("delay")
     assert order.index("delay") < order.index("economics")
     assert order.index("economics") < order.index("export")
-    assert order.index("export") < order.index("reports")
+    # export runs twice, deliberately: reports.py loads corridor.json which only export
+    # writes, and export copies the reports' markdown into web/public. This assertion
+    # used to read `export < reports` and nothing else, which locked in a run order that
+    # left four dead download links on a clean clone.
+    assert order.index("export") < order.index("reports"), "pass 1 must precede reports"
     assert order.index("reports") < order.index("service_docs")
 
 
@@ -179,3 +183,57 @@ def test_a_filtered_pytest_run_cannot_overwrite_the_published_test_count():
         assert opt in src, f"the hook does not check for a {opt} filter"
     assert "return" in src.split("filtered")[-1][:200], (
         "the hook detects a filtered run but does not bail out of it")
+
+
+# --- the published run order must actually work ------------------------------
+def test_export_runs_after_every_module_whose_output_it_copies():
+    """
+    export.py copies capacity_report.md, method_statement.md, validation_report.md and
+    data_dictionary.md into web/public for the dashboard's download panel — and guards
+    each copy with `if src_f.exists()`. PIPELINE_ORDER put export ABOVE reports and
+    dictionary, so following the README on a fresh clone produced no error and four dead
+    download links.
+    """
+    from src.service_docs import PIPELINE_ORDER
+    order = [m for m, _ in PIPELINE_ORDER]
+    assert order.count("export") == 2, (
+        "export must run twice: once to write corridor.json for reports, once to publish "
+        "the documents reports and dictionary produce")
+    for producer, artefact in (("reports", "capacity_report.md / D8 / D9"),
+                               ("dictionary", "data_dictionary.md")):
+        assert producer in order, f"{producer} is missing from PIPELINE_ORDER"
+        assert order.index(producer) < len(order) - 1 - order[::-1].index("export"), (
+            f"the LAST export pass runs before {producer}, so {artefact} will not be "
+            f"copied on a clean run and the dashboard will link to nothing")
+
+
+def test_pipeline_order_covers_every_module_that_writes_published_data():
+    """
+    Eight modules the pipeline needs were absent from the published run order, so a
+    reader following the README would never generate their outputs.
+    """
+    from src.service_docs import PIPELINE_ORDER
+    order = {m for m, _ in PIPELINE_ORDER}
+    required = {"tmc_parse", "audit", "pcu", "analyse", "capacity", "scheme_test",
+                "delay", "economics", "safety", "profiles", "exhibits", "standards",
+                "sensitivity", "reports", "dictionary", "export"}
+    missing = sorted(required - order)
+    assert not missing, f"PIPELINE_ORDER omits modules the pipeline needs: {missing}"
+
+
+def test_no_unbanded_invented_rupee_figure_in_the_pitch():
+    """
+    CLAUDE.md's economics gate: every rupee figure banded. The pitch carried "a ₹50-crore
+    programme" — a single point, sourced to nothing, and our own invention rather than a
+    cited external figure. Bands or citations only.
+    """
+    import re
+    from pathlib import Path
+    html = (Path(__file__).resolve().parent.parent / "src" / "pitch_template.html").read_text()
+    for m in re.finditer(r"&#8377;([\d.,]+)\s*crore", html):
+        window = html[max(0, m.start() - 300):m.end() + 300]
+        banded = "&ndash;" in html[max(0, m.start() - 40):m.end() + 40]
+        cited = re.search(r"CAG|DPR|audit report|Dravyavati|invented|earlier draft",
+                          window, re.I)
+        assert banded or cited, (
+            f"unbanded, uncited rupee figure in the pitch: {m.group(0)}")

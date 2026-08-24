@@ -262,7 +262,11 @@ if __name__ == "__main__":
               f"(swings the result by {swings[0][3]} approaches)")
 
     # --- conclusion 3: do queues block the junction behind them? ----------
+    from src.delay import JAM_PACKING as _JAM      # local: delay imports capacity
     qrows, qmin, qmax = [], None, None
+    assert QUEUE_AXES["jam_packing"][1] == _JAM, (
+        "the middle of the packing axis must be delay.py's own JAM_PACKING, or the "
+        "'central assumptions' cell is not central")
     if (OUT_DATA / "delay.json").exists():
         print("\n=== Conclusion 3 — queues block the junction upstream ===")
         print("  Jam packing, vehicle footprint and lane capacity all bear on this one.")
@@ -311,6 +315,15 @@ if __name__ == "__main__":
         queue=[{k: (v if not hasattr(v, "item") else v.item()) for k, v in r.items()}
                for r in qrows],
         queue_spillback_min=qmin, queue_spillback_max=qmax,
+        # The CENTRAL cell, published separately because the dashboard was quoting
+        # queue_spillback_max as "at the central assumptions" - the grid's worst corner
+        # relabelled as its middle, overstating the finding by two approaches. The centre
+        # is packing = JAM_PACKING, footprint 1.0, lane capacity at the published value,
+        # and it reproduces delay.py exactly.
+        queue_spillback_central=next(
+            (r["spillback"] for r in qrows
+             if r["packing"] == _JAM and r["footprint"] == 1.0
+             and r["lane_cap"] == QUEUE_AXES["lane_capacity_pcu"][1]), None),
         queue_robust=(None if qmin is None else bool(qmin > 0)),
         most_influential=(swings[0][0] if swings[0][3] > 0 else None),
         swing=swings[0][3], assumption_driven=bool(swings[0][3] > 0),

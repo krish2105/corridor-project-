@@ -802,7 +802,9 @@ export default function Page() {
                     vehicle footprints, the most generous lane capacity &mdash;{" "}
                     <strong>{sen.queue_spillback_min} of {sen.queue?.[0]?.total}</strong>{" "}
                     approaches still queue past the junction upstream. At the central
-                    assumptions it is <strong>{sen.queue_spillback_max}</strong>.</p>
+                    assumptions it is <strong>{sen.queue_spillback_central}</strong>, and
+                    at the least favourable corner of the grid{" "}
+                    <strong>{sen.queue_spillback_max}</strong>.</p>
                     <p>No combination in the grid removes it, so the finding is not an
                     artefact of the packing or footprint figures.</p>
                   </div>

@@ -71,6 +71,7 @@ The U-turn conclusion currently rests on critical-gap values from literature, no
 
 | Quantity | Literature (opt / cons) | Measured | Effect |
 |---|---|---|---|
+| Critical gap, two-wheeler | 3.5 / 4.4 s | — | 49% of the stream - dominates the weighted gap |
 | Critical gap, car bucket | 4.2 / 5.6 s | — | sets U-turn bay capacity |
 | Follow-up headway | 2.0 / 3.0 s | — | sets saturation discharge |
 | Raff vs MLE disagreement | — | — | large disagreement withdraws the estimate |
