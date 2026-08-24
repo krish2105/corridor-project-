@@ -80,10 +80,20 @@ def test_client_components_declare_use_client(path):
 
 @pytest.mark.parametrize("path", sorted(COMPONENTS.glob("*.tsx")), ids=lambda p: p.name)
 def test_toggles_expose_their_state_to_assistive_tech(path):
-    """A button that toggles must say so; aria-pressed is how a screen reader reads it."""
+    """
+    A button that toggles must say so, or a screen reader announces "button" and nothing
+    about its state.
+
+    Three attributes are correct here, for different controls, and the right one depends
+    on what the button does: aria-pressed for a toggle button that stays in, aria-expanded
+    for a disclosure that reveals a panel, aria-label where the control has no text.
+    Accepting only the first would have pushed a disclosure into announcing itself as a
+    pressed toggle, which is worse for a screen reader than the narrower test looked.
+    """
     src = path.read_text()
     if "onClick" in src and ("setCode" in src or "toggle" in src.lower()):
-        assert "aria-pressed" in src or "aria-label" in src, path.name
+        assert any(a in src for a in ("aria-pressed", "aria-expanded", "aria-label")), (
+            f"{path.name}: a toggling button exposes no state to assistive tech")
 
 
 # --- basemap -----------------------------------------------------------------

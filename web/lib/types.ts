@@ -32,13 +32,15 @@ export type Corridor = {
     opening_classes: Record<string, number>;
   } | null;
   capacity: {
-    observed_vs_planning_ratio: number; horizon_year: number;
+    observed_vs_planning_ratio: number; lane_model_applicable?: boolean; horizon_year: number;
     approaches_ok_after_grade_separation: number;
     widths: Record<string, { width_m: number; lanes_per_dir: number; capacity_pcu_hr: number }>;
     relief: { junction: string; approach: string; through_pct: number; peak_pcu: number;
               residual_pcu: number; vc_before: number; vc_after: number; los_after: string }[];
     growth: { growth_pct: number; multiple: number; binding_need_pcu: number }[];
-    assumptions: { base_year: number; design_horizon_years: number };
+    assumptions: { base_year: number; design_horizon_years: number;
+                   base_capacity_pcu_per_dir: number; base_width_per_dir_m: number;
+                   capacity_source: string };
     design_life?: { junction: string; approach: string; vc_after: number;
                     fails_low: number; fails_med: number; fails_high: number }[];
     design_life_first_failure_med?: number;

@@ -459,7 +459,8 @@ export default function Page() {
                 perpendicular transects from the alignment to the kerb linework, taking the
                 outermost hit each side and subtracting the median. The corridor runs{" "}
                 <strong>{width0?.toFixed(1)} m per direction</strong> &mdash; two nominal
-                lanes, about 2,400 PCU/hour by IRC:106.</p>
+                lanes, about {nf.format(Math.round(Object.values(cp.widths ?? {})[0]?.capacity_pcu_hr ?? 0))}{" "}
+                PCU/hour at that measured width.</p>
                 <p className="col">Observed peak flow is{" "}
                 <strong>{cp.observed_vs_planning_ratio}&times;</strong> that. On the binding
                 approach it reaches <strong>3,266 vehicles per nominal lane per hour</strong>{" "}
@@ -469,6 +470,24 @@ export default function Page() {
                 v/c here is reported as <em>what the standard says</em>, not as a measurement,
                 and Indo-HCM&rsquo;s sublane treatment with local calibration is what a
                 detailed design would need.</p>
+                <Evidence
+                  label="The capacity figure, and where it comes from"
+                  rows={[
+                    { k: "measured width", v: `${width0?.toFixed(1)} m per direction`,
+                      note: "155 perpendicular transects, outermost kerb hit each side, median subtracted" },
+                    { k: "base capacity", v: `${nf.format(cp.assumptions.base_capacity_pcu_per_dir)} PCU/hr/dir`,
+                      note: `at the ${cp.assumptions.base_width_per_dir_m} m reference width` },
+                    { k: "scaled to this corridor", v: `${nf.format(Math.round(Object.values(cp.widths ?? {})[0]?.capacity_pcu_hr ?? 0))} PCU/hr` },
+                    { k: "observed vs planning", v: `${cp.observed_vs_planning_ratio}x`, tone: "bad" },
+                    { k: "lane model applicable", v: cp.lane_model_applicable ? "yes" : "no",
+                      tone: cp.lane_model_applicable ? "ok" : "bad",
+                      note: "which is why v/c is reported as what the standard says, not as a measurement" },
+                  ]}
+                  source={`${cp.assumptions.capacity_source}. An earlier version of this ` +
+                          "page quoted 2,400 PCU/hour and attributed it to IRC:106. No such " +
+                          "table exists: that figure came from an unsourced 1,200 PCU/lane " +
+                          "the pipeline has since retired, and it was lower than the real " +
+                          "capacity, which made this corridor look worse than it is."} />
               </div>
             </div>
           </Reveal>
@@ -794,6 +813,25 @@ export default function Page() {
                 <p className="col"><strong>{nf.format(Math.round(sc.forced_uturns_per_hour))}{" "}
                 vehicles per peak hour</strong> would be forcing their way across opposing
                 traffic with no gap to take.</p>
+                <Evidence
+                  label="Where the forced-movement figure comes from"
+                  rows={[
+                    { k: "forced U-turns", v: `${nf.format(Math.round(sc.forced_uturns_per_hour))} veh/hr`,
+                      tone: "bad", note: "demand above what the bays can serve, summed across the corridor" },
+                    { k: "approaches unservable", v: `${sc.fails_conservative} of ${sc.uturns.length}`,
+                      tone: "bad" },
+                    { k: "of those, past any viable gap", v: `${sc.no_viable_gap}`,
+                      tone: "bad", note: "the capacity formula runs to near zero; no ratio is quoted" },
+                    { k: "modelled as", v: `${sc.uturn_analogue}`,
+                      note: "a merge needs a smaller gap than a crossing, so this sets the scale" },
+                    { k: "gap bases tested", v: `${sc.gap_bases_tested}`,
+                      note: `the finding holds in ${sc.gap_conclusion_holds_in} of them` },
+                  ]}
+                  source={"This is the one figure here NOT produced by gap acceptance. Gap " +
+                          "acceptance says the movement cannot be served; it does not say " +
+                          "the vehicles vanish. The count is the unserved demand, which is " +
+                          "why it is reported as a load on the through stream rather than " +
+                          "as a queue that waits."} />
               </div>
             </div>
           </Reveal>
