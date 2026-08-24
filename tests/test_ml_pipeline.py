@@ -199,3 +199,35 @@ def test_a_skipped_validate_forbids_quoting_an_accuracy_figure():
     out = summarise({"homography": 1, "_skipped": [("validate", "no manual counts")]},
                     "/tmp/w")
     assert "No accuracy figure may be quoted" in out
+
+
+# --- the field plan may only ask for GCPs the code can resolve ---------------
+def test_field_plan_asks_only_for_gcp_types_the_code_can_match():
+    """
+    The plan is what an enumerator carries to site, and a wasted trip cannot be redone
+    cheaply. It asked for "a kerb corner at the junction mouth" — there is no kerb layer
+    in GCP_LAYERS, so that photograph could never be matched to a surveyed coordinate.
+    It also omitted two types the code DOES resolve, and said "6 photographs" above a
+    list of five.
+
+    Skips when out/ is absent; the plan is generated output.
+    """
+    import re
+    import pytest
+    from pathlib import Path
+    from src.homography import GCP_LAYERS
+    plan = Path(__file__).resolve().parent.parent / "out" / "phase6_field_plan.md"
+    if not plan.exists():
+        pytest.skip("field plan not generated on a clean checkout")
+    text = plan.read_text()
+    section = text[text.index("### What to do"):]
+    section = section[:section.index("**Spread them across the frame**")]
+    asked = [m.group(1).strip().lower()
+             for m in re.finditer(r"^\d+\.\s*(?:A|An)\s+(.+)$", section, re.M)]
+    resolvable = {v.lower() for v in GCP_LAYERS.values()}
+    unmatched = [a for a in asked if a not in resolvable]
+    assert not unmatched, (
+        f"the plan asks for GCP types the code cannot resolve: {unmatched}. "
+        f"Resolvable types are {sorted(resolvable)}")
+    missing = sorted(resolvable - set(asked))
+    assert not missing, f"the plan omits resolvable GCP types: {missing}"

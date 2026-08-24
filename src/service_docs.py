@@ -48,10 +48,17 @@ DELIVERABLES = [
     # D8 exists on disk as a pro forma. "Delivered" would be an overclaim, and a disk
     # check alone cannot tell a finished report from a template awaiting its measurement.
     ("D8", "Count validation report", "Manual-vs-auto MAPE by class",
-     "T3", OUT / "validation_report.md", "pro forma"),
+     "T3", OUT / "validation_report.md",
+     "gates published, awaiting footage"),
     ("D9", "Method statement", "Reproducibility record", "All", OUT / "method_statement.md"),
     ("D10", "Data dictionary", "Every field in every published file, with units",
      "All", ROOT / "docs" / "data_dictionary.md"),
+    # Was written, published nowhere and referenced by nothing, so it could - and did -
+    # drift from the code: it asked the enumerator to photograph a kerb corner, which has
+    # no CAD layer and therefore no surveyed coordinate to match it to. Registering it is
+    # what makes that visible.
+    ("D11", "Phase 6 field plan", "Camera positions, schedule, GCP capture list",
+     "T3", OUT / "phase6_field_plan.md", "awaiting the field day"),
 ]
 
 
@@ -73,7 +80,12 @@ def _status(entry):
     if not (path.exists() or (ROOT / "web" / "public" / path.name).exists()):
         return "Scoped"
     if qualifier:
-        return f"**Pro forma** — gates published, awaiting footage"
+        # USE THE QUALIFIER, do not hardcode one. This returned "gates published,
+        # awaiting footage" for ANY qualifier, which was true of D8 and false of D11 —
+        # a field plan is not a pro-forma report and is not waiting on footage, it is
+        # waiting on the field day. A register that describes one deliverable in another
+        # one's words is the sort of small untruth this project exists to object to.
+        return f"**Pro forma** — {qualifier}"
     return "**Delivered**"
 
 

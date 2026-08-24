@@ -126,3 +126,59 @@ def test_the_slicing_we_describe_is_the_slicing_we_implement():
     src = (ROOT / "src" / "detect.py").read_text()
     for fn in ("def slices(", "def merge(", "def iou("):
         assert fn in src, fn
+
+
+# --- CLAUDE.md's Layout block is a map; it must match the territory ----------
+def test_claude_md_layout_names_every_module_in_src():
+    """
+    Six modules existed and were absent from the Layout block — safety, profiles,
+    exhibits, standards, dictionary and service_docs. Four of them produce published
+    dashboard sections. A layout that omits a third of the analysis layer sends a reader
+    looking for code that is right there.
+    """
+    src = ROOT / "src"
+    claude = (ROOT / "CLAUDE.md").read_text()
+    missing = sorted(p.name for p in src.glob("*.py")
+                     if p.name != "__init__.py" and p.name not in claude)
+    assert not missing, f"CLAUDE.md's Layout block omits: {missing}"
+
+
+def test_claude_md_does_not_list_directories_that_do_not_exist():
+    """
+    `data/gcps/` was listed as though it were there. Every other entry in that tree is
+    real, so one that is not teaches the reader to distrust the rest — and this one is a
+    pending INPUT, worth saying explicitly rather than implying it has arrived.
+
+    Scope: directories under roots git actually tracks. 00_source/, out/ and data/ are
+    gitignored because they hold client-derived material, so their children legitimately
+    do not exist in a fresh clone and cannot be checked this way. Saying so beats a test
+    that appears to cover them and does not.
+    """
+    import re
+    claude = (ROOT / "CLAUDE.md").read_text()
+    tree = claude[claude.index("```\ncorridor/"):]
+    tree = tree[:tree.index("```", 3)]
+    IGNORED_ROOTS = {"00_source", "out", "data"}
+    under_ignored = {"dwg", "dxf", "extracted", "raw", "gcps", "processed", "service"}
+    bad = []
+    for m in re.finditer(r"([a-z0-9_]+)/\s*#([^\n]*)", tree):
+        name, note = m.group(1), m.group(2)
+        if name in IGNORED_ROOTS or name in under_ignored:
+            continue
+        if "NOT YET" in note.upper():
+            continue
+        if not any(h.is_dir() for h in ROOT.glob(f"**/{name}")):
+            bad.append(name)
+    assert not bad, (
+        f"CLAUDE.md lists directories that do not exist and are not marked pending: {bad}")
+
+
+def test_the_pending_gcp_directory_is_marked_pending_not_implied():
+    """
+    The one that motivated the check. data/gcps/ cannot be verified by existence — it is
+    gitignored — so what must hold is that CLAUDE.md says it has not arrived yet.
+    """
+    claude = (ROOT / "CLAUDE.md").read_text()
+    line = next(l for l in claude.splitlines() if "gcps/" in l)
+    assert "NOT YET" in line.upper(), (
+        "data/gcps/ is listed as though it exists; it is a pending input")

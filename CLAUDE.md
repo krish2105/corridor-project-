@@ -227,7 +227,8 @@ corridor/
 │   └── setup_runbook.md              # environment setup; its PROMPT ORDER is superseded
 ├── data/
 │   ├── raw/          # video, downloaded OSM
-│   ├── gcps/         # ground control points
+│   ├── gcps/         # ground control points — NOT YET CREATED; arrives with the
+│   │                 #   GCP stills, which are still outstanding
 │   └── processed/    # geojson, graphml, parquet
 ├── src/                # every module runs standalone and prints its own metric
 │   ├── config.py       # corridor + junction constants, incl. coordinates
@@ -246,6 +247,10 @@ corridor/
 │   ├── delay.py        # queue, spillback, delay, corridor journey time
 │   ├── economics.py    # cost of delay, banded; value of time is a policy input
 │   ├── sensitivity.py  # every conclusion re-run across the assumption grid
+│   ├── safety.py       # conflict points from geometry; exposure, not crash prediction
+│   ├── profiles.py     # LOS by approach-hour, peak spreading, cumulative queue
+│   ├── exhibits.py     # volume-flow, tornado, continuity, flow raster
+│   ├── standards.py    # the corridor against the codes it is built under
 │   │
 │   ├── homography.py   # pixel -> world, float64 + local origin, plain least squares
 │   ├── detect.py       # YOLO + SAHI slicing + ByteTrack
@@ -258,6 +263,8 @@ corridor/
 │   ├── pipeline.py     # Phase 6 driver — fails at the first gate
 │   │
 │   ├── reports.py      # D6 capacity, D8 validation (pro forma), D9 method
+│   ├── dictionary.py   # -> docs/data_dictionary.md; gates every published field
+│   ├── service_docs.py # -> README.md and out/service/; owns PIPELINE_ORDER
 │   ├── export.py       # -> out/data/corridor.json (both dashboards read this)
 │   ├── build_page.py   # -> out/corridor_audit.html
 │   ├── build_pitch.py  # -> out/corridor_pitch.html
