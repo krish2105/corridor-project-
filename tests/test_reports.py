@@ -16,7 +16,10 @@ from src.validate import GATES, validate, _synth
 # Every test here renders a deliverable, which needs out/data. See conftest.
 from conftest import needs_generated_output
 
-pytestmark = needs_generated_output()
+# The module-level skip is gone. It hid every check on the deliverables'
+# own content from CI, because out/ is gitignored and the loaders raised
+# SystemExit without it. Both loaders now fall back to the committed
+# web/public copies, so these run on a clean checkout.
 
 DATA_FILE = "validation.json"
 

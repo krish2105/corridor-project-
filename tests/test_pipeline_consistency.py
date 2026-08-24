@@ -197,3 +197,51 @@ def test_peak_hour_rederivation_lands_inside_the_surveyed_day():
     day = sorted(bins.date.unique())[0]
     ph = peak_hours(bins, day)
     assert len(ph) > 0
+
+
+# --- web/public is the committed copy of out/data, and must not drift --------
+def test_web_public_matches_out_data():
+    """
+    The dashboard reads web/public, the pipeline writes out/data, and the copy between
+    them is manual. Every stale-figure defect this session ran through that gap: a module
+    regenerated, the copy forgotten, and the deployed page kept serving the old number.
+
+    It matters more now that the `published` fixture falls back to web/public on a clean
+    checkout — a drifted copy would mean CI verifies a snapshot nobody is looking at.
+
+    Skips when out/data is absent (a clean checkout has nothing to compare).
+    """
+    import json
+    from src.config import OUT_DATA, ROOT
+    webpub = ROOT / "web" / "public"
+    if not OUT_DATA.exists():
+        pytest.skip("out/data absent; nothing to compare against")
+
+    # export.py copies most of these verbatim but deliberately RESHAPES a few for the
+    # browser - constraint_profile is thinned to (chainage, score, hard) triples so the
+    # page does not ship the full atlas. Those are not drift and must not be compared.
+    RESHAPED = {"constraint_profile.json"}
+
+    drifted = []
+    for src in sorted(OUT_DATA.glob("*.json")):
+        if src.name in RESHAPED:
+            continue
+        dst = webpub / src.name
+        if not dst.exists():
+            continue                      # not every output is published to the web
+        if json.loads(src.read_text()) != json.loads(dst.read_text()):
+            drifted.append(src.name)
+    assert not drifted, (
+        "web/public is stale against out/data for: " + ", ".join(drifted)
+        + " — re-run src/export.py and copy, or the deployed dashboard serves old numbers")
+
+
+def test_the_binding_checks_can_run_without_out_data(published):
+    """
+    Guards the fallback itself. If web/public ever stopped carrying these, the suite would
+    quietly go back to skipping its most important checks and still report green.
+    """
+    for name in ("capacity", "delay", "scheme_test", "sensitivity", "safety",
+                 "profiles", "exhibits", "standards", "economics", "corridor"):
+        d = published(name)
+        assert isinstance(d, dict) and d, f"{name}.json loaded empty"

@@ -66,7 +66,11 @@ def _status(entry):
     """
     path = entry[4]
     qualifier = entry[5] if len(entry) > 5 else None
-    if not path.exists():
+    # out/ is gitignored, so on a clean checkout every delivered artefact read as
+    # "Scoped" and D8's pro-forma qualifier never surfaced — the register understated
+    # its own delivery in exactly the environment CI runs in. The committed copies in
+    # web/public count as existing.
+    if not (path.exists() or (ROOT / "web" / "public" / path.name).exists()):
         return "Scoped"
     if qualifier:
         return f"**Pro forma** — gates published, awaiting footage"
@@ -80,17 +84,28 @@ def _tests():
     Previously this shelled out to `uv run pytest --collect-only` during the build. That
     made rendering a document depend on a working test environment, and took seconds.
     """
-    f = OUT_DATA / "testcount.json"
-    if f.exists():
-        try:
-            return int(json.loads(f.read_text())["collected"])
-        except Exception:
-            pass
+    for base in (OUT_DATA, ROOT / "web" / "public"):
+        f = base / "testcount.json"
+        if f.exists():
+            try:
+                return int(json.loads(f.read_text())["collected"])
+            except Exception:
+                pass
     return None
 
 def _load(name):
-    p = OUT_DATA / f"{name}.json"
-    return json.loads(p.read_text()) if p.exists() else {}
+    """
+    Read a generated dataset, falling back to the committed copy in web/public.
+
+    Returning {} on a clean checkout meant every generated document rendered with empty
+    sections and the test module that checks them was skipped wholesale, so nothing ever
+    noticed. web/public carries these because the dashboard build needs them.
+    """
+    for base in (OUT_DATA, ROOT / "web" / "public"):
+        p = base / f"{name}.json"
+        if p.exists():
+            return json.loads(p.read_text())
+    return {}
 
 
 def _table(headers, rows):

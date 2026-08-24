@@ -163,7 +163,7 @@ def synth_dxf(tmp_path_factory):
     return path
 
 
-def pytest_collection_finish(session):
+def pytest_sessionfinish(session, exitstatus):
     """
     Record how many tests were collected, so the builders do not have to shell out.
 
@@ -172,7 +172,12 @@ def pytest_collection_finish(session):
     a test runner is slow, and it breaks anywhere pytest is not installed - which is any
     environment that only wants to render the deliverables.
 
-    ONLY A FULL RUN MAY WRITE IT. A filtered run - `pytest tests/test_x.py`, `-k`, `-m`,
+    ONLY A GREEN, UNFILTERED RUN MAY WRITE IT.
+
+    It also used to run at COLLECTION, before a single test had executed, so the count
+    was recorded even when the suite then went red — a headline figure in the README
+    asserting a passing suite that had just failed. It runs at session finish now, and
+    only on exit status 0. A filtered run - `pytest tests/test_x.py`, `-k`, `-m`,
     or a single node id - collects a handful of tests, and this hook happily recorded that
     handful as the project's test count. The next document build then published "1 tests"
     or "15 tests" as a headline figure in client-facing deliverables. It happened three
@@ -180,6 +185,8 @@ def pytest_collection_finish(session):
     itself runs a filtered step, so the corruption had a scheduled cause.
     """
     from src.config import OUT_DATA
+    if exitstatus != 0:
+        return                            # a red suite does not get to publish a count
     cfg = session.config
     filtered = (bool(cfg.getoption("keyword", default=""))
                 or bool(cfg.getoption("markexpr", default=""))
@@ -190,8 +197,8 @@ def pytest_collection_finish(session):
         return
     try:
         OUT_DATA.mkdir(parents=True, exist_ok=True)
-        (OUT_DATA / "testcount.json").write_text(json.dumps(
-            {"collected": len(session.items)}))
+        n = session.testscollected
+        (OUT_DATA / "testcount.json").write_text(json.dumps({"collected": n}))
     except Exception:
         pass          # recording the count must never fail a test run
 
@@ -227,12 +234,26 @@ def published():
     CI red on its first run, which is what happened.
     """
     import json
-    from src.config import OUT_DATA
+    from src.config import OUT_DATA, ROOT
+
+    # FALL BACK TO web/public BEFORE SKIPPING.
+    #
+    # 56 tests - 16% of the suite, and precisely the ones binding the published numbers to
+    # each other - skipped on every CI run, because out/ is gitignored. Those are the
+    # checks that would have caught the queue-cap breach, the retired capacity constant
+    # and the mislabelled grid maximum, and not one of them had ever executed in CI.
+    #
+    # No synthetic fixture is needed. Eleven of the fourteen out/data files are ALREADY
+    # committed at web/public/ - the dashboard needs them at build time, so they are in
+    # the repo and public. Reading those is real data, not a stand-in, and it cannot drift
+    # from the schema because it IS the schema. test_web_public_matches_out_data below
+    # keeps the two in step.
+    WEBPUB = ROOT / "web" / "public"
 
     def _load(name):
-        p = OUT_DATA / f"{name}.json"
-        if not p.exists():
-            pytest.skip(f"{name}.json is generated from client data, "
-                        "absent on a clean checkout")
-        return json.loads(p.read_text())
+        for base in (OUT_DATA, WEBPUB):
+            p = base / f"{name}.json"
+            if p.exists():
+                return json.loads(p.read_text())
+        pytest.skip(f"{name}.json is not in out/data or web/public")
     return _load

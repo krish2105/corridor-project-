@@ -14,7 +14,10 @@ from src.service_docs import (DELIVERABLES, _status, capability_statement,
 # Every test here renders a deliverable, which needs out/data. See conftest.
 from conftest import needs_generated_output
 
-pytestmark = needs_generated_output()
+# The module-level skip is gone. It hid every check on the deliverables'
+# own content from CI, because out/ is gitignored and the loaders raised
+# SystemExit without it. Both loaders now fall back to the committed
+# web/public copies, so these run on a clean checkout.
 
 
 @pytest.fixture(scope="module")
@@ -170,19 +173,22 @@ def test_superseded_docs_say_so_at_the_top():
 
 def test_a_filtered_pytest_run_cannot_overwrite_the_published_test_count():
     """
-    The collection hook writes out/data/testcount.json, which service_docs.py publishes as
-    a headline figure. It used to write on EVERY run, so `pytest tests/test_x.py` recorded
-    that file's handful of tests as the project's count and the next document build shipped
-    it. CI runs a filtered step, so this had a scheduled cause. The hook must bail out on
-    any filtered invocation.
+    The hook writes out/data/testcount.json, which service_docs.py publishes as a headline
+    figure. It used to write on EVERY run, so `pytest tests/test_x.py` recorded that
+    file's handful of tests as the project's count and the next document build shipped it.
+    CI runs a filtered step, so this had a scheduled cause.
+
+    It also ran at COLLECTION, before any test executed, so a red suite still published a
+    count. Both are guarded now: session finish, exit status 0, unfiltered only.
     """
     import inspect
     import conftest
-    src = inspect.getsource(conftest.pytest_collection_finish)
+    src = inspect.getsource(conftest.pytest_sessionfinish)
     for opt in ("keyword", "markexpr", "file_or_dir"):
         assert opt in src, f"the hook does not check for a {opt} filter"
     assert "return" in src.split("filtered")[-1][:200], (
         "the hook detects a filtered run but does not bail out of it")
+    assert "exitstatus" in src, "a red suite can still publish a test count"
 
 
 # --- the published run order must actually work ------------------------------

@@ -241,6 +241,12 @@ def _write_web_layers(webdir):
                   OUT_DATA / "delay.json", OUT_DATA / "economics.json",
                   OUT_DATA / "safety.json", OUT_DATA / "profiles.json",
                   OUT_DATA / "exhibits.json",
+                  # atlas_summary is read by reports.py and was the last generated input
+                  # with no committed copy, so five report tests could not run in CI.
+                  OUT_DATA / "atlas_summary.json",
+                  # not client data - our own test count, and committing it is what
+                  # lets a clean checkout render the same README the repo carries.
+                  OUT_DATA / "testcount.json",
                   OUT_DATA / "standards.json"):
         if src_f.exists():
             _sh.copy(src_f, webdir / src_f.name)

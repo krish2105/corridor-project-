@@ -26,11 +26,36 @@ OUT = ROOT / "out"
 DATA = OUT / "data"
 
 
+def _find(filename):
+    """
+    Locate a generated artefact in out/data, else the committed copy in web/public.
+
+    Not only JSON: atlas.geojson is read directly here, and it was the file that kept
+    five report tests failing on a clean checkout after the JSON loaders were fixed.
+    """
+    for base in (DATA, ROOT / "web" / "public"):
+        p = base / filename
+        if p.exists():
+            return p
+    return None
+
+
 def _load(name):
-    p = DATA / f"{name}.json"
-    if not p.exists():
-        raise SystemExit(f"missing {p} - run src/export.py first")
-    return json.loads(p.read_text())
+    """
+    Read a generated dataset, falling back to the committed copy in web/public.
+
+    out/ is gitignored, so on a clean checkout this raised SystemExit and two whole test
+    modules were skipped by a pytestmark — every check on the deliverables' own content,
+    absent from CI. Eleven of these files are already committed at web/public because the
+    dashboard build needs them, so the fallback reads real published data rather than a
+    stand-in. tests/test_pipeline_consistency.py keeps the two copies in step.
+    """
+    for base in (DATA, ROOT / "web" / "public"):
+        p = base / f"{name}.json"
+        if p.exists():
+            return json.loads(p.read_text())
+    raise SystemExit(f"missing {name}.json in out/data and web/public - "
+                     f"run src/export.py first")
 
 
 def _table(headers, rows, align=None):
@@ -56,7 +81,10 @@ def chainage():
     from shapely.geometry import LineString, MultiLineString, Point
     from shapely.ops import linemerge
     T = Transformer.from_crs("EPSG:4326", "EPSG:32643", always_xy=True)
-    g = json.loads((DATA / "atlas.geojson").read_text())
+    _g = _find("atlas.geojson")
+    if _g is None:
+        raise SystemExit("missing atlas.geojson - run src/atlas.py and src/export.py")
+    g = json.loads(_g.read_text())
     lines = []
     for f in g["features"]:
         if f["properties"].get("category") != "alignment":
@@ -84,8 +112,8 @@ NOT_MEASURED = "—"   # a cell that has no measurement; never a zero
 
 def _opt(name):
     """Pipeline output that only exists once footage has been processed."""
-    f = DATA / f"{name}.json"
-    return json.loads(f.read_text()) if f.exists() else None
+    f = _find(f"{name}.json")
+    return json.loads(f.read_text()) if f else None
 
 
 def _status_line(v):
