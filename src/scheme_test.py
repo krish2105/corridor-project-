@@ -477,6 +477,26 @@ def analyse(bins, day, full_mut=True):
     return pd.DataFrame(rows)
 
 
+def openings_toward(direction, chainage, ops, chainage_from=None):
+    """
+    The openings a driver heading `direction` from `chainage` will actually reach.
+
+    Module level and pure so the relationship can be tested, because getting it wrong is
+    silent. It WAS wrong: the rule was written as "northbound means higher chainage",
+    which was a bare fact about the file rather than about the road. Chainage used to
+    start at the northern end, so higher chainage meant further SOUTH and every bay was
+    matched to an opening on the wrong side of its junction. The numbers looked entirely
+    reasonable.
+
+    The sign now comes from the convention. If JDA chains from the north, CHAINAGE_FROM
+    flips and this still returns openings that are physically north of a northbound
+    driver.
+    """
+    north_is_up = (chainage_from or CHAINAGE_FROM) == "south"
+    wants_higher = (direction == "northbound") == north_is_up
+    return sorted(o for o in ops if (o > chainage) == wants_higher and o != chainage)
+
+
 def uturn_detour(uturns):
     """
     How much further a converted movement actually has to travel.
@@ -519,13 +539,6 @@ def uturn_detour(uturns):
     # figures looked entirely reasonable, which is why it survived. Reversing the chainage
     # direction fixed it by accident; deriving the sign from the convention fixes it on
     # purpose, and flipping CHAINAGE_FROM will not silently swap them again.
-    north_is_up = CHAINAGE_FROM == "south"
-
-    def toward(direction, c):
-        ahead = (o for o in ops if (o > c) if (direction == "northbound") == north_is_up)
-        behind = (o for o in ops if (o < c) if (direction == "northbound") != north_is_up)
-        return sorted(ahead) + sorted(behind)
-
     # ARE ANY OF THESE OPENINGS ACTUALLY MID-BLOCK?
     #
     # The detour figures assume a driver reaches an existing opening. That is only a
@@ -545,8 +558,8 @@ def uturn_detour(uturns):
     out = []
     for r in jrows:
         c = r["chainage_m"]
-        for bay, cand in (("northbound", toward("northbound", c)),
-                          ("southbound", toward("southbound", c))):
+        for bay, cand in (("northbound", openings_toward("northbound", c, ops)),
+                          ("southbound", openings_toward("southbound", c, ops))):
             d = demand.get((r["junction"], bay))
             if d is None:
                 continue

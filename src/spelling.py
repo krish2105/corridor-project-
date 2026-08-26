@@ -139,6 +139,7 @@ ALLOW = {
     "carriageway", "carriageways", "kerb", "kerbs", "chainage", "chainages", "transect",
     "transects", "median", "medians", "spillback", "oversaturated", "saturation",
     "throughput", "sublane", "weaving", "deceleration", "decelerating", "gap",
+    "midblock", "mid-block",
     "geometrics", "grade", "separation", "flyover", "rickshaw", "rickshaws", "tempo",
     "lcv", "mav", "axle", "bullock", "scooter", "pickup", "wheeler", "trailer",
     "vph", "kmh", "km", "hr", "nos", "crore", "lakh", "arterial", "roundabout",

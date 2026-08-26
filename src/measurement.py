@@ -215,6 +215,15 @@ def register(conv, boot, reg):
                           f"90th percentile {med_reg.get('p90_m')} m"
                           if med_reg.get("median_m") is not None else "not quantified"),
              resolved_by="a common control point in both, or a stated CAD georeference"),
+        dict(dimension="Median opening position",
+             used_for="U-turn detour distances, and which bay reaches which opening",
+             method="centre of the gap between adjacent median runs, projected onto the "
+                    "alignment",
+             uncertainty="0.4 m between the two chainage conventions, measured by running "
+                         "the corridor from each end. It was up to 33 m until openings "
+                         "were reported at their centre rather than at whichever edge "
+                         "the walk reached first",
+             resolved_by="total station at each opening: nose to nose, both medians"),
         dict(dimension="Median opening width",
              used_for="whether a U-turn is physically possible at an opening",
              method="gap between consecutive DIVIDER runs, measured along the alignment",

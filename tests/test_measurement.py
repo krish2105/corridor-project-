@@ -65,9 +65,22 @@ def test_an_unquantifiable_dimension_says_so_rather_than_being_omitted():
     make the register look complete while a published dimension went unexamined.
     """
     rows = register([_conv([11.7, 15.6, 15.6, 15.7])], [_boot(4.8)], _reg())
-    opening = next(r for r in rows if r["dimension"].startswith("Median opening"))
+    # startswith("Median opening") now matches the POSITION row too, which does carry a
+    # measured uncertainty. Matched exactly, so the test keeps testing what it names.
+    opening = next(r for r in rows if r["dimension"] == "Median opening width")
     assert "not quantified" in opening["uncertainty"]
     assert "total station" in opening["resolved_by"]
+
+
+def test_opening_position_carries_the_directional_residual():
+    """
+    Measured by running the corridor from each end, not asserted. It was up to 33 m until
+    openings were reported at their centre; the register has to say what it is now.
+    """
+    rows = register([_conv([12.0] * 4)], [_boot(1.0)], _reg())
+    pos = next(r for r in rows if r["dimension"] == "Median opening position")
+    assert "chainage convention" in pos["uncertainty"]
+    assert "centre" in pos["method"]
 
 
 def test_the_register_reports_the_real_bootstrap_spread():

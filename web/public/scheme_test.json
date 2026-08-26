@@ -398,10 +398,10 @@
    "demand": 975.0,
    "bay_beyond_drawing": false,
    "junction_chainage_m": 5,
-   "bay_chainage_m": 774,
-   "one_way_m": 769,
-   "detour_m": 1537,
-   "veh_km_per_hour": 1498.8,
+   "bay_chainage_m": 782,
+   "one_way_m": 777,
+   "detour_m": 1555,
+   "veh_km_per_hour": 1516.0,
    "bay_is_junction_mouth": true
   },
   {
@@ -419,10 +419,10 @@
    "demand": 1487.0,
    "bay_beyond_drawing": false,
    "junction_chainage_m": 785,
-   "bay_chainage_m": 1295,
-   "one_way_m": 510,
-   "detour_m": 1019,
-   "veh_km_per_hour": 1515.5,
+   "bay_chainage_m": 1308,
+   "one_way_m": 523,
+   "detour_m": 1046,
+   "veh_km_per_hour": 1555.3,
    "bay_is_junction_mouth": true
   },
   {
@@ -431,10 +431,10 @@
    "demand": 1257.0,
    "bay_beyond_drawing": false,
    "junction_chainage_m": 785,
-   "bay_chainage_m": 774,
-   "one_way_m": 12,
-   "detour_m": 23,
-   "veh_km_per_hour": 29.0,
+   "bay_chainage_m": 782,
+   "one_way_m": 3,
+   "detour_m": 5,
+   "veh_km_per_hour": 6.9,
    "bay_is_junction_mouth": true
   },
   {
@@ -443,10 +443,10 @@
    "demand": 1148.0,
    "bay_beyond_drawing": false,
    "junction_chainage_m": 1306,
-   "bay_chainage_m": 2086,
-   "one_way_m": 780,
-   "detour_m": 1559,
-   "veh_km_per_hour": 1790.0,
+   "bay_chainage_m": 1308,
+   "one_way_m": 2,
+   "detour_m": 4,
+   "veh_km_per_hour": 4.2,
    "bay_is_junction_mouth": true
   },
   {
@@ -455,10 +455,10 @@
    "demand": 1094.0,
    "bay_beyond_drawing": false,
    "junction_chainage_m": 1306,
-   "bay_chainage_m": 1295,
-   "one_way_m": 12,
-   "detour_m": 23,
-   "veh_km_per_hour": 25.3,
+   "bay_chainage_m": 782,
+   "one_way_m": 524,
+   "detour_m": 1048,
+   "veh_km_per_hour": 1146.3,
    "bay_is_junction_mouth": true
   },
   {
@@ -467,10 +467,10 @@
    "demand": 1493.0,
    "bay_beyond_drawing": false,
    "junction_chainage_m": 2101,
-   "bay_chainage_m": 2962,
-   "one_way_m": 862,
-   "detour_m": 1724,
-   "veh_km_per_hour": 2573.4,
+   "bay_chainage_m": 2114,
+   "one_way_m": 14,
+   "detour_m": 28,
+   "veh_km_per_hour": 41.2,
    "bay_is_junction_mouth": true
   },
   {
@@ -479,10 +479,10 @@
    "demand": 1889.0,
    "bay_beyond_drawing": false,
    "junction_chainage_m": 2101,
-   "bay_chainage_m": 2098,
-   "one_way_m": 3,
-   "detour_m": 5,
-   "veh_km_per_hour": 9.8,
+   "bay_chainage_m": 2091,
+   "one_way_m": 9,
+   "detour_m": 19,
+   "veh_km_per_hour": 35.9,
    "bay_is_junction_mouth": true
   },
   {
@@ -491,11 +491,11 @@
    "demand": 819.0,
    "bay_beyond_drawing": false,
    "junction_chainage_m": 2974,
-   "bay_chainage_m": 3768,
-   "one_way_m": 793,
-   "detour_m": 1586,
-   "veh_km_per_hour": 1299.3,
-   "bay_is_junction_mouth": false
+   "bay_chainage_m": 2977,
+   "one_way_m": 2,
+   "detour_m": 5,
+   "veh_km_per_hour": 3.8,
+   "bay_is_junction_mouth": true
   },
   {
    "junction": "TMC-05",
@@ -503,10 +503,10 @@
    "demand": 1156.0,
    "bay_beyond_drawing": false,
    "junction_chainage_m": 2974,
-   "bay_chainage_m": 2962,
-   "one_way_m": 12,
-   "detour_m": 24,
-   "veh_km_per_hour": 27.9,
+   "bay_chainage_m": 2114,
+   "one_way_m": 860,
+   "detour_m": 1720,
+   "veh_km_per_hour": 1988.5,
    "bay_is_junction_mouth": true
   },
   {
@@ -524,10 +524,10 @@
    "demand": 764.0,
    "bay_beyond_drawing": false,
    "junction_chainage_m": 4622,
-   "bay_chainage_m": 3768,
-   "one_way_m": 854,
-   "detour_m": 1708,
-   "veh_km_per_hour": 1305.3,
+   "bay_chainage_m": 3780,
+   "one_way_m": 842,
+   "detour_m": 1685,
+   "veh_km_per_hour": 1287.1,
    "bay_is_junction_mouth": false
   }
  ],
@@ -538,53 +538,53 @@
   "midblock_threshold_m": 100.0,
   "mouth_detail": [
    {
-    "chainage_m": 774,
+    "chainage_m": 782,
     "nearest_junction": "TMC-02",
-    "metres_from_junction": 12
-   },
-   {
-    "chainage_m": 1295,
-    "nearest_junction": "TMC-03",
-    "metres_from_junction": 12
-   },
-   {
-    "chainage_m": 2086,
-    "nearest_junction": "TMC-04",
-    "metres_from_junction": 15
-   },
-   {
-    "chainage_m": 2098,
-    "nearest_junction": "TMC-04",
     "metres_from_junction": 3
    },
    {
-    "chainage_m": 2962,
+    "chainage_m": 1308,
+    "nearest_junction": "TMC-03",
+    "metres_from_junction": 2
+   },
+   {
+    "chainage_m": 2091,
+    "nearest_junction": "TMC-04",
+    "metres_from_junction": 9
+   },
+   {
+    "chainage_m": 2114,
+    "nearest_junction": "TMC-04",
+    "metres_from_junction": 14
+   },
+   {
+    "chainage_m": 2977,
     "nearest_junction": "TMC-05",
-    "metres_from_junction": 12
+    "metres_from_junction": 2
    }
   ],
   "midblock_detail": [
    {
-    "chainage_m": 3768,
+    "chainage_m": 3780,
     "nearest_junction": "TMC-05",
-    "metres_from_junction": 793
+    "metres_from_junction": 805
    }
   ]
  },
- "detour_min_m": 5,
- "detour_max_m": 1724,
- "detour_mean_m": 921,
- "detour_veh_km_per_hour": 10074.3,
+ "detour_min_m": 4,
+ "detour_max_m": 1720,
+ "detour_mean_m": 712,
+ "detour_veh_km_per_hour": 7585.2,
  "detour_bays_measured": 10,
  "detour_bays_beyond_drawing": 2,
- "detour_bays_at_junction_mouth": 8,
- "detour_bays_midblock": 2,
- "detour_midblock_mean_m": 1647,
- "detour_midblock_veh_km": 2604.6,
- "detour_mouth_mean_m": 739,
- "detour_mean_typical_m": 1647,
- "detour_veh_km_typical": 2604.6,
- "detour_outliers_excluded": 8,
+ "detour_bays_at_junction_mouth": 9,
+ "detour_bays_midblock": 1,
+ "detour_midblock_mean_m": 1685,
+ "detour_midblock_veh_km": 1287.1,
+ "detour_mouth_mean_m": 603,
+ "detour_mean_typical_m": 1685,
+ "detour_veh_km_typical": 1287.1,
+ "detour_outliers_excluded": 9,
  "gap_direction_note": "our gap sits mid-pack in the Indian field evidence - above the Kerala openings, below Gupta, CSIR-CRRI and IRC:SP:41 - so the finding rests on neither the generous nor the punitive end",
  "two_wheeler_gap_basis": "Gupta, Mondal & Sharma 2018 (Varanasi, four-lane divided, 7.03-8.90 m per direction) 3.83 s and Datta & Bhuyan 2014 (six four-lane median openings) 3.37-4.78 s; 3.5 s sits inside both",
  "gap_evidence_spread": [

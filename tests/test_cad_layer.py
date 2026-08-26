@@ -73,3 +73,38 @@ def test_carriageway_width_is_recoverable_from_the_edges(synth_dxf):
 
 def test_every_mapped_layer_name_has_a_category():
     assert all(isinstance(v, str) and v for v in LAYER_CAT.values())
+
+
+# --- median openings and the chainage convention ------------------------------
+
+def test_openings_are_reported_at_their_centre_not_an_edge():
+    """
+    Which edge of a gap is its "start" depends on which end the corridor is chained from,
+    so reporting the start moved every opening by its own width when the convention was
+    reversed - up to 33 m here, and up to 47 m on the U-turn detours derived from them.
+    Nothing caught it because nothing had ever run both ways.
+
+    The centre is direction-independent, and it is where a vehicle turning through 180
+    degrees actually is.
+    """
+    from src.medians import openings
+    merged = [(0.0, 100.0), (130.0, 200.0), (260.0, 300.0)]
+    got = openings(merged)
+    assert got == [(115.0, 30.0), (230.0, 60.0)]
+
+
+def test_opening_centres_mirror_when_the_corridor_is_chained_from_the_other_end():
+    """
+    The invariance the whole convention rests on: chainage direction decides which end is
+    zero and nothing else. Reverse the runs, mirror the chainages, and the centres land on
+    the same physical points.
+    """
+    from src.medians import openings
+    total = 300.0
+    fwd = [(0.0, 100.0), (130.0, 200.0), (260.0, 300.0)]
+    rev = sorted((total - hi, total - lo) for lo, hi in fwd)
+    a = sorted(total - c for c, _w in openings(fwd))
+    b = sorted(c for c, _w in openings(rev))
+    assert a == pytest.approx(b)
+    # and the widths are unchanged either way
+    assert sorted(w for _c, w in openings(fwd)) == sorted(w for _c, w in openings(rev))

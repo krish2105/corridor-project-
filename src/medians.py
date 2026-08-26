@@ -89,11 +89,23 @@ def median_runs(geom, alignment):
 
 
 def openings(merged):
-    """Gaps between ADJACENT median runs. This is the erratum'd version."""
+    """
+    Gaps between ADJACENT median runs, reported at the CENTRE of the gap.
+
+    This used to report the gap's start, which is its near edge - and which edge is
+    "near" depends on which end the corridor is chained from. Reversing the chainage
+    direction therefore moved every opening by its own width, up to 33 m here, and moved
+    the U-turn detours derived from them by up to 47 m. The figures looked stable because
+    nothing had ever run both ways.
+
+    The centre is direction-independent, and it is also the better answer: a vehicle
+    turning through 180 degrees does so in the middle of the gap, not at the nose of the
+    median it has just passed.
+    """
     gaps = []
     for i in range(len(merged) - 1):
         start, end = merged[i][1], merged[i + 1][0]
-        gaps.append((start, end - start))
+        gaps.append(((start + end) / 2.0, end - start))
     return gaps
 
 

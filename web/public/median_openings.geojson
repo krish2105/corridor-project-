@@ -6,12 +6,12 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     75.7647732,
-     26.8460423
+     75.7647405,
+     26.8461165
     ]
    },
    "properties": {
-    "chainage_m": 773.6,
+    "chainage_m": 782.4,
     "width_m": 17.7,
     "classification": "wide / junction mouth",
     "uturn_possible": true
@@ -22,12 +22,12 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     75.7628238,
-     26.8504548
+     75.7627699,
+     26.8505655
     ]
    },
    "properties": {
-    "chainage_m": 1294.7,
+    "chainage_m": 1308.1,
     "width_m": 26.8,
     "classification": "wide / junction mouth",
     "uturn_possible": true
@@ -38,12 +38,12 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     75.7586464,
-     26.8563059
+     75.7586096,
+     26.8563388
     ]
    },
    "properties": {
-    "chainage_m": 2085.9,
+    "chainage_m": 2091.1,
     "width_m": 10.3,
     "classification": "typical opening",
     "uturn_possible": true
@@ -54,12 +54,12 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     75.7584837,
-     26.8564574
+     75.7583705,
+     26.8565648
     ]
    },
    "properties": {
-    "chainage_m": 2098.0,
+    "chainage_m": 2114.4,
     "width_m": 32.7,
     "classification": "wide / junction mouth",
     "uturn_possible": true
@@ -70,12 +70,12 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     75.754129,
-     26.8630841
+     75.7540715,
+     26.8632039
     ]
    },
    "properties": {
-    "chainage_m": 2962.4,
+    "chainage_m": 2976.8,
     "width_m": 28.9,
     "classification": "wide / junction mouth",
     "uturn_possible": true
@@ -86,12 +86,12 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     75.7508402,
-     26.8697042
+     75.7507929,
+     26.8698031
     ]
    },
    "properties": {
-    "chainage_m": 3767.7,
+    "chainage_m": 3779.6,
     "width_m": 23.8,
     "classification": "wide / junction mouth",
     "uturn_possible": true

@@ -54,8 +54,8 @@
   "openings": 6,
   "gaps": 5,
   "closer_than_500m": 1,
-  "closest_m": 12,
-  "median_gap_m": 791,
+  "closest_m": 23,
+  "median_gap_m": 783,
   "within_18_20m": 0,
   "widths_checked": 6
  },

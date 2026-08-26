@@ -73,12 +73,12 @@
     },
     "weaving": {
      "status": "not reached",
-     "value": 769,
+     "value": 777,
      "detail": "not reached: gap capacity binds first."
     },
     "detour burden": {
      "status": "not reached",
-     "value": 1537,
+     "value": 1555,
      "detail": "not reached: gap capacity binds first."
     }
    },
@@ -180,12 +180,12 @@
     },
     "weaving": {
      "status": "not reached",
-     "value": 510,
+     "value": 523,
      "detail": "not reached: gap capacity binds first."
     },
     "detour burden": {
      "status": "not reached",
-     "value": 1019,
+     "value": 1046,
      "detail": "not reached: gap capacity binds first."
     }
    },
@@ -232,12 +232,12 @@
     },
     "weaving": {
      "status": "not reached",
-     "value": 12,
+     "value": 3,
      "detail": "not reached: gap capacity binds first."
     },
     "detour burden": {
      "status": "not reached",
-     "value": 23,
+     "value": 5,
      "detail": "not reached: gap capacity binds first."
     }
    },
@@ -274,7 +274,7 @@
     },
     "median width": {
      "status": "not reached",
-     "value": 10.3,
+     "value": 26.8,
      "detail": "not reached: gap capacity binds first."
     },
     "storage": {
@@ -284,12 +284,12 @@
     },
     "weaving": {
      "status": "not reached",
-     "value": 780,
+     "value": 2,
      "detail": "not reached: gap capacity binds first."
     },
     "detour burden": {
      "status": "not reached",
-     "value": 1559,
+     "value": 4,
      "detail": "not reached: gap capacity binds first."
     }
    },
@@ -326,7 +326,7 @@
     },
     "median width": {
      "status": "not reached",
-     "value": 26.8,
+     "value": 17.7,
      "detail": "not reached: gap capacity binds first."
     },
     "storage": {
@@ -336,12 +336,12 @@
     },
     "weaving": {
      "status": "not reached",
-     "value": 12,
+     "value": 524,
      "detail": "not reached: gap capacity binds first."
     },
     "detour burden": {
      "status": "not reached",
-     "value": 23,
+     "value": 1048,
      "detail": "not reached: gap capacity binds first."
     }
    },
@@ -378,7 +378,7 @@
     },
     "median width": {
      "status": "not reached",
-     "value": 28.9,
+     "value": 32.7,
      "detail": "not reached: gap capacity binds first."
     },
     "storage": {
@@ -388,12 +388,12 @@
     },
     "weaving": {
      "status": "not reached",
-     "value": 862,
+     "value": 14,
      "detail": "not reached: gap capacity binds first."
     },
     "detour burden": {
      "status": "not reached",
-     "value": 1724,
+     "value": 28,
      "detail": "not reached: gap capacity binds first."
     }
    },
@@ -430,7 +430,7 @@
     },
     "median width": {
      "status": "not reached",
-     "value": 32.7,
+     "value": 10.3,
      "detail": "not reached: gap capacity binds first."
     },
     "storage": {
@@ -440,12 +440,12 @@
     },
     "weaving": {
      "status": "not reached",
-     "value": 3,
+     "value": 9,
      "detail": "not reached: gap capacity binds first."
     },
     "detour burden": {
      "status": "not reached",
-     "value": 5,
+     "value": 19,
      "detail": "not reached: gap capacity binds first."
     }
    },
@@ -482,7 +482,7 @@
     },
     "median width": {
      "status": "not reached",
-     "value": 23.8,
+     "value": 28.9,
      "detail": "not reached: gap capacity binds first."
     },
     "storage": {
@@ -492,12 +492,12 @@
     },
     "weaving": {
      "status": "not reached",
-     "value": 793,
+     "value": 2,
      "detail": "not reached: gap capacity binds first."
     },
     "detour burden": {
      "status": "not reached",
-     "value": 1586,
+     "value": 5,
      "detail": "not reached: gap capacity binds first."
     }
    },
@@ -534,7 +534,7 @@
     },
     "median width": {
      "status": "not reached",
-     "value": 28.9,
+     "value": 32.7,
      "detail": "not reached: gap capacity binds first."
     },
     "storage": {
@@ -544,12 +544,12 @@
     },
     "weaving": {
      "status": "not reached",
-     "value": 12,
+     "value": 860,
      "detail": "not reached: gap capacity binds first."
     },
     "detour burden": {
      "status": "not reached",
-     "value": 24,
+     "value": 1720,
      "detail": "not reached: gap capacity binds first."
     }
    },
@@ -651,12 +651,12 @@
     },
     "weaving": {
      "status": "not reached",
-     "value": 854,
+     "value": 842,
      "detail": "not reached: gap capacity binds first."
     },
     "detour burden": {
      "status": "not reached",
-     "value": 1708,
+     "value": 1685,
      "detail": "not reached: gap capacity binds first."
     }
    },

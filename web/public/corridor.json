@@ -1162,10 +1162,10 @@
     "demand": 975.0,
     "bay_beyond_drawing": false,
     "junction_chainage_m": 5,
-    "bay_chainage_m": 774,
-    "one_way_m": 769,
-    "detour_m": 1537,
-    "veh_km_per_hour": 1498.8,
+    "bay_chainage_m": 782,
+    "one_way_m": 777,
+    "detour_m": 1555,
+    "veh_km_per_hour": 1516.0,
     "bay_is_junction_mouth": true
    },
    {
@@ -1183,10 +1183,10 @@
     "demand": 1487.0,
     "bay_beyond_drawing": false,
     "junction_chainage_m": 785,
-    "bay_chainage_m": 1295,
-    "one_way_m": 510,
-    "detour_m": 1019,
-    "veh_km_per_hour": 1515.5,
+    "bay_chainage_m": 1308,
+    "one_way_m": 523,
+    "detour_m": 1046,
+    "veh_km_per_hour": 1555.3,
     "bay_is_junction_mouth": true
    },
    {
@@ -1195,10 +1195,10 @@
     "demand": 1257.0,
     "bay_beyond_drawing": false,
     "junction_chainage_m": 785,
-    "bay_chainage_m": 774,
-    "one_way_m": 12,
-    "detour_m": 23,
-    "veh_km_per_hour": 29.0,
+    "bay_chainage_m": 782,
+    "one_way_m": 3,
+    "detour_m": 5,
+    "veh_km_per_hour": 6.9,
     "bay_is_junction_mouth": true
    },
    {
@@ -1207,10 +1207,10 @@
     "demand": 1148.0,
     "bay_beyond_drawing": false,
     "junction_chainage_m": 1306,
-    "bay_chainage_m": 2086,
-    "one_way_m": 780,
-    "detour_m": 1559,
-    "veh_km_per_hour": 1790.0,
+    "bay_chainage_m": 1308,
+    "one_way_m": 2,
+    "detour_m": 4,
+    "veh_km_per_hour": 4.2,
     "bay_is_junction_mouth": true
    },
    {
@@ -1219,10 +1219,10 @@
     "demand": 1094.0,
     "bay_beyond_drawing": false,
     "junction_chainage_m": 1306,
-    "bay_chainage_m": 1295,
-    "one_way_m": 12,
-    "detour_m": 23,
-    "veh_km_per_hour": 25.3,
+    "bay_chainage_m": 782,
+    "one_way_m": 524,
+    "detour_m": 1048,
+    "veh_km_per_hour": 1146.3,
     "bay_is_junction_mouth": true
    },
    {
@@ -1231,10 +1231,10 @@
     "demand": 1493.0,
     "bay_beyond_drawing": false,
     "junction_chainage_m": 2101,
-    "bay_chainage_m": 2962,
-    "one_way_m": 862,
-    "detour_m": 1724,
-    "veh_km_per_hour": 2573.4,
+    "bay_chainage_m": 2114,
+    "one_way_m": 14,
+    "detour_m": 28,
+    "veh_km_per_hour": 41.2,
     "bay_is_junction_mouth": true
    },
    {
@@ -1243,10 +1243,10 @@
     "demand": 1889.0,
     "bay_beyond_drawing": false,
     "junction_chainage_m": 2101,
-    "bay_chainage_m": 2098,
-    "one_way_m": 3,
-    "detour_m": 5,
-    "veh_km_per_hour": 9.8,
+    "bay_chainage_m": 2091,
+    "one_way_m": 9,
+    "detour_m": 19,
+    "veh_km_per_hour": 35.9,
     "bay_is_junction_mouth": true
    },
    {
@@ -1255,11 +1255,11 @@
     "demand": 819.0,
     "bay_beyond_drawing": false,
     "junction_chainage_m": 2974,
-    "bay_chainage_m": 3768,
-    "one_way_m": 793,
-    "detour_m": 1586,
-    "veh_km_per_hour": 1299.3,
-    "bay_is_junction_mouth": false
+    "bay_chainage_m": 2977,
+    "one_way_m": 2,
+    "detour_m": 5,
+    "veh_km_per_hour": 3.8,
+    "bay_is_junction_mouth": true
    },
    {
     "junction": "TMC-05",
@@ -1267,10 +1267,10 @@
     "demand": 1156.0,
     "bay_beyond_drawing": false,
     "junction_chainage_m": 2974,
-    "bay_chainage_m": 2962,
-    "one_way_m": 12,
-    "detour_m": 24,
-    "veh_km_per_hour": 27.9,
+    "bay_chainage_m": 2114,
+    "one_way_m": 860,
+    "detour_m": 1720,
+    "veh_km_per_hour": 1988.5,
     "bay_is_junction_mouth": true
    },
    {
@@ -1288,10 +1288,10 @@
     "demand": 764.0,
     "bay_beyond_drawing": false,
     "junction_chainage_m": 4622,
-    "bay_chainage_m": 3768,
-    "one_way_m": 854,
-    "detour_m": 1708,
-    "veh_km_per_hour": 1305.3,
+    "bay_chainage_m": 3780,
+    "one_way_m": 842,
+    "detour_m": 1685,
+    "veh_km_per_hour": 1287.1,
     "bay_is_junction_mouth": false
    }
   ],
@@ -1302,53 +1302,53 @@
    "midblock_threshold_m": 100.0,
    "mouth_detail": [
     {
-     "chainage_m": 774,
+     "chainage_m": 782,
      "nearest_junction": "TMC-02",
-     "metres_from_junction": 12
-    },
-    {
-     "chainage_m": 1295,
-     "nearest_junction": "TMC-03",
-     "metres_from_junction": 12
-    },
-    {
-     "chainage_m": 2086,
-     "nearest_junction": "TMC-04",
-     "metres_from_junction": 15
-    },
-    {
-     "chainage_m": 2098,
-     "nearest_junction": "TMC-04",
      "metres_from_junction": 3
     },
     {
-     "chainage_m": 2962,
+     "chainage_m": 1308,
+     "nearest_junction": "TMC-03",
+     "metres_from_junction": 2
+    },
+    {
+     "chainage_m": 2091,
+     "nearest_junction": "TMC-04",
+     "metres_from_junction": 9
+    },
+    {
+     "chainage_m": 2114,
+     "nearest_junction": "TMC-04",
+     "metres_from_junction": 14
+    },
+    {
+     "chainage_m": 2977,
      "nearest_junction": "TMC-05",
-     "metres_from_junction": 12
+     "metres_from_junction": 2
     }
    ],
    "midblock_detail": [
     {
-     "chainage_m": 3768,
+     "chainage_m": 3780,
      "nearest_junction": "TMC-05",
-     "metres_from_junction": 793
+     "metres_from_junction": 805
     }
    ]
   },
-  "detour_min_m": 5,
-  "detour_max_m": 1724,
-  "detour_mean_m": 921,
-  "detour_veh_km_per_hour": 10074.3,
+  "detour_min_m": 4,
+  "detour_max_m": 1720,
+  "detour_mean_m": 712,
+  "detour_veh_km_per_hour": 7585.2,
   "detour_bays_measured": 10,
   "detour_bays_beyond_drawing": 2,
-  "detour_bays_at_junction_mouth": 8,
-  "detour_bays_midblock": 2,
-  "detour_midblock_mean_m": 1647,
-  "detour_midblock_veh_km": 2604.6,
-  "detour_mouth_mean_m": 739,
-  "detour_mean_typical_m": 1647,
-  "detour_veh_km_typical": 2604.6,
-  "detour_outliers_excluded": 8,
+  "detour_bays_at_junction_mouth": 9,
+  "detour_bays_midblock": 1,
+  "detour_midblock_mean_m": 1685,
+  "detour_midblock_veh_km": 1287.1,
+  "detour_mouth_mean_m": 603,
+  "detour_mean_typical_m": 1685,
+  "detour_veh_km_typical": 1287.1,
+  "detour_outliers_excluded": 9,
   "gap_direction_note": "our gap sits mid-pack in the Indian field evidence - above the Kerala openings, below Gupta, CSIR-CRRI and IRC:SP:41 - so the finding rests on neither the generous nor the punitive end",
   "two_wheeler_gap_basis": "Gupta, Mondal & Sharma 2018 (Varanasi, four-lane divided, 7.03-8.90 m per direction) 3.83 s and Datta & Bhuyan 2014 (six four-lane median openings) 3.37-4.78 s; 3.5 s sits inside both",
   "gap_evidence_spread": [
@@ -2649,8 +2649,8 @@
    "openings": 6,
    "gaps": 5,
    "closer_than_500m": 1,
-   "closest_m": 12,
-   "median_gap_m": 791,
+   "closest_m": 23,
+   "median_gap_m": 783,
    "within_18_20m": 0,
    "widths_checked": 6
   },
@@ -3795,12 +3795,12 @@
      },
      "weaving": {
       "status": "not reached",
-      "value": 769,
+      "value": 777,
       "detail": "not reached: gap capacity binds first."
      },
      "detour burden": {
       "status": "not reached",
-      "value": 1537,
+      "value": 1555,
       "detail": "not reached: gap capacity binds first."
      }
     },
@@ -3902,12 +3902,12 @@
      },
      "weaving": {
       "status": "not reached",
-      "value": 510,
+      "value": 523,
       "detail": "not reached: gap capacity binds first."
      },
      "detour burden": {
       "status": "not reached",
-      "value": 1019,
+      "value": 1046,
       "detail": "not reached: gap capacity binds first."
      }
     },
@@ -3954,12 +3954,12 @@
      },
      "weaving": {
       "status": "not reached",
-      "value": 12,
+      "value": 3,
       "detail": "not reached: gap capacity binds first."
      },
      "detour burden": {
       "status": "not reached",
-      "value": 23,
+      "value": 5,
       "detail": "not reached: gap capacity binds first."
      }
     },
@@ -3996,7 +3996,7 @@
      },
      "median width": {
       "status": "not reached",
-      "value": 10.3,
+      "value": 26.8,
       "detail": "not reached: gap capacity binds first."
      },
      "storage": {
@@ -4006,12 +4006,12 @@
      },
      "weaving": {
       "status": "not reached",
-      "value": 780,
+      "value": 2,
       "detail": "not reached: gap capacity binds first."
      },
      "detour burden": {
       "status": "not reached",
-      "value": 1559,
+      "value": 4,
       "detail": "not reached: gap capacity binds first."
      }
     },
@@ -4048,7 +4048,7 @@
      },
      "median width": {
       "status": "not reached",
-      "value": 26.8,
+      "value": 17.7,
       "detail": "not reached: gap capacity binds first."
      },
      "storage": {
@@ -4058,12 +4058,12 @@
      },
      "weaving": {
       "status": "not reached",
-      "value": 12,
+      "value": 524,
       "detail": "not reached: gap capacity binds first."
      },
      "detour burden": {
       "status": "not reached",
-      "value": 23,
+      "value": 1048,
       "detail": "not reached: gap capacity binds first."
      }
     },
@@ -4100,7 +4100,7 @@
      },
      "median width": {
       "status": "not reached",
-      "value": 28.9,
+      "value": 32.7,
       "detail": "not reached: gap capacity binds first."
      },
      "storage": {
@@ -4110,12 +4110,12 @@
      },
      "weaving": {
       "status": "not reached",
-      "value": 862,
+      "value": 14,
       "detail": "not reached: gap capacity binds first."
      },
      "detour burden": {
       "status": "not reached",
-      "value": 1724,
+      "value": 28,
       "detail": "not reached: gap capacity binds first."
      }
     },
@@ -4152,7 +4152,7 @@
      },
      "median width": {
       "status": "not reached",
-      "value": 32.7,
+      "value": 10.3,
       "detail": "not reached: gap capacity binds first."
      },
      "storage": {
@@ -4162,12 +4162,12 @@
      },
      "weaving": {
       "status": "not reached",
-      "value": 3,
+      "value": 9,
       "detail": "not reached: gap capacity binds first."
      },
      "detour burden": {
       "status": "not reached",
-      "value": 5,
+      "value": 19,
       "detail": "not reached: gap capacity binds first."
      }
     },
@@ -4204,7 +4204,7 @@
      },
      "median width": {
       "status": "not reached",
-      "value": 23.8,
+      "value": 28.9,
       "detail": "not reached: gap capacity binds first."
      },
      "storage": {
@@ -4214,12 +4214,12 @@
      },
      "weaving": {
       "status": "not reached",
-      "value": 793,
+      "value": 2,
       "detail": "not reached: gap capacity binds first."
      },
      "detour burden": {
       "status": "not reached",
-      "value": 1586,
+      "value": 5,
       "detail": "not reached: gap capacity binds first."
      }
     },
@@ -4256,7 +4256,7 @@
      },
      "median width": {
       "status": "not reached",
-      "value": 28.9,
+      "value": 32.7,
       "detail": "not reached: gap capacity binds first."
      },
      "storage": {
@@ -4266,12 +4266,12 @@
      },
      "weaving": {
       "status": "not reached",
-      "value": 12,
+      "value": 860,
       "detail": "not reached: gap capacity binds first."
      },
      "detour burden": {
       "status": "not reached",
-      "value": 24,
+      "value": 1720,
       "detail": "not reached: gap capacity binds first."
      }
     },
@@ -4373,12 +4373,12 @@
      },
      "weaving": {
       "status": "not reached",
-      "value": 854,
+      "value": 842,
       "detail": "not reached: gap capacity binds first."
      },
      "detour burden": {
       "status": "not reached",
-      "value": 1708,
+      "value": 1685,
       "detail": "not reached: gap capacity binds first."
      }
     },
@@ -4773,6 +4773,13 @@
     "method": "distance from each centreline station to the nearest CAD linework",
     "uncertainty": "median 1.36 m to the nearest divider line, 90th percentile 3.92 m",
     "resolved_by": "a common control point in both, or a stated CAD georeference"
+   },
+   {
+    "dimension": "Median opening position",
+    "used_for": "U-turn detour distances, and which bay reaches which opening",
+    "method": "centre of the gap between adjacent median runs, projected onto the alignment",
+    "uncertainty": "0.4 m between the two chainage conventions, measured by running the corridor from each end. It was up to 33 m until openings were reported at their centre rather than at whichever edge the walk reached first",
+    "resolved_by": "total station at each opening: nose to nose, both medians"
    },
    {
     "dimension": "Median opening width",

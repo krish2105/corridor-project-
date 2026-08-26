@@ -114,8 +114,8 @@
    "detours": [
     {
      "bay": "northbound",
-     "detour_m": 1537,
-     "one_way_m": 769,
+     "detour_m": 1555,
+     "one_way_m": 777,
      "beyond": false,
      "at_junction_mouth": true
     },
@@ -242,15 +242,15 @@
    "detours": [
     {
      "bay": "northbound",
-     "detour_m": 1019,
-     "one_way_m": 510,
+     "detour_m": 1046,
+     "one_way_m": 523,
      "beyond": false,
      "at_junction_mouth": true
     },
     {
      "bay": "southbound",
-     "detour_m": 23,
-     "one_way_m": 12,
+     "detour_m": 5,
+     "one_way_m": 3,
      "beyond": false,
      "at_junction_mouth": true
     }
@@ -370,15 +370,15 @@
    "detours": [
     {
      "bay": "northbound",
-     "detour_m": 1559,
-     "one_way_m": 780,
+     "detour_m": 4,
+     "one_way_m": 2,
      "beyond": false,
      "at_junction_mouth": true
     },
     {
      "bay": "southbound",
-     "detour_m": 23,
-     "one_way_m": 12,
+     "detour_m": 1048,
+     "one_way_m": 524,
      "beyond": false,
      "at_junction_mouth": true
     }
@@ -498,15 +498,15 @@
    "detours": [
     {
      "bay": "northbound",
-     "detour_m": 1724,
-     "one_way_m": 862,
+     "detour_m": 28,
+     "one_way_m": 14,
      "beyond": false,
      "at_junction_mouth": true
     },
     {
      "bay": "southbound",
-     "detour_m": 5,
-     "one_way_m": 3,
+     "detour_m": 19,
+     "one_way_m": 9,
      "beyond": false,
      "at_junction_mouth": true
     }
@@ -626,15 +626,15 @@
    "detours": [
     {
      "bay": "northbound",
-     "detour_m": 1586,
-     "one_way_m": 793,
+     "detour_m": 5,
+     "one_way_m": 2,
      "beyond": false,
-     "at_junction_mouth": false
+     "at_junction_mouth": true
     },
     {
      "bay": "southbound",
-     "detour_m": 24,
-     "one_way_m": 12,
+     "detour_m": 1720,
+     "one_way_m": 860,
      "beyond": false,
      "at_junction_mouth": true
     }
@@ -761,8 +761,8 @@
     },
     {
      "bay": "southbound",
-     "detour_m": 1708,
-     "one_way_m": 854,
+     "detour_m": 1685,
+     "one_way_m": 842,
      "beyond": false,
      "at_junction_mouth": false
     }
