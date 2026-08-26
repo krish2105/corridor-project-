@@ -137,16 +137,18 @@ export default function CorridorMap({ junctions }: { junctions: Junction[] }) {
     // can finish loading before this line runs, and `once("load", ...)` would then never
     // fire. Cheap to guard against and impossible to notice if it ever happened.
     const build = () => {
-      m.addSource("corridor", {
-        type: "geojson",
-        data: { type: "Feature", properties: {},
-                geometry: { type: "LineString",
-                            coordinates: ordered.map((j) => [j.lon, j.lat]) } },
-      });
-      m.addLayer({ id: "corridor-halo", type: "line", source: "corridor",
-        paint: { "line-color": "#FAFBF8", "line-width": 7, "line-opacity": .85 } });
-      m.addLayer({ id: "corridor-line", type: "line", source: "corridor",
-        paint: { "line-color": "#1B3A6B", "line-width": 2.6 } });
+      // NO ALIGNMENT LINE IS DRAWN, and its absence is the point.
+      //
+      // A line joining the six junctions asserts which physical road they sit on. That
+      // was our inference, JDA's reviewer disputed it, and drawing it is the same claim
+      // as naming it - louder, if anything, because a line on a map reads as surveyed
+      // fact rather than as a guess. The name was withdrawn from the text; leaving the
+      // line would have withdrawn it in words and kept it in the picture.
+      //
+      // What stays is what the survey actually supports: six junction positions, and the
+      // JDA drawing underneath them. A reader can see where the junctions are without
+      // being told which road connects them. Restore this when JDA confirms the
+      // alignment, from their centreline rather than by joining our own pins.
 
       // Surveyed basemap. Fetched after the corridor so the junctions paint first and
       // the map is useful before 408 KB of context has arrived.
@@ -157,15 +159,13 @@ export default function CorridorMap({ junctions }: { junctions: Junction[] }) {
         const faint = tok("--rule", "#D5D9D4");
         m.addLayer({ id: "base-structures", type: "line", source: "base",
           filter: ["==", ["get", "category"], "structures"],
-          paint: { "line-color": faint, "line-width": .6, "line-opacity": .9 } },
-          "corridor-halo");
+          paint: { "line-color": faint, "line-width": .6, "line-opacity": .9 } });
         m.addLayer({ id: "base-carriageway", type: "line", source: "base",
           filter: ["==", ["get", "category"], "carriageway"],
-          paint: { "line-color": rule, "line-width": 1.1 } }, "corridor-halo");
+          paint: { "line-color": rule, "line-width": 1.1 } });
         m.addLayer({ id: "base-median", type: "line", source: "base",
           filter: ["==", ["get", "category"], "median"],
-          paint: { "line-color": rule, "line-width": .8, "line-dasharray": [3, 2] } },
-          "corridor-halo");
+          paint: { "line-color": rule, "line-width": .8, "line-dasharray": [3, 2] } });
         // The observer only fires on CHANGE, and the ground layer is created in the
         // constructor before any of this exists. Without one call here, a first load in
         // dark mode paints a light ground under dark linework.
@@ -207,8 +207,7 @@ export default function CorridorMap({ junctions }: { junctions: Junction[] }) {
             paint: { "line-color": def.colour, "line-width": 1.4, "line-opacity": .85 } }
         : { id: `atlas-${def.id}`, type: "circle", source: "atlas",
             filter: ["==", ["get", "category"], def.id],
-            paint: { "circle-color": def.colour, "circle-radius": 2.4, "circle-opacity": .8 } },
-        "corridor-halo");
+            paint: { "circle-color": def.colour, "circle-radius": 2.4, "circle-opacity": .8 } });
     }
     setOn((s) => ({ ...s, [def.id]: true }));
     setBusy(null);
@@ -232,7 +231,7 @@ export default function CorridorMap({ junctions }: { junctions: Junction[] }) {
       m.addLayer({ id: "cand-c", type: "circle", source: "cand",
         paint: { "circle-radius": ["interpolate", ["linear"], ["get", "signal_heads"], 1, 3, 14, 9],
                  "circle-color": "#82600F", "circle-opacity": .55,
-                 "circle-stroke-width": 1, "circle-stroke-color": "#fff" } }, "corridor-halo");
+                 "circle-stroke-width": 1, "circle-stroke-color": "#fff" } });
       m.addLayer({ id: "cand-l", type: "symbol", source: "cand",
         layout: { "text-field": ["get", "cluster"], "text-size": 9,
                   "text-offset": [0, 1.2], "text-allow-overlap": false },
