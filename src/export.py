@@ -227,6 +227,14 @@ def _write_web_layers(webdir):
             geom = dict(type="LineString", coordinates=[list(p) for p in c])
         feats.append(dict(type="Feature", geometry=geom,
                           properties=dict(category=cat, layer=f["properties"].get("layer"))))
+    # JDA's own centreline, so the map draws THEIR geometry rather than joining our pins
+    from src.config import CORRIDOR_CENTRELINE
+    (webdir / "centreline.geojson").write_text(json.dumps({
+        "type": "Feature", "properties": {"source": "JDA KML"},
+        "geometry": {"type": "LineString",
+                     "coordinates": [[lo, la] for lo, la in CORRIDOR_CENTRELINE]}},
+        separators=(",", ":")))
+
     (webdir / "atlas.geojson").write_text(
         json.dumps(dict(type="FeatureCollection", features=feats), separators=(",", ":")))
     # deliverables a reviewer can pull straight off the page. Cross-verification is the

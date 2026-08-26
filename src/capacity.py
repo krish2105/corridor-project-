@@ -108,6 +108,12 @@ def los(vc):
     return "F"
 
 
+# Above this, a per-direction carriageway is wide enough that a service road is the
+# likelier explanation than five running lanes. Not an error, a flag.
+WIDE_TRANSECT_M = 14.0
+WIDE_HITS = []
+
+
 def measure_widths(step=25.0, probe=45.0, band=400.0):
     """
     Carriageway width along the corridor, by perpendicular transect to the kerb lines.
@@ -197,6 +203,13 @@ def measure_widths(step=25.0, probe=45.0, band=400.0):
             # divided: the two carriageways share the section, so one direction is half
             if 8.0 < carriage < 40.0:
                 stations.append((acc + t * L, p, carriage / 2.0))
+                # A transect cannot tell a through lane from a service road, and on this
+                # corridor the northern half measures 17 to 20 m per direction, which is
+                # five lanes each way. That is possible and it is also exactly what
+                # picking up a service road looks like. Recorded so the capacity it
+                # produces carries the doubt with it rather than arriving clean.
+                if carriage / 2.0 > WIDE_TRANSECT_M:
+                    WIDE_HITS.append(round(carriage / 2.0, 1))
         acc += L
 
     from pyproj import Transformer
@@ -471,6 +484,20 @@ if __name__ == "__main__":
         horizon_year=horizon,
         observed_vs_planning_ratio=round(ratio, 2),
         lane_model_applicable=False,
+        # The width flag, published rather than left in a comment. It is the single most
+        # consequential uncertainty in this file: capacity scales linearly with measured
+        # width, and these widths are what turn a corridor that was over capacity on the
+        # wrong alignment into one that is not.
+        wide_transects=len(WIDE_HITS),
+        wide_transect_threshold_m=WIDE_TRANSECT_M,
+        wide_transect_range_m=([min(WIDE_HITS), max(WIDE_HITS)] if WIDE_HITS else None),
+        width_caveat=(
+            "A transect cannot distinguish a through lane from a service road. Ten "
+            "transects measure over 14 m per direction, up to 19.8 m, which is five "
+            "running lanes each way. That is possible on this corridor and it is also "
+            "what a service road looks like from above. Capacity scales linearly with "
+            "this, so treat the northern junctions as an upper bound until the "
+            "carriageway is confirmed on site."),
         relief=[{k: (v if not hasattr(v, "item") else v.item())
                  for k, v in r.items()} for r in rel.to_dict("records")],
         approaches_ok_after_grade_separation=ok,

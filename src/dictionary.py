@@ -299,6 +299,13 @@ FIELDS.update({
     "junction_chainage_m": "Distance of the junction along the surveyed alignment, metres.",
     "bay_chainage_m": "Distance of the U-turn opening along the same alignment, metres.",
     "demand": "Vehicles per peak hour that must use this bay.",
+    "wide_transects": ("How many measured transects exceed the width above which a "
+                       "service road is a likelier reading than five running lanes."),
+    "wide_transect_threshold_m": "That width, per direction, in metres.",
+    "wide_transect_range_m": "Low and high of the flagged transects, metres per direction.",
+    "width_caveat": ("Why the widths on the northern junctions should be read as an upper "
+                     "bound: capacity scales linearly with them, and a transect cannot "
+                     "tell a through lane from a service road."),
     "uturn_detour": ("Per bay: how much further a converted movement travels, measured "
                      "from the drawing as junction chainage against the nearest median "
                      "opening wide enough to turn in, doubled for the return leg."),

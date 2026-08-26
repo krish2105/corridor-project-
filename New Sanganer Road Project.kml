@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document id="12Xv9HixFotIKI88xxxBLwaMgmgxA7pWE">
+	<name>New Sanganer Road Project</name>
+	<gx:CascadingStyle kml:id="__managed_style_039F60E2784172F8EEF3_highlight">
+		<Style>
+			<IconStyle>
+				<scale>1.2</scale>
+				<Icon>
+					<href>https://earth.google.com/earth/document/icon?color=1976d2&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>4</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_039F60E2784172F8EEF3_normal">
+		<Style>
+			<IconStyle>
+				<Icon>
+					<href>https://earth.google.com/earth/document/icon?color=1976d2&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>2.66667</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_08CCF784844172F7FDDE_highlight">
+		<Style>
+			<IconStyle>
+				<scale>1.2</scale>
+				<Icon>
+					<href>https://earth.google.com/earth/document/icon?color=1976d2&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>4</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<StyleMap id="__managed_style_08CCF784844172F7FDDE">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#__managed_style_08CCF784844172F7FDDE_normal</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#__managed_style_08CCF784844172F7FDDE_highlight</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="__managed_style_039F60E2784172F8EEF3">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#__managed_style_039F60E2784172F8EEF3_normal</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#__managed_style_039F60E2784172F8EEF3_highlight</styleUrl>
+		</Pair>
+	</StyleMap>
+	<gx:CascadingStyle kml:id="__managed_style_090E74FF794172F7FDE1_highlight">
+		<Style>
+			<IconStyle>
+				<scale>1.2</scale>
+				<Icon>
+					<href>https://earth.google.com/earth/document/icon?color=1976d2&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>4</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_08CCF784844172F7FDDE_normal">
+		<Style>
+			<IconStyle>
+				<Icon>
+					<href>https://earth.google.com/earth/document/icon?color=1976d2&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>2.66667</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_090E74FF794172F7FDE1_normal">
+		<Style>
+			<IconStyle>
+				<Icon>
+					<href>https://earth.google.com/earth/document/icon?color=1976d2&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>2.66667</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<StyleMap id="__managed_style_090E74FF794172F7FDE1">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#__managed_style_090E74FF794172F7FDE1_normal</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#__managed_style_090E74FF794172F7FDE1_highlight</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Placemark id="0B28563C913F45F1AC75">
+		<name>1</name>
+		<LookAt>
+			<longitude>75.76780079916736</longitude>
+			<latitude>26.83957072942029</latitude>
+			<altitude>424.7695277160775</altitude>
+			<heading>338.8678636356746</heading>
+			<tilt>0</tilt>
+			<gx:fovy>35</gx:fovy>
+			<range>871.7856271572236</range>
+			<altitudeMode>absolute</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_090E74FF794172F7FDE1</styleUrl>
+		<Point>
+			<coordinates>75.76780079916736,26.83957072942029,424.7695277160775</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="04F61494923F45F20799">
+		<name>2</name>
+		<LookAt>
+			<longitude>75.76479130331522</longitude>
+			<latitude>26.84607520091654</latitude>
+			<altitude>425.7371771672911</altitude>
+			<heading>338.8664894818697</heading>
+			<tilt>0</tilt>
+			<gx:fovy>35</gx:fovy>
+			<range>870.818008739152</range>
+			<altitudeMode>absolute</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_08CCF784844172F7FDDE</styleUrl>
+		<Point>
+			<coordinates>75.76479130331522,26.84607520091654,425.7371771672911</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0F3B497B193F45F2CD95">
+		<name>4</name>
+		<LookAt>
+			<longitude>75.75865463906992</longitude>
+			<latitude>26.85643061053636</latitude>
+			<altitude>433.1976333111367</altitude>
+			<heading>338.863695298418</heading>
+			<tilt>0</tilt>
+			<gx:fovy>35</gx:fovy>
+			<range>863.357510346832</range>
+			<altitudeMode>absolute</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_08CCF784844172F7FDDE</styleUrl>
+		<Point>
+			<coordinates>75.75865463906992,26.85643061053636,433.1976333111367</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0DA5D17DF13F45F374D5">
+		<name>5</name>
+		<LookAt>
+			<longitude>75.75411180188085</longitude>
+			<latitude>26.86305429129968</latitude>
+			<altitude>432.7350849038081</altitude>
+			<heading>343.3916684640028</heading>
+			<tilt>0</tilt>
+			<gx:fovy>30.00020898373548</gx:fovy>
+			<range>1690.129272814665</range>
+			<altitudeMode>absolute</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_08CCF784844172F7FDDE</styleUrl>
+		<Point>
+			<coordinates>75.75411180188085,26.86305429129968,432.7350849038081</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="089E2721763F45F3C40D">
+		<name>6</name>
+		<LookAt>
+			<longitude>75.74761332803239</longitude>
+			<latitude>26.87670541172528</latitude>
+			<altitude>440.5968106733763</altitude>
+			<heading>343.3887109878472</heading>
+			<tilt>0</tilt>
+			<gx:fovy>30.00020898373548</gx:fovy>
+			<range>1682.267616532627</range>
+			<altitudeMode>absolute</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_08CCF784844172F7FDDE</styleUrl>
+		<Point>
+			<coordinates>75.74761332803239,26.87670541172528,440.5968106733763</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0A67F5A1DA3F45F5A5D2">
+		<name>3</name>
+		<LookAt>
+			<longitude>75.76278241549258</longitude>
+			<latitude>26.85042041427349</latitude>
+			<altitude>427.2018481781624</altitude>
+			<heading>338.2382161217145</heading>
+			<tilt>0</tilt>
+			<gx:fovy>30.00020898373548</gx:fovy>
+			<range>1351.976998353785</range>
+			<altitudeMode>absolute</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_08CCF784844172F7FDDE</styleUrl>
+		<Point>
+			<coordinates>75.76278241549258,26.85042041427349,427.2018481781624</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="02230D79E74172F8EED1">
+		<name>NEW SANGANER ROAD</name>
+		<LookAt>
+			<longitude>75.76767877192836</longitude>
+			<latitude>26.83816307898581</latitude>
+			<altitude>421.508779668073</altitude>
+			<heading>71.08558371558944</heading>
+			<tilt>0.1746126740943277</tilt>
+			<gx:fovy>30.00006087280463</gx:fovy>
+			<range>1466.871046981687</range>
+			<altitudeMode>absolute</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_039F60E2784172F8EEF3</styleUrl>
+		<LineString>
+			<coordinates>
+				75.74759010599209,26.87672794704194,0 75.74766102079602,26.87616105547065,0 75.74893465391638,26.87368450216649,0 75.75101998804722,26.86932873431231,0 75.7536447424332,26.8640932893114,0 75.75442845243315,26.8624599198965,0 75.75594171283574,26.85936597317789,0 75.75657231162631,26.85827078483254,0 75.75859212931161,26.85635454654429,0 75.76100232094366,26.85419777189128,0 75.76283293670673,26.85043614776792,0 75.76480881910108,26.84596174428014,0 75.76624618151621,26.84278720313305,0 75.76779357293243,26.83951918543538,0 
+			</coordinates>
+		</LineString>
+	</Placemark>
+</Document>
+</kml>

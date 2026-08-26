@@ -2,7 +2,7 @@
  "volume_flow": [
   {
    "junction": "TMC-01",
-   "jda_name": "B-2 Bypass",
+   "jda_name": "B-2 Bypass ",
    "arms": [
     "Mansarover Metro",
     "Patrika Gate",
@@ -111,7 +111,7 @@
   },
   {
    "junction": "TMC-02",
-   "jda_name": "Vijay Path",
+   "jda_name": "Vijay Path ",
    "arms": [
     "Mansarover Metro",
     "Durgapur",
@@ -220,7 +220,7 @@
   },
   {
    "junction": "TMC-03",
-   "jda_name": "Patel Marg",
+   "jda_name": "Patel Marg ",
    "arms": [
     "Mansarover Metro",
     "Patel Marg Crossing",
@@ -329,7 +329,7 @@
   },
   {
    "junction": "TMC-04",
-   "jda_name": "VT Road",
+   "jda_name": "VT Road    ",
    "arms": [
     "Mansarover Metro",
     "VT Road",
@@ -438,7 +438,7 @@
   },
   {
    "junction": "TMC-05",
-   "jda_name": "Rajat Path",
+   "jda_name": "Rajat Path ",
    "arms": [
     "Mansarover Metro",
     "Rajatpath",

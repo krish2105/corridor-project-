@@ -8,9 +8,9 @@
 
 ## 1. Finding
 
-**12 of 12 surveyed approaches already exceed their carrying capacity at the 2026 peak hour.** The worst, TMC-05 from Mansarover Metro, runs at a volume-to-capacity ratio of **2.29** — Level of Service **F**. This is a present-day measurement, not a projection.
+**0 of 12 surveyed approaches already exceed their carrying capacity at the 2026 peak hour.** The worst, TMC-01 from Sanganer Stadium, runs at a volume-to-capacity ratio of **0.94** — Level of Service **E**. This is a present-day measurement, not a projection.
 
-The corridor carries **1.56x** the traffic that the planning-stage assumption implies, which is the gap this assessment exists to quantify.
+The corridor carries **0.73x** the traffic that the planning-stage assumption implies, which is the gap this assessment exists to quantify.
 
 ## 2. Basis of assessment
 
@@ -27,12 +27,12 @@ The corridor carries **1.56x** the traffic that the planning-stage assumption im
 
 | Junction | JDA name | Measured width | Transects | Lanes/dir | Capacity |
 |---|---|---|---|---|---|
-| TMC-01 | B-2 Bypass | 7.2 m | 5 | 2 | 2,592 PCU/hr |
-| TMC-02 | Vijay Path | 7.1 m | 31 | 2 | 2,556 PCU/hr |
-| TMC-03 | Patel Marg | 7.1 m | 30 | 2 | 2,556 PCU/hr |
-| TMC-04 | VT Road | 7.2 m | 27 | 2 | 2,592 PCU/hr |
-| TMC-05 | Rajat Path | 7.0 m | 30 | 2 | 2,520 PCU/hr |
-| TMC-06 | Bhrigu Path | 7.0 m | 27 | 2 | 2,520 PCU/hr |
+| TMC-01 | B-2 Bypass  | 11.7 m | 2 | 3 | 4,212 PCU/hr |
+| TMC-02 | Vijay Path  | 12.7 m | 2 | 3 | 4,572 PCU/hr |
+| TMC-03 | Patel Marg  | 13.0 m | 1 | 3 | 4,680 PCU/hr |
+| TMC-04 | VT Road     | 17.7 m | 3 | 5 | 6,372 PCU/hr |
+| TMC-05 | Rajat Path  | 18.3 m | 7 | 5 | 6,588 PCU/hr |
+| TMC-06 | Bhrigu Path | 19.6 m | 3 | 5 | 7,056 PCU/hr |
 
 ## 3. Demand against capacity, by approach
 
@@ -40,18 +40,18 @@ PCU is reported as a band, not a point. The survey's composite vehicle classes (
 
 | Junction | Approach | Peak | Capacity | PCU low | PCU high | v/c | LOS |
 |---|---|---|---|---|---|---|---|
-| TMC-01 | Mansarover Metro | 09:15 | 2,592 | 3,301 | 4,860 | 1.27–1.87 | F |
-| TMC-01 | Sanganer Stadium | 08:30 | 2,592 | 3,938 | 5,704 | 1.52–2.20 | F |
-| TMC-02 | Mansarover Metro | 09:15 | 2,556 | 3,115 | 4,830 | 1.22–1.89 | F |
-| TMC-02 | Sanganer Stadium | 18:15 | 2,556 | 2,971 | 4,496 | 1.16–1.76 | F |
-| TMC-03 | Mansarover Metro | 09:00 | 2,556 | 3,744 | 5,256 | 1.46–2.06 | F |
-| TMC-03 | Sanganer Stadium | 18:30 | 2,556 | 3,735 | 5,315 | 1.46–2.08 | F |
-| TMC-04 | Mansarover Metro | 09:15 | 2,592 | 3,502 | 5,029 | 1.35–1.94 | F |
-| TMC-04 | Sanganer Stadium | 17:45 | 2,592 | 3,182 | 5,064 | 1.23–1.95 | F |
-| TMC-05 | Mansarover Metro | 09:45 | 2,520 | 5,773 | 8,437 | 2.29–3.35 | F |
-| TMC-05 | Sanganer Stadium | 09:15 | 2,520 | 4,070 | 6,183 | 1.62–2.45 | F |
-| TMC-06 | Mansarover Metro | 09:15 | 2,520 | 3,788 | 5,436 | 1.50–2.16 | F |
-| TMC-06 | Sanganer Stadium | 09:30 | 2,520 | 3,537 | 5,649 | 1.40–2.24 | F |
+| TMC-01 | Mansarover Metro | 09:15 | 4,212 | 3,301 | 4,860 | 0.78–1.15 | D |
+| TMC-01 | Sanganer Stadium | 08:30 | 4,212 | 3,938 | 5,704 | 0.94–1.35 | E |
+| TMC-02 | Mansarover Metro | 09:15 | 4,572 | 3,115 | 4,830 | 0.68–1.06 | C |
+| TMC-02 | Sanganer Stadium | 18:15 | 4,572 | 2,971 | 4,496 | 0.65–0.98 | C |
+| TMC-03 | Mansarover Metro | 09:00 | 4,680 | 3,744 | 5,256 | 0.80–1.12 | D |
+| TMC-03 | Sanganer Stadium | 18:30 | 4,680 | 3,735 | 5,315 | 0.80–1.14 | D |
+| TMC-04 | Mansarover Metro | 09:15 | 6,372 | 3,502 | 5,029 | 0.55–0.79 | C |
+| TMC-04 | Sanganer Stadium | 17:45 | 6,372 | 3,182 | 5,064 | 0.50–0.79 | C |
+| TMC-05 | Mansarover Metro | 09:45 | 6,588 | 5,773 | 8,437 | 0.88–1.28 | E |
+| TMC-05 | Sanganer Stadium | 09:15 | 6,588 | 4,070 | 6,183 | 0.62–0.94 | C |
+| TMC-06 | Mansarover Metro | 09:15 | 7,056 | 3,788 | 5,436 | 0.54–0.77 | C |
+| TMC-06 | Sanganer Stadium | 09:30 | 7,056 | 3,537 | 5,649 | 0.50–0.80 | C |
 
 ## 4. The published scheme does not resolve this
 
@@ -67,18 +67,18 @@ Removing the through movement from the at-grade surface — the elevated option 
 
 | Junction | Approach | Through % | Peak PCU | Residual | v/c before | v/c after | LOS after |
 |---|---|---|---|---|---|---|---|
-| TMC-01 | Mansarover Metro | 57.2% | 3,317 | 1,420 | 1.28 | 0.55 | C |
-| TMC-01 | Sanganer Stadium | 57.2% | 3,963 | 1,696 | 1.53 | 0.65 | C |
-| TMC-02 | Mansarover Metro | 68.3% | 3,126 | 991 | 1.22 | 0.39 | B |
-| TMC-02 | Sanganer Stadium | 68.3% | 2,990 | 948 | 1.17 | 0.37 | B |
-| TMC-03 | Mansarover Metro | 77.4% | 3,750 | 847 | 1.47 | 0.33 | B |
-| TMC-03 | Sanganer Stadium | 77.4% | 3,757 | 849 | 1.47 | 0.33 | B |
-| TMC-04 | Mansarover Metro | 67.9% | 3,510 | 1,127 | 1.35 | 0.43 | B |
-| TMC-04 | Sanganer Stadium | 67.9% | 3,194 | 1,025 | 1.23 | 0.40 | B |
-| TMC-05 | Mansarover Metro | 78.7% | 5,777 | 1,231 | 2.29 | 0.49 | C |
-| TMC-05 | Sanganer Stadium | 78.7% | 4,086 | 870 | 1.62 | 0.35 | B |
-| TMC-06 | Mansarover Metro | 72.9% | 3,797 | 1,029 | 1.51 | 0.41 | B |
-| TMC-06 | Sanganer Stadium | 72.9% | 3,566 | 966 | 1.42 | 0.38 | B |
+| TMC-01 | Mansarover Metro | 57.2% | 3,317 | 1,420 | 0.79 | 0.34 | B |
+| TMC-01 | Sanganer Stadium | 57.2% | 3,963 | 1,696 | 0.94 | 0.40 | B |
+| TMC-02 | Mansarover Metro | 68.3% | 3,126 | 991 | 0.68 | 0.22 | A |
+| TMC-02 | Sanganer Stadium | 68.3% | 2,990 | 948 | 0.65 | 0.21 | A |
+| TMC-03 | Mansarover Metro | 77.4% | 3,750 | 847 | 0.80 | 0.18 | A |
+| TMC-03 | Sanganer Stadium | 77.4% | 3,757 | 849 | 0.80 | 0.18 | A |
+| TMC-04 | Mansarover Metro | 67.9% | 3,510 | 1,127 | 0.55 | 0.18 | A |
+| TMC-04 | Sanganer Stadium | 67.9% | 3,194 | 1,025 | 0.50 | 0.16 | A |
+| TMC-05 | Mansarover Metro | 78.7% | 5,777 | 1,231 | 0.88 | 0.19 | A |
+| TMC-05 | Sanganer Stadium | 78.7% | 4,086 | 870 | 0.62 | 0.13 | A |
+| TMC-06 | Mansarover Metro | 72.9% | 3,797 | 1,029 | 0.54 | 0.15 | A |
+| TMC-06 | Sanganer Stadium | 72.9% | 3,566 | 966 | 0.51 | 0.14 | A |
 
 ## 6. How long does that relief last?
 
@@ -86,20 +86,20 @@ Opening-year relief is not the same as a design life, and the difference is the 
 
 | Junction | Approach | v/c on opening | 4% | 6% | 8% |
 |---|---|---|---|---|---|
-| TMC-01 | Mansarover Metro | 0.55 | 2042 | 2037 | 2034 |
-| TMC-01 | Sanganer Stadium | 0.65 | 2037 | 2034 | 2032 |
-| TMC-02 | Mansarover Metro | 0.39 | 2051 | 2043 | 2039 |
-| TMC-02 | Sanganer Stadium | 0.37 | 2052 | 2044 | 2039 |
-| TMC-03 | Mansarover Metro | 0.33 | 2055 | 2046 | 2041 |
-| TMC-03 | Sanganer Stadium | 0.33 | 2055 | 2046 | 2041 |
-| TMC-04 | Mansarover Metro | 0.43 | 2048 | 2041 | 2037 |
-| TMC-04 | Sanganer Stadium | 0.40 | 2050 | 2042 | 2038 |
-| TMC-05 | Mansarover Metro | 0.49 | 2045 | 2039 | 2036 |
-| TMC-05 | Sanganer Stadium | 0.35 | 2053 | 2045 | 2040 |
-| TMC-06 | Mansarover Metro | 0.41 | 2049 | 2042 | 2038 |
-| TMC-06 | Sanganer Stadium | 0.38 | 2051 | 2043 | 2039 |
+| TMC-01 | Mansarover Metro | 0.34 | 2054 | 2045 | 2041 |
+| TMC-01 | Sanganer Stadium | 0.40 | 2050 | 2042 | 2038 |
+| TMC-02 | Mansarover Metro | 0.22 | 2065 | 2052 | 2046 |
+| TMC-02 | Sanganer Stadium | 0.21 | 2066 | 2053 | 2047 |
+| TMC-03 | Mansarover Metro | 0.18 | 2070 | 2056 | 2049 |
+| TMC-03 | Sanganer Stadium | 0.18 | 2070 | 2056 | 2049 |
+| TMC-04 | Mansarover Metro | 0.18 | 2070 | 2056 | 2049 |
+| TMC-04 | Sanganer Stadium | 0.16 | 2073 | 2058 | 2050 |
+| TMC-05 | Mansarover Metro | 0.19 | 2069 | 2055 | 2048 |
+| TMC-05 | Sanganer Stadium | 0.13 | 2079 | 2062 | 2053 |
+| TMC-06 | Mansarover Metro | 0.15 | 2075 | 2059 | 2051 |
+| TMC-06 | Sanganer Stadium | 0.14 | 2077 | 2060 | 2052 |
 
-**At the medium 6% growth rate, 0 of 12 approaches still hold at 2046.** The first returns to capacity in **2034** — 8 years after the base year — and the last in 2046.
+**At the medium 6% growth rate, 10 of 12 approaches still hold at 2046.** The first returns to capacity in **2042** — 16 years after the base year — and the last in 2062.
 
 This does not withdraw the recommendation; grade separation is still the only measure tested here that returns the corridor to service at all. It qualifies it. A structure sized on opening-year relief alone would be delivering a corridor that is over capacity again well inside its own design horizon, so the scheme needs a demand-side measure alongside it — public transport priority, parking control, or access management — not a structure on its own.
 
@@ -111,30 +111,30 @@ A volume-to-capacity ratio is not something anyone can act on. Deterministic ove
 
 | Junction | Approach | Queue veh | Queue m | Storage m | Delay min | Blocks back |
 |---|---|---|---|---|---|---|
-| TMC-01 | Mansarover Metro | 831 | 860 | 1,884 | 6.6 | no |
-| TMC-01 | Sanganer Stadium | 1,571 | 1,626 | n/a | 10.4 | leaves study area |
-| TMC-02 | Mansarover Metro | 673 | 393 | 393 | 5.5 | TMC-03 at 37 min |
-| TMC-02 | Sanganer Stadium | 513 | 488 | 1,884 | 4.4 | no |
-| TMC-03 | Mansarover Metro | 1,495 | 1,333 | 2,332 | 9.6 | no |
-| TMC-03 | Sanganer Stadium | 1,504 | 393 | 393 | 9.6 | TMC-02 at 18 min |
-| TMC-04 | Mansarover Metro | 1,127 | 190 | 190 | 7.8 | TMC-05 at 11 min |
-| TMC-04 | Sanganer Stadium | 739 | 659 | 2,332 | 5.7 | no |
-| TMC-05 | Mansarover Metro | 4,119 | 539 | 539 | 16.9 | TMC-06 at 8 min |
-| TMC-05 | Sanganer Stadium | 1,981 | 190 | 190 | 11.5 | TMC-04 at 6 min |
-| TMC-06 | Mansarover Metro | 1,601 | 1,584 | n/a | 10.1 | leaves study area |
-| TMC-06 | Sanganer Stadium | 1,311 | 539 | 539 | 8.8 | TMC-05 at 25 min |
+| TMC-01 | Mansarover Metro | 0 | 0 | 780 | 0.0 | no |
+| TMC-01 | Sanganer Stadium | 0 | 0 | n/a | 0.0 | leaves study area |
+| TMC-02 | Mansarover Metro | 0 | 0 | 521 | 0.0 | no |
+| TMC-02 | Sanganer Stadium | 0 | 0 | 780 | 0.0 | no |
+| TMC-03 | Mansarover Metro | 0 | 0 | 794 | 0.0 | no |
+| TMC-03 | Sanganer Stadium | 0 | 0 | 521 | 0.0 | no |
+| TMC-04 | Mansarover Metro | 0 | 0 | 874 | 0.0 | no |
+| TMC-04 | Sanganer Stadium | 0 | 0 | 794 | 0.0 | no |
+| TMC-05 | Mansarover Metro | 0 | 0 | 1,647 | 0.0 | no |
+| TMC-05 | Sanganer Stadium | 0 | 0 | 874 | 0.0 | no |
+| TMC-06 | Mansarover Metro | 0 | 0 | n/a | 0.0 | leaves study area |
+| TMC-06 | Sanganer Stadium | 0 | 0 | 1,647 | 0.0 | no |
 
-**6 of 12 queues reach the junction behind them inside the peak hour.** No queue is reported longer than the road can physically hold: past the point where a queue blocks the junction upstream, the approaches stop being independent and the deterministic model has left the regime it is valid in. A metre figure beyond that would be a fiction dressed as a measurement.
+**0 of 12 queues reach the junction behind them inside the peak hour.** No queue is reported longer than the road can physically hold: past the point where a queue blocks the junction upstream, the approaches stop being independent and the deterministic model has left the regime it is valid in. A metre figure beyond that would be a fiction dressed as a measurement.
 
-Over the 5.34 km corridor a through trip takes **8.0 minutes** at free flow and **64.5 minutes** at the peak in the southbound direction — an effective **5.0 km/h**. Grade-separated through traffic does not enter the junctions and so returns to the free-flow figure, a saving of **56.5 minutes per trip**. The peak figure is a floor: it sums queues as though independent, and several are not.
+Over the 4.62 km corridor a through trip takes **6.9 minutes** at free flow and **6.9 minutes** at the peak in the southbound direction — an effective **40.0 km/h**. Grade-separated through traffic does not enter the junctions and so returns to the free-flow figure, a saving of **0.0 minutes per trip**. The peak figure is a floor: it sums queues as though independent, and several are not.
 
-Approaches are over capacity for a mean of **7.0 hours a day**, counted from the survey's own 96 intervals rather than assumed from a nominal peak period. That accumulates **28,262 vehicle-hours** of delay daily.
+Approaches are over capacity for a mean of **0.0 hours a day**, counted from the survey's own 96 intervals rather than assumed from a nominal peak period. That accumulates **0 vehicle-hours** of delay daily.
 
 | Case | Annual cost of delay |
 |---|---|
-| Do nothing | Rs 135–320 crore |
-| Grade separated | Rs 35–83 crore |
-| **Annual benefit** | **Rs 100–237 crore** |
+| Do nothing | Rs 0–0 crore |
+| Grade separated | Rs 0–0 crore |
+| **Annual benefit** | **Rs 0–0 crore** |
 
 **These rupee figures are indicative and deliberately banded.** The delay is measured; the value of time is a policy input and not ours to set. Authorities appraise against their own approved rates, so quoting a single figure derived from a rate the authority has not adopted would present a policy choice as an engineering result. The method is the deliverable; substituting JDA's rates changes one table in `src/economics.py`.
 
@@ -145,7 +145,7 @@ Excluded entirely: vehicle operating cost, fuel, emissions, accident cost, relia
 Both were re-run across **144 combinations** of PCU uplift, lane capacity, effective lane count, critical gap and growth rate.
 
 - **U-turn scheme fails:** holds. Robust across the grid.
-- **Grade separation relieves on opening:** all 12 approaches pass in **21 of 24** combinations.
+- **Grade separation relieves on opening:** all 12 approaches pass in **23 of 24** combinations.
 
 No single assumption dominates the outcome — the swing across the grid is negligible, so naming a most-influential parameter would overstate what the analysis shows.
 
@@ -156,7 +156,7 @@ No single assumption dominates the outcome — the swing across the grid is negl
 - Critical gap values are from literature, not measured at this corridor. They are **not** conservative: an earlier version of this report said so, and it was withdrawn. They sit mid-pack against the four-lane median-opening studies that match this geometry, so measurement could move the finding either way. The same test is published across twelve bases so the reader can pick one.
 - E-rickshaw has no IRC PCU factor and no column in the survey. It is excluded rather than assumed, and its absence understates demand by an unknown amount.
 - Three of the six junction positions are inferred from the scheme description and are labelled as such. The survey location schedule would confirm them.
-- **TMC-01 width is measured from 5 transects against a typical 30.** The surveyed drawing runs 6.52 km and TMC-01 sits 1 m from its end, so a width band around that junction falls largely outside the drawing. Its width figure rests on fewer measurements than the others and should be treated as the least certain of the six.
+- **TMC-03 width is measured from 1 transects against a typical 3.** The surveyed drawing runs 4.62 km and TMC-03 sits 1306 m from its end, so a width band around that junction falls largely outside the drawing. Its width figure rests on fewer measurements than the others and should be treated as the least certain of the six.
 
 **Corridor order.** Chainage along the surveyed alignment places the junctions in the order TMC-06, TMC-05, TMC-04, TMC-03, TMC-02, TMC-01. For the 0 junctions matched by name this is independent geometric evidence, and the full sequence reproduces the order the scheme itself lists. For the inferred three it only restates the assumed position and confirms nothing.
 

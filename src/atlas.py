@@ -104,14 +104,24 @@ def read_geometry(path):
     return out
 
 
-def longest_alignment(geom):
-    """The corridor centreline: the longest imported alignment in the drawing."""
-    def length(p):
-        return sum(math.dist(p[i], p[i + 1]) for i in range(len(p) - 1))
-    lines = [v for _, kind, v in geom.get("alignment", []) if kind == "line" and len(v) > 1]
-    if not lines:
-        raise SystemExit("No 'kml road' alignment found in the drawing.")
-    return max(lines, key=length)
+def longest_alignment(geom=None):
+    """
+    The corridor centreline, as supplied by JDA.
+
+    This used to take the longest line in the drawing tagged "alignment" and call it the
+    corridor. That is where the wrong-road error came from: it returned 6,517 m of a
+    parallel route, and everything measured along it - junction chainage, corridor
+    ordering, median opening positions, U-turn detour distances - inherited the mistake.
+    Picking the longest candidate was never a measurement; it was a guess that produced a
+    number, which is the kind that does not announce itself.
+
+    JDA supplied their centreline as a KML. It is 4,625 m and it is the reference now.
+    `geom` is accepted and ignored so existing callers keep working.
+    """
+    from pyproj import Transformer
+    from src.config import CORRIDOR_CENTRELINE
+    T = Transformer.from_crs("EPSG:4326", "EPSG:32643", always_xy=True)
+    return [T.transform(lon, lat) for lon, lat in CORRIDOR_CENTRELINE]
 
 
 def densify(line, step):

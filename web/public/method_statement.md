@@ -9,7 +9,7 @@
 
 To establish, from the authority's own classified turning-movement survey, what the the Mansarover Metro – Sanganer Stadium corridor corridor carries at present, whether the published scheme (signal-free corridor, 7 U-turn bays) resolves the demand, and what does.
 
-Scope is the **6 surveyed junctions** over **4.71 km** of alignment. Each is a four-arm junction with twelve movements. No U-turn is counted anywhere in the source survey.
+Scope is the **6 surveyed junctions** over **4.62 km** of alignment. Each is a four-arm junction with twelve movements. No U-turn is counted anywhere in the source survey.
 
 ## 2. Standards applied
 

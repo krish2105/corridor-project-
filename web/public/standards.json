@@ -51,13 +51,13 @@
  "zebra_over": 12,
  "zebra_total": 12,
  "median": {
-  "openings": 30,
-  "gaps": 29,
-  "closer_than_500m": 29,
-  "closest_m": 4,
-  "median_gap_m": 173,
-  "within_18_20m": 4,
-  "widths_checked": 30
+  "openings": 6,
+  "gaps": 5,
+  "closer_than_500m": 1,
+  "closest_m": 34,
+  "median_gap_m": 775,
+  "within_18_20m": 0,
+  "widths_checked": 6
  },
  "surveys_required_by_sp90": 7,
  "surveys_run": 1,

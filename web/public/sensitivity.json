@@ -7,9 +7,9 @@
    74.8
   ],
   "lane_capacity_pcu": [
-   1100,
    1350,
-   1600
+   2790,
+   3400
   ],
   "lanes_per_direction": [
    2,
@@ -44,22 +44,6 @@
  "elevated": [
   {
    "uplift": 14.9,
-   "lane_cap": 1100,
-   "lanes": 2,
-   "ok": 12,
-   "total": 12,
-   "frac": 1.0
-  },
-  {
-   "uplift": 14.9,
-   "lane_cap": 1100,
-   "lanes": 3,
-   "ok": 12,
-   "total": 12,
-   "frac": 1.0
-  },
-  {
-   "uplift": 14.9,
    "lane_cap": 1350,
    "lanes": 2,
    "ok": 12,
@@ -76,7 +60,7 @@
   },
   {
    "uplift": 14.9,
-   "lane_cap": 1600,
+   "lane_cap": 2790,
    "lanes": 2,
    "ok": 12,
    "total": 12,
@@ -84,23 +68,23 @@
   },
   {
    "uplift": 14.9,
-   "lane_cap": 1600,
+   "lane_cap": 2790,
    "lanes": 3,
    "ok": 12,
    "total": 12,
    "frac": 1.0
   },
   {
-   "uplift": 30.0,
-   "lane_cap": 1100,
+   "uplift": 14.9,
+   "lane_cap": 3400,
    "lanes": 2,
    "ok": 12,
    "total": 12,
    "frac": 1.0
   },
   {
-   "uplift": 30.0,
-   "lane_cap": 1100,
+   "uplift": 14.9,
+   "lane_cap": 3400,
    "lanes": 3,
    "ok": 12,
    "total": 12,
@@ -124,7 +108,7 @@
   },
   {
    "uplift": 30.0,
-   "lane_cap": 1600,
+   "lane_cap": 2790,
    "lanes": 2,
    "ok": 12,
    "total": 12,
@@ -132,23 +116,23 @@
   },
   {
    "uplift": 30.0,
-   "lane_cap": 1600,
+   "lane_cap": 2790,
    "lanes": 3,
    "ok": 12,
    "total": 12,
    "frac": 1.0
   },
   {
-   "uplift": 44.0,
-   "lane_cap": 1100,
+   "uplift": 30.0,
+   "lane_cap": 3400,
    "lanes": 2,
-   "ok": 11,
+   "ok": 12,
    "total": 12,
-   "frac": 0.9166666666666666
+   "frac": 1.0
   },
   {
-   "uplift": 44.0,
-   "lane_cap": 1100,
+   "uplift": 30.0,
+   "lane_cap": 3400,
    "lanes": 3,
    "ok": 12,
    "total": 12,
@@ -172,7 +156,7 @@
   },
   {
    "uplift": 44.0,
-   "lane_cap": 1600,
+   "lane_cap": 2790,
    "lanes": 2,
    "ok": 12,
    "total": 12,
@@ -180,23 +164,23 @@
   },
   {
    "uplift": 44.0,
-   "lane_cap": 1600,
+   "lane_cap": 2790,
    "lanes": 3,
    "ok": 12,
    "total": 12,
    "frac": 1.0
   },
   {
-   "uplift": 74.8,
-   "lane_cap": 1100,
+   "uplift": 44.0,
+   "lane_cap": 3400,
    "lanes": 2,
-   "ok": 10,
+   "ok": 12,
    "total": 12,
-   "frac": 0.8333333333333334
+   "frac": 1.0
   },
   {
-   "uplift": 74.8,
-   "lane_cap": 1100,
+   "uplift": 44.0,
+   "lane_cap": 3400,
    "lanes": 3,
    "ok": 12,
    "total": 12,
@@ -220,7 +204,7 @@
   },
   {
    "uplift": 74.8,
-   "lane_cap": 1600,
+   "lane_cap": 2790,
    "lanes": 2,
    "ok": 12,
    "total": 12,
@@ -228,14 +212,30 @@
   },
   {
    "uplift": 74.8,
-   "lane_cap": 1600,
+   "lane_cap": 2790,
+   "lanes": 3,
+   "ok": 12,
+   "total": 12,
+   "frac": 1.0
+  },
+  {
+   "uplift": 74.8,
+   "lane_cap": 3400,
+   "lanes": 2,
+   "ok": 12,
+   "total": 12,
+   "frac": 1.0
+  },
+  {
+   "uplift": 74.8,
+   "lane_cap": 3400,
    "lanes": 3,
    "ok": 12,
    "total": 12,
    "frac": 1.0
   }
  ],
- "elevated_all_pass_combinations": 21,
+ "elevated_all_pass_combinations": 23,
  "elevated_total_combinations": 24,
  "queue_axes": {
   "jam_packing": [
@@ -249,206 +249,206 @@
    1.2
   ],
   "lane_capacity_pcu": [
-   1600,
-   1296,
-   1000
+   3400,
+   2790,
+   1350
   ]
  },
  "queue": [
   {
    "packing": 0.85,
    "footprint": 0.8,
-   "lane_cap": 1600,
-   "spillback": 4,
+   "lane_cap": 3400,
+   "spillback": 0,
    "total": 10
   },
   {
    "packing": 0.85,
    "footprint": 0.8,
-   "lane_cap": 1296,
-   "spillback": 6,
+   "lane_cap": 2790,
+   "spillback": 0,
    "total": 10
   },
   {
    "packing": 0.85,
    "footprint": 0.8,
-   "lane_cap": 1000,
-   "spillback": 6,
+   "lane_cap": 1350,
+   "spillback": 0,
    "total": 10
   },
   {
    "packing": 0.85,
    "footprint": 1.0,
-   "lane_cap": 1600,
-   "spillback": 4,
+   "lane_cap": 3400,
+   "spillback": 0,
    "total": 10
   },
   {
    "packing": 0.85,
    "footprint": 1.0,
-   "lane_cap": 1296,
-   "spillback": 6,
+   "lane_cap": 2790,
+   "spillback": 0,
    "total": 10
   },
   {
    "packing": 0.85,
    "footprint": 1.0,
-   "lane_cap": 1000,
-   "spillback": 6,
+   "lane_cap": 1350,
+   "spillback": 0,
    "total": 10
   },
   {
    "packing": 0.85,
    "footprint": 1.2,
-   "lane_cap": 1600,
-   "spillback": 4,
+   "lane_cap": 3400,
+   "spillback": 0,
    "total": 10
   },
   {
    "packing": 0.85,
    "footprint": 1.2,
-   "lane_cap": 1296,
-   "spillback": 6,
+   "lane_cap": 2790,
+   "spillback": 0,
    "total": 10
   },
   {
    "packing": 0.85,
    "footprint": 1.2,
-   "lane_cap": 1000,
-   "spillback": 6,
+   "lane_cap": 1350,
+   "spillback": 0,
    "total": 10
   },
   {
    "packing": 0.75,
    "footprint": 0.8,
-   "lane_cap": 1600,
-   "spillback": 4,
+   "lane_cap": 3400,
+   "spillback": 0,
    "total": 10
   },
   {
    "packing": 0.75,
    "footprint": 0.8,
-   "lane_cap": 1296,
-   "spillback": 6,
+   "lane_cap": 2790,
+   "spillback": 0,
    "total": 10
   },
   {
    "packing": 0.75,
    "footprint": 0.8,
-   "lane_cap": 1000,
-   "spillback": 6,
+   "lane_cap": 1350,
+   "spillback": 0,
    "total": 10
   },
   {
    "packing": 0.75,
    "footprint": 1.0,
-   "lane_cap": 1600,
-   "spillback": 4,
+   "lane_cap": 3400,
+   "spillback": 0,
    "total": 10
   },
   {
    "packing": 0.75,
    "footprint": 1.0,
-   "lane_cap": 1296,
-   "spillback": 6,
+   "lane_cap": 2790,
+   "spillback": 0,
    "total": 10
   },
   {
    "packing": 0.75,
    "footprint": 1.0,
-   "lane_cap": 1000,
-   "spillback": 6,
+   "lane_cap": 1350,
+   "spillback": 0,
    "total": 10
   },
   {
    "packing": 0.75,
    "footprint": 1.2,
-   "lane_cap": 1600,
-   "spillback": 5,
+   "lane_cap": 3400,
+   "spillback": 0,
    "total": 10
   },
   {
    "packing": 0.75,
    "footprint": 1.2,
-   "lane_cap": 1296,
-   "spillback": 6,
+   "lane_cap": 2790,
+   "spillback": 0,
    "total": 10
   },
   {
    "packing": 0.75,
    "footprint": 1.2,
-   "lane_cap": 1000,
-   "spillback": 7,
+   "lane_cap": 1350,
+   "spillback": 0,
    "total": 10
   },
   {
    "packing": 0.65,
    "footprint": 0.8,
-   "lane_cap": 1600,
-   "spillback": 4,
+   "lane_cap": 3400,
+   "spillback": 0,
    "total": 10
   },
   {
    "packing": 0.65,
    "footprint": 0.8,
-   "lane_cap": 1296,
-   "spillback": 6,
+   "lane_cap": 2790,
+   "spillback": 0,
    "total": 10
   },
   {
    "packing": 0.65,
    "footprint": 0.8,
-   "lane_cap": 1000,
-   "spillback": 6,
+   "lane_cap": 1350,
+   "spillback": 0,
    "total": 10
   },
   {
    "packing": 0.65,
    "footprint": 1.0,
-   "lane_cap": 1600,
-   "spillback": 4,
+   "lane_cap": 3400,
+   "spillback": 0,
    "total": 10
   },
   {
    "packing": 0.65,
    "footprint": 1.0,
-   "lane_cap": 1296,
-   "spillback": 6,
+   "lane_cap": 2790,
+   "spillback": 0,
    "total": 10
   },
   {
    "packing": 0.65,
    "footprint": 1.0,
-   "lane_cap": 1000,
-   "spillback": 6,
+   "lane_cap": 1350,
+   "spillback": 0,
    "total": 10
   },
   {
    "packing": 0.65,
    "footprint": 1.2,
-   "lane_cap": 1600,
-   "spillback": 5,
+   "lane_cap": 3400,
+   "spillback": 0,
    "total": 10
   },
   {
    "packing": 0.65,
    "footprint": 1.2,
-   "lane_cap": 1296,
-   "spillback": 6,
+   "lane_cap": 2790,
+   "spillback": 0,
    "total": 10
   },
   {
    "packing": 0.65,
    "footprint": 1.2,
-   "lane_cap": 1000,
-   "spillback": 8,
+   "lane_cap": 1350,
+   "spillback": 0,
    "total": 10
   }
  ],
- "queue_spillback_min": 4,
- "queue_spillback_max": 8,
- "queue_spillback_central": 6,
- "queue_robust": true,
+ "queue_spillback_min": 0,
+ "queue_spillback_max": 0,
+ "queue_spillback_central": 0,
+ "queue_robust": false,
  "most_influential": null,
  "swing": 0,
  "assumption_driven": false

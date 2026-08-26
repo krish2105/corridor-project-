@@ -20,7 +20,8 @@ from datetime import date
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from src.config import JUNCTION_COORDS, CORRIDOR_ROAD, JDA_SCHEME, ROOT
+from src.config import (JUNCTION_COORDS, CORRIDOR_ROAD, CORRIDOR_CENTRELINE,
+                        JDA_SCHEME, ROOT)
 
 OUT = ROOT / "out"
 DATA = OUT / "data"
@@ -68,41 +69,31 @@ def _table(headers, rows, align=None):
 
 def chainage():
     """
-    Distance of each junction along the surveyed CAD alignment.
+    Distance of each junction along JDA's own corridor centreline.
 
-    Read from the exported atlas rather than the CAD directly, so this stays bound to the
-    same geometry the dashboard draws. Two things fall out of it: which junctions sit near
-    a drawing end (and therefore have few width transects), and the physical order of the
-    corridor - though the order is only EVIDENCE for the three junctions matched by name.
-    For the three inferred ones the chainage merely restates the position that was
-    inferred, so it confirms nothing and is reported as such.
+    This used to take the longest line in the CAD tagged "alignment" and treat it as the
+    corridor. That produced 6,517 m of the WRONG ROAD: a parallel route, with the junction
+    picks 269 to 950 m off where they belong. JDA supplied their centreline as a KML and
+    it is 4,625 m. Chainage, corridor ordering and the U-turn detour distances are all
+    measured along that now.
+
+    Picking the longest alignment-tagged line was never a measurement. It was a guess that
+    produced a number, which is the harder kind of guess to notice.
     """
     from pyproj import Transformer
-    from shapely.geometry import LineString, MultiLineString, Point
-    from shapely.ops import linemerge
+    from shapely.geometry import LineString, Point
     T = Transformer.from_crs("EPSG:4326", "EPSG:32643", always_xy=True)
-    _g = _find("atlas.geojson")
-    if _g is None:
-        raise SystemExit("missing atlas.geojson - run src/atlas.py and src/export.py")
-    g = json.loads(_g.read_text())
-    lines = []
-    for f in g["features"]:
-        if f["properties"].get("category") != "alignment":
-            continue
-        geom = f["geometry"]; cs = geom["coordinates"]
-        segs = [cs] if geom["type"] == "LineString" else (
-            cs if geom["type"] == "MultiLineString" else [])
-        for seg in segs:
-            if len(seg) > 1:
-                lines.append(LineString([T.transform(c[0], c[1]) for c in seg]))
-    merged = linemerge(MultiLineString(lines))
-    main = max(merged.geoms, key=lambda l: l.length) \
-        if merged.geom_type == "MultiLineString" else merged
+    main = LineString([T.transform(lon, lat) for lon, lat in CORRIDOR_CENTRELINE])
     rows = []
     for k, (lat, lon, name, cl, conf) in JUNCTION_COORDS.items():
-        ch = main.project(Point(T.transform(lon, lat)))
+        pt = Point(T.transform(lon, lat))
+        ch = main.project(pt)
         rows.append(dict(junction=k, name=name, confidence=conf, chainage_m=ch,
-                         from_end_m=min(ch, main.length - ch)))
+                         from_end_m=min(ch, main.length - ch),
+                         # how far the supplied point sits off the supplied line; a
+                         # figure worth publishing, because it is the one internal
+                         # consistency check available on data we did not produce
+                         offset_from_centreline_m=round(pt.distance(main), 1)))
     rows.sort(key=lambda r: r["chainage_m"])
     return main.length, rows
 

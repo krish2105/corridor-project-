@@ -447,16 +447,28 @@ export default function Page() {
           <Reveal delay={.14}>
             <div className="card" style={{ marginTop: "1.1rem" }}>
               <header><span className="chip fixed">Feasible</span>
-                <h3>An elevated structure has room; the argument is about{" "}
-                  {c2.stations - c2.hard_free} pinch points</h3></header>
+                {/* On the corrected alignment there are no pinch points at all, so a
+                    heading built around counting them stops making sense. */}
+                <h3>{c2.stations - c2.hard_free > 0
+                  ? <>An elevated structure has room; the argument is about{" "}
+                     {c2.stations - c2.hard_free} pinch points</>
+                  : <>An elevated structure has room, and on this alignment there is
+                     almost nothing in the way</>}</h3></header>
               <div className="body">
                 <p className="col">Walking the <strong>{c2.corridor_km} km</strong> alignment
                 at 25 m stations and counting what falls inside an {c2.pier_radius_m} m pier
                 footprint: <strong>{c2.hard_free} of {c2.stations} stations
                 ({c2.hard_free_pct}%)</strong> carry no hard constraint &mdash; no building,
-                temple, railway or gas main. The longest uninterrupted runs are{" "}
-                <strong>{nf.format(Math.round(c2.longest_clear_runs_m[0]))} m</strong> and{" "}
-                <strong>{nf.format(Math.round(c2.longest_clear_runs_m[1]))} m</strong>.</p>
+                temple, railway or gas main.{" "}
+                {c2.longest_clear_runs_m.length > 1
+                  ? <>The longest uninterrupted runs are{" "}
+                      <strong>{nf.format(Math.round(c2.longest_clear_runs_m[0]))} m</strong> and{" "}
+                      <strong>{nf.format(Math.round(c2.longest_clear_runs_m[1]))} m</strong>.</>
+                  : <>The whole corridor is a single uninterrupted run of{" "}
+                      <strong>{nf.format(Math.round(c2.longest_clear_runs_m[0] ?? 0))} m</strong>.
+                      Stations are sampled every 25 m, and one structure sits inside the pier
+                      radius between two of them, so read this as very nearly clear rather
+                      than perfectly so.</>}</p>
                 <p className="col">Reporting a single blended score would have been
                 misleading, and nearly was. Weighted equally,{" "}
                 <strong>2,300 lamp posts outrank a building</strong> and the corridor reads

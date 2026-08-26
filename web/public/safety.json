@@ -10,7 +10,7 @@
  "junctions": [
   {
    "junction": "TMC-01",
-   "jda_name": "B-2 Bypass",
+   "jda_name": "B-2 Bypass ",
    "peak_veh": 11107,
    "today_points": 32,
    "today_crossing_exposure": 19.0,
@@ -21,7 +21,7 @@
   },
   {
    "junction": "TMC-02",
-   "jda_name": "Vijay Path",
+   "jda_name": "Vijay Path ",
    "peak_veh": 9476,
    "today_points": 32,
    "today_crossing_exposure": 12.2,
@@ -32,7 +32,7 @@
   },
   {
    "junction": "TMC-03",
-   "jda_name": "Patel Marg",
+   "jda_name": "Patel Marg ",
    "peak_veh": 9695,
    "today_points": 32,
    "today_crossing_exposure": 9.9,
@@ -43,7 +43,7 @@
   },
   {
    "junction": "TMC-04",
-   "jda_name": "VT Road",
+   "jda_name": "VT Road    ",
    "peak_veh": 10876,
    "today_points": 32,
    "today_crossing_exposure": 16.5,
@@ -54,7 +54,7 @@
   },
   {
    "junction": "TMC-05",
-   "jda_name": "Rajat Path",
+   "jda_name": "Rajat Path ",
    "peak_veh": 12433,
    "today_points": 32,
    "today_crossing_exposure": 11.6,

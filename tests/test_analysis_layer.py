@@ -277,14 +277,17 @@ def test_the_published_order_is_reported_as_inconclusive_where_it_is(published):
     assert len(c["order_candidates"]) > 1, "a tie needs its runner-up published"
 
 
-def test_chainage_places_every_junction_and_labels_them_unconfirmed(published):
+def test_chainage_places_every_junction_against_jdas_own_centreline(published):
     """
     Chainage is what decided the published order, and nothing asserted it.
 
-    It used to count as evidence for the three junctions "matched by name". That was
-    withdrawn: a name match says the junction exists, not where it is, and JDA's reviewer
-    says all six position picks sit on the wrong road. So chainage now restates an
-    unconfirmed position for every one of them, and the labels must say so.
+    Our own picks were wrong: six of 39 signal clusters out of the CAD, landing on a
+    parallel road 269 to 950 m away. JDA supplied the positions and the centreline as a
+    KML, so chainage is measured along THEIR line now.
+
+    The check that matters is internal consistency of data we did not produce: every
+    supplied point must sit close to the supplied centreline. Ten metres is generous for
+    a junction centre; anything larger means the two halves of the file disagree.
     """
     from src.reports import chainage
     total, rows = chainage()
@@ -292,6 +295,8 @@ def test_chainage_places_every_junction_and_labels_them_unconfirmed(published):
     ch = [r["chainage_m"] for r in rows]
     assert ch == sorted(ch), "chainage rows are not in order along the alignment"
     assert all(0 <= c <= total for c in ch), "a junction sits off the alignment"
-    assert all(r["confidence"] == "unconfirmed" for r in rows), (
-        "a junction is claiming a confirmed position; none is confirmed until JDA "
-        "supplies the survey location schedule")
+    assert all(r["confidence"] == "JDA KML" for r in rows), (
+        "a junction position is not sourced from the supplied KML")
+    off = [(r["junction"], r["offset_from_centreline_m"]) for r in rows
+           if r["offset_from_centreline_m"] > 15]
+    assert not off, f"supplied points sit far off the supplied centreline: {off}"

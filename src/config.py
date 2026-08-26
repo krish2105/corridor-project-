@@ -59,34 +59,49 @@ JUNCTIONS = {
 # CONFIDENCE is per junction and honest: the three name-matched ones are firm, the
 # rest are placed by position in the sequence. The survey contractor's location
 # schedule would settle it outright. Every downstream output carries this flag.
-# EVERY POSITION HERE IS UNCONFIRMED, and the distinction this table used to draw was
-# wrong in a way worth spelling out.
+# Junction positions and the corridor centreline, both supplied by JDA as a KML.
 #
-# Three rows were labelled "name match" and shown as confirmed on the map. What matched
-# was the NAME: the survey's own arm label, say "Patel Marg Crossing", against a junction
-# JDA names in its scheme. That tells us the junction exists. It says nothing about where
-# it is. The position of all six came from picking one of 39 signal clusters out of the
-# CAD, and JDA's reviewer says those picks sit on the wrong road.
+# These replace our own picks, which were wrong. We had chosen six of 39 signal clusters
+# out of the CAD and landed on a parallel road: the supplied points sit 269 to 950 m from
+# where we had put them. Three of ours were labelled "name match" and drawn as confirmed,
+# which conflated identity with position - the survey's arm name told us a junction
+# existed, never where it was.
 #
-# So "name match" was being presented as position confidence when it was only ever
-# identity confidence. Two different claims, one label, and the map showed the stronger
-# one. All six are now marked unconfirmed until JDA supplies the survey location
-# schedule or their own pins.
-#
-# Nothing else in the pipeline depends on these coordinates. The counts, the movement
-# matrices, the PCU correction and the U-turn analysis all come from the workbooks. What
-# they do drive is chainage, and therefore corridor ordering and the detour distances,
-# which is why those carry their own caveats.
+# Checked on receipt, not taken on trust:
+#   every point falls inside a sane Jaipur box
+#   every point sits 2 to 10 m off JDA's own centreline, so they are on that road
+#   ordering along that centreline matches the placemark numbering, so 1 = TMC-01
+#   the CAD drawing covers the centreline, all 14 vertices inside its extent
 JUNCTION_COORDS = {
-    #          lat        lon        JDA name        cluster  confidence
-    "TMC-01": (26.840536, 75.770289, "B-2 Bypass",   "C8",  "unconfirmed"),
-    "TMC-02": (26.847800, 75.769429, "Vijay Path",   "C21", "unconfirmed"),
-    "TMC-03": (26.852267, 75.767456, "Patel Marg",   "C26", "unconfirmed"),
-    "TMC-04": (26.860842, 75.763579, "VT Road",      "C18", "unconfirmed"),
-    "TMC-05": (26.864799, 75.758347, "Rajat Path",   "C22", "unconfirmed"),
-    "TMC-06": (26.871403, 75.755127, "Bhrigu Path",  "C28", "unconfirmed"),
+    #          lat          lon          JDA name       cluster  source
+    "TMC-01": (26.8395707, 75.7678008, "B-2 Bypass ", "C8 ", "JDA KML"),
+    "TMC-02": (26.8460752, 75.7647913, "Vijay Path ", "C21", "JDA KML"),
+    "TMC-03": (26.8504204, 75.7627824, "Patel Marg ", "C26", "JDA KML"),
+    "TMC-04": (26.8564306, 75.7586546, "VT Road    ", "C18", "JDA KML"),
+    "TMC-05": (26.8630543, 75.7541118, "Rajat Path ", "C22", "JDA KML"),
+    "TMC-06": (26.8767054, 75.7476133, "Bhrigu Path", "C28", "JDA KML"),
 }
-# The road is deliberately UNNAMED. Every one of the six junctions carries
+
+# JDA's centreline, straight from the KML. 4,625 m against the 6,517 m we had derived by
+# taking the longest "alignment" line out of the CAD, which is the error this fixes.
+# Chainage, corridor ordering and the U-turn detour distances are all measured along
+# THIS, and the map draws it rather than joining our own pins.
+CORRIDOR_CENTRELINE = [   # lon, lat
+    (75.7475901, 26.8767279),
+    (75.7476610, 26.8761611),
+    (75.7489347, 26.8736845),
+    (75.7510200, 26.8693287),
+    (75.7536447, 26.8640933),
+    (75.7544285, 26.8624599),
+    (75.7559417, 26.8593660),
+    (75.7565723, 26.8582708),
+    (75.7585921, 26.8563545),
+    (75.7610023, 26.8541978),
+    (75.7628329, 26.8504361),
+    (75.7648088, 26.8459617),
+    (75.7662462, 26.8427872),
+    (75.7677936, 26.8395192),
+]# The road is deliberately UNNAMED. Every one of the six junctions carries
 # "Mansarover Metro" as its north arm and "Sanganer Stadium" as its south arm, so the
 # corridor is defined by the survey itself. Which physical road that is was our
 # inference and it was challenged, so the name is withdrawn until JDA confirms it.

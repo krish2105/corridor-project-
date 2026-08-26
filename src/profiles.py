@@ -22,6 +22,7 @@ and lets a reader check it with a ruler.
 Run:  uv run python src/profiles.py
 """
 import json
+import math
 import sys
 from pathlib import Path
 
@@ -186,7 +187,12 @@ if __name__ == "__main__":
         approach_hours_total=total, approach_hours_F=int(dist["F"]),
         f_share_pct=round(f_share, 1),
         hours_over_capacity={f"{k[0]}|{k[1]}": float(v) for k, v in over.items()},
-        mean_hours_over=round(float(over.mean()), 2),
+        # On an alignment where nothing exceeds capacity this is a mean over an
+        # empty set, which pandas returns as NaN and json.dumps writes as a bare
+        # NaN token. That is not valid JSON, and it took the whole dashboard
+        # build down. Zero hours over capacity is the honest value, not NaN.
+        mean_hours_over=(0.0 if len(over) == 0 or math.isnan(float(over.mean()))
+                         else round(float(over.mean()), 2)),
         cumulative=dict(junction=binding["junction"], approach=binding["approach"],
                         capacity=binding["capacity"], peak_queue_pcu=int(peak_q),
                         peak_queue_band=[int(cum["queue_low"].max()),

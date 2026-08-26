@@ -111,7 +111,7 @@ export default function CorridorMap({ junctions }: { junctions: Junction[] }) {
       bounds.extend([j.lon, j.lat]);
       // No position is confirmed, so no marker claims to be. The solid/dashed
       // split encoded a NAME match and was read as a POSITION match.
-      const firm = false;
+      const firm = j.location_confidence === "JDA KML";
       const el = document.createElement("div");
       const d = 16 + Math.round((j.daily_veh / 160000) * 18);
       el.style.cssText =
@@ -139,7 +139,23 @@ export default function CorridorMap({ junctions }: { junctions: Junction[] }) {
     // can finish loading before this line runs, and `once("load", ...)` would then never
     // fire. Cheap to guard against and impossible to notice if it ever happened.
     const build = () => {
-      // NO ALIGNMENT LINE IS DRAWN, and its absence is the point.
+      // JDA's OWN centreline, fetched as published geometry.
+      //
+      // We drew one before by joining our six pins, and it was wrong: it traced a
+      // parallel road, 6,517 m against the 4,625 m JDA actually supplied. That line was
+      // removed rather than corrected, because a line joining our own guesses asserts a
+      // road we had inferred. This one is theirs, from the KML, so it can be drawn as
+      // what it is.
+      fetch("/centreline.geojson").then((r) => r.json()).then((data) => {
+        if (!m.getSource("centreline")) {
+          m.addSource("centreline", { type: "geojson", data });
+          m.addLayer({ id: "centreline-halo", type: "line", source: "centreline",
+            paint: { "line-color": "#FAFBF8", "line-width": 7, "line-opacity": .85 } });
+          m.addLayer({ id: "centreline-line", type: "line", source: "centreline",
+            paint: { "line-color": "#1B3A6B", "line-width": 2.6 } });
+        }
+      }).catch(() => { /* the map is still useful without it */ });
+
       //
       // A line joining the six junctions asserts which physical road they sit on. That
       // was our inference, JDA's reviewer disputed it, and drawing it is the same claim
@@ -275,19 +291,17 @@ export default function CorridorMap({ junctions }: { junctions: Junction[] }) {
       </div>
       <div style={{ padding: ".8rem 1.15rem", borderTop: "1px solid var(--rule)",
                     fontSize: ".76rem", color: "var(--muted)" }}>
-        <span style={{ color: "var(--defect)", fontWeight: 600 }}>
-          Every position on this map is unconfirmed.</span>{" "}
-        Three of the six used to show as confirmed because the survey&rsquo;s own arm name
-        matched a junction JDA names in its scheme. That was the wrong claim to draw from
-        it: a name match tells you the junction <em>exists</em>, not where it is. All six
-        positions came from picking one of 39 signal clusters out of the CAD, and
-        JDA&rsquo;s reviewer says those picks sit on the wrong road.{" "}
-        <strong>Treat the markers as a sketch, not a survey.</strong> Switch on{" "}
-        <em>All 39 signal clusters</em> to see every candidate and judge for yourself.
-        The constraint layers underneath are read directly from the JDA drawing and are
-        not affected. Nothing else on this page depends on these coordinates: the counts,
-        the matrices, the PCU correction and the U-turn analysis all come from the
-        workbooks.
+        <span style={{ color: "var(--accent)", fontWeight: 600 }}>
+          Positions and centreline supplied by JDA</span>{" "}
+        as a KML, and drawn as received. We had picked these ourselves before, from
+        signal clusters in the CAD, and landed on a parallel road: our points sat 269 to
+        950 m from where they belong, and the line we drew was 6,517 m against the actual
+        4,625 m.{" "}
+        <strong>Checked on receipt, not taken on trust:</strong> every supplied point
+        falls 2 to 10 m off the supplied centreline, their order along it matches the
+        placemark numbering, and the CAD drawing covers all fourteen vertices. Switch on{" "}
+        <em>All 39 signal clusters</em> to see the candidates we were choosing between.
+        The constraint layers are read directly from the JDA drawing.
       </div>
     </div>
   );

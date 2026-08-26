@@ -112,7 +112,11 @@ def build():
         CFREE=str(con.get("hard_free", 0)),
         CFREEPCT=f"{con.get('hard_free_pct', 0):.0f}",
         CRUN1=fmt(con.get("longest_clear_runs_m", [0])[0]),
-        CRUN2=fmt(con.get("longest_clear_runs_m", [0, 0])[1]),
+        # On the corrected alignment the whole corridor is ONE clear run, so there
+        # is no second-longest. Reaching for [1] assumed there would always be a
+        # list of them, which was true of the wrong road and its 15 pinch points.
+        CRUN2=fmt((con.get("longest_clear_runs_m") or [0])[1]
+                  if len(con.get("longest_clear_runs_m") or []) > 1 else 0),
         UTURNS=str(con.get("uturn_possible", 0)),
         UTPERKM=f"{con.get('uturn_per_km', 0):.1f}",
         UTTYP=str(con.get("opening_classes", {}).get("typical opening", 0)),

@@ -44,7 +44,11 @@ AXES = dict(
     # is ~1350/lane. The axis now brackets that rather than sitting entirely below it -
     # an axis whose every value is under the real capacity tests a different road, not
     # the sensitivity of this one.
-    lane_capacity_pcu=[1100, 1350, 1600],       # adverse -> IRC:92-2017 -> generous
+    # Re-centred on the corrected alignment, where measured widths give about
+    # 2,790 PCU/lane. The low end is deliberately far below it: ten transects may be
+    # picking up a service road, and if they are the true capacity is nearer the old
+    # 1,350. The axis has to bracket both readings, not just the flattering one.
+    lane_capacity_pcu=[1350, 2790, 3400],
     lanes_per_direction=[2, 3],                 # geometric -> observed stream count
     critical_gap=["optimistic", "conservative"],
     growth_pct=[4.0, 6.0, 8.0],
@@ -71,7 +75,10 @@ QUEUE_AXES = dict(
     # centred on the ~1,296 PCU/lane that capacity.py's 2,592 PCU/dir implies over two
     # lanes, so the middle of the axis reproduces the published queue rather than
     # sitting a quarter away from it. Was [1800, 1500, 1200], centred on nothing.
-    lane_capacity_pcu=[1600, 1296, 1000],
+    # Same re-centring as AXES: the corrected alignment measures about 2,790 PCU/lane,
+    # and the low end stays near the old 1,350 because ten transects may be reading a
+    # service road as running lanes.
+    lane_capacity_pcu=[3400, 2790, 1350],
 )
 
 

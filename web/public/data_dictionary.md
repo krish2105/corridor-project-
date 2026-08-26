@@ -408,6 +408,10 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `veh_km_per_hour` | Extra vehicle-kilometres this bay generates in the peak hour. |
 | `volume_flow` | Peak-hour movement volumes for the volume-flow diagram. |
 | `vot_status` | That value of time is a policy input, not a measurement. |
+| `wide_transect_range_m` | Low and high of the flagged transects, metres per direction. |
+| `wide_transect_threshold_m` | That width, per direction, in metres. |
+| `wide_transects` | How many measured transects exceed the width above which a service road is a likelier reading than five running lanes. |
+| `width_caveat` | Why the widths on the northern junctions should be read as an upper bound: capacity scales linearly with them, and a transect cannot tell a through lane from a service road. |
 | `width_m` | Carriageway width, metres, ONE direction. Measured, not assumed. |
 | `widths_checked` | Openings whose width was measurable. |
 | `within_18_20m` | Openings within the IRC:SP:84 18-20 m length rule. |
