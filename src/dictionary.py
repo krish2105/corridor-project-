@@ -44,6 +44,7 @@ FILES = {
     "anomaly.json":     "Integrity screen: six detectors over the parsed survey, scored.",
     "cluster.json":     "Approach typology learned from the counts, and its held-out test.",
     "forecast.json":    "How short a count can be and still predict the day, with its error.",
+    "uturn_framework.json": "Per-bay criteria ladder, the binding constraint, and the back-solve.",
 }
 
 # Units are stated because a number without one is not checkable.
@@ -470,6 +471,59 @@ FIELDS.update({
     "combinations_searched": "Window-target combinations the shortest was picked from.",
     "predictable": "Targets predictable from a short count at the gate.",
     "p": "Significance level of the test named in the same record.",
+})
+
+
+# --- the U-turn decision framework -------------------------------------------
+FIELDS.update({
+    "criteria": "The five criteria, in the order they are evaluated.",
+    "bays": "One entry per U-turn bay: two per junction, north and south.",
+    "n_bays": "Bays assessed.", "n_fail": "Bays failing a criterion.",
+    "n_undecided": "Bays with no verdict because a criterion could not be evaluated.",
+    "verdict": "fails, viable, or undecided.",
+    "binding_criterion": "The first criterion to fail. Criteria below it are untested.",
+    "blocked_on": "Criteria ABOVE the binding one that could not be evaluated. These "
+                  "block today's verdict.",
+    "blocked_if_binding_cleared": "Criteria BELOW the binding one lacking data. They do "
+                                  "not block today's verdict; they are what would need "
+                                  "measuring if the binding criterion were cleared.",
+    "blocked_criteria_now": "Union of blocked_on across bays.",
+    "blocked_criteria_once_binding_cleared": "Union of blocked_if_binding_cleared.",
+    "checks": "The five criteria for this bay, each with status, value and reason.",
+    "gap capacity": "Can the bay serve its demand from gaps in the opposing stream?",
+    "median width": "Does the design vehicle physically fit the turning path?",
+    "storage": "Does the queue fit the bay without blocking the through lane?",
+    "weaving": "Is there room to cross to the left before the next junction?",
+    "detour burden": "What the diversion costs the traffic it diverts.",
+    "back_solve": "What would have to change for the binding criterion to clear.",
+    "bay_ceiling_veh_hr": "The most a single opening can pass, 3600 / follow-up headway, "
+                          "with no opposing traffic at all. Nothing lifts it.",
+    "bays_above_bay_ceiling": "Bays whose demand exceeds that ceiling. For these the bay "
+                              "is the wrong instrument, not a badly sited one.",
+    "above_bay_ceiling": "Whether this bay's demand exceeds the ceiling.",
+    "conflicting_now": "Opposing through flow today, veh/h.",
+    "conflicting_needed": "Opposing flow at which the bay would exactly serve its demand. "
+                          "null when the demand is above the ceiling: no flow reaches it.",
+    "conflicting_reduction_pct": "Cut in the opposing flow that implies.",
+    "demand_now": "U-turn demand at the bay, veh/h.",
+    "demand_servable": "What the bay can serve at today's opposing flow.",
+    "demand_reduction_pct": "Share of the demand that would have to go elsewhere.",
+    "gap_needed_s": "Critical gap at which the bay would exactly serve its demand.",
+    "gap_ours_s": "The composition-weighted gap actually used, optimistic end.",
+    "alternatives": "The ladder of what to do instead, ordered by cost.",
+    "measure": "The alternative.", "live": "Whether it can move the binding term here.",
+    "swept_allowance_m": "Working allowance either side of the turning path.",
+    "bay_storage_m": "Assumed deceleration and storage length. No bay geometry supplied.",
+    "weave_per_lane_m": "Metres needed to cross one lane after re-entering.",
+    "detour_tolerable_m": "Round-trip detour above which the diversion is the problem. "
+                          "A stated threshold, not a standard.",
+    "no_gap_vc": "v/c above which no capacity number is reported at all.",
+    "radii_note": "That the design-vehicle radii are a policy input, banded, and that "
+                  "the governing IRC clause must be confirmed before design.",
+    "articulated": "Minimum turning radius band, metres.",
+    "bus_truck": "Minimum turning radius band, metres.",
+    "measurement_status": "That every width here is scaled from CAD linework and "
+                          "provisional pending a total station survey.",
 })
 
 

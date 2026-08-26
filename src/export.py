@@ -264,7 +264,8 @@ def _write_web_layers(webdir):
                   OUT_DATA / "testcount.json",
                   OUT_DATA / "standards.json",
                   OUT_DATA / "anomaly.json", OUT_DATA / "cluster.json",
-                  OUT_DATA / "forecast.json"):
+                  OUT_DATA / "forecast.json",
+                  OUT_DATA / "uturn_framework.json"):
         if src_f.exists():
             _sh.copy(src_f, webdir / src_f.name)
         else:
@@ -407,6 +408,7 @@ def build():
         anomaly=_section("anomaly"),
         cluster=_section("cluster"),
         forecast=_section("forecast"),
+        uturn_framework=_section("uturn_framework"),
         junctions=junctions,
         corridor=dict(
             through_pct_mean=round(float(tv.through_pct.mean()), 1),

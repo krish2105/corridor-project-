@@ -244,6 +244,7 @@ corridor/
 │   │
 │   ├── capacity.py     # measured widths, v/c, design life of the relief
 │   ├── scheme_test.py  # gap acceptance — does the JDA U-turn scheme work?
+│   ├── uturn_framework.py # where a bay belongs: criteria ladder, binding term
 │   ├── delay.py        # queue, spillback, delay, corridor journey time
 │   ├── economics.py    # cost of delay, banded; value of time is a policy input
 │   ├── sensitivity.py  # every conclusion re-run across the assumption grid

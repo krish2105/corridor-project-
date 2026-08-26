@@ -29,7 +29,7 @@ Source data is not in this repo — the workbooks and CAD are the client's. Plac
 
 ```bash
 uv sync
-uv run pytest                     # 395 tests
+uv run pytest                     # 429 tests
 uv run python src/inspect_tmc.py   # raw workbook structure, no reshaping
 uv run python src/tmc_parse.py     # workbooks -> tidy frames; never trusts a stored total
 uv run python src/audit.py         # -> out/audit_report.md
@@ -39,6 +39,7 @@ uv run python src/pcu.py           # IRC:106 share-dependent PCU, bands for the 
 uv run python src/analyse.py       # peak hour, TMC matrices, through/turning split
 uv run python src/capacity.py      # measured widths, v/c, design life
 uv run python src/scheme_test.py   # does the JDA U-turn scheme work?
+uv run python src/uturn_framework.py # where a bay belongs: criteria ladder, binding term back-solved
 uv run python src/delay.py         # queue, spillback, corridor journey time
 uv run python src/economics.py     # cost of delay, banded
 uv run python src/safety.py        # conflict points and exposure, from geometry
@@ -64,12 +65,12 @@ Every module runs standalone and prints its own verification metric. A module th
 
 ## Layout
 
-- `src/` — 40 modules. `tmc_parse` and `audit` are the core; `atlas`, `medians` and `dxf_inventory` read the CAD survey; `capacity`, `scheme_test`, `delay` and `economics` carry the findings.
+- `src/` — 41 modules. `tmc_parse` and `audit` are the core; `atlas`, `medians` and `dxf_inventory` read the CAD survey; `capacity`, `scheme_test`, `delay` and `economics` carry the findings.
 - `web/` — Next.js dashboard, reading the same `corridor.json` as the static report.
 - `docs/data_dictionary.md` — every field in every published file, with units. Generated, so a field added without a description fails a test.
 - `docs/jaipur_corridor_study.md` — the methodology, with inline `ERRATUM` blocks correcting 9 defects in its own worked code.
 
-**Documents are generated, not written.** Reports, the data dictionary, the commercial pack and this README all build from pipeline output, because hand-written figures go stale silently — this file claimed 26 tests while the suite held 395.
+**Documents are generated, not written.** Reports, the data dictionary, the commercial pack and this README all build from pipeline output, because hand-written figures go stale silently — this file claimed 26 tests while the suite held 429.
 
 ## Caveats, stated
 

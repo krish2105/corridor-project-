@@ -1,0 +1,733 @@
+{
+ "method": "ordered criteria ladder, first failure binding, binding term back-solved",
+ "criteria": [
+  "gap capacity",
+  "median width",
+  "storage",
+  "weaving",
+  "detour burden"
+ ],
+ "assumptions": {
+  "design_vehicle_turning_radius_m": {
+   "car": [
+    5.5,
+    6.0
+   ],
+   "bus_truck": [
+    12.0,
+    13.0
+   ],
+   "articulated": [
+    13.0,
+    14.0
+   ]
+  },
+  "swept_allowance_m": 1.5,
+  "swept_width_needed_m": {
+   "car": [
+    14.0,
+    15.0
+   ],
+   "bus_truck": [
+    27.0,
+    29.0
+   ],
+   "articulated": [
+    29.0,
+    31.0
+   ]
+  },
+  "bay_storage_m": 45.0,
+  "weave_per_lane_m": 60.0,
+  "detour_tolerable_m": 400.0,
+  "no_gap_vc": 3.0,
+  "radii_note": "design-vehicle radii are a policy input carried as a band; the governing clause in the current IRC:SP:41 and IRC:86 print has not been checked against this text and must be before design"
+ },
+ "bays": [
+  {
+   "junction": "TMC-01",
+   "jda_name": "B-2 Bypass",
+   "bay": "northbound",
+   "uturn_demand": 975,
+   "verdict": "fails",
+   "binding_criterion": "gap capacity",
+   "blocked_on": [],
+   "blocked_if_binding_cleared": [
+    "median width",
+    "storage",
+    "weaving",
+    "detour burden"
+   ],
+   "checks": {
+    "gap capacity": {
+     "status": "fail",
+     "value": 7.6,
+     "detail": "v/c 7.6 exceeds 3.0. Reported as no viable gaps, not as a capacity number: past this ratio gap acceptance has degenerated and the model is out of regime."
+    },
+    "median width": {
+     "status": "not reached",
+     "value": null,
+     "detail": "not reached: gap capacity binds first."
+    },
+    "storage": {
+     "status": "not reached",
+     "value": null,
+     "detail": "not reached: gap capacity binds first."
+    },
+    "weaving": {
+     "status": "not reached",
+     "value": null,
+     "detail": "not reached: gap capacity binds first."
+    },
+    "detour burden": {
+     "status": "not reached",
+     "value": null,
+     "detail": "not reached: gap capacity binds first."
+    }
+   },
+   "back_solve": {
+    "conflicting_now": 3094,
+    "demand_now": 975,
+    "demand_servable": 129,
+    "demand_reduction_pct": 86.8,
+    "bay_ceiling_veh_hr": 1800,
+    "above_bay_ceiling": false,
+    "gap_needed_s": 1.57,
+    "gap_ours_s": 3.93,
+    "conflicting_needed": 745,
+    "conflicting_reduction_pct": 75.9,
+    "note": null
+   }
+  },
+  {
+   "junction": "TMC-01",
+   "jda_name": "B-2 Bypass",
+   "bay": "southbound",
+   "uturn_demand": 2755,
+   "verdict": "fails",
+   "binding_criterion": "gap capacity",
+   "blocked_on": [],
+   "blocked_if_binding_cleared": [
+    "storage"
+   ],
+   "checks": {
+    "gap capacity": {
+     "status": "fail",
+     "value": 9.6,
+     "detail": "v/c 9.6 exceeds 3.0. Reported as no viable gaps, not as a capacity number: past this ratio gap acceptance has degenerated and the model is out of regime."
+    },
+    "median width": {
+     "status": "not reached",
+     "value": 17.7,
+     "detail": "not reached: gap capacity binds first."
+    },
+    "storage": {
+     "status": "not reached",
+     "value": null,
+     "detail": "not reached: gap capacity binds first."
+    },
+    "weaving": {
+     "status": "not reached",
+     "value": 786,
+     "detail": "not reached: gap capacity binds first."
+    },
+    "detour burden": {
+     "status": "not reached",
+     "value": 1573,
+     "detail": "not reached: gap capacity binds first."
+    }
+   },
+   "back_solve": {
+    "conflicting_now": 2182,
+    "demand_now": 2755,
+    "demand_servable": 287,
+    "demand_reduction_pct": 89.6,
+    "bay_ceiling_veh_hr": 1800,
+    "above_bay_ceiling": true,
+    "gap_needed_s": 0.2,
+    "gap_ours_s": 3.93,
+    "conflicting_needed": null,
+    "conflicting_reduction_pct": null,
+    "note": "demand 2,755 exceeds the 1,800 veh/h a single bay passes at zero opposing traffic. No reduction in the opposing stream can make this bay work."
+   }
+  },
+  {
+   "junction": "TMC-02",
+   "jda_name": "Vijay Path",
+   "bay": "northbound",
+   "uturn_demand": 1487,
+   "verdict": "fails",
+   "binding_criterion": "gap capacity",
+   "blocked_on": [],
+   "blocked_if_binding_cleared": [
+    "median width",
+    "storage",
+    "weaving",
+    "detour burden"
+   ],
+   "checks": {
+    "gap capacity": {
+     "status": "fail",
+     "value": 6.9,
+     "detail": "v/c 6.9 exceeds 3.0. Reported as no viable gaps, not as a capacity number: past this ratio gap acceptance has degenerated and the model is out of regime."
+    },
+    "median width": {
+     "status": "not reached",
+     "value": null,
+     "detail": "not reached: gap capacity binds first."
+    },
+    "storage": {
+     "status": "not reached",
+     "value": null,
+     "detail": "not reached: gap capacity binds first."
+    },
+    "weaving": {
+     "status": "not reached",
+     "value": null,
+     "detail": "not reached: gap capacity binds first."
+    },
+    "detour burden": {
+     "status": "not reached",
+     "value": null,
+     "detail": "not reached: gap capacity binds first."
+    }
+   },
+   "back_solve": {
+    "conflicting_now": 2555,
+    "demand_now": 1487,
+    "demand_servable": 215,
+    "demand_reduction_pct": 85.6,
+    "bay_ceiling_veh_hr": 1800,
+    "above_bay_ceiling": false,
+    "gap_needed_s": 1.15,
+    "gap_ours_s": 3.88,
+    "conflicting_needed": 238,
+    "conflicting_reduction_pct": 90.7,
+    "note": null
+   }
+  },
+  {
+   "junction": "TMC-02",
+   "jda_name": "Vijay Path",
+   "bay": "southbound",
+   "uturn_demand": 1257,
+   "verdict": "fails",
+   "binding_criterion": "gap capacity",
+   "blocked_on": [],
+   "blocked_if_binding_cleared": [
+    "storage"
+   ],
+   "checks": {
+    "gap capacity": {
+     "status": "fail",
+     "value": 6.8,
+     "detail": "v/c 6.8 exceeds 3.0. Reported as no viable gaps, not as a capacity number: past this ratio gap acceptance has degenerated and the model is out of regime."
+    },
+    "median width": {
+     "status": "not reached",
+     "value": 17.7,
+     "detail": "not reached: gap capacity binds first."
+    },
+    "storage": {
+     "status": "not reached",
+     "value": null,
+     "detail": "not reached: gap capacity binds first."
+    },
+    "weaving": {
+     "status": "not reached",
+     "value": 6,
+     "detail": "not reached: gap capacity binds first."
+    },
+    "detour burden": {
+     "status": "not reached",
+     "value": 12,
+     "detail": "not reached: gap capacity binds first."
+    }
+   },
+   "back_solve": {
+    "conflicting_now": 2727,
+    "demand_now": 1257,
+    "demand_servable": 185,
+    "demand_reduction_pct": 85.3,
+    "bay_ceiling_veh_hr": 1800,
+    "above_bay_ceiling": false,
+    "gap_needed_s": 1.35,
+    "gap_ours_s": 3.88,
+    "conflicting_needed": 446,
+    "conflicting_reduction_pct": 83.7,
+    "note": null
+   }
+  },
+  {
+   "junction": "TMC-03",
+   "jda_name": "Patel Marg",
+   "bay": "northbound",
+   "uturn_demand": 1148,
+   "verdict": "fails",
+   "binding_criterion": "gap capacity",
+   "blocked_on": [],
+   "blocked_if_binding_cleared": [
+    "storage"
+   ],
+   "checks": {
+    "gap capacity": {
+     "status": "fail",
+     "value": 11.1,
+     "detail": "v/c 11.1 exceeds 3.0. Reported as no viable gaps, not as a capacity number: past this ratio gap acceptance has degenerated and the model is out of regime."
+    },
+    "median width": {
+     "status": "not reached",
+     "value": 17.7,
+     "detail": "not reached: gap capacity binds first."
+    },
+    "storage": {
+     "status": "not reached",
+     "value": null,
+     "detail": "not reached: gap capacity binds first."
+    },
+    "weaving": {
+     "status": "not reached",
+     "value": 515,
+     "detail": "not reached: gap capacity binds first."
+    },
+    "detour burden": {
+     "status": "not reached",
+     "value": 1030,
+     "detail": "not reached: gap capacity binds first."
+    }
+   },
+   "back_solve": {
+    "conflicting_now": 3433,
+    "demand_now": 1148,
+    "demand_servable": 104,
+    "demand_reduction_pct": 91.0,
+    "bay_ceiling_veh_hr": 1800,
+    "above_bay_ceiling": false,
+    "gap_needed_s": 1.32,
+    "gap_ours_s": 3.84,
+    "conflicting_needed": 565,
+    "conflicting_reduction_pct": 83.5,
+    "note": null
+   }
+  },
+  {
+   "junction": "TMC-03",
+   "jda_name": "Patel Marg",
+   "bay": "southbound",
+   "uturn_demand": 1094,
+   "verdict": "fails",
+   "binding_criterion": "gap capacity",
+   "blocked_on": [],
+   "blocked_if_binding_cleared": [
+    "storage"
+   ],
+   "checks": {
+    "gap capacity": {
+     "status": "fail",
+     "value": 7.3,
+     "detail": "v/c 7.3 exceeds 3.0. Reported as no viable gaps, not as a capacity number: past this ratio gap acceptance has degenerated and the model is out of regime."
+    },
+    "median width": {
+     "status": "not reached",
+     "value": 26.8,
+     "detail": "not reached: gap capacity binds first."
+    },
+    "storage": {
+     "status": "not reached",
+     "value": null,
+     "detail": "not reached: gap capacity binds first."
+    },
+    "weaving": {
+     "status": "not reached",
+     "value": 15,
+     "detail": "not reached: gap capacity binds first."
+    },
+    "detour burden": {
+     "status": "not reached",
+     "value": 30,
+     "detail": "not reached: gap capacity binds first."
+    }
+   },
+   "back_solve": {
+    "conflicting_now": 3000,
+    "demand_now": 1094,
+    "demand_servable": 151,
+    "demand_reduction_pct": 86.2,
+    "bay_ceiling_veh_hr": 1800,
+    "above_bay_ceiling": false,
+    "gap_needed_s": 1.46,
+    "gap_ours_s": 3.84,
+    "conflicting_needed": 625,
+    "conflicting_reduction_pct": 79.2,
+    "note": null
+   }
+  },
+  {
+   "junction": "TMC-04",
+   "jda_name": "VT Road",
+   "bay": "northbound",
+   "uturn_demand": 1493,
+   "verdict": "fails",
+   "binding_criterion": "gap capacity",
+   "blocked_on": [],
+   "blocked_if_binding_cleared": [
+    "storage"
+   ],
+   "checks": {
+    "gap capacity": {
+     "status": "fail",
+     "value": 6.4,
+     "detail": "v/c 6.4 exceeds 3.0. Reported as no viable gaps, not as a capacity number: past this ratio gap acceptance has degenerated and the model is out of regime."
+    },
+    "median width": {
+     "status": "not reached",
+     "value": 10.3,
+     "detail": "not reached: gap capacity binds first."
+    },
+    "storage": {
+     "status": "not reached",
+     "value": null,
+     "detail": "not reached: gap capacity binds first."
+    },
+    "weaving": {
+     "status": "not reached",
+     "value": 4,
+     "detail": "not reached: gap capacity binds first."
+    },
+    "detour burden": {
+     "status": "not reached",
+     "value": 9,
+     "detail": "not reached: gap capacity binds first."
+    }
+   },
+   "back_solve": {
+    "conflicting_now": 2482,
+    "demand_now": 1493,
+    "demand_servable": 232,
+    "demand_reduction_pct": 84.5,
+    "bay_ceiling_veh_hr": 1800,
+    "above_bay_ceiling": false,
+    "gap_needed_s": 1.16,
+    "gap_ours_s": 3.86,
+    "conflicting_needed": 234,
+    "conflicting_reduction_pct": 90.6,
+    "note": null
+   }
+  },
+  {
+   "junction": "TMC-04",
+   "jda_name": "VT Road",
+   "bay": "southbound",
+   "uturn_demand": 1889,
+   "verdict": "fails",
+   "binding_criterion": "gap capacity",
+   "blocked_on": [],
+   "blocked_if_binding_cleared": [
+    "storage"
+   ],
+   "checks": {
+    "gap capacity": {
+     "status": "fail",
+     "value": 10.5,
+     "detail": "v/c 10.5 exceeds 3.0. Reported as no viable gaps, not as a capacity number: past this ratio gap acceptance has degenerated and the model is out of regime."
+    },
+    "median width": {
+     "status": "not reached",
+     "value": 32.7,
+     "detail": "not reached: gap capacity binds first."
+    },
+    "storage": {
+     "status": "not reached",
+     "value": null,
+     "detail": "not reached: gap capacity binds first."
+    },
+    "weaving": {
+     "status": "not reached",
+     "value": 30,
+     "detail": "not reached: gap capacity binds first."
+    },
+    "detour burden": {
+     "status": "not reached",
+     "value": 60,
+     "detail": "not reached: gap capacity binds first."
+    }
+   },
+   "back_solve": {
+    "conflicting_now": 2781,
+    "demand_now": 1889,
+    "demand_servable": 179,
+    "demand_reduction_pct": 90.5,
+    "bay_ceiling_veh_hr": 1800,
+    "above_bay_ceiling": true,
+    "gap_needed_s": 0.81,
+    "gap_ours_s": 3.86,
+    "conflicting_needed": null,
+    "conflicting_reduction_pct": null,
+    "note": "demand 1,889 exceeds the 1,800 veh/h a single bay passes at zero opposing traffic. No reduction in the opposing stream can make this bay work."
+   }
+  },
+  {
+   "junction": "TMC-05",
+   "jda_name": "Rajat Path",
+   "bay": "northbound",
+   "uturn_demand": 819,
+   "verdict": "fails",
+   "binding_criterion": "gap capacity",
+   "blocked_on": [],
+   "blocked_if_binding_cleared": [
+    "storage"
+   ],
+   "checks": {
+    "gap capacity": {
+     "status": "fail",
+     "value": 13.1,
+     "detail": "v/c 13.1 exceeds 3.0. Reported as no viable gaps, not as a capacity number: past this ratio gap acceptance has degenerated and the model is out of regime."
+    },
+    "median width": {
+     "status": "not reached",
+     "value": 32.7,
+     "detail": "not reached: gap capacity binds first."
+    },
+    "storage": {
+     "status": "not reached",
+     "value": null,
+     "detail": "not reached: gap capacity binds first."
+    },
+    "weaving": {
+     "status": "not reached",
+     "value": 844,
+     "detail": "not reached: gap capacity binds first."
+    },
+    "detour burden": {
+     "status": "not reached",
+     "value": 1687,
+     "detail": "not reached: gap capacity binds first."
+    }
+   },
+   "back_solve": {
+    "conflicting_now": 3978,
+    "demand_now": 819,
+    "demand_servable": 63,
+    "demand_reduction_pct": 92.3,
+    "bay_ceiling_veh_hr": 1800,
+    "above_bay_ceiling": false,
+    "gap_needed_s": 1.54,
+    "gap_ours_s": 3.86,
+    "conflicting_needed": 976,
+    "conflicting_reduction_pct": 75.5,
+    "note": null
+   }
+  },
+  {
+   "junction": "TMC-05",
+   "jda_name": "Rajat Path",
+   "bay": "southbound",
+   "uturn_demand": 1156,
+   "verdict": "fails",
+   "binding_criterion": "gap capacity",
+   "blocked_on": [],
+   "blocked_if_binding_cleared": [
+    "storage"
+   ],
+   "checks": {
+    "gap capacity": {
+     "status": "fail",
+     "value": 93.6,
+     "detail": "v/c 93.6 exceeds 3.0. Reported as no viable gaps, not as a capacity number: past this ratio gap acceptance has degenerated and the model is out of regime."
+    },
+    "median width": {
+     "status": "not reached",
+     "value": 28.9,
+     "detail": "not reached: gap capacity binds first."
+    },
+    "storage": {
+     "status": "not reached",
+     "value": null,
+     "detail": "not reached: gap capacity binds first."
+    },
+    "weaving": {
+     "status": "not reached",
+     "value": 17,
+     "detail": "not reached: gap capacity binds first."
+    },
+    "detour burden": {
+     "status": "not reached",
+     "value": 34,
+     "detail": "not reached: gap capacity binds first."
+    }
+   },
+   "back_solve": {
+    "conflicting_now": 5763,
+    "demand_now": 1156,
+    "demand_servable": 12,
+    "demand_reduction_pct": 98.9,
+    "bay_ceiling_veh_hr": 1800,
+    "above_bay_ceiling": false,
+    "gap_needed_s": 1.03,
+    "gap_ours_s": 3.86,
+    "conflicting_needed": 552,
+    "conflicting_reduction_pct": 90.4,
+    "note": null
+   }
+  },
+  {
+   "junction": "TMC-06",
+   "jda_name": "Bhrigu Path",
+   "bay": "northbound",
+   "uturn_demand": 699,
+   "verdict": "fails",
+   "binding_criterion": "gap capacity",
+   "blocked_on": [],
+   "blocked_if_binding_cleared": [
+    "storage"
+   ],
+   "checks": {
+    "gap capacity": {
+     "status": "fail",
+     "value": 6.2,
+     "detail": "v/c 6.2 exceeds 3.0. Reported as no viable gaps, not as a capacity number: past this ratio gap acceptance has degenerated and the model is out of regime."
+    },
+    "median width": {
+     "status": "not reached",
+     "value": 23.8,
+     "detail": "not reached: gap capacity binds first."
+    },
+    "storage": {
+     "status": "not reached",
+     "value": null,
+     "detail": "not reached: gap capacity binds first."
+    },
+    "weaving": {
+     "status": "not reached",
+     "value": 830,
+     "detail": "not reached: gap capacity binds first."
+    },
+    "detour burden": {
+     "status": "not reached",
+     "value": 1661,
+     "detail": "not reached: gap capacity binds first."
+    }
+   },
+   "back_solve": {
+    "conflicting_now": 3293,
+    "demand_now": 699,
+    "demand_servable": 112,
+    "demand_reduction_pct": 84.0,
+    "bay_ceiling_veh_hr": 1800,
+    "above_bay_ceiling": false,
+    "gap_needed_s": 1.89,
+    "gap_ours_s": 3.89,
+    "conflicting_needed": 1157,
+    "conflicting_reduction_pct": 64.9,
+    "note": null
+   }
+  },
+  {
+   "junction": "TMC-06",
+   "jda_name": "Bhrigu Path",
+   "bay": "southbound",
+   "uturn_demand": 764,
+   "verdict": "fails",
+   "binding_criterion": "gap capacity",
+   "blocked_on": [],
+   "blocked_if_binding_cleared": [
+    "median width",
+    "storage",
+    "weaving",
+    "detour burden"
+   ],
+   "checks": {
+    "gap capacity": {
+     "status": "fail",
+     "value": 7.3,
+     "detail": "v/c 7.3 exceeds 3.0. Reported as no viable gaps, not as a capacity number: past this ratio gap acceptance has degenerated and the model is out of regime."
+    },
+    "median width": {
+     "status": "not reached",
+     "value": null,
+     "detail": "not reached: gap capacity binds first."
+    },
+    "storage": {
+     "status": "not reached",
+     "value": null,
+     "detail": "not reached: gap capacity binds first."
+    },
+    "weaving": {
+     "status": "not reached",
+     "value": null,
+     "detail": "not reached: gap capacity binds first."
+    },
+    "detour burden": {
+     "status": "not reached",
+     "value": null,
+     "detail": "not reached: gap capacity binds first."
+    }
+   },
+   "back_solve": {
+    "conflicting_now": 3377,
+    "demand_now": 764,
+    "demand_servable": 104,
+    "demand_reduction_pct": 86.4,
+    "bay_ceiling_veh_hr": 1800,
+    "above_bay_ceiling": false,
+    "gap_needed_s": 1.76,
+    "gap_ours_s": 3.89,
+    "conflicting_needed": 1050,
+    "conflicting_reduction_pct": 68.9,
+    "note": null
+   }
+  }
+ ],
+ "n_bays": 12,
+ "n_fail": 12,
+ "binding_counts": {
+  "gap capacity": 12,
+  "median width": 0,
+  "storage": 0,
+  "weaving": 0,
+  "detour burden": 0
+ },
+ "alternatives": [
+  {
+   "measure": "keep the signal",
+   "cost": "no capital cost",
+   "note": "The junction already meters the opposing stream. Removing the signal is what creates the gap problem in the first place.",
+   "live": true
+  },
+  {
+   "measure": "relocate the bay",
+   "cost": "low",
+   "note": "Move it to a chainage where the opposing through flow is lower. Only helps if such a chainage exists within a tolerable detour. It cannot help the 2 bay(s) whose demand is above the 1,800 veh/h a single opening passes at zero opposing traffic, and for the rest the opposing flow would have to fall 91%.",
+   "live": false
+  },
+  {
+   "measure": "signalise the U-turn",
+   "cost": "moderate",
+   "note": "A metered U-turn manufactures the gap the stream will not offer. It reintroduces the signal the scheme exists to remove, on the corridor rather than at the junction. It still cannot serve the 2 bay(s) above the 1,800 veh/h ceiling: metering creates gaps, it does not shorten the follow-up headway.",
+   "live": true
+  },
+  {
+   "measure": "widen the median, add an acceleration lane",
+   "cost": "moderate",
+   "note": "Raises capacity by lowering the follow-up headway and letting vehicles merge rather than cross. A second-order effect on a first-order shortfall. It cannot help the 2 bay(s) whose demand is above the 1,800 veh/h a single opening passes at zero opposing traffic, and for the rest the opposing flow would have to fall 91%.",
+   "live": false
+  },
+  {
+   "measure": "grade separate the through movement",
+   "cost": "high",
+   "note": "The only measure that changes the binding term: it removes the conflicting flow rather than asking the U-turn to find gaps in it. For the 2 bay(s) above the ceiling it works by removing the NEED for a U-turn - with the through movement elevated the junction can keep a signalised right turn - not by making the bay work. A single opening still cannot pass their demand.",
+   "live": true
+  }
+ ],
+ "blocked_criteria_now": [],
+ "blocked_criteria_once_binding_cleared": [
+  "detour burden",
+  "median width",
+  "storage",
+  "weaving"
+ ],
+ "n_undecided": 0,
+ "bay_ceiling_veh_hr": 1800,
+ "bays_above_bay_ceiling": 2,
+ "measurement_status": "provisional: the DWG carries no dimension entities, so every width here is scaled from georeferenced linework and a total station survey is required before design"
+}

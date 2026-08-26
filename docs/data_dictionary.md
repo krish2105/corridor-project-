@@ -27,6 +27,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `anomaly.json` | Integrity screen: six detectors over the parsed survey, scored. |
 | `cluster.json` | Approach typology learned from the counts, and its held-out test. |
 | `forecast.json` | How short a count can be and still predict the day, with its error. |
+| `uturn_framework.json` | Per-bay criteria ladder, the binding constraint, and the back-solve. |
 
 ## Fields
 
@@ -39,6 +40,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `MAV` | PCU factor for multi-axle vehicles. |
 | `after_grade_separation` | Approach state once the through movement is elevated. |
 | `alignment_km` | Length of the surveyed alignment. |
+| `alternatives` | The ladder of what to do instead, ordered by cost. |
 | `analysis_date` | Survey day the figures come from. Day two is derived; see the audit. |
 | `analysis_days` | Independent days the model is fitted on. One. |
 | `annual_benefit_crore` | [low, high] difference between the two. |
@@ -52,8 +54,10 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `approaches_ok_after_grade_separation` | Approaches under capacity on opening. |
 | `arms` | Arm names, clockwise from north. |
 | `arrivals` | Cumulative PCU arriving at the stop line. Measured. |
+| `articulated` | Minimum turning radius band, metres. |
 | `assumption_driven` | Whether any single assumption changes the conclusion. |
 | `auto` | PCU factor for auto-rickshaws. |
+| `back_solve` | What would have to change for the binding criterion to clear. |
 | `band_high_pct` | High end of the PCU correction band, %. |
 | `band_low_pct` | Low end of the PCU correction band, %. |
 | `base_capacity_pcu_per_dir` | Tabulated capacity per direction at the base width, PCU/hour. Scaled by measured width, not by lane count. |
@@ -65,12 +69,22 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `baseline_mape` | Error of that baseline: the window carries its pro-rata share. |
 | `bay` | Which U-turn bay the demand feeds: the one merging into northbound traffic, or into southbound. |
 | `bay_beyond_drawing` | True where the CAD ends before the next opening, so the detour cannot be measured in that direction. A limit of the survey extent, not a finding about the road. |
+| `bay_ceiling_veh_hr` | The most a single opening can pass, 3600 / follow-up headway, with no opposing traffic at all. Nothing lifts it. |
 | `bay_chainage_m` | Distance of the U-turn opening along the same alignment, metres. |
+| `bay_storage_m` | Assumed deceleration and storage length. No bay geometry supplied. |
+| `bays` | One entry per U-turn bay: two per junction, north and south. |
+| `bays_above_bay_ceiling` | Bays whose demand exceeds that ceiling. For these the bay is the wrong instrument, not a badly sited one. |
 | `bays_planned_by_jda` | U-turn bays in the published scheme. |
 | `benefit_to_first_failure_crore` | Undiscounted benefit over the years the relief lasts. |
+| `binding_criterion` | The first criterion to fail. Criteria below it are untested. |
 | `binding_need_pcu` | What the binding approach would need by then, PCU/hour. |
 | `bins_parsed` | 15-minute class bins parsed across all workbooks. |
+| `blocked_criteria_now` | Union of blocked_on across bays. |
+| `blocked_criteria_once_binding_cleared` | Union of blocked_if_binding_cleared. |
+| `blocked_if_binding_cleared` | Criteria BELOW the binding one lacking data. They do not block today's verdict; they are what would need measuring if the binding criterion were cleared. |
+| `blocked_on` | Criteria ABOVE the binding one that could not be evaluated. These block today's verdict. |
 | `breaks` | Arithmetic breaks at this junction. |
+| `bus_truck` | Minimum turning radius band, metres. |
 | `cap_conservative` | Bay capacity at the conservative gap, veh/hour. |
 | `cap_optimistic` | Bay capacity at the optimistic gap, veh/hour. |
 | `capacity` | Approach capacity, PCU/hour, lanes x lane capacity. |
@@ -82,6 +96,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `cells_checked` | Cells re-derived when checking stored totals. |
 | `chainage_m` | Distance along the alignment from its start, metres. |
 | `change_pct` | Change in crossing exposure between the two schemes, %. |
+| `checks` | The five criteria for this bay, each with status, value and reason. |
 | `chi2` | Chi-square statistic of the last-digit test. |
 | `city` | City. |
 | `claim_overstatement` | The ratio between the two. |
@@ -111,6 +126,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `corridor_order` | Junction order along the alignment, from chainage. |
 | `corridor_through_pct` | Through share used for the relief calculation, %. |
 | `cost` | Mismatch between those pairs, as a fraction of flow. |
+| `criteria` | The five criteria, in the order they are evaluated. |
 | `critical_gap` | Which critical-gap assumption was used. |
 | `critical_gap_source` | Where the critical-gap values come from. |
 | `cross_mean` | Mean share on the twelve cross-street arms. |
@@ -130,6 +146,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `design_life_first_failure_med` | Earliest of fails_med across all approaches. |
 | `design_life_last_failure_med` | Latest of fails_med. |
 | `design_life_survives_horizon` | How many approaches still hold at horizon_year. |
+| `detour burden` | What the diversion costs the traffic it diverts. |
 | `detour_bays_beyond_drawing` | How many it does not. |
 | `detour_bays_measured` | How many bays the drawing covers in that direction. |
 | `detour_m` | Extra distance a converted movement travels, out and back, metres. |
@@ -138,6 +155,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `detour_mean_typical_m` | Mean detour excluding rows over 1 km, which are driven by the drawing ending rather than by the road. |
 | `detour_min_m` | Shortest measured detour on the corridor, metres. |
 | `detour_outliers_excluded` | Rows over 1 km held out of the typical figure. |
+| `detour_tolerable_m` | Round-trip detour above which the diversion is the problem. A stated threshold, not a standard. |
 | `detour_veh_km_per_hour` | Extra vehicle-kilometres per peak hour, all measured bays. |
 | `detour_veh_km_typical` | The same, excluding the over-1-km rows. |
 | `digit_min_count` | Counts below this are excluded from the digit test: their last digit IS the count, so it is skewed for honest reasons. |
@@ -185,6 +203,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `frac` | ok divided by total. |
 | `free_flow_kmh` | Free-flow speed used for journey time, km/h. |
 | `free_flow_min` | Through journey time at the free-flow speed. |
+| `gap capacity` | Can the bay serve its demand from gaps in the opposing stream? |
 | `gap_bases_tested` | How many published critical-gap bases the test was re-run on. |
 | `gap_benchmark` | Per-approach critical gap needed against the gap we assume. |
 | `gap_conclusion_holds_in` | How many of the tested gap bases return the same finding. |
@@ -244,6 +263,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `layers` | CAD layers read. |
 | `link` | One corridor link, between two consecutive junctions. |
 | `links` | The five links between the six junctions, in corridor order. |
+| `live` | Whether it can move the binding term here. |
 | `location_confidence` | Whether the position is name-matched or inferred. |
 | `lon` | Longitude, EPSG:4326. |
 | `longest_clear_runs_m` | Longest continuous constraint-free runs, metres. |
@@ -264,7 +284,10 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `mean_delay_min` | Mean delay per arriving vehicle, minutes. |
 | `mean_hours_over` | Mean of hours_over across approaches. |
 | `mean_residual_pct` | Mean continuity mismatch across links, as a share of flow. |
+| `measure` | The alternative. |
 | `measured_turning_pct` | The turning share the commissioned survey actually shows. |
+| `measurement_status` | That every width here is scaled from CAD linework and provisional pending a total station survey. |
+| `median width` | Does the design vehicle physically fit the turning path? |
 | `median_gap_m` | Median spacing between openings, metres. |
 | `median_openings` | Median gaps found. |
 | `merging` | Points where two streams join. |
@@ -281,16 +304,20 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `multiple_comparison_note` | Statement of that, carried with the data. |
 | `n` | Count of constraints at that station. |
 | `n_approaches` | Approaches clustered: six junctions by four arms. |
+| `n_bays` | Bays assessed. |
 | `n_corridor` | Corridor approaches. |
 | `n_cross` | Cross-street approaches. |
+| `n_fail` | Bays failing a criterion. |
 | `n_features` | Dimensions in that representation. |
 | `n_junctions` | Junctions surveyed. |
+| `n_undecided` | Bays with no verdict because a criterion could not be evaluated. |
 | `nearest_label` | Nearest text label in the drawing. |
 | `nearest_label_m` | Distance to it, metres. |
 | `net_grand_total` | Net effect of all discrepancies on the grand total. |
 | `net_high_pct` | Net effect at the high end, %. |
 | `net_low_pct` | Net effect of correcting every class, low end, %. |
 | `next` | Junction after it. |
+| `no_gap_vc` | v/c above which no capacity number is reported at all. |
 | `no_gap_vc_threshold` | v/c past which no capacity figure is reported. |
 | `no_viable_gap` | Approaches where gap acceptance degenerates; no number is quoted. |
 | `northbound_in` | Northbound flow arriving at the northern one. |
@@ -352,6 +379,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `queue_spillback_min` | Fewest approaches spilling back, across the queue grid. |
 | `queue_unconstrained_m` | What the deterministic model returns before the physical cap - published so the magnitude is not hidden, but it is not a queue the link can hold. |
 | `queue_vehicles` | That queue converted to vehicles using the observed composition. |
+| `radii_note` | That the design-vehicle radii are a policy input, banded, and that the governing IRC clause must be confirmed before design. |
 | `rediscovered` | How many of them the screen re-found without being told. |
 | `ref_errors` | #REF! errors found in the flow-diagram sheets. |
 | `relief` | What an elevated through-carriageway returns to each approach. |
@@ -402,6 +430,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `start_hour_from_0800` | Window start, hours after the 08:00 survey boundary. |
 | `station_step_m` | Spacing between stations, metres. |
 | `stations` | As `profile`. |
+| `storage` | Does the queue fit the bay without blocking the through lane? |
 | `storage_m` | Distance to the junction behind. null at a corridor end. |
 | `stored_total_breaks` | Written totals disagreeing with their own components. |
 | `structure_found` | Whether the silhouette cleared that threshold. |
@@ -410,6 +439,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `surveyed_factor` | The static PCU factor the survey applied. |
 | `surveys_required_by_sp90` | Traffic surveys IRC:SP:90 cl. 5.6 requires. |
 | `surveys_run` | How many this programme ran. |
+| `swept_allowance_m` | Working allowance either side of the turning path. |
 | `swing` | Size of that swing, in approaches. |
 | `swing_high_pct` | The same at the IRC:106 high value, %. |
 | `swing_low_pct` | Effect on corridor PCU of correcting this class to the IRC:106 low value, %. Negative means the survey overstated it. |
@@ -472,8 +502,11 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `veh_class` | Vehicle class code. |
 | `veh_km_per_hour` | Extra vehicle-kilometres this bay generates in the peak hour. |
 | `vehicle_class` | The class being compared. |
+| `verdict` | fails, viable, or undecided. |
 | `volume_flow` | Peak-hour movement volumes for the volume-flow diagram. |
 | `vot_status` | That value of time is a policy input, not a measurement. |
+| `weave_per_lane_m` | Metres needed to cross one lane after re-entering. |
+| `weaving` | Is there room to cross to the left before the next junction? |
 | `wholly_identical` | Series identical to the previous day across all live bins. |
 | `wide_transect_range_m` | Low and high of the flagged transects, metres per direction. |
 | `wide_transect_threshold_m` | That width, per direction, in metres. |

@@ -59,6 +59,9 @@ DELIVERABLES = [
     # what makes that visible.
     ("D11", "Phase 6 field plan", "Camera positions, schedule, GCP capture list",
      "T3", OUT / "phase6_field_plan.md", "awaiting the field day"),
+    ("D13", "U-turn decision framework",
+     "Criteria ladder per bay, binding constraint named, alternatives costed",
+     "T2", OUT_DATA / "uturn_framework.json"),
     ("D12", "Six-junction master database",
      "One Excel workbook: inventory, hourly, composition, movements, PCU, criticality",
      "T1", OUT / "Six_Junction_Master_Database.xlsx"),
@@ -228,6 +231,7 @@ PIPELINE_ORDER = [
     ("analyse",      "peak hour, TMC matrices, through/turning split"),
     ("capacity",     "measured widths, v/c, design life"),
     ("scheme_test",  "does the JDA U-turn scheme work?"),
+    ("uturn_framework", "where a bay belongs: criteria ladder, binding term back-solved"),
     ("delay",        "queue, spillback, corridor journey time"),
     ("economics",    "cost of delay, banded"),
     ("safety",       "conflict points and exposure, from geometry"),
