@@ -1,7 +1,7 @@
 # Data dictionary
 ### Every field in every published dataset
 
-Generated 2026-08-24 from the files in `out/data`. The field list is read from the data itself, so a field added to the pipeline and not described here is reported below as undocumented rather than quietly omitted.
+Generated 2026-08-26 from the files in `out/data`. The field list is read from the data itself, so a field added to the pipeline and not described here is reported below as undocumented rather than quietly omitted.
 
 **All spatial data is EPSG:32643 (UTM zone 43N, metres).** GeoJSON is written in EPSG:4326 because the format requires it, and is converted at that boundary only.
 
@@ -56,6 +56,7 @@ Generated 2026-08-24 from the files in `out/data`. The field list is read from t
 | `base_total` | Total conflict points at a four-arm junction, from geometry. |
 | `base_width_per_dir_m` | Carriageway width per direction the tabulated capacity applies to, metres. |
 | `base_year` | Year the survey and all present-day figures refer to. |
+| `bay` | Which U-turn bay the demand feeds: the one merging into northbound traffic, or into southbound. |
 | `bays_planned_by_jda` | U-turn bays in the published scheme. |
 | `benefit_to_first_failure_crore` | Undiscounted benefit over the years the relief lasts. |
 | `binding_need_pcu` | What the binding approach would need by then, PCU/hour. |
@@ -131,6 +132,7 @@ Generated 2026-08-24 from the files in `out/data`. The field list is read from t
 | `fails_med` | Year it returns to capacity at the medium growth rate. |
 | `fails_optimistic` | Approaches they cannot serve even optimistically. |
 | `features` | Geometry features extracted. |
+| `feeds_bay` | Which movements have to use a U-turn bay under the scheme. Right turns from all four arms, plus the cross-street through movement. |
 | `files_affected` | Workbooks containing at least one discrepancy. |
 | `floor_vs_warrant` | That floor as a multiple of the interchange warrant. |
 | `flow_raster` | Through flow per link per fifteen-minute bin. |

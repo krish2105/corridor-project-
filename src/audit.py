@@ -24,7 +24,7 @@ from openpyxl import load_workbook
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from src.config import SOURCE, OUT, PROCESSED, SURVEY_DIRS, JUNCTIONS
-from src.tmc_parse import (CLASS_COLS, CLASS_LABELS, FAST_COLS, SLOW_COLS,
+from src.tmc_parse import (workbooks, CLASS_COLS, CLASS_LABELS, FAST_COLS, SLOW_COLS,
                            ROW_TOTAL_VEH, ROW_TOTAL_PCU, ROW_BINS, ROW_HOURS, COL_PCU,
                            COL_GRAND, parse_all, num)
 
@@ -148,7 +148,7 @@ def pcu_interval_check(fixed, source=None, dirs=None):
     checked = failed = 0
     worst = (0.0, None)
     for d in dirs:
-        for path in sorted((source / d).glob("*.xlsx")):
+        for path in workbooks(source / d):
             wb = load_workbook(path, data_only=True)
             for name in wb.sheetnames:
                 ws = wb[name]
@@ -179,7 +179,7 @@ def check_pcu(bins):
     # Back-solve the factor each workbook actually used, from the day totals.
     factors = {}
     for d in SURVEY_DIRS:
-        for path in sorted((SOURCE / d).glob("*.xlsx")):
+        for path in workbooks(SOURCE / d):
             wb = load_workbook(path, data_only=True)
             ws = wb["IN_1"]
             for col, code in CLASS_COLS.items():
@@ -284,7 +284,7 @@ def workbook_rolling_peaks(source=None, dirs=None):
     dirs = SURVEY_DIRS if dirs is None else dirs
     rows = []
     for d in dirs:
-        for path in sorted((source / d).glob("*.xlsx")):
+        for path in workbooks(source / d):
             wb = load_workbook(path, data_only=True)
             if "TOTAL_IN" not in wb.sheetnames:
                 wb.close()
@@ -433,7 +433,7 @@ def check_flow_diagram():
     say("## G — Flow Diagram Table: labels do not match the data beneath them\n")
     rows, refs_total = [], 0
     for d in SURVEY_DIRS:
-        for path in sorted((SOURCE / d).glob("*.xlsx")):
+        for path in workbooks(SOURCE / d):
             wb = load_workbook(path, data_only=True)
             fdt, tab = wb["Flow Diagram Table"], wb["Table"]
             refs = sum(1 for r in fdt.iter_rows() for c in r if c.value == "#REF!")

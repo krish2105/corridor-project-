@@ -1,7 +1,7 @@
 # Method statement
 ### New Sanganer Road corridor assessment, Jaipur
 
-**Generated** 2026-08-24. Figures are read from pipeline output at generation time.
+**Generated** 2026-08-26. Figures are read from pipeline output at generation time.
 
 ---
 

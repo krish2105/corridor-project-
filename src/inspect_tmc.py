@@ -15,6 +15,7 @@ from openpyxl import load_workbook
 from openpyxl.utils import get_column_letter
 
 sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent.parent))
+from src.tmc_parse import workbooks
 from src.config import SOURCE, SURVEY_DIRS
 
 # The file the deep probe runs against.
@@ -201,7 +202,7 @@ def sweep():
 
     files = []
     for d in SURVEY_DIRS:
-        files.extend(sorted((SOURCE / d).glob("*.xlsx")))
+        files.extend(workbooks(SOURCE / d))
     print(f"{len(files)} workbooks found\n")
 
     signatures = defaultdict(list)

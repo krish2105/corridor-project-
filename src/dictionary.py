@@ -296,6 +296,10 @@ FIELDS.update({
     "csir_crri_design_source": "Where the CSIR-CRRI design gap comes from.",
     "follow_up_measured_s": ("The only measured Indian follow-up headways found, seconds, "
                              "against which our assumed band is checked."),
+    "bay": ("Which U-turn bay the demand feeds: the one merging into northbound "
+            "traffic, or into southbound."),
+    "feeds_bay": ("Which movements have to use a U-turn bay under the scheme. Right "
+                  "turns from all four arms, plus the cross-street through movement."),
     "uturn_analogue": ("Which manoeuvre the U-turn is modelled as. Load-bearing: a merge "
                        "into the opposing stream needs a smaller gap than a crossing of it."),
     "gap_direction_note": ("Which way our critical-gap assumption errs against the field "

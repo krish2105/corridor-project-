@@ -364,12 +364,65 @@ def peak_window(series):
     return series.index[i], series.iloc[i:i + 4]
 
 
-def analyse(bins, day):
-    """Per junction: right-turn demand that becomes U-turn demand, vs bay capacity."""
+# WHICH MOVEMENTS ACTUALLY FEED A U-TURN BAY.
+#
+# The first version of this counted right turns from the two CORRIDOR arms only, and
+# nothing else. That was wrong, and a reviewer for JDA caught it: under a median U-turn
+# scheme the bays serve the cross-street traffic too, and in the full form they serve the
+# cross-street THROUGH movement as well. Counting two of the six feeding movements
+# understated corridor U-turn demand by about 3.4x.
+#
+# Working it through for left-hand drive, a junction with the corridor running N-S:
+#
+#   Northbound-merging bay (vehicles head south, U-turn, come back north)
+#     N -> W   right turn off the corridor: straight through, U-turn, then left into W
+#     E -> N   right turn off the cross-street: left onto the corridor southbound,
+#              U-turn, back north
+#     E -> W   cross-street through: same left onto the corridor, U-turn, then left into W
+#
+#   Southbound-merging bay, the mirror image
+#     S -> E   right turn off the corridor
+#     W -> S   right turn off the cross-street
+#     W -> E   cross-street through
+#
+# Three movements share each bay, so the demands ADD at the bay rather than being
+# tested one at a time. The conflicting stream is whichever corridor through movement
+# the bay merges into, which is the opposite direction to the one the vehicle arrived on.
+#
+# Which cross arm is "east" is derived from the data rather than assumed: the arm whose
+# right turn lands on the north arm is the east side.
+FEEDS_BAY = "right turns from all four arms, plus the cross-street through movement"
+
+
+def bay_demand(pk, cross_east, cross_west):
+    """
+    (northbound bay demand, southbound bay demand) for one peak window.
+
+    Returns the SUM over every movement that has to use each bay, because they queue
+    for the same gap in the same opposing stream.
+    """
+    def n(frm, mvt):
+        return float(pk[(pk.arm_from == frm) & (pk.movement == mvt)]["count"].sum())
+    north = n(NORTH, "Right")                      # corridor right turn
+    south = n(SOUTH, "Right")
+    if cross_east is not None:
+        north += n(cross_east, "Right") + n(cross_east, "Straight")
+    if cross_west is not None:
+        south += n(cross_west, "Right") + n(cross_west, "Straight")
+    return north, south
+
+
+def analyse(bins, day, full_mut=True):
+    """
+    Per junction: the demand each U-turn bay must serve, against its gap-acceptance
+    capacity.
+
+    full_mut=False reproduces the original corridor-right-turns-only reading, kept so the
+    two can be published side by side rather than one quietly replacing the other.
+    """
     mv = bins[(bins.kind == "movement") & (bins.date == day)]
     rows = []
     for code, g in mv.groupby("junction"):
-        arms = JUNCTION_COORDS[code]
         share = g.groupby("veh_class")["count"].sum()
         share = (share / share.sum()).to_dict()
         tc_lo, tc_hi = weighted_gap(share, 0), weighted_gap(share, 1)
@@ -380,23 +433,41 @@ def analyse(bins, day):
         window = tot.index[list(tot.index).index(start):][:4]
         pk = g[g.bin_start.isin(window)]
 
-        for arm in (NORTH, SOUTH):
-            # RIGHT turn from this approach -> becomes a U-turn under signal-free running
-            rt = pk[(pk.arm_from == arm) & (pk.movement == "Right")]["count"].sum()
-            # conflicting stream at the bay: the opposing through movement
-            opp = SOUTH if arm == NORTH else NORTH
-            thru = pk[(pk.arm_from == opp) & (pk.movement == "Straight")]["count"].sum()
-            if rt <= 0:
+        # identify the cross arms by where their right turn lands, not by assuming
+        cross_east = cross_west = None
+        for a in pk.arm_from.unique():
+            if a in (NORTH, SOUTH):
+                continue
+            to = pk[(pk.arm_from == a) & (pk.movement == "Right")]["arm_to"]
+            if len(to) and to.iloc[0] == NORTH:
+                cross_east = a
+            elif len(to) and to.iloc[0] == SOUTH:
+                cross_west = a
+
+        if full_mut:
+            d_north, d_south = bay_demand(pk, cross_east, cross_west)
+        else:
+            d_north, d_south = bay_demand(pk, None, None)
+
+        # a bay merging INTO the northbound stream conflicts with northbound through,
+        # which is the traffic arriving from the south arm and going straight
+        thru_north = float(pk[(pk.arm_from == SOUTH) & (pk.movement == "Straight")]["count"].sum())
+        thru_south = float(pk[(pk.arm_from == NORTH) & (pk.movement == "Straight")]["count"].sum())
+
+        for arm, demand, thru, bay in ((NORTH, d_north, thru_north, "northbound"),
+                                       (SOUTH, d_south, thru_south, "southbound")):
+            if demand <= 0:
                 continue
             cap_lo = gap_capacity(thru, tc_hi, FOLLOW_UP_S[1])   # conservative
             cap_hi = gap_capacity(thru, tc_lo, FOLLOW_UP_S[0])   # optimistic
             rows.append(dict(
-                junction=code, approach=arm, jda_name=JUNCTION_COORDS[code][2],
-                uturn_demand=float(rt), conflicting_flow=float(thru),
+                junction=code, approach=arm, bay=bay,
+                jda_name=JUNCTION_COORDS[code][2],
+                uturn_demand=demand, conflicting_flow=thru,
                 t_c_lo=round(tc_lo, 2), t_c_hi=round(tc_hi, 2),
                 cap_conservative=cap_lo, cap_optimistic=cap_hi,
-                vc_conservative=rt / cap_lo if cap_lo else float("inf"),
-                vc_optimistic=rt / cap_hi if cap_hi else float("inf"),
+                vc_conservative=demand / cap_lo if cap_lo else float("inf"),
+                vc_optimistic=demand / cap_hi if cap_hi else float("inf"),
                 peak_start=str(start)[11:16]))
     return pd.DataFrame(rows)
 
@@ -634,6 +705,7 @@ if __name__ == "__main__":
     print(f"\n  U-turn modelled as: {UTURN_ANALOGUE}")
 
     payload["uturn_analogue"] = UTURN_ANALOGUE
+    payload["feeds_bay"] = FEEDS_BAY
     payload["gap_direction_note"] = GAP_DIRECTION_NOTE
     payload["two_wheeler_gap_basis"] = TWO_WHEELER_GAP_BASIS
     payload["gap_evidence_spread"] = spread

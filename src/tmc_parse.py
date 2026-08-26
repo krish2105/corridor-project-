@@ -88,6 +88,18 @@ def movement_for(v_index, arms):
     return arms[entry], arms[exit_], MOVEMENTS[offset - 1]
 
 
+def workbooks(d):
+    """
+    The .xlsx files in one survey directory, excluding Excel's own lock files.
+
+    Excel drops a `~$name.xlsx` beside any workbook that is currently open. It is not a
+    zip archive, so openpyxl raises BadZipFile and the run dies. That happened the first
+    time someone opened a source workbook to look at it, which is exactly when the
+    pipeline needs to keep working.
+    """
+    return sorted(p for p in d.glob("*.xlsx") if not p.name.startswith("~$"))
+
+
 def parse_workbook(path, junction, survey_date, mismatches):
     """One workbook -> list of tidy bin records. Appends to `mismatches` in place."""
     wb = load_workbook(path, data_only=True)
@@ -192,7 +204,7 @@ def parse_all():
     all_rows, mismatches = [], []
     for d in SURVEY_DIRS:
         survey_date = datetime.strptime(d.split("_")[1], "%d-%m-%Y").date()
-        for path in sorted((SOURCE / d).glob("*.xlsx")):
+        for path in workbooks(SOURCE / d):
             junction = f"TMC-{path.name[:2]}"
             all_rows.extend(parse_workbook(path, junction, survey_date, mismatches))
     return pd.DataFrame(all_rows), pd.DataFrame(mismatches)

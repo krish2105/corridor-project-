@@ -2,7 +2,7 @@
 ### New Sanganer Road, Jaipur — six surveyed junctions
 
 **Base year** 2026  |  **Design horizon** 20 years to 2046  |  **Survey date** 2026-05-11
-**Generated** 2026-08-24 from `out/data/capacity.json`. Every figure in this document is read from the pipeline output at generation time; none is transcribed.
+**Generated** 2026-08-26 from `out/data/capacity.json`. Every figure in this document is read from the pipeline output at generation time; none is transcribed.
 
 ---
 
@@ -55,11 +55,11 @@ PCU is reported as a band, not a point. The survey's composite vehicle classes (
 
 ## 4. The published scheme does not resolve this
 
-The scheme under construction — signal-free New Sanganer Road, 7 U-turns — replaces signalised turning with U-turn bays. Tested by gap acceptance against the measured opposing flow, **11 of 12 approaches fail** under conservative critical-gap assumptions and **11 still fail** under optimistic ones.
+The scheme under construction — signal-free New Sanganer Road, 7 U-turns — replaces signalised turning with U-turn bays. Tested by gap acceptance against the measured opposing flow, **12 of 12 approaches fail** under conservative critical-gap assumptions and **12 still fail** under optimistic ones.
 
-On **11** approaches the opposing flow is heavy enough that gap acceptance degenerates entirely: there is no usable gap, and no capacity figure is quoted because none would be meaningful.
+On **12** approaches the opposing flow is heavy enough that gap acceptance degenerates entirely: there is no usable gap, and no capacity figure is quoted because none would be meaningful.
 
-The mechanism is that removing a signalised right turn does not remove the demand — it converts it into a U-turn. Across the corridor that forces **3,923 additional U-turning vehicles per hour** onto bays sized for far less.
+The mechanism is that removing a signalised right turn does not remove the demand — it converts it into a U-turn. Across the corridor that forces **14,908 additional U-turning vehicles per hour** onto bays sized for far less.
 
 ## 5. Grade separation returns the corridor to service
 
@@ -168,20 +168,20 @@ The critical gap is the single most attackable input in this report: it was chos
 
 | Basis | t_c (s) | t_f (s) | Unservable | Geometric match |
 |---|---:|---:|---:|---|
-| Kerala median openings, traditional/Raff | 2.05 | 1.23 | 1 of 12 | median openings, but the paper states carriageway width only and never lane count - reading it as four-lane was our inference, not theirs |
-| Kerala median openings, merging behaviour | 2.80 | 1.70 | 9 of 12 | median openings, lane count not stated in the paper |
-| Khan 2022 thesis, four-lane median openings, modified Raff / binary logit | 3.36 | 2.04 | 9 of 12 | closest of all: four-lane divided median openings, and the only source with a MEASURED four-lane follow-up time (2.04 s, two-wheelers, Table 8.2) |
-| Mohan & Chandra 2020, RT from minor, 4-lane divided | 3.50 | 2.10 | 9 of 12 | four-lane divided major, but a junction movement not a median opening |
-| Datta & Bhuyan 2014, four-lane median openings, prob. equilibrium | 3.79 | 2.17 | 10 of 12 | closest by road type: median openings explicitly on four-lane divided |
-| ours, optimistic | 3.87 | 2.00 | 11 of 12 | none stated |
-| Khan 2022 thesis, four-lane median openings, occupancy time / SVM | 4.26 | 2.04 | 11 of 12 | closest of all: four-lane divided median openings, authors' preferred methods |
-| Gupta et al. 2018, four-lane median openings, Varanasi | 4.45 | 2.50 | 11 of 12 | closest overall: four-lane divided median openings, carriageway 7.03-8.90 m per direction against this corridor's ~7 m |
-| CSIR-CRRI NH-8 design recommendation | 4.50 | 2.70 | 11 of 12 | the only Indian DESIGN value for a median opening, but inter-urban NH not urban |
-| ours, conservative | 5.03 | 3.00 | 11 of 12 | none stated |
-| Datta & Bhuyan 2014, four-lane median openings, INAFOGA | 5.09 | 3.00 | 11 of 12 | closest by road type: median openings explicitly on four-lane divided |
-| IRC:SP:41 Table III-2, RT from major, 4-lane, 48 kmph | 5.50 | 3.00 | 11 of 12 | four-lane, but HCM 1985 in metric with no Indian calibration |
+| Kerala median openings, traditional/Raff | 2.05 | 1.23 | 11 of 12 | median openings, but the paper states carriageway width only and never lane count - reading it as four-lane was our inference, not theirs |
+| Kerala median openings, merging behaviour | 2.80 | 1.70 | 12 of 12 | median openings, lane count not stated in the paper |
+| Khan 2022 thesis, four-lane median openings, modified Raff / binary logit | 3.36 | 2.04 | 12 of 12 | closest of all: four-lane divided median openings, and the only source with a MEASURED four-lane follow-up time (2.04 s, two-wheelers, Table 8.2) |
+| Mohan & Chandra 2020, RT from minor, 4-lane divided | 3.50 | 2.10 | 12 of 12 | four-lane divided major, but a junction movement not a median opening |
+| Datta & Bhuyan 2014, four-lane median openings, prob. equilibrium | 3.79 | 2.17 | 12 of 12 | closest by road type: median openings explicitly on four-lane divided |
+| ours, optimistic | 3.87 | 2.00 | 12 of 12 | none stated |
+| Khan 2022 thesis, four-lane median openings, occupancy time / SVM | 4.26 | 2.04 | 12 of 12 | closest of all: four-lane divided median openings, authors' preferred methods |
+| Gupta et al. 2018, four-lane median openings, Varanasi | 4.45 | 2.50 | 12 of 12 | closest overall: four-lane divided median openings, carriageway 7.03-8.90 m per direction against this corridor's ~7 m |
+| CSIR-CRRI NH-8 design recommendation | 4.50 | 2.70 | 12 of 12 | the only Indian DESIGN value for a median opening, but inter-urban NH not urban |
+| ours, conservative | 5.03 | 3.00 | 12 of 12 | none stated |
+| Datta & Bhuyan 2014, four-lane median openings, INAFOGA | 5.09 | 3.00 | 12 of 12 | closest by road type: median openings explicitly on four-lane divided |
+| IRC:SP:41 Table III-2, RT from major, 4-lane, 48 kmph | 5.50 | 3.00 | 12 of 12 | four-lane, but HCM 1985 in metric with no Indian calibration |
 
-The finding holds in **11 of 12** bases. Where it does not, that basis uses the traditional Raff method, which the authors who published it recommend against for mixed traffic. It is reported rather than omitted.
+The finding holds in **12 of 12** bases. Where it does not, that basis uses the traditional Raff method, which the authors who published it recommend against for mixed traffic. It is reported rather than omitted.
 
 **The U-turn is modelled as a merge into the opposing stream, not a crossing of it.** A merge needs a smaller gap than a crossing does, so this choice sets the whole scale and is the load-bearing assumption behind every number above.
 
