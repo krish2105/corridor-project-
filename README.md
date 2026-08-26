@@ -46,6 +46,9 @@ uv run python src/profiles.py      # LOS by approach-hour, peak spreading, cumul
 uv run python src/exhibits.py      # volume-flow, tornado, continuity, flow raster
 uv run python src/standards.py     # the corridor against the codes it is built under
 uv run python src/sensitivity.py   # every conclusion across its assumption grid
+uv run python src/anomaly.py       # integrity screen: six detectors, gated on rediscovery
+uv run python src/cluster.py       # approach typology, gated on a held-out label
+uv run python src/forecast.py      # how short a count can be, leave-one-out
 uv run python src/export.py        # -> out/data/corridor.json   (pass 1: reports read this)
 uv run python src/reports.py       # -> D6, D8, D9
 uv run python src/dictionary.py    # -> docs/data_dictionary.md
@@ -61,7 +64,7 @@ Every module runs standalone and prints its own verification metric. A module th
 
 ## Layout
 
-- `src/` — 37 modules. `tmc_parse` and `audit` are the core; `atlas`, `medians` and `dxf_inventory` read the CAD survey; `capacity`, `scheme_test`, `delay` and `economics` carry the findings.
+- `src/` — 40 modules. `tmc_parse` and `audit` are the core; `atlas`, `medians` and `dxf_inventory` read the CAD survey; `capacity`, `scheme_test`, `delay` and `economics` carry the findings.
 - `web/` — Next.js dashboard, reading the same `corridor.json` as the static report.
 - `docs/data_dictionary.md` — every field in every published file, with units. Generated, so a field added without a description fails a test.
 - `docs/jaipur_corridor_study.md` — the methodology, with inline `ERRATUM` blocks correcting 9 defects in its own worked code.

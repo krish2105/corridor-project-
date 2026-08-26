@@ -41,6 +41,9 @@ FILES = {
     "profiles.json":    "Level of service by approach and hour, and peak spreading.",
     "exhibits.json":    "Volume-flow, tornado, continuity and flow-raster series.",
     "standards.json":   "The corridor measured against the codes it is built under.",
+    "anomaly.json":     "Integrity screen: six detectors over the parsed survey, scored.",
+    "cluster.json":     "Approach typology learned from the counts, and its held-out test.",
+    "forecast.json":    "How short a count can be and still predict the day, with its error.",
 }
 
 # Units are stated because a number without one is not checkable.
@@ -368,6 +371,105 @@ FIELDS.update({
     "constraints": "Constraint categories present.",
     "direction_delay_min": "Junction delay summed along each direction, minutes.",
     "peak_delay_min": "Junction delay along the worst direction, minutes.",
+})
+
+
+# --- the three learned applications ------------------------------------------
+# Written out at the same level of detail as the engineering fields, because a model's
+# output is exactly the kind of number a reader is inclined to take on trust.
+FIELDS.update({
+    # anomaly: the integrity screen
+    "duplicate_series_share": "Share of this junction's series that reproduce the "
+                              "previous day in every live bin.",
+    "wholly_identical": "Series identical to the previous day across all live bins.",
+    "terminal_digit": "Per-junction last-digit test of every count of 10 or more.",
+    "terminal_digit_p": "Chi-square p against a uniform last digit. Rejects on a tiny "
+                        "effect at this sample size, so it is reported, not scored.",
+    "terminal_digit_excess_pct": "Percentage points by which digits 0 and 5 exceed the "
+                                 "expected 20%. This is what the score uses.",
+    "chi2": "Chi-square statistic of the last-digit test.",
+    "excess_0_5_pct": "As terminal_digit_excess_pct.",
+    "flatline_series": "Series holding one non-zero count across 4+ consecutive intervals.",
+    "spike_bins_per_1000": "Bins per thousand departing from their neighbours' line by "
+                           "both |z|>3.5 and 10+ vehicles.",
+    "mix_intervals": "Intervals whose class mix departs from the site's own by L1>0.5.",
+    "intervals": "As mix_intervals, for one junction-day.",
+    "stored_total_breaks": "Written totals disagreeing with their own components.",
+    "integrity_flag_score": "Unweighted sum of the six detector scores, 0 to 6. Not a "
+                            "verdict: an ordering of what to ask about first.",
+    "s_duplicate": "Duplicate-day detector, normalised 0 to 1 across the six junctions.",
+    "s_digit": "Terminal-digit detector, on effect size, clipped at 0.",
+    "s_flatline": "Flatline detector, normalised.", "s_spike": "Spike detector, normalised.",
+    "s_mix": "Composition detector, normalised.", "s_arith": "Arithmetic detector, normalised.",
+    "breaks": "Arithmetic breaks at this junction.",
+    "known_defects": "Defects the audit proved independently of this screen.",
+    "rediscovered": "How many of them the screen re-found without being told.",
+    "digit_min_count": "Counts below this are excluded from the digit test: their last "
+                       "digit IS the count, so it is skewed for honest reasons.",
+    "spike_z": "Modified-z threshold for a spike.",
+    "spike_min_veh": "Vehicles a spike must also differ by, so the detector does not "
+                     "fire on slow classes where the local spread is a vehicle or two.",
+    "flatline_min": "Consecutive identical non-zero intervals that count as a flatline.",
+    "mix_l1": "L1 distance between share vectors that counts as a changed mix.",
+
+    # cluster: the approach typology
+    "feature_sets_tested": "How many feature sets were fitted. All are published; "
+                           "reporting only the winner would invalidate the p-value.",
+    "multiple_comparison_note": "Statement of that, carried with the data.",
+    "feature_set": "What each approach was represented by.",
+    "n_features": "Dimensions in that representation.",
+    "n_approaches": "Approaches clustered: six junctions by four arms.",
+    "k": "Clusters chosen, by silhouette across k = 2..6.",
+    "silhouette": "Mean silhouette at the chosen k. Higher is tighter separation.",
+    "silhouette_by_k": "Silhouette at each k tested.",
+    "silhouette_min": "Below this, reported as no typology rather than forced into k groups.",
+    "structure_found": "Whether the silhouette cleared that threshold.",
+    "external_label": "A label held out of the fitting, used to test whether the "
+                      "clusters mean anything.",
+    "held_out": "Confirmation the label never entered the distance matrix.",
+    "purity": "Share of approaches in the majority external class of their own cluster.",
+    "null_mean": "The same statistic on randomly permuted cluster labels.",
+    "permutations": "Random relabellings the p-value is computed against.",
+    "clusters": "One entry per cluster.",
+    "size": "Approaches in the cluster.",
+    "corridor_arms": "Of those, how many are Mansarover Metro or Sanganer Stadium arms.",
+    "cross_arms": "How many are cross-street arms.",
+    "peak_hour": "Busiest hour of the cluster's mean profile.",
+    "share_in_busiest_4h": "Share of the day in its four busiest hours. Flat is 0.167.",
+    "profile": "The cluster's mean share vector.",
+    "features": "What each position in that vector is.",
+    "members": "Which approaches are in the cluster.",
+    "dominant_class": "Largest class in the cluster's mean mix.",
+    "dominant_share": "That class's share.",
+    "results": "One entry per feature set tested.",
+    "any_typology_found": "Whether any feature set cleared both gates.",
+    "two_wheeler_split": "Two-wheeler share on corridor arms against cross-street arms.",
+    "vehicle_class": "The class being compared.",
+    "corridor_mean": "Mean share on the twelve corridor arms.",
+    "cross_mean": "Mean share on the twelve cross-street arms.",
+    "n_corridor": "Corridor approaches.", "n_cross": "Cross-street approaches.",
+    "min_share": "Lowest share on any approach.", "max_share": "Highest.",
+
+    # forecast: how short a count can be
+    "analysis_days": "Independent days the model is fitted on. One.",
+    "windows": "Every window-target combination evaluated.",
+    "start_hour_from_0800": "Window start, hours after the 08:00 survey boundary.",
+    "hours": "Window length, hours.",
+    "clock": "The same window in clock time.",
+    "target": "What is being predicted: the daily total or the peak hour.",
+    "targets": "How many targets were tested.",
+    "mape": "Leave-one-out mean absolute percentage error.",
+    "mape_gate": "The threshold a window must clear, matching the count gate.",
+    "baseline": "The no-model comparison the windows are scored against.",
+    "baseline_mape": "Error of that baseline: the window carries its pro-rata share.",
+    "factor": "Expansion factor, the mean of the approaches' total-over-partial ratios.",
+    "factor_cv": "Coefficient of variation of those ratios. Low means the factor travels.",
+    "worst_approach_pct": "Largest single-approach error. Not selected, so read it.",
+    "shortest_window": "Shortest window clearing the gate and beating the baseline.",
+    "selection": "How the window was chosen, and what that does to the headline error.",
+    "combinations_searched": "Window-target combinations the shortest was picked from.",
+    "predictable": "Targets predictable from a short count at the gate.",
+    "p": "Significance level of the test named in the same record.",
 })
 
 

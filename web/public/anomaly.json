@@ -1,0 +1,187 @@
+{
+ "method": "six independent detectors over the parsed survey, scored unweighted",
+ "caveat": "a screen, not fraud detection; every signature has an innocent explanation and the output is an ordered list to ask about",
+ "thresholds": {
+  "digit_min_count": 10,
+  "spike_z": 3.5,
+  "spike_min_veh": 10,
+  "flatline_min": 4,
+  "mix_l1": 0.5
+ },
+ "detectors": {
+  "duplicate": {
+   "series": 555,
+   "wholly_identical": 100
+  },
+  "terminal_digit": [
+   {
+    "junction": "TMC-01",
+    "n": 3663,
+    "chi2": 39.4,
+    "p": 9.82422591212812e-06,
+    "excess_0_5_pct": 1.8
+   },
+   {
+    "junction": "TMC-02",
+    "n": 3503,
+    "chi2": 37.4,
+    "p": 2.2725832736434537e-05,
+    "excess_0_5_pct": 2.6
+   },
+   {
+    "junction": "TMC-03",
+    "n": 3457,
+    "chi2": 72.2,
+    "p": 5.6856844184882704e-12,
+    "excess_0_5_pct": 2.3
+   },
+   {
+    "junction": "TMC-04",
+    "n": 3631,
+    "chi2": 43.8,
+    "p": 1.5633080946952854e-06,
+    "excess_0_5_pct": -0.3
+   },
+   {
+    "junction": "TMC-05",
+    "n": 3001,
+    "chi2": 87.7,
+    "p": 4.719801644253446e-15,
+    "excess_0_5_pct": 4.0
+   },
+   {
+    "junction": "TMC-06",
+    "n": 2763,
+    "chi2": 97.5,
+    "p": 4.944588393462818e-17,
+    "excess_0_5_pct": 2.5
+   }
+  ],
+  "flatline": {
+   "series": 186
+  },
+  "spike": {
+   "series": 404
+  },
+  "mix": {
+   "intervals": 15
+  },
+  "arithmetic": {
+   "breaks": 225
+  }
+ },
+ "junctions": [
+  {
+   "junction": "TMC-01",
+   "jda_name": "B-2 Bypass",
+   "duplicate_series_share": 0.354,
+   "terminal_digit_p": 9.82422591212812e-06,
+   "terminal_digit_excess_pct": 1.8,
+   "flatline_series": 45,
+   "spike_bins_per_1000": 8.6,
+   "mix_intervals": 2,
+   "stored_total_breaks": 121,
+   "s_duplicate": 0.354,
+   "s_digit": 0.45,
+   "s_flatline": 1.0,
+   "s_spike": 0.195,
+   "s_mix": 0.222,
+   "s_arith": 1.0,
+   "integrity_flag_score": 3.221
+  },
+  {
+   "junction": "TMC-06",
+   "jda_name": "Bhrigu Path",
+   "duplicate_series_share": 0.0,
+   "terminal_digit_p": 4.944588393462818e-17,
+   "terminal_digit_excess_pct": 2.5,
+   "flatline_series": 24,
+   "spike_bins_per_1000": 20.8,
+   "mix_intervals": 4,
+   "stored_total_breaks": 104,
+   "s_duplicate": 0.0,
+   "s_digit": 0.625,
+   "s_flatline": 0.533,
+   "s_spike": 0.473,
+   "s_mix": 0.444,
+   "s_arith": 0.86,
+   "integrity_flag_score": 2.935
+  },
+  {
+   "junction": "TMC-03",
+   "jda_name": "Patel Marg",
+   "duplicate_series_share": 0.198,
+   "terminal_digit_p": 5.6856844184882704e-12,
+   "terminal_digit_excess_pct": 2.3,
+   "flatline_series": 27,
+   "spike_bins_per_1000": 14.3,
+   "mix_intervals": 9,
+   "stored_total_breaks": 0,
+   "s_duplicate": 0.198,
+   "s_digit": 0.575,
+   "s_flatline": 0.6,
+   "s_spike": 0.325,
+   "s_mix": 1.0,
+   "s_arith": 0.0,
+   "integrity_flag_score": 2.698
+  },
+  {
+   "junction": "TMC-05",
+   "jda_name": "Rajat Path",
+   "duplicate_series_share": 0.077,
+   "terminal_digit_p": 4.719801644253446e-15,
+   "terminal_digit_excess_pct": 4.0,
+   "flatline_series": 21,
+   "spike_bins_per_1000": 44.0,
+   "mix_intervals": 0,
+   "stored_total_breaks": 0,
+   "s_duplicate": 0.077,
+   "s_digit": 1.0,
+   "s_flatline": 0.467,
+   "s_spike": 1.0,
+   "s_mix": 0.0,
+   "s_arith": 0.0,
+   "integrity_flag_score": 2.544
+  },
+  {
+   "junction": "TMC-02",
+   "jda_name": "Vijay Path",
+   "duplicate_series_share": 0.258,
+   "terminal_digit_p": 2.2725832736434537e-05,
+   "terminal_digit_excess_pct": 2.6,
+   "flatline_series": 28,
+   "spike_bins_per_1000": 8.0,
+   "mix_intervals": 0,
+   "stored_total_breaks": 0,
+   "s_duplicate": 0.258,
+   "s_digit": 0.65,
+   "s_flatline": 0.622,
+   "s_spike": 0.182,
+   "s_mix": 0.0,
+   "s_arith": 0.0,
+   "integrity_flag_score": 1.712
+  },
+  {
+   "junction": "TMC-04",
+   "jda_name": "VT Road",
+   "duplicate_series_share": 0.149,
+   "terminal_digit_p": 1.5633080946952854e-06,
+   "terminal_digit_excess_pct": -0.3,
+   "flatline_series": 41,
+   "spike_bins_per_1000": 13.9,
+   "mix_intervals": 0,
+   "stored_total_breaks": 0,
+   "s_duplicate": 0.149,
+   "s_digit": 0.0,
+   "s_flatline": 0.911,
+   "s_spike": 0.316,
+   "s_mix": 0.0,
+   "s_arith": 0.0,
+   "integrity_flag_score": 1.376
+  }
+ ],
+ "gate": {
+  "known_defects": 2,
+  "rediscovered": 2
+ }
+}

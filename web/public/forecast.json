@@ -1,0 +1,240 @@
+{
+ "method": "ratio (expansion-factor) estimator, leave-one-out over approaches",
+ "baseline": "pro-rata: the window carries its share of the day, no model",
+ "n_approaches": 24,
+ "analysis_days": 1,
+ "caveat": "one independent day, one corridor; not a growth forecast and not validated across days, because day two is derived from day one",
+ "mape_gate": 10.0,
+ "selection": {
+  "combinations_searched": 18,
+  "note": "the window is chosen on the same leave-one-out error it is reported with, so the headline MAPE is the best of a search and optimistic by an unknown amount; the leave-one-out protects the factor, not the choice of window"
+ },
+ "windows": [
+  {
+   "start_hour_from_0800": 0,
+   "hours": 2,
+   "clock": "08:00-10:00",
+   "target": "daily_total",
+   "mape": 17.4,
+   "baseline_mape": 59.65,
+   "factor": 7.7981,
+   "factor_cv": 0.1992,
+   "worst_approach_pct": 42.67
+  },
+  {
+   "start_hour_from_0800": 0,
+   "hours": 2,
+   "clock": "08:00-10:00",
+   "target": "peak_hour",
+   "mape": 13.33,
+   "baseline_mape": 20.64,
+   "factor": 0.6473,
+   "factor_cv": 0.1856,
+   "worst_approach_pct": 37.25
+  },
+  {
+   "start_hour_from_0800": 0,
+   "hours": 4,
+   "clock": "08:00-12:00",
+   "target": "daily_total",
+   "mape": 11.99,
+   "baseline_mape": 60.37,
+   "factor": 3.821,
+   "factor_cv": 0.1496,
+   "worst_approach_pct": 42.65
+  },
+  {
+   "start_hour_from_0800": 0,
+   "hours": 4,
+   "clock": "08:00-12:00",
+   "target": "peak_hour",
+   "mape": 9.85,
+   "baseline_mape": 20.12,
+   "factor": 0.3176,
+   "factor_cv": 0.1336,
+   "worst_approach_pct": 30.57
+  },
+  {
+   "start_hour_from_0800": 0,
+   "hours": 6,
+   "clock": "08:00-14:00",
+   "target": "daily_total",
+   "mape": 8.03,
+   "baseline_mape": 54.92,
+   "factor": 2.6081,
+   "factor_cv": 0.1046,
+   "worst_approach_pct": 25.36
+  },
+  {
+   "start_hour_from_0800": 0,
+   "hours": 6,
+   "clock": "08:00-14:00",
+   "target": "peak_hour",
+   "mape": 8.5,
+   "baseline_mape": 22.58,
+   "factor": 0.2174,
+   "factor_cv": 0.1045,
+   "worst_approach_pct": 22.66
+  },
+  {
+   "start_hour_from_0800": 0,
+   "hours": 8,
+   "clock": "08:00-16:00",
+   "target": "daily_total",
+   "mape": 6.43,
+   "baseline_mape": 46.22,
+   "factor": 2.0647,
+   "factor_cv": 0.0822,
+   "worst_approach_pct": 19.05
+  },
+  {
+   "start_hour_from_0800": 0,
+   "hours": 8,
+   "clock": "08:00-16:00",
+   "target": "peak_hour",
+   "mape": 8.18,
+   "baseline_mape": 26.8,
+   "factor": 0.1724,
+   "factor_cv": 0.1014,
+   "worst_approach_pct": 19.36
+  },
+  {
+   "start_hour_from_0800": 0,
+   "hours": 12,
+   "clock": "08:00-20:00",
+   "target": "daily_total",
+   "mape": 4.95,
+   "baseline_mape": 47.9,
+   "factor": 1.3573,
+   "factor_cv": 0.0618,
+   "worst_approach_pct": 13.74
+  },
+  {
+   "start_hour_from_0800": 0,
+   "hours": 12,
+   "clock": "08:00-20:00",
+   "target": "peak_hour",
+   "mape": 8.71,
+   "baseline_mape": 25.8,
+   "factor": 0.1136,
+   "factor_cv": 0.1134,
+   "worst_approach_pct": 20.87
+  },
+  {
+   "start_hour_from_0800": 1,
+   "hours": 4,
+   "clock": "09:00-13:00",
+   "target": "daily_total",
+   "mape": 9.57,
+   "baseline_mape": 65.66,
+   "factor": 3.6722,
+   "factor_cv": 0.1212,
+   "worst_approach_pct": 36.89
+  },
+  {
+   "start_hour_from_0800": 1,
+   "hours": 4,
+   "clock": "09:00-13:00",
+   "target": "peak_hour",
+   "mape": 8.3,
+   "baseline_mape": 17.35,
+   "factor": 0.3056,
+   "factor_cv": 0.1064,
+   "worst_approach_pct": 22.86
+  },
+  {
+   "start_hour_from_0800": 2,
+   "hours": 4,
+   "clock": "10:00-14:00",
+   "target": "daily_total",
+   "mape": 7.82,
+   "baseline_mape": 52.55,
+   "factor": 3.9651,
+   "factor_cv": 0.0914,
+   "worst_approach_pct": 22.12
+  },
+  {
+   "start_hour_from_0800": 2,
+   "hours": 4,
+   "clock": "10:00-14:00",
+   "target": "peak_hour",
+   "mape": 10.04,
+   "baseline_mape": 23.54,
+   "factor": 0.3315,
+   "factor_cv": 0.1226,
+   "worst_approach_pct": 25.42
+  },
+  {
+   "start_hour_from_0800": 8,
+   "hours": 4,
+   "clock": "16:00-20:00",
+   "target": "daily_total",
+   "mape": 10.1,
+   "baseline_mape": 51.28,
+   "factor": 4.0153,
+   "factor_cv": 0.1122,
+   "worst_approach_pct": 27.75
+  },
+  {
+   "start_hour_from_0800": 8,
+   "hours": 4,
+   "clock": "16:00-20:00",
+   "target": "peak_hour",
+   "mape": 14.9,
+   "baseline_mape": 23.8,
+   "factor": 0.3379,
+   "factor_cv": 0.1894,
+   "worst_approach_pct": 32.6
+  },
+  {
+   "start_hour_from_0800": 10,
+   "hours": 4,
+   "clock": "18:00-22:00",
+   "target": "daily_total",
+   "mape": 9.75,
+   "baseline_mape": 41.15,
+   "factor": 4.3057,
+   "factor_cv": 0.1147,
+   "worst_approach_pct": 34.07
+  },
+  {
+   "start_hour_from_0800": 10,
+   "hours": 4,
+   "clock": "18:00-22:00",
+   "target": "peak_hour",
+   "mape": 16.55,
+   "baseline_mape": 28.6,
+   "factor": 0.364,
+   "factor_cv": 0.2188,
+   "worst_approach_pct": 40.4
+  }
+ ],
+ "shortest_window": {
+  "daily_total": {
+   "start_hour_from_0800": 2,
+   "hours": 4,
+   "clock": "10:00-14:00",
+   "target": "daily_total",
+   "mape": 7.82,
+   "baseline_mape": 52.55,
+   "factor": 3.9651,
+   "factor_cv": 0.0914,
+   "worst_approach_pct": 22.12
+  },
+  "peak_hour": {
+   "start_hour_from_0800": 1,
+   "hours": 4,
+   "clock": "09:00-13:00",
+   "target": "peak_hour",
+   "mape": 8.3,
+   "baseline_mape": 17.35,
+   "factor": 0.3056,
+   "factor_cv": 0.1064,
+   "worst_approach_pct": 22.86
+  }
+ },
+ "gate": {
+  "targets": 2,
+  "predictable": 2
+ }
+}

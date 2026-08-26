@@ -252,6 +252,10 @@ corridor/
 │   ├── exhibits.py     # volume-flow, tornado, continuity, flow raster
 │   ├── standards.py    # the corridor against the codes it is built under
 │   │
+│   ├── anomaly.py      # survey integrity screen; gate is rediscovering known defects
+│   ├── cluster.py      # approach typology; gate is a held-out corridor/cross label
+│   ├── forecast.py     # shortest trustworthy count, leave-one-out expansion factors
+│   │
 │   ├── homography.py   # pixel -> world, float64 + local origin, plain least squares
 │   ├── detect.py       # YOLO + SAHI slicing + ByteTrack
 │   ├── count.py        # zones -> movements; resolves by radial velocity order

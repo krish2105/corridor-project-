@@ -97,6 +97,12 @@ def _safety():
     return json.loads(p.read_text()) if p.exists() else None
 
 
+def _section(name):
+    """A generated dataset, published as-is. None when it has not been generated yet."""
+    p = OUT_DATA / f"{name}.json"
+    return json.loads(p.read_text()) if p.exists() else None
+
+
 # corridor.json is fetched on every page view, so it carries SUMMARIES only. The heavy
 # per-bin series - 1,116 LOS cells, 96-step cumulative curves, 576 raster cells and five
 # continuity series - are split into files the page fetches when a reader opens the
@@ -256,7 +262,9 @@ def _write_web_layers(webdir):
                   # not client data - our own test count, and committing it is what
                   # lets a clean checkout render the same README the repo carries.
                   OUT_DATA / "testcount.json",
-                  OUT_DATA / "standards.json"):
+                  OUT_DATA / "standards.json",
+                  OUT_DATA / "anomaly.json", OUT_DATA / "cluster.json",
+                  OUT_DATA / "forecast.json"):
         if src_f.exists():
             _sh.copy(src_f, webdir / src_f.name)
         else:
@@ -396,6 +404,9 @@ def build():
         standards=_standards(),
         profiles=_profiles(),
         exhibits=_exhibits(),
+        anomaly=_section("anomaly"),
+        cluster=_section("cluster"),
+        forecast=_section("forecast"),
         junctions=junctions,
         corridor=dict(
             through_pct_mean=round(float(tv.through_pct.mean()), 1),
