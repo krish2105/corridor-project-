@@ -45,6 +45,7 @@ FILES = {
     "cluster.json":     "Approach typology learned from the counts, and its held-out test.",
     "forecast.json":    "How short a count can be and still predict the day, with its error.",
     "uturn_framework.json": "Per-bay criteria ladder, the binding constraint, and the back-solve.",
+    "measurement.json": "Every published dimension: how it was derived, its uncertainty, what resolves it.",
 }
 
 # Units are stated because a number without one is not checkable.
@@ -546,6 +547,49 @@ FIELDS.update({
     "n_uturn_demand": "U-turn demand, scaled 0 to 1.",
     "n_exposure_change_pct": "Exposure change, scaled 0 to 1.",
     "n_turning_share_pct": "Turning share, scaled 0 to 1.",
+})
+
+
+# --- the measurement register -------------------------------------------------
+# Every dimension in this project is scaled off linework, never read from a dimension
+# entity, because the supplied DWG has none. These fields are how far that can be trusted.
+FIELDS.update({
+    "published_step_m": "Transect spacing actually used. Chosen where the width stops "
+                        "moving, not by convenience.",
+    "steps_tested": "Spacings the convergence was run at, coarse to fine.",
+    "converged_tolerance_m": "Agreement between consecutive steps that counts as settled.",
+    "convergence": "Per junction, the width at each step and where it settles.",
+    "by_step": "Width and transect count at each spacing tested.",
+    "step_m": "The transect spacing this record was measured at.",
+    "converged_at_step": "Coarsest spacing agreeing with the next finer one. null means "
+                         "the answer was still moving at the finest step tested.",
+    "spread_m": "Widest minus narrowest across all spacings. The method's own scatter.",
+    "transects_by_step": "Usable transects on the whole corridor at each spacing.",
+    "transects_total": "Usable transects at the published spacing.",
+    "bootstrap": "Confidence interval on each junction's width, resampling its own "
+                 "transects.",
+    "bootstrap_resamples": "Resamples behind that interval.",
+    "median_m": "Median of the transects near this junction. The published width.",
+    "ci_m": "[low, high] 95% interval on that median.",
+    "ci_width_m": "High minus low. How much the width depends on which transects landed.",
+    "min_m": "Narrowest single transect near the junction.",
+    "max_m": "Widest single transect near the junction.",
+    "above_wide_threshold": "Whether the width exceeds the point at which a service road "
+                            "and five running lanes look the same from above.",
+    "junctions_above_wide_threshold": "How many junctions are in that state.",
+    "wide_threshold_m": "That threshold, metres per direction.",
+    "wide_transect_pct": "Share of transects above it. Published as a share because the "
+                         "count moves with the spacing.",
+    "registration": "Whether JDA's KML centreline and JDA's CAD drawing agree about "
+                    "where the road is. Consistency between two sources, not ground truth.",
+    "feature": "The CAD linework the distance was measured to.",
+    "p90_m": "90th percentile of that distance.",
+    "dimensions": "Every published dimension, with its method and its uncertainty.",
+    "dimension": "What is being measured.",
+    "used_for": "Which published results depend on it.",
+    "uncertainty": "How far it can be trusted, or why that cannot be quantified.",
+    "resolved_by": "The field measurement that would settle it.",
+    "status": "That every dimension here is provisional pending a total station survey.",
 })
 
 

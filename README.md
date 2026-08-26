@@ -15,7 +15,7 @@ The pipeline parses every cell, recomputes every stored total from its component
 | **225 stored totals** disagree with their components | 180 understate, 43 overstate; all recorded, none silently corrected |
 | **JDA's U-turn bays cannot carry the demand** | A right turn becomes a U-turn under signal-free running, so the bays inherit the recorded right-turn volume. At a composition-weighted critical gap: 12 of 12 approaches unservable, 12 even optimistically. 14,908 veh/hr would force across opposing traffic |
 | An elevated through-carriageway **is justified on opening** | Through movements 57–79%; carrying them over the junctions returns all 12 corridor approaches to acceptable operation |
-| **…and does not last its own design horizon** | Growing residual turning demand at 6%, the first approach is back over capacity in 2042 and 10 of 12 still hold at 2046. This argues against our own recommendation and is reported anyway |
+| **…and does not last its own design horizon** | Growing residual turning demand at 6%, the first approach is back over capacity in 2047 and 12 of 12 still hold at 2046. This argues against our own recommendation and is reported anyway |
 | **The corridor does not queue, it locks** | 0 of 12 approaches queue past the junction behind them inside the peak hour. A through trip takes 6.9 minutes against 6.9 at free flow — an effective 40.0 km/h |
 | **The delay already has a measurable annual cost** | Approaches are over capacity 0.0 hours a day, counted from the survey's own intervals. Valued at an occupancy-weighted value of time that is ₹0–0 crore a year |
 
@@ -29,7 +29,7 @@ Source data is not in this repo — the workbooks and CAD are the client's. Plac
 
 ```bash
 uv sync
-uv run pytest                     # 445 tests
+uv run pytest                     # 452 tests
 uv run python src/inspect_tmc.py   # raw workbook structure, no reshaping
 uv run python src/tmc_parse.py     # workbooks -> tidy frames; never trusts a stored total
 uv run python src/audit.py         # -> out/audit_report.md
@@ -38,6 +38,7 @@ uv run python src/medians.py       # U-turn feasibility from the DIVIDER linewor
 uv run python src/pcu.py           # IRC:106 share-dependent PCU, bands for the composites
 uv run python src/analyse.py       # peak hour, TMC matrices, through/turning split
 uv run python src/capacity.py      # measured widths, v/c, design life
+uv run python src/measurement.py   # -> out/data/measurement.json; the uncertainty on every dimension
 uv run python src/scheme_test.py   # does the JDA U-turn scheme work?
 uv run python src/uturn_framework.py # where a bay belongs: criteria ladder, binding term back-solved
 uv run python src/delay.py         # queue, spillback, corridor journey time
@@ -65,12 +66,12 @@ Every module runs standalone and prints its own verification metric. A module th
 
 ## Layout
 
-- `src/` — 41 modules. `tmc_parse` and `audit` are the core; `atlas`, `medians` and `dxf_inventory` read the CAD survey; `capacity`, `scheme_test`, `delay` and `economics` carry the findings.
+- `src/` — 42 modules. `tmc_parse` and `audit` are the core; `atlas`, `medians` and `dxf_inventory` read the CAD survey; `capacity`, `scheme_test`, `delay` and `economics` carry the findings.
 - `web/` — Next.js dashboard, reading the same `corridor.json` as the static report.
 - `docs/data_dictionary.md` — every field in every published file, with units. Generated, so a field added without a description fails a test.
 - `docs/jaipur_corridor_study.md` — the methodology, with inline `ERRATUM` blocks correcting 9 defects in its own worked code.
 
-**Documents are generated, not written.** Reports, the data dictionary, the commercial pack and this README all build from pipeline output, because hand-written figures go stale silently — this file claimed 26 tests while the suite held 445.
+**Documents are generated, not written.** Reports, the data dictionary, the commercial pack and this README all build from pipeline output, because hand-written figures go stale silently — this file claimed 26 tests while the suite held 452.
 
 ## Caveats, stated
 

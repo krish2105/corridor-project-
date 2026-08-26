@@ -59,6 +59,9 @@ DELIVERABLES = [
     # what makes that visible.
     ("D11", "Phase 6 field plan", "Camera positions, schedule, GCP capture list",
      "T3", OUT / "phase6_field_plan.md", "awaiting the field day"),
+    ("D14", "Measurement register",
+     "Every published dimension with its method, its uncertainty and what resolves it",
+     "T2", OUT_DATA / "measurement.json"),
     ("D13", "U-turn decision framework",
      "Criteria ladder per bay, binding constraint named, alternatives costed",
      "T2", OUT_DATA / "uturn_framework.json"),
@@ -230,6 +233,7 @@ PIPELINE_ORDER = [
     ("pcu",          "IRC:106 share-dependent PCU, bands for the composites"),
     ("analyse",      "peak hour, TMC matrices, through/turning split"),
     ("capacity",     "measured widths, v/c, design life"),
+    ("measurement",  "-> out/data/measurement.json; the uncertainty on every dimension"),
     ("scheme_test",  "does the JDA U-turn scheme work?"),
     ("uturn_framework", "where a bay belongs: criteria ladder, binding term back-solved"),
     ("delay",        "queue, spillback, corridor journey time"),

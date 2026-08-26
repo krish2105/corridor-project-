@@ -450,3 +450,23 @@ tr.grow:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
 .lrn-card dd em{display:block;font-style:normal;font-size:.7rem;color:var(--muted);
   margin-top:.1rem}
 td.dim{color:var(--faint)}
+
+/* measurement register ----------------------------------------------------- */
+/* The published spacing is marked in the convergence table so a reader can see which
+   column the widths on this page actually came from, without counting across. */
+td.pub{background:var(--accent-soft);font-weight:600}
+.disc{display:flex;align-items:center;gap:.5rem;min-height:44px;padding:.4rem .1rem;
+  background:none;border:0;cursor:pointer;color:var(--accent);font:inherit;
+  font-size:.74rem;text-align:left}
+.disc:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.disc span[aria-hidden]{display:inline-flex;align-items:center;justify-content:center;
+  width:1.1rem;height:1.1rem;border:1px solid var(--rule-hard);border-radius:2px;
+  font-family:"IBM Plex Mono",monospace;font-size:.7rem;flex:none}
+.dims{margin:0;display:flex;flex-direction:column;gap:.8rem}
+.dims dt{font-weight:600;font-size:.82rem}
+.dims dd{margin:.25rem 0 0;font-size:.76rem;line-height:1.65;color:var(--muted)}
+.dim-k{display:inline-block;min-width:6.2rem;font-family:"IBM Plex Mono",monospace;
+  font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+@media (max-width: 40rem){
+  .dim-k{min-width:0;margin-right:.4rem}
+}

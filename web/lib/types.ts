@@ -86,7 +86,11 @@ export type Corridor = {
   capacity: {
     observed_vs_planning_ratio: number; lane_model_applicable?: boolean; horizon_year: number;
     approaches_ok_after_grade_separation: number;
-    widths: Record<string, { width_m: number; lanes_per_dir: number; capacity_pcu_hr: number }>;
+    widths: Record<string, { width_m: number; lanes_per_dir: number; capacity_pcu_hr: number;
+                             transects: number }>;
+    width_caveat?: string; wide_transects?: number; transects_total?: number;
+    wide_transect_pct?: number; wide_transect_threshold_m?: number;
+    wide_transect_range_m?: [number, number] | null;
     relief: { junction: string; approach: string; through_pct: number; peak_pcu: number;
               residual_pcu: number; vc_before: number; vc_after: number; los_after: string }[];
     growth: { growth_pct: number; multiple: number; binding_need_pcu: number }[];
@@ -204,6 +208,28 @@ export type Corridor = {
     most_influential: string | null; swing: number; assumption_driven: boolean;
   } | null;
   criticality: Criticality[];
+  measurement: {
+    source: string; status: string;
+    published_step_m: number; steps_tested: number[]; converged_tolerance_m: number;
+    convergence: {
+      junction: string; jda_name: string; converged_at_step: number | null;
+      spread_m: number | null;
+      by_step: { step_m: number; width_m: number | null; transects: number | null }[];
+    }[];
+    transects_by_step: { step_m: number; transects: number }[];
+    bootstrap: {
+      junction: string; n: number; median_m: number | null;
+      ci_m: [number, number] | null; ci_width_m?: number;
+      min_m?: number; max_m?: number; above_wide_threshold?: boolean;
+      unquantified?: string;
+    }[];
+    bootstrap_resamples: number;
+    registration: { feature: string; n: number; median_m?: number; p90_m?: number;
+                    max_m?: number; unquantified?: string }[];
+    dimensions: { dimension: string; used_for: string; method: string;
+                  uncertainty: string; resolved_by: string }[];
+    junctions_above_wide_threshold: number; wide_threshold_m: number;
+  } | null;
   anomaly: {
     method: string; caveat: string;
     thresholds: Record<string, number>;

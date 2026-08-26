@@ -114,13 +114,21 @@ WIDE_TRANSECT_M = 14.0
 WIDE_HITS = []
 
 
-def measure_widths(step=25.0, probe=45.0, band=400.0):
+def measure_widths(step=5.0, probe=45.0, band=400.0):
     """
     Carriageway width along the corridor, by perpendicular transect to the kerb lines.
 
     Returns {junction: median width within `band` metres of it}. The median resists the
     transects that miss a kerb gap or catch a service road.
+
+    STEP WAS 25 m AND THAT WAS TOO COARSE. A transect only yields a width where it finds
+    kerbs both sides and the result is a plausible carriageway, and at 25 m the whole
+    4.6 km corridor produced 18 such transects - one to three per junction. TMC-01 read
+    11.7 m from two of them and 15.6 m at every finer step, a 33% difference that carries
+    straight into its lane count, capacity, v/c and design life. `measurement.py` runs the
+    convergence and publishes it; 5 m sits inside the converged region for all six.
     """
+    del WIDE_HITS[:]          # module-level, so repeated calls would otherwise accumulate
     geom = read_geometry(DXF)
     align = longest_alignment(geom)
     f, total = chainage(align)
@@ -489,15 +497,26 @@ if __name__ == "__main__":
         # width, and these widths are what turn a corridor that was over capacity on the
         # wrong alignment into one that is not.
         wide_transects=len(WIDE_HITS),
+        transects_total=len(stations),
+        wide_transect_pct=(round(100 * len(WIDE_HITS) / len(stations), 1)
+                           if stations else None),
         wide_transect_threshold_m=WIDE_TRANSECT_M,
         wide_transect_range_m=([min(WIDE_HITS), max(WIDE_HITS)] if WIDE_HITS else None),
+        # Counted and stated as a share, not a count. The count moves with the transect
+        # step - it went from 10 to 43 when the step was corrected from 25 m to 5 m -
+        # and a hardcoded "ten" in this sentence would have gone stale silently, which is
+        # the whole failure mode this file exists to avoid.
         width_caveat=(
-            "A transect cannot distinguish a through lane from a service road. Ten "
-            "transects measure over 14 m per direction, up to 19.8 m, which is five "
-            "running lanes each way. That is possible on this corridor and it is also "
-            "what a service road looks like from above. Capacity scales linearly with "
-            "this, so treat the northern junctions as an upper bound until the "
-            "carriageway is confirmed on site."),
+            f"A transect cannot distinguish a through lane from a service road. "
+            f"{len(WIDE_HITS)} of {len(stations)} transects "
+            f"({100 * len(WIDE_HITS) / len(stations):.0f}%) measure over "
+            f"{WIDE_TRANSECT_M:.0f} m per direction, up to {max(WIDE_HITS):.1f} m, which "
+            f"is five running lanes each way. That is possible on this corridor and it is "
+            f"also what a service road looks like from above. Capacity scales linearly "
+            f"with this, so treat the wide junctions as an upper bound until the "
+            f"carriageway is confirmed on site."
+            if WIDE_HITS and stations else
+            "No transect exceeded the wide threshold."),
         relief=[{k: (v if not hasattr(v, "item") else v.item())
                  for k, v in r.items()} for r in rel.to_dict("records")],
         approaches_ok_after_grade_separation=ok,

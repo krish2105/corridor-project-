@@ -277,96 +277,96 @@
   "analysis_date": "2026-05-11",
   "widths": {
    "TMC-01": {
-    "width_m": 11.7,
-    "transects": 2,
-    "lanes_per_dir": 3,
-    "capacity_pcu_hr": 4212
+    "width_m": 15.6,
+    "transects": 7,
+    "lanes_per_dir": 4,
+    "capacity_pcu_hr": 5616
    },
    "TMC-02": {
-    "width_m": 12.7,
-    "transects": 2,
+    "width_m": 12.5,
+    "transects": 9,
     "lanes_per_dir": 3,
-    "capacity_pcu_hr": 4572
+    "capacity_pcu_hr": 4500
    },
    "TMC-03": {
     "width_m": 13.0,
-    "transects": 1,
+    "transects": 4,
     "lanes_per_dir": 3,
     "capacity_pcu_hr": 4680
    },
    "TMC-04": {
-    "width_m": 17.7,
-    "transects": 3,
+    "width_m": 17.6,
+    "transects": 13,
     "lanes_per_dir": 5,
-    "capacity_pcu_hr": 6372
+    "capacity_pcu_hr": 6336
    },
    "TMC-05": {
-    "width_m": 18.3,
-    "transects": 7,
+    "width_m": 18.2,
+    "transects": 32,
     "lanes_per_dir": 5,
-    "capacity_pcu_hr": 6588
+    "capacity_pcu_hr": 6552
    },
    "TMC-06": {
-    "width_m": 19.6,
-    "transects": 3,
+    "width_m": 19.4,
+    "transects": 9,
     "lanes_per_dir": 5,
-    "capacity_pcu_hr": 7056
+    "capacity_pcu_hr": 6984
    }
   },
   "junctions": [
    {
     "junction": "TMC-01",
     "approach": "from Mansarover Metro",
-    "capacity": 4212,
+    "capacity": 5616,
     "peak": "09:15",
     "pcu_lo": 3301.2,
     "pcu_pt": 3317.0,
     "pcu_hi": 4859.9,
-    "vc_lo": 0.7837606837606838,
-    "vc_pt": 0.7875118708452041,
-    "vc_hi": 1.1538224121557454,
-    "los_pt": "D",
-    "los_hi": "F"
+    "vc_lo": 0.5878205128205128,
+    "vc_pt": 0.5906339031339032,
+    "vc_hi": 0.8653668091168091,
+    "los_pt": "C",
+    "los_hi": "E"
    },
    {
     "junction": "TMC-01",
     "approach": "from Sanganer Stadium",
-    "capacity": 4212,
+    "capacity": 5616,
     "peak": "08:30",
     "pcu_lo": 3938.4500000000003,
     "pcu_pt": 3962.75,
     "pcu_hi": 5703.849999999999,
-    "vc_lo": 0.9350546058879393,
-    "vc_pt": 0.94082383665717,
-    "vc_hi": 1.3541904083570748,
-    "los_pt": "E",
+    "vc_lo": 0.7012909544159545,
+    "vc_pt": 0.7056178774928775,
+    "vc_hi": 1.0156428062678062,
+    "los_pt": "D",
     "los_hi": "F"
    },
    {
     "junction": "TMC-02",
     "approach": "from Mansarover Metro",
-    "capacity": 4572,
+    "capacity": 4500,
     "peak": "09:15",
     "pcu_lo": 3114.75,
     "pcu_pt": 3125.55,
     "pcu_hi": 4829.849999999999,
-    "vc_lo": 0.681266404199475,
-    "vc_pt": 0.6836286089238846,
-    "vc_hi": 1.0563976377952755,
+    "vc_lo": 0.6921666666666667,
+    "vc_pt": 0.6945666666666667,
+    "vc_hi": 1.0733,
     "los_pt": "C",
     "los_hi": "F"
    },
    {
     "junction": "TMC-02",
     "approach": "from Sanganer Stadium",
-    "capacity": 4572,
+    "capacity": 4500,
     "peak": "18:15",
     "pcu_lo": 2970.8999999999996,
     "pcu_pt": 2989.8,
     "pcu_hi": 4495.9,
-    "vc_lo": 0.6498031496062991,
-    "vc_pt": 0.6539370078740158,
-    "vc_hi": 0.9833552055993,
+    "vc_lo": 0.6601999999999999,
+    "vc_pt": 0.6644,
+    "vc_hi": 0.9990888888888888,
     "los_pt": "C",
     "los_hi": "E"
    },
@@ -401,98 +401,100 @@
    {
     "junction": "TMC-04",
     "approach": "from Mansarover Metro",
-    "capacity": 6372,
+    "capacity": 6336,
     "peak": "09:15",
     "pcu_lo": 3501.65,
     "pcu_pt": 3509.6499999999996,
     "pcu_hi": 5029.0,
-    "vc_lo": 0.549537037037037,
-    "vc_pt": 0.5507925298179535,
-    "vc_hi": 0.7892341494036409,
+    "vc_lo": 0.5526594065656566,
+    "vc_pt": 0.5539220328282828,
+    "vc_hi": 0.7937184343434344,
     "los_pt": "C",
     "los_hi": "D"
    },
    {
     "junction": "TMC-04",
     "approach": "from Sanganer Stadium",
-    "capacity": 6372,
+    "capacity": 6336,
     "peak": "17:45",
     "pcu_lo": 3181.7999999999997,
     "pcu_pt": 3193.8,
     "pcu_hi": 5064.45,
-    "vc_lo": 0.4993408662900188,
-    "vc_pt": 0.5012241054613936,
-    "vc_hi": 0.7947975517890772,
+    "vc_lo": 0.5021780303030302,
+    "vc_pt": 0.5040719696969698,
+    "vc_hi": 0.799313446969697,
     "los_pt": "C",
     "los_hi": "D"
    },
    {
     "junction": "TMC-05",
     "approach": "from Mansarover Metro",
-    "capacity": 6588,
+    "capacity": 6552,
     "peak": "09:45",
     "pcu_lo": 5772.85,
     "pcu_pt": 5777.45,
     "pcu_hi": 8437.45,
-    "vc_lo": 0.8762674559805708,
-    "vc_pt": 0.8769656952034001,
-    "vc_hi": 1.280730115361263,
+    "vc_lo": 0.8810821123321124,
+    "vc_pt": 0.881784188034188,
+    "vc_hi": 1.2877670940170942,
     "los_pt": "E",
     "los_hi": "F"
    },
    {
     "junction": "TMC-05",
     "approach": "from Sanganer Stadium",
-    "capacity": 6588,
+    "capacity": 6552,
     "peak": "09:15",
     "pcu_lo": 4070.45,
     "pcu_pt": 4086.15,
     "pcu_hi": 6183.15,
-    "vc_lo": 0.6178582270795385,
-    "vc_pt": 0.6202413479052823,
-    "vc_hi": 0.938547358834244,
+    "vc_lo": 0.6212530525030525,
+    "vc_pt": 0.6236492673992674,
+    "vc_hi": 0.9437042124542124,
     "los_pt": "C",
     "los_hi": "E"
    },
    {
     "junction": "TMC-06",
     "approach": "from Mansarover Metro",
-    "capacity": 7056,
+    "capacity": 6984,
     "peak": "09:15",
     "pcu_lo": 3787.5499999999997,
     "pcu_pt": 3796.85,
     "pcu_hi": 5435.75,
-    "vc_lo": 0.5367842970521541,
-    "vc_pt": 0.5381023242630385,
-    "vc_hi": 0.7703727324263039,
+    "vc_lo": 0.5423181557846506,
+    "vc_pt": 0.5436497709049255,
+    "vc_hi": 0.7783147193585338,
     "los_pt": "C",
     "los_hi": "D"
    },
    {
     "junction": "TMC-06",
     "approach": "from Sanganer Stadium",
-    "capacity": 7056,
+    "capacity": 6984,
     "peak": "09:30",
     "pcu_lo": 3537.2,
     "pcu_pt": 3565.8,
     "pcu_hi": 5648.999999999999,
-    "vc_lo": 0.5013038548752834,
-    "vc_pt": 0.5053571428571428,
-    "vc_hi": 0.8005952380952379,
+    "vc_lo": 0.5064719358533791,
+    "vc_pt": 0.5105670103092784,
+    "vc_hi": 0.808848797250859,
     "los_pt": "C",
     "los_hi": "D"
    }
   ],
   "horizon_year": 2046,
-  "observed_vs_planning_ratio": 0.73,
+  "observed_vs_planning_ratio": 0.7,
   "lane_model_applicable": false,
-  "wide_transects": 10,
+  "wide_transects": 43,
+  "transects_total": 77,
+  "wide_transect_pct": 55.8,
   "wide_transect_threshold_m": 14.0,
   "wide_transect_range_m": [
-   15.7,
-   19.8
+   15.5,
+   19.9
   ],
-  "width_caveat": "A transect cannot distinguish a through lane from a service road. Ten transects measure over 14 m per direction, up to 19.8 m, which is five running lanes each way. That is possible on this corridor and it is also what a service road looks like from above. Capacity scales linearly with this, so treat the northern junctions as an upper bound until the carriageway is confirmed on site.",
+  "width_caveat": "A transect cannot distinguish a through lane from a service road. 43 of 77 transects (56%) measure over 14 m per direction, up to 19.9 m, which is five running lanes each way. That is possible on this corridor and it is also what a service road looks like from above. Capacity scales linearly with this, so treat the wide junctions as an upper bound until the carriageway is confirmed on site.",
   "relief": [
    {
     "junction": "TMC-01",
@@ -500,9 +502,9 @@
     "through_pct": 57.2,
     "peak_pcu": 3317,
     "residual_pcu": 1420,
-    "vc_before": 0.79,
-    "vc_after": 0.34,
-    "los_after": "B"
+    "vc_before": 0.59,
+    "vc_after": 0.25,
+    "los_after": "A"
    },
    {
     "junction": "TMC-01",
@@ -510,8 +512,8 @@
     "through_pct": 57.2,
     "peak_pcu": 3963,
     "residual_pcu": 1696,
-    "vc_before": 0.94,
-    "vc_after": 0.4,
+    "vc_before": 0.71,
+    "vc_after": 0.3,
     "los_after": "B"
    },
    {
@@ -520,7 +522,7 @@
     "through_pct": 68.3,
     "peak_pcu": 3126,
     "residual_pcu": 991,
-    "vc_before": 0.68,
+    "vc_before": 0.69,
     "vc_after": 0.22,
     "los_after": "A"
    },
@@ -530,7 +532,7 @@
     "through_pct": 68.3,
     "peak_pcu": 2990,
     "residual_pcu": 948,
-    "vc_before": 0.65,
+    "vc_before": 0.66,
     "vc_after": 0.21,
     "los_after": "A"
    },
@@ -620,18 +622,18 @@
    {
     "junction": "TMC-01",
     "approach": "from Mansarover Metro",
-    "vc_after": 0.34,
-    "fails_low": 2054,
-    "fails_med": 2045,
-    "fails_high": 2041
+    "vc_after": 0.25,
+    "fails_low": 2062,
+    "fails_med": 2050,
+    "fails_high": 2045
    },
    {
     "junction": "TMC-01",
     "approach": "from Sanganer Stadium",
-    "vc_after": 0.4,
-    "fails_low": 2050,
-    "fails_med": 2042,
-    "fails_high": 2038
+    "vc_after": 0.3,
+    "fails_low": 2057,
+    "fails_med": 2047,
+    "fails_high": 2042
    },
    {
     "junction": "TMC-02",
@@ -714,9 +716,9 @@
     "fails_high": 2052
    }
   ],
-  "design_life_first_failure_med": 2042,
+  "design_life_first_failure_med": 2047,
   "design_life_last_failure_med": 2062,
-  "design_life_survives_horizon": 10,
+  "design_life_survives_horizon": 12,
   "growth": [
    {
     "growth_pct": 4.0,
@@ -934,19 +936,19 @@
    {
     "junction": "TMC-01",
     "jda_name": "B-2 Bypass ",
-    "s0_vc": 0.94,
+    "s0_vc": 0.71,
     "s0_los": "-",
     "s1_uturn_vc_cons": 23.80276434973617,
     "s1_uturn_vc_opt": 7.600495818548861,
     "s1_works": false,
-    "s2_vc": 0.4,
+    "s2_vc": 0.3,
     "s2_los": "B",
     "through_pct": 57.2
    },
    {
     "junction": "TMC-02",
     "jda_name": "Vijay Path ",
-    "s0_vc": 0.65,
+    "s0_vc": 0.66,
     "s0_los": "-",
     "s1_uturn_vc_cons": 18.7802589760515,
     "s1_uturn_vc_opt": 6.806552202197836,
@@ -1899,9 +1901,9 @@
    {
     "junction": "TMC-01",
     "approach": "from Mansarover Metro",
-    "vc": 0.79,
-    "capacity_pcu_hr": 4212,
-    "los": "D",
+    "vc": 0.59,
+    "capacity_pcu_hr": 5616,
+    "los": "C",
     "queue_pcu": 0,
     "queue_vehicles": 0,
     "queue_m": 0,
@@ -1917,9 +1919,9 @@
    {
     "junction": "TMC-01",
     "approach": "from Sanganer Stadium",
-    "vc": 0.94,
-    "capacity_pcu_hr": 4212,
-    "los": "E",
+    "vc": 0.71,
+    "capacity_pcu_hr": 5616,
+    "los": "D",
     "queue_pcu": 0,
     "queue_vehicles": 0,
     "queue_m": 0,
@@ -1935,8 +1937,8 @@
    {
     "junction": "TMC-02",
     "approach": "from Mansarover Metro",
-    "vc": 0.68,
-    "capacity_pcu_hr": 4572,
+    "vc": 0.69,
+    "capacity_pcu_hr": 4500,
     "los": "C",
     "queue_pcu": 0,
     "queue_vehicles": 0,
@@ -1953,8 +1955,8 @@
    {
     "junction": "TMC-02",
     "approach": "from Sanganer Stadium",
-    "vc": 0.65,
-    "capacity_pcu_hr": 4572,
+    "vc": 0.66,
+    "capacity_pcu_hr": 4500,
     "los": "C",
     "queue_pcu": 0,
     "queue_vehicles": 0,
@@ -2008,7 +2010,7 @@
     "junction": "TMC-04",
     "approach": "from Mansarover Metro",
     "vc": 0.55,
-    "capacity_pcu_hr": 6372,
+    "capacity_pcu_hr": 6336,
     "los": "C",
     "queue_pcu": 0,
     "queue_vehicles": 0,
@@ -2026,7 +2028,7 @@
     "junction": "TMC-04",
     "approach": "from Sanganer Stadium",
     "vc": 0.5,
-    "capacity_pcu_hr": 6372,
+    "capacity_pcu_hr": 6336,
     "los": "C",
     "queue_pcu": 0,
     "queue_vehicles": 0,
@@ -2044,7 +2046,7 @@
     "junction": "TMC-05",
     "approach": "from Mansarover Metro",
     "vc": 0.88,
-    "capacity_pcu_hr": 6588,
+    "capacity_pcu_hr": 6552,
     "los": "E",
     "queue_pcu": 0,
     "queue_vehicles": 0,
@@ -2062,7 +2064,7 @@
     "junction": "TMC-05",
     "approach": "from Sanganer Stadium",
     "vc": 0.62,
-    "capacity_pcu_hr": 6588,
+    "capacity_pcu_hr": 6552,
     "los": "C",
     "queue_pcu": 0,
     "queue_vehicles": 0,
@@ -2080,7 +2082,7 @@
     "junction": "TMC-06",
     "approach": "from Mansarover Metro",
     "vc": 0.54,
-    "capacity_pcu_hr": 7056,
+    "capacity_pcu_hr": 6984,
     "los": "C",
     "queue_pcu": 0,
     "queue_vehicles": 0,
@@ -2098,7 +2100,7 @@
     "junction": "TMC-06",
     "approach": "from Sanganer Stadium",
     "vc": 0.51,
-    "capacity_pcu_hr": 7056,
+    "capacity_pcu_hr": 6984,
     "los": "C",
     "queue_pcu": 0,
     "queue_vehicles": 0,
@@ -2130,14 +2132,14 @@
    {
     "junction": "TMC-01",
     "approach": "from Mansarover Metro",
-    "vc": 0.34,
+    "vc": 0.25,
     "mean_delay_min": 0.0,
-    "los": "B"
+    "los": "A"
    },
    {
     "junction": "TMC-01",
     "approach": "from Sanganer Stadium",
-    "vc": 0.4,
+    "vc": 0.3,
     "mean_delay_min": 0.0,
     "los": "B"
    },
@@ -2424,7 +2426,7 @@
    0,
    0
   ],
-  "years_to_first_failure": 16
+  "years_to_first_failure": 21
  },
  "safety": {
   "method": "geometric conflict-point construction, flow-weighted exposure",
@@ -2580,11 +2582,11 @@
  },
  "profiles": {
   "los_distribution": {
-   "A": 453,
-   "B": 268,
-   "C": 360,
-   "D": 29,
-   "E": 6,
+   "A": 472,
+   "B": 298,
+   "C": 323,
+   "D": 22,
+   "E": 1,
    "F": 0
   },
   "approach_hours_total": 1116,
@@ -4366,6 +4368,356 @@
   "bay_ceiling_veh_hr": 1800,
   "bays_above_bay_ceiling": 2,
   "measurement_status": "provisional: the DWG carries no dimension entities, so every width here is scaled from georeferenced linework and a total station survey is required before design"
+ },
+ "measurement": {
+  "source": "JDA survey drawing (DWG converted to DXF); no dimension entities present",
+  "published_step_m": 5.0,
+  "steps_tested": [
+   25.0,
+   10.0,
+   5.0,
+   2.0
+  ],
+  "converged_tolerance_m": 0.3,
+  "convergence": [
+   {
+    "junction": "TMC-01",
+    "jda_name": "B-2 Bypass",
+    "by_step": [
+     {
+      "step_m": 25.0,
+      "width_m": 11.7,
+      "transects": 2
+     },
+     {
+      "step_m": 10.0,
+      "width_m": 15.6,
+      "transects": 3
+     },
+     {
+      "step_m": 5.0,
+      "width_m": 15.6,
+      "transects": 7
+     },
+     {
+      "step_m": 2.0,
+      "width_m": 15.7,
+      "transects": 19
+     }
+    ],
+    "converged_at_step": 10.0,
+    "spread_m": 4.0
+   },
+   {
+    "junction": "TMC-02",
+    "jda_name": "Vijay Path",
+    "by_step": [
+     {
+      "step_m": 25.0,
+      "width_m": 12.7,
+      "transects": 2
+     },
+     {
+      "step_m": 10.0,
+      "width_m": 12.4,
+      "transects": 3
+     },
+     {
+      "step_m": 5.0,
+      "width_m": 12.5,
+      "transects": 9
+     },
+     {
+      "step_m": 2.0,
+      "width_m": 12.5,
+      "transects": 22
+     }
+    ],
+    "converged_at_step": 25.0,
+    "spread_m": 0.3
+   },
+   {
+    "junction": "TMC-03",
+    "jda_name": "Patel Marg",
+    "by_step": [
+     {
+      "step_m": 25.0,
+      "width_m": 13.0,
+      "transects": 1
+     },
+     {
+      "step_m": 10.0,
+      "width_m": 12.8,
+      "transects": 1
+     },
+     {
+      "step_m": 5.0,
+      "width_m": 13.0,
+      "transects": 4
+     },
+     {
+      "step_m": 2.0,
+      "width_m": 13.0,
+      "transects": 13
+     }
+    ],
+    "converged_at_step": 25.0,
+    "spread_m": 0.2
+   },
+   {
+    "junction": "TMC-04",
+    "jda_name": "VT Road",
+    "by_step": [
+     {
+      "step_m": 25.0,
+      "width_m": 17.7,
+      "transects": 3
+     },
+     {
+      "step_m": 10.0,
+      "width_m": 17.5,
+      "transects": 5
+     },
+     {
+      "step_m": 5.0,
+      "width_m": 17.6,
+      "transects": 13
+     },
+     {
+      "step_m": 2.0,
+      "width_m": 17.6,
+      "transects": 36
+     }
+    ],
+    "converged_at_step": 25.0,
+    "spread_m": 0.2
+   },
+   {
+    "junction": "TMC-05",
+    "jda_name": "Rajat Path",
+    "by_step": [
+     {
+      "step_m": 25.0,
+      "width_m": 18.3,
+      "transects": 7
+     },
+     {
+      "step_m": 10.0,
+      "width_m": 18.1,
+      "transects": 18
+     },
+     {
+      "step_m": 5.0,
+      "width_m": 18.2,
+      "transects": 32
+     },
+     {
+      "step_m": 2.0,
+      "width_m": 18.2,
+      "transects": 90
+     }
+    ],
+    "converged_at_step": 25.0,
+    "spread_m": 0.2
+   },
+   {
+    "junction": "TMC-06",
+    "jda_name": "Bhrigu Path",
+    "by_step": [
+     {
+      "step_m": 25.0,
+      "width_m": 19.6,
+      "transects": 3
+     },
+     {
+      "step_m": 10.0,
+      "width_m": 19.5,
+      "transects": 4
+     },
+     {
+      "step_m": 5.0,
+      "width_m": 19.4,
+      "transects": 9
+     },
+     {
+      "step_m": 2.0,
+      "width_m": 19.3,
+      "transects": 21
+     }
+    ],
+    "converged_at_step": 25.0,
+    "spread_m": 0.3
+   }
+  ],
+  "transects_by_step": [
+   {
+    "step_m": 25.0,
+    "transects": 18
+   },
+   {
+    "step_m": 10.0,
+    "transects": 34
+   },
+   {
+    "step_m": 5.0,
+    "transects": 77
+   },
+   {
+    "step_m": 2.0,
+    "transects": 205
+   }
+  ],
+  "bootstrap": [
+   {
+    "junction": "TMC-01",
+    "n": 7,
+    "median_m": 15.61,
+    "ci_m": [
+     11.21,
+     15.98
+    ],
+    "ci_width_m": 4.77,
+    "min_m": 10.15,
+    "max_m": 16.22,
+    "above_wide_threshold": true
+   },
+   {
+    "junction": "TMC-02",
+    "n": 9,
+    "median_m": 12.46,
+    "ci_m": [
+     12.42,
+     13.13
+    ],
+    "ci_width_m": 0.71,
+    "min_m": 12.41,
+    "max_m": 19.95,
+    "above_wide_threshold": false
+   },
+   {
+    "junction": "TMC-03",
+    "n": 4,
+    "median_m": 13.0,
+    "ci_m": [
+     12.79,
+     13.32
+    ],
+    "ci_width_m": 0.53,
+    "min_m": 12.79,
+    "max_m": 13.32,
+    "above_wide_threshold": false
+   },
+   {
+    "junction": "TMC-04",
+    "n": 13,
+    "median_m": 17.62,
+    "ci_m": [
+     13.04,
+     19.44
+    ],
+    "ci_width_m": 6.4,
+    "min_m": 11.52,
+    "max_m": 19.49,
+    "above_wide_threshold": true
+   },
+   {
+    "junction": "TMC-05",
+    "n": 32,
+    "median_m": 18.21,
+    "ci_m": [
+     15.59,
+     18.41
+    ],
+    "ci_width_m": 2.82,
+    "min_m": 5.06,
+    "max_m": 19.8,
+    "above_wide_threshold": true
+   },
+   {
+    "junction": "TMC-06",
+    "n": 9,
+    "median_m": 19.4,
+    "ci_m": [
+     12.63,
+     19.6
+    ],
+    "ci_width_m": 6.97,
+    "min_m": 12.58,
+    "max_m": 19.8,
+    "above_wide_threshold": true
+   }
+  ],
+  "bootstrap_resamples": 2000,
+  "registration": [
+   {
+    "feature": "nearest median/divider line",
+    "n": 179,
+    "median_m": 1.36,
+    "p90_m": 3.92,
+    "max_m": 14.56
+   },
+   {
+    "feature": "nearest carriageway kerb line",
+    "n": 179,
+    "median_m": 1.39,
+    "p90_m": 3.82,
+    "max_m": 14.36
+   }
+  ],
+  "dimensions": [
+   {
+    "dimension": "Carriageway width per direction",
+    "used_for": "lane count, approach capacity, v/c, design life, queue length",
+    "method": "perpendicular transects every 5 m, median within 400 m of the junction; total kerb-to-kerb less the median, halved",
+    "uncertainty": "95% bootstrap interval 0.5 to 7.0 m wide across the six junctions",
+    "resolved_by": "total station cross-sections at each junction and mid-block"
+   },
+   {
+    "dimension": "Transect step",
+    "used_for": "every width above",
+    "method": "5 m, chosen where the answer stops moving",
+    "uncertainty": "convergence tested at 25, 10, 5, 2 m; junctions converged: 6 of 6",
+    "resolved_by": "not applicable - this is a property of the method, not the road"
+   },
+   {
+    "dimension": "Corridor chainage and length",
+    "used_for": "junction ordering, U-turn detours, pier siting stations",
+    "method": "cumulative distance along JDA's KML centreline in EPSG:32643",
+    "uncertainty": "the KML carries 14 vertices over 4,625 m, so curvature between vertices is cut off; the polyline is a lower bound on true length",
+    "resolved_by": "a surveyed centreline string, or the CAD alignment once its layer is identified"
+   },
+   {
+    "dimension": "KML against CAD registration",
+    "used_for": "the assumption that chainage and transects share one geometry",
+    "method": "distance from each centreline station to the nearest CAD linework",
+    "uncertainty": "median 1.36 m to the nearest divider line, 90th percentile 3.92 m",
+    "resolved_by": "a common control point in both, or a stated CAD georeference"
+   },
+   {
+    "dimension": "Median opening width",
+    "used_for": "whether a U-turn is physically possible at an opening",
+    "method": "gap between consecutive DIVIDER runs, measured along the alignment",
+    "uncertainty": "not quantified per opening - the DIVIDER layer is a single polyline set with no separate edge, so an opening's width has no second reading to compare against",
+    "resolved_by": "total station at each opening: nose to nose, and the receiving carriageway width opposite"
+   },
+   {
+    "dimension": "U-turn detour distance",
+    "used_for": "vehicle-km imposed by the scheme",
+    "method": "junction chainage to the nearest U-turn-capable opening, doubled",
+    "uncertainty": "carries the chainage uncertainty above, doubled; and 3 of 12 bays lie beyond the drawing so their detour is not measured at all rather than estimated",
+    "resolved_by": "the seven proposed bay chainages from JDA"
+   },
+   {
+    "dimension": "Constraint offsets in the atlas",
+    "used_for": "pier siting, clear-run identification",
+    "method": "perpendicular distance from the alignment to each constraint feature",
+    "uncertainty": "inherits the registration figure above; feature positions are CAD vertices with no stated survey accuracy",
+    "resolved_by": "the drawing's own survey control sheet, if one exists"
+   }
+  ],
+  "junctions_above_wide_threshold": 4,
+  "wide_threshold_m": 14.0,
+  "status": "provisional: every dimension is scaled from georeferenced linework and a total station survey is required before design"
  },
  "junctions": [
   {
@@ -7665,17 +8017,17 @@
    "jda_name": "B-2 Bypass",
    "daily_veh": 127998,
    "peak_veh": 11107,
-   "worst_vc": 0.94,
+   "worst_vc": 0.71,
    "uturn_demand": 3730,
    "exposure_change_pct": 14.3,
    "turning_share_pct": 42.8,
    "n_daily_veh": 0.342,
    "n_peak_veh": 0.562,
-   "n_worst_vc": 1.0,
+   "n_worst_vc": 0.5,
    "n_uturn_demand": 1.0,
    "n_exposure_change_pct": 0.0,
    "n_turning_share_pct": 1.0,
-   "score": 3.904,
+   "score": 3.404,
    "rank": 1
   },
   {
@@ -7689,11 +8041,11 @@
    "turning_share_pct": 21.3,
    "n_daily_veh": 0.342,
    "n_peak_veh": 1.0,
-   "n_worst_vc": 0.85,
+   "n_worst_vc": 1.0,
    "n_uturn_demand": 0.226,
    "n_exposure_change_pct": 0.782,
    "n_turning_share_pct": 0.0,
-   "score": 3.2,
+   "score": 3.35,
    "rank": 2
   },
   {
@@ -7707,11 +8059,11 @@
    "turning_share_pct": 32.1,
    "n_daily_veh": 1.0,
    "n_peak_veh": 0.486,
-   "n_worst_vc": 0.025,
+   "n_worst_vc": 0.029,
    "n_uturn_demand": 0.846,
    "n_exposure_change_pct": 0.284,
    "n_turning_share_pct": 0.502,
-   "score": 3.143,
+   "score": 3.147,
    "rank": 3
   },
   {
@@ -7725,11 +8077,11 @@
    "turning_share_pct": 22.6,
    "n_daily_veh": 0.348,
    "n_peak_veh": 0.096,
-   "n_worst_vc": 0.65,
+   "n_worst_vc": 0.765,
    "n_uturn_demand": 0.344,
    "n_exposure_change_pct": 0.52,
    "n_turning_share_pct": 0.06,
-   "score": 2.018,
+   "score": 2.133,
    "rank": 4
   },
   {
@@ -7737,17 +8089,17 @@
    "jda_name": "Vijay Path",
    "daily_veh": 129047,
    "peak_veh": 9476,
-   "worst_vc": 0.68,
+   "worst_vc": 0.69,
    "uturn_demand": 2744,
    "exposure_change_pct": 16.7,
    "turning_share_pct": 31.7,
    "n_daily_veh": 0.37,
    "n_peak_veh": 0.024,
-   "n_worst_vc": 0.35,
+   "n_worst_vc": 0.441,
    "n_uturn_demand": 0.565,
    "n_exposure_change_pct": 0.105,
    "n_turning_share_pct": 0.484,
-   "score": 1.898,
+   "score": 1.989,
    "rank": 5
   },
   {

@@ -1,0 +1,350 @@
+{
+ "source": "JDA survey drawing (DWG converted to DXF); no dimension entities present",
+ "published_step_m": 5.0,
+ "steps_tested": [
+  25.0,
+  10.0,
+  5.0,
+  2.0
+ ],
+ "converged_tolerance_m": 0.3,
+ "convergence": [
+  {
+   "junction": "TMC-01",
+   "jda_name": "B-2 Bypass",
+   "by_step": [
+    {
+     "step_m": 25.0,
+     "width_m": 11.7,
+     "transects": 2
+    },
+    {
+     "step_m": 10.0,
+     "width_m": 15.6,
+     "transects": 3
+    },
+    {
+     "step_m": 5.0,
+     "width_m": 15.6,
+     "transects": 7
+    },
+    {
+     "step_m": 2.0,
+     "width_m": 15.7,
+     "transects": 19
+    }
+   ],
+   "converged_at_step": 10.0,
+   "spread_m": 4.0
+  },
+  {
+   "junction": "TMC-02",
+   "jda_name": "Vijay Path",
+   "by_step": [
+    {
+     "step_m": 25.0,
+     "width_m": 12.7,
+     "transects": 2
+    },
+    {
+     "step_m": 10.0,
+     "width_m": 12.4,
+     "transects": 3
+    },
+    {
+     "step_m": 5.0,
+     "width_m": 12.5,
+     "transects": 9
+    },
+    {
+     "step_m": 2.0,
+     "width_m": 12.5,
+     "transects": 22
+    }
+   ],
+   "converged_at_step": 25.0,
+   "spread_m": 0.3
+  },
+  {
+   "junction": "TMC-03",
+   "jda_name": "Patel Marg",
+   "by_step": [
+    {
+     "step_m": 25.0,
+     "width_m": 13.0,
+     "transects": 1
+    },
+    {
+     "step_m": 10.0,
+     "width_m": 12.8,
+     "transects": 1
+    },
+    {
+     "step_m": 5.0,
+     "width_m": 13.0,
+     "transects": 4
+    },
+    {
+     "step_m": 2.0,
+     "width_m": 13.0,
+     "transects": 13
+    }
+   ],
+   "converged_at_step": 25.0,
+   "spread_m": 0.2
+  },
+  {
+   "junction": "TMC-04",
+   "jda_name": "VT Road",
+   "by_step": [
+    {
+     "step_m": 25.0,
+     "width_m": 17.7,
+     "transects": 3
+    },
+    {
+     "step_m": 10.0,
+     "width_m": 17.5,
+     "transects": 5
+    },
+    {
+     "step_m": 5.0,
+     "width_m": 17.6,
+     "transects": 13
+    },
+    {
+     "step_m": 2.0,
+     "width_m": 17.6,
+     "transects": 36
+    }
+   ],
+   "converged_at_step": 25.0,
+   "spread_m": 0.2
+  },
+  {
+   "junction": "TMC-05",
+   "jda_name": "Rajat Path",
+   "by_step": [
+    {
+     "step_m": 25.0,
+     "width_m": 18.3,
+     "transects": 7
+    },
+    {
+     "step_m": 10.0,
+     "width_m": 18.1,
+     "transects": 18
+    },
+    {
+     "step_m": 5.0,
+     "width_m": 18.2,
+     "transects": 32
+    },
+    {
+     "step_m": 2.0,
+     "width_m": 18.2,
+     "transects": 90
+    }
+   ],
+   "converged_at_step": 25.0,
+   "spread_m": 0.2
+  },
+  {
+   "junction": "TMC-06",
+   "jda_name": "Bhrigu Path",
+   "by_step": [
+    {
+     "step_m": 25.0,
+     "width_m": 19.6,
+     "transects": 3
+    },
+    {
+     "step_m": 10.0,
+     "width_m": 19.5,
+     "transects": 4
+    },
+    {
+     "step_m": 5.0,
+     "width_m": 19.4,
+     "transects": 9
+    },
+    {
+     "step_m": 2.0,
+     "width_m": 19.3,
+     "transects": 21
+    }
+   ],
+   "converged_at_step": 25.0,
+   "spread_m": 0.3
+  }
+ ],
+ "transects_by_step": [
+  {
+   "step_m": 25.0,
+   "transects": 18
+  },
+  {
+   "step_m": 10.0,
+   "transects": 34
+  },
+  {
+   "step_m": 5.0,
+   "transects": 77
+  },
+  {
+   "step_m": 2.0,
+   "transects": 205
+  }
+ ],
+ "bootstrap": [
+  {
+   "junction": "TMC-01",
+   "n": 7,
+   "median_m": 15.61,
+   "ci_m": [
+    11.21,
+    15.98
+   ],
+   "ci_width_m": 4.77,
+   "min_m": 10.15,
+   "max_m": 16.22,
+   "above_wide_threshold": true
+  },
+  {
+   "junction": "TMC-02",
+   "n": 9,
+   "median_m": 12.46,
+   "ci_m": [
+    12.42,
+    13.13
+   ],
+   "ci_width_m": 0.71,
+   "min_m": 12.41,
+   "max_m": 19.95,
+   "above_wide_threshold": false
+  },
+  {
+   "junction": "TMC-03",
+   "n": 4,
+   "median_m": 13.0,
+   "ci_m": [
+    12.79,
+    13.32
+   ],
+   "ci_width_m": 0.53,
+   "min_m": 12.79,
+   "max_m": 13.32,
+   "above_wide_threshold": false
+  },
+  {
+   "junction": "TMC-04",
+   "n": 13,
+   "median_m": 17.62,
+   "ci_m": [
+    13.04,
+    19.44
+   ],
+   "ci_width_m": 6.4,
+   "min_m": 11.52,
+   "max_m": 19.49,
+   "above_wide_threshold": true
+  },
+  {
+   "junction": "TMC-05",
+   "n": 32,
+   "median_m": 18.21,
+   "ci_m": [
+    15.59,
+    18.41
+   ],
+   "ci_width_m": 2.82,
+   "min_m": 5.06,
+   "max_m": 19.8,
+   "above_wide_threshold": true
+  },
+  {
+   "junction": "TMC-06",
+   "n": 9,
+   "median_m": 19.4,
+   "ci_m": [
+    12.63,
+    19.6
+   ],
+   "ci_width_m": 6.97,
+   "min_m": 12.58,
+   "max_m": 19.8,
+   "above_wide_threshold": true
+  }
+ ],
+ "bootstrap_resamples": 2000,
+ "registration": [
+  {
+   "feature": "nearest median/divider line",
+   "n": 179,
+   "median_m": 1.36,
+   "p90_m": 3.92,
+   "max_m": 14.56
+  },
+  {
+   "feature": "nearest carriageway kerb line",
+   "n": 179,
+   "median_m": 1.39,
+   "p90_m": 3.82,
+   "max_m": 14.36
+  }
+ ],
+ "dimensions": [
+  {
+   "dimension": "Carriageway width per direction",
+   "used_for": "lane count, approach capacity, v/c, design life, queue length",
+   "method": "perpendicular transects every 5 m, median within 400 m of the junction; total kerb-to-kerb less the median, halved",
+   "uncertainty": "95% bootstrap interval 0.5 to 7.0 m wide across the six junctions",
+   "resolved_by": "total station cross-sections at each junction and mid-block"
+  },
+  {
+   "dimension": "Transect step",
+   "used_for": "every width above",
+   "method": "5 m, chosen where the answer stops moving",
+   "uncertainty": "convergence tested at 25, 10, 5, 2 m; junctions converged: 6 of 6",
+   "resolved_by": "not applicable - this is a property of the method, not the road"
+  },
+  {
+   "dimension": "Corridor chainage and length",
+   "used_for": "junction ordering, U-turn detours, pier siting stations",
+   "method": "cumulative distance along JDA's KML centreline in EPSG:32643",
+   "uncertainty": "the KML carries 14 vertices over 4,625 m, so curvature between vertices is cut off; the polyline is a lower bound on true length",
+   "resolved_by": "a surveyed centreline string, or the CAD alignment once its layer is identified"
+  },
+  {
+   "dimension": "KML against CAD registration",
+   "used_for": "the assumption that chainage and transects share one geometry",
+   "method": "distance from each centreline station to the nearest CAD linework",
+   "uncertainty": "median 1.36 m to the nearest divider line, 90th percentile 3.92 m",
+   "resolved_by": "a common control point in both, or a stated CAD georeference"
+  },
+  {
+   "dimension": "Median opening width",
+   "used_for": "whether a U-turn is physically possible at an opening",
+   "method": "gap between consecutive DIVIDER runs, measured along the alignment",
+   "uncertainty": "not quantified per opening - the DIVIDER layer is a single polyline set with no separate edge, so an opening's width has no second reading to compare against",
+   "resolved_by": "total station at each opening: nose to nose, and the receiving carriageway width opposite"
+  },
+  {
+   "dimension": "U-turn detour distance",
+   "used_for": "vehicle-km imposed by the scheme",
+   "method": "junction chainage to the nearest U-turn-capable opening, doubled",
+   "uncertainty": "carries the chainage uncertainty above, doubled; and 3 of 12 bays lie beyond the drawing so their detour is not measured at all rather than estimated",
+   "resolved_by": "the seven proposed bay chainages from JDA"
+  },
+  {
+   "dimension": "Constraint offsets in the atlas",
+   "used_for": "pier siting, clear-run identification",
+   "method": "perpendicular distance from the alignment to each constraint feature",
+   "uncertainty": "inherits the registration figure above; feature positions are CAD vertices with no stated survey accuracy",
+   "resolved_by": "the drawing's own survey control sheet, if one exists"
+  }
+ ],
+ "junctions_above_wide_threshold": 4,
+ "wide_threshold_m": 14.0,
+ "status": "provisional: every dimension is scaled from georeferenced linework and a total station survey is required before design"
+}

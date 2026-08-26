@@ -12,6 +12,7 @@ import Evidence from "@/components/Evidence";
 import Compare from "@/components/Compare";
 import Ladder from "@/components/Ladder";
 import Learned from "@/components/Learned";
+import Measurement from "@/components/Measurement";
 import type { Corridor } from "@/lib/types";
 
 const nf = new Intl.NumberFormat("en-US");
@@ -37,7 +38,7 @@ const WHY: Record<string, string> = {
 const REQUIRED_SECTIONS = [
   "meta", "audit", "constraints", "capacity", "scheme", "sensitivity",
   "delay", "economics", "safety", "standards", "junctions", "corridor",
-  "criticality",
+  "criticality", "measurement",
 ] as const;
 
 function load(): Corridor {
@@ -66,6 +67,13 @@ export default function Page() {
   const maxPcu = Math.max(...js.map((j) => j.pcu_corrected));
   const c2 = d.constraints;
   const cp = d.capacity;
+  // Derived here rather than written into the prose below, so the sentences track the
+  // pipeline instead of recording what it said the day they were typed.
+  const survivesAll = !!cp?.design_life
+    && cp.design_life_survives_horizon === cp.design_life.length;
+  const widthsM = Object.values(cp?.widths ?? {}).map((w) => w.width_m);
+  const widthRange: [number, number] = widthsM.length
+    ? [Math.min(...widthsM), Math.max(...widthsM)] : [0, 0];
   const sc = d.scheme;
   const sen = d.sensitivity;
   const uf = d.uturn_framework;
@@ -613,31 +621,71 @@ export default function Page() {
                 capacity <em>on opening</em>. This is the argument the count data exists to
                 make, and the one place turning movement data is irreplaceable &mdash; no
                 other dataset separates through traffic from turning traffic.</p>
+                {/* Branching on the numbers rather than asserting a conclusion. This
+                    paragraph used to open "It does not hold for the design horizon",
+                    which was true when it was written and stopped being true when a
+                    transect-spacing correction widened TMC-01 from 11.7 m to 15.6 m. A
+                    narrative sentence that outlives its own figures is the failure this
+                    whole page is about. */}
                 {cp.design_life && cp.design_life_first_failure_med && (
                   <p className="col" style={{
-                    borderLeft: "3px solid var(--defect)", paddingLeft: ".9rem" }}>
-                    <strong>It does not hold for the design horizon.</strong> Growing the
-                    residual turning demand at 6% returns the first approach to capacity in{" "}
-                    <strong>{cp.design_life_first_failure_med}</strong> &mdash;{" "}
-                    {cp.design_life_first_failure_med - cp.assumptions.base_year} years
-                    after the base year &mdash; and{" "}
-                    <strong>{cp.design_life_survives_horizon} of {cp.design_life.length}</strong>{" "}
-                    still hold at {cp.horizon_year}. That qualifies the recommendation
-                    rather than withdrawing it: grade separation is the only measure tested
-                    here that relieves the corridor at all, but a structure sized on
-                    opening-year relief alone would be over capacity again well inside its
-                    own design life. The scheme needs a demand-side measure beside it.
+                    borderLeft: `3px solid var(--${survivesAll ? "ok" : "defect"})`,
+                    paddingLeft: ".9rem" }}>
+                    {survivesAll ? (
+                      <><strong>It holds to the design horizon, and only just.</strong>{" "}
+                      Growing the residual turning demand at 6% returns the first approach
+                      to capacity in <strong>{cp.design_life_first_failure_med}</strong>{" "}
+                      &mdash; {cp.design_life_first_failure_med - cp.assumptions.base_year}{" "}
+                      years after the base year, and{" "}
+                      {cp.design_life_first_failure_med - cp.horizon_year} past the{" "}
+                      {cp.horizon_year} horizon &mdash; so all{" "}
+                      <strong>{cp.design_life.length}</strong> approaches survive it. Read
+                      that margin against the width caveat below rather than as comfort:
+                      the relief lasts a year beyond the horizon on widths that are scaled
+                      off linework, and capacity moves linearly with them.</>
+                    ) : (
+                      <><strong>It does not hold for the design horizon.</strong> Growing
+                      the residual turning demand at 6% returns the first approach to
+                      capacity in <strong>{cp.design_life_first_failure_med}</strong>{" "}
+                      &mdash; {cp.design_life_first_failure_med - cp.assumptions.base_year}{" "}
+                      years after the base year &mdash; and only{" "}
+                      <strong>{cp.design_life_survives_horizon} of {cp.design_life.length}</strong>{" "}
+                      still hold at {cp.horizon_year}. That qualifies the recommendation
+                      rather than withdrawing it: grade separation is the only measure
+                      tested here that relieves the corridor at all, but a structure sized
+                      on opening-year relief alone would be over capacity again well inside
+                      its own design life. The scheme needs a demand-side measure beside it.</>
+                    )}
                   </p>
                 )}
                 <p className="col">On growth to {cp.horizon_year}: 6% compounding implies
                 roughly <strong>{cp.growth[1]?.multiple}&times;</strong> today&rsquo;s flow.
                 Treat that as a floor, not a forecast &mdash; counted flow on a saturated
                 approach is capacity-constrained, so suppressed and diverted trips are
-                invisible to it. No at-grade widening inside the available 15 m section
-                delivers a threefold increase.</p>
+                invisible to it. No at-grade widening inside the{" "}
+                {widthRange[0]}&ndash;{widthRange[1]} m measured per direction delivers a
+                threefold increase.</p>
               </div>
             </div>
           </Reveal>
+
+          {d.measurement && (
+            <Reveal delay={.06}>
+              <div className="card" style={{ marginTop: "1.1rem" }}>
+                <header><span className="chip material">Provisional</span>
+                  <h3>Every width above is scaled off linework, not measured</h3></header>
+                <div className="body">
+                  <p className="col">The drawing JDA supplied contains no dimension
+                  entities. Nothing in it states a width; the widths here are read off
+                  georeferenced geometry by casting transects across it, and a scaled
+                  number printed to one decimal place looks exactly like a measured one.
+                  Capacity moves linearly with width, so this is the most consequential
+                  uncertainty on the page.</p>
+                  <Measurement m={d.measurement} caveat={cp.width_caveat} />
+                </div>
+              </div>
+            </Reveal>
+          )}
         </section>
       )}
 

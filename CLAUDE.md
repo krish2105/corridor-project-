@@ -243,6 +243,7 @@ corridor/
 │   ├── medians.py      # U-turn feasibility from DIVIDER linework
 │   │
 │   ├── capacity.py     # measured widths, v/c, design life of the relief
+│   ├── measurement.py  # every published dimension: method, uncertainty, what fixes it
 │   ├── scheme_test.py  # gap acceptance — does the JDA U-turn scheme work?
 │   ├── uturn_framework.py # where a bay belongs: criteria ladder, binding term
 │   ├── delay.py        # queue, spillback, delay, corridor journey time

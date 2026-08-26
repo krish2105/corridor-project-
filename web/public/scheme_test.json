@@ -197,19 +197,19 @@
   {
    "junction": "TMC-01",
    "jda_name": "B-2 Bypass ",
-   "s0_vc": 0.94,
+   "s0_vc": 0.71,
    "s0_los": "-",
    "s1_uturn_vc_cons": 23.80276434973617,
    "s1_uturn_vc_opt": 7.600495818548861,
    "s1_works": false,
-   "s2_vc": 0.4,
+   "s2_vc": 0.3,
    "s2_los": "B",
    "through_pct": 57.2
   },
   {
    "junction": "TMC-02",
    "jda_name": "Vijay Path ",
-   "s0_vc": 0.65,
+   "s0_vc": 0.66,
    "s0_los": "-",
    "s1_uturn_vc_cons": 18.7802589760515,
    "s1_uturn_vc_opt": 6.806552202197836,
