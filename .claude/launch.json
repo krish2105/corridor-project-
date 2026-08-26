@@ -6,6 +6,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev", "--prefix", "web"],
       "port": 3210
+    },
+    {
+      "name": "corridor-web-prod",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["--prefix", "web", "next", "start", "web", "-p", "3211"],
+      "port": 3211
     }
   ]
 }

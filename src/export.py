@@ -17,6 +17,11 @@ from src.analyse import (composition, corridor_order, movements, peak_hours,
 from src.config import (OUT, ROOT, CORRIDOR_NAME, CORRIDOR_ROAD, CORRIDOR_ROAD_SOURCE,
                         JDA_SCHEME, JUNCTIONS,
                         JUNCTION_COORDS, OUT_DATA, SURVEY_DATES)
+# The criticality ranking is computed HERE as well as in the workbook, by calling the
+# same function on the same payload, so the dashboard and the Excel file cannot disagree.
+# Recomputing it in the browser from the published components would be a second
+# implementation of a scoring rule, and two implementations of a scoring rule drift.
+from src.masterdb import criticality
 from src.pcu import SURVEYED, convert, factor_band
 from src.tmc_parse import CLASS_LABELS, parse_all
 
@@ -421,6 +426,7 @@ def build():
                    for r in links.to_dict("records")],
         ),
     )
+    payload["criticality"] = criticality(payload).to_dict("records")
     return payload
 
 

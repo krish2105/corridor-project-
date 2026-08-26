@@ -11,9 +11,11 @@ import type { Junction } from "@/lib/types";
  * an officer opening this on a phone in a meeting should not wait for constraint data
  * they may never look at.
  *
- * Marker fill encodes how each position was established: solid where the survey's own
- * arm name matches JDA's scheme, dashed where it was placed by position in that sequence.
- * That distinction is the point - it lets the three inferred ones be challenged.
+ * Marker fill encodes how each position was established, and every one is now solid:
+ * JDA supplied the six positions and the centreline as a KML. The dashed state is kept
+ * rather than deleted because it is what the map showed while the positions were our own
+ * inference, and that inference was wrong - our picks sat 269 to 950 m away, on a parallel
+ * road. If a position is ever placed by us again, the map has to say so.
  */
 type LayerDef = { id: string; label: string; colour: string; kind: "line" | "circle" };
 

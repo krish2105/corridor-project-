@@ -13,8 +13,60 @@ export type Junction = {
   composition: { cls: string; label: string; count: number; share: number }[];
   profile: { t: string; v: number }[];
 };
+export type Criticality = {
+  junction: string; jda_name: string;
+  daily_veh: number; peak_veh: number; worst_vc: number; uturn_demand: number;
+  exposure_change_pct: number; turning_share_pct: number;
+  n_daily_veh: number; n_peak_veh: number; n_worst_vc: number; n_uturn_demand: number;
+  n_exposure_change_pct: number; n_turning_share_pct: number;
+  score: number; rank: number;
+};
+
+export type AnomalyScore = {
+  junction: string; jda_name: string;
+  duplicate_series_share: number; terminal_digit_p: number;
+  terminal_digit_excess_pct: number; flatline_series: number;
+  spike_bins_per_1000: number; mix_intervals: number; stored_total_breaks: number;
+  s_duplicate: number; s_digit: number; s_flatline: number; s_spike: number;
+  s_mix: number; s_arith: number; integrity_flag_score: number;
+};
+
+export type ClusterResult = {
+  feature_set: string; n_features: number; k: number; silhouette: number;
+  silhouette_by_k: Record<string, number>; structure_found: boolean;
+  external_label: { label: string; held_out: boolean; purity: number; null_mean: number;
+                    p: number; permutations: number; recovered: boolean };
+  clusters: { cluster: number; size: number; corridor_arms: number; cross_arms: number;
+              profile: number[]; features: string[]; members: string[];
+              peak_hour?: number; share_in_busiest_4h?: number;
+              dominant_class?: string; dominant_share?: number }[];
+};
+
+export type ForecastWindow = {
+  start_hour_from_0800: number; hours: number; clock: string; target: string;
+  mape: number; baseline_mape: number; factor: number; factor_cv: number;
+  worst_approach_pct: number;
+};
+
+export type BayCheck = { status: string; value: number | null; detail: string };
+
+export type Bay = {
+  junction: string; jda_name: string; bay: string; uturn_demand: number;
+  verdict: string; binding_criterion: string | null;
+  blocked_on: string[]; blocked_if_binding_cleared: string[];
+  checks: Record<string, BayCheck>;
+  back_solve: {
+    conflicting_now: number; demand_now: number; demand_servable: number;
+    demand_reduction_pct: number | null; bay_ceiling_veh_hr: number;
+    above_bay_ceiling: boolean; gap_needed_s: number; gap_ours_s: number;
+    conflicting_needed: number | null; conflicting_reduction_pct: number | null;
+    note: string | null;
+  } | null;
+};
+
 export type Corridor = {
-  meta: { corridor: string; road: string; jda_scheme: string; city: string; survey_dates: string[];
+  meta: { corridor: string; road: string; road_source: string; jda_scheme: string;
+          city: string; survey_dates: string[];
           analysis_date: string; n_junctions: number; bins_parsed: number; note: string };
   audit: {
     arithmetic: { discrepancies: number; understate: number; overstate: number; net_grand_total: number };
@@ -150,6 +202,46 @@ export type Corridor = {
     uturn: Record<string, { fails: number; of: number }>;
     elevated_all_pass_combinations: number; elevated_total_combinations: number;
     most_influential: string | null; swing: number; assumption_driven: boolean;
+  } | null;
+  criticality: Criticality[];
+  anomaly: {
+    method: string; caveat: string;
+    thresholds: Record<string, number>;
+    detectors: {
+      duplicate: { series: number; wholly_identical: number };
+      terminal_digit: { junction: string; n: number; chi2: number; p: number;
+                        excess_0_5_pct: number }[];
+      flatline: { series: number }; spike: { series: number };
+      mix: { intervals: number }; arithmetic: { breaks: number };
+    };
+    junctions: AnomalyScore[];
+    gate: { known_defects: number; rediscovered: number };
+  } | null;
+  cluster: {
+    method: string; feature_sets_tested: number; multiple_comparison_note: string;
+    silhouette_min: number; n_approaches: number; any_typology_found: boolean;
+    results: ClusterResult[];
+    two_wheeler_split: { vehicle_class: string; corridor_mean: number; cross_mean: number;
+                         n_corridor: number; n_cross: number; p: number;
+                         min_share: number; max_share: number } | null;
+  } | null;
+  forecast: {
+    method: string; baseline: string; caveat: string; mape_gate: number;
+    n_approaches: number; analysis_days: number;
+    selection: { combinations_searched: number; note: string };
+    windows: ForecastWindow[];
+    shortest_window: Record<string, ForecastWindow | null>;
+    gate: { targets: number; predictable: number };
+  } | null;
+  uturn_framework: {
+    method: string; criteria: string[]; n_bays: number; n_fail: number;
+    n_undecided: number; measurement_status: string;
+    bay_ceiling_veh_hr: number | null; bays_above_bay_ceiling: number;
+    binding_counts: Record<string, number>;
+    blocked_criteria_now: string[]; blocked_criteria_once_binding_cleared: string[];
+    assumptions: Record<string, unknown>;
+    bays: Bay[];
+    alternatives: { measure: string; cost: string; note: string; live: boolean }[];
   } | null;
   junctions: Junction[];
   corridor: {

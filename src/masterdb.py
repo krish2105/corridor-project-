@@ -204,19 +204,35 @@ def peak_pcu(d):
     return pd.DataFrame(rows)
 
 
+# The six indicators, machine name -> the label the workbook shows. Machine names because
+# corridor.json is read by the dashboard and a key with spaces in it is a nuisance there;
+# labels because a spreadsheet column called `uturn_demand` is a nuisance to a reviewer.
+# One source, renamed at the boundary, so the two cannot drift apart.
+INDICATORS = {
+    "daily_veh": "Daily vehicles",
+    "peak_veh": "Peak hour vehicles",
+    "worst_vc": "Worst approach v/c",
+    "uturn_demand": "U-turn demand under scheme",
+    "exposure_change_pct": "Crossing exposure change %",
+    "turning_share_pct": "Turning share %",
+}
+
+
 def criticality(d):
     """
-    Deliverable 8. Which junctions and movements need attention first.
+    Deliverable 8. Which junctions need attention first.
 
     Ranked on indicators the survey actually supports, each normalised 0 to 1 across the
     six and then summed. No weighting is applied, because a weighting is a policy choice
-    and inventing one here would present a judgement as a result. The component scores
-    are all published so a traffic engineer can weight them.
+    and inventing one here would present a judgement as a result. Every component score
+    is published so a traffic engineer can apply their own.
+
+    Called by export.py on the same payload, so the dashboard and the workbook show one
+    ranking rather than two implementations of one.
     """
     sch = {}
     for u in d["scheme"]["uturns"]:
-        sch.setdefault(u["junction"], 0)
-        sch[u["junction"]] += u["uturn_demand"]
+        sch[u["junction"]] = sch.get(u["junction"], 0) + u["uturn_demand"]
     saf = {s["junction"]: s for s in d["safety"]["junctions"]}
 
     rows = []
@@ -224,24 +240,33 @@ def criticality(d):
         c = j["code"]
         vcs = [x.get("vc_pt", 0) for x in d["capacity"]["junctions"] if x["junction"] == c]
         rows.append({
-            "Junction": c,
-            "JDA name": JUNCTION_COORDS[c][2],
-            "Daily vehicles": j.get("daily_veh", 0),
-            "Peak hour vehicles": j.get("peak_veh", 0),
-            "Worst approach v/c": round(max(vcs), 2) if vcs else 0,
-            "U-turn demand under scheme": round(sch.get(c, 0)),
-            "Crossing exposure change %": saf.get(c, {}).get("change_pct", 0),
-            "Turning share %": round(100 - (j.get("through_pct") or 0), 1),
+            "junction": c,
+            "jda_name": JUNCTION_COORDS[c][2].strip(),
+            "daily_veh": j.get("daily_veh", 0),
+            "peak_veh": j.get("peak_veh", 0),
+            "worst_vc": round(max(vcs), 2) if vcs else 0,
+            "uturn_demand": round(sch.get(c, 0)),
+            "exposure_change_pct": saf.get(c, {}).get("change_pct", 0),
+            "turning_share_pct": round(100 - (j.get("through_pct") or 0), 1),
         })
     df = pd.DataFrame(rows)
-    ind = ["Daily vehicles", "Peak hour vehicles", "Worst approach v/c",
-           "U-turn demand under scheme", "Crossing exposure change %", "Turning share %"]
-    for c in ind:
+    for c in INDICATORS:
         lo, hi = df[c].min(), df[c].max()
+        # a corridor where every junction scores the same has no ranking to report, and
+        # dividing by (hi - lo) there would either raise or invent one
         df[f"n_{c}"] = 0.0 if hi == lo else ((df[c] - lo) / (hi - lo)).round(3)
-    df["Criticality score"] = df[[f"n_{c}" for c in ind]].sum(axis=1).round(3)
-    df["Rank"] = df["Criticality score"].rank(ascending=False, method="min").astype(int)
-    return df.sort_values("Rank")
+    df["score"] = df[[f"n_{c}" for c in INDICATORS]].sum(axis=1).round(3)
+    df["rank"] = df["score"].rank(ascending=False, method="min").astype(int)
+    return df.sort_values("rank")
+
+
+def criticality_sheet(d):
+    """The same table with the labels a reviewer reads rather than the keys code reads."""
+    cols = {"junction": "Junction", "jda_name": "JDA name",
+            "score": "Criticality score", "rank": "Rank"}
+    cols.update(INDICATORS)
+    cols.update({f"n_{k}": f"{v} (normalised)" for k, v in INDICATORS.items()})
+    return criticality(d).rename(columns=cols)
 
 
 def build():
@@ -258,7 +283,7 @@ def build():
         ("4 Vehicle composition", composition(bins)),
         ("5 Turning movements", movements(bins)),
         ("6 Peak hour and PCU", peak_pcu(d)),
-        ("8 Criticality ranking", criticality(d)),
+        ("8 Criticality ranking", criticality_sheet(d)),
     ]
     OUT.mkdir(exist_ok=True)
     with pd.ExcelWriter(BOOK, engine="openpyxl") as xw:
@@ -274,7 +299,8 @@ if __name__ == "__main__":
     for name, df in sheets:
         print(f"  {name:<26}{df.shape[0]:>7,} rows x {df.shape[1]:>2} cols")
     crit = dict(sheets)["8 Criticality ranking"]
-    print("\n  Criticality ranking, unweighted sum of six normalised indicators:")
+    print(f"\n  Criticality ranking, unweighted sum of {len(INDICATORS)} normalised "
+          f"indicators:")
     for _, r in crit.iterrows():
         print(f"    {r['Rank']}. {r['Junction']}  {r['JDA name']:<13}"
               f"score {r['Criticality score']:.3f}")

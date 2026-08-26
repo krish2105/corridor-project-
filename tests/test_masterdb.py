@@ -14,8 +14,9 @@ import pandas as pd
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from src.masterdb import (_by_day, composition, cover, criticality, hourly,
-                          hourly_extremes, inventory, movements, peak_pcu, PROVISIONAL)
+from src.masterdb import (_by_day, composition, cover, criticality,
+                          criticality_sheet, hourly, hourly_extremes, inventory,
+                          movements, peak_pcu, INDICATORS, PROVISIONAL)
 
 DAY2 = pd.Timestamp("2026-05-12").date()
 
@@ -116,10 +117,10 @@ def test_criticality_is_bounded_and_ordered():
                  [x * 0.2 for x in rising], [x * 50 for x in rising],
                  [x * 2 for x in rising], [100 - x for x in rising])
     t = criticality(d)
-    assert t["Criticality score"].between(0, 6).all()
-    assert t.Rank.tolist() == [1, 2, 3, 4, 5, 6]
+    assert t.score.between(0, 6).all()
+    assert t["rank"].tolist() == [1, 2, 3, 4, 5, 6]
     # every indicator rises with the index, so the last junction must rank first
-    assert t.iloc[0].Junction == "TMC-06"
+    assert t.iloc[0].junction == "TMC-06"
 
 
 def test_criticality_does_not_invent_an_order_from_identical_inputs():
@@ -133,8 +134,8 @@ def test_criticality_does_not_invent_an_order_from_identical_inputs():
     flat = [5] * 6
     d = _payload(flat, flat, flat, flat, flat, flat)
     t = criticality(d)
-    assert (t["Criticality score"] == 0).all()
-    assert (t.Rank == 1).all()
+    assert (t.score == 0).all()
+    assert (t["rank"] == 1).all()
 
 
 def test_criticality_publishes_its_components():
@@ -147,12 +148,11 @@ def test_criticality_publishes_its_components():
     d = _payload(list(range(1, 7)), list(range(1, 7)), list(range(1, 7)),
                  list(range(1, 7)), list(range(1, 7)), list(range(1, 7)))
     t = criticality(d)
-    norm = [c for c in t.columns if c.startswith("n_")]
-    assert len(norm) == 6
+    norm = [f"n_{k}" for k in INDICATORS]
+    assert len(norm) == 6 and set(norm) <= set(t.columns)
     for c in norm:
         assert t[c].between(0, 1).all()
-    total = t[norm].sum(axis=1).round(3)
-    assert (total - t["Criticality score"]).abs().max() < 1e-9
+    assert (t[norm].sum(axis=1).round(3) - t.score).abs().max() < 1e-9
 
 
 # --- the measurement caveat --------------------------------------------------
@@ -175,3 +175,19 @@ def test_cover_states_the_measurement_status():
     assert PROVISIONAL in text
     for gap in ("U-turn", "rickshaw", "Pedestrian"):
         assert any(gap.lower() in s.lower() for s in t.Item.astype(str) + t.Detail.astype(str))
+
+
+def test_the_workbook_sheet_is_the_same_table_under_readable_labels():
+    """
+    export.py publishes criticality() and the workbook publishes criticality_sheet().
+    They must be one table, or the dashboard and the spreadsheet rank the corridor
+    differently and a reviewer holding both has no way to tell which is right.
+    """
+    d = _payload(list(range(1, 7)), list(range(6, 0, -1)), [1, 3, 2, 6, 4, 5],
+                 [9, 1, 4, 2, 8, 3], [2, 2, 9, 1, 5, 5], [50] * 6)
+    machine, sheet = criticality(d), criticality_sheet(d)
+    assert sheet["Criticality score"].tolist() == machine.score.tolist()
+    assert sheet["Rank"].tolist() == machine["rank"].tolist()
+    for key, label in INDICATORS.items():
+        assert sheet[label].tolist() == machine[key].tolist()
+        assert sheet[f"{label} (normalised)"].tolist() == machine[f"n_{key}"].tolist()

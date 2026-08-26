@@ -129,13 +129,14 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `criteria` | The five criteria, in the order they are evaluated. |
 | `critical_gap` | Which critical-gap assumption was used. |
 | `critical_gap_source` | Where the critical-gap values come from. |
+| `criticality` | Which junctions need attention first: six indicators normalised across the six and summed unweighted, with every component published. |
 | `cross_mean` | Mean share on the twelve cross-street arms. |
 | `crossing` | Conflict points where two paths cross. |
 | `csir_crri_design_gap_s` | CSIR-CRRI's recommended design critical gap for Indian median openings, seconds. |
 | `csir_crri_design_source` | Where the CSIR-CRRI design gap comes from. |
 | `daily_in` | Vehicles entering the junction over the surveyed day. |
 | `daily_out` | Vehicles leaving the junction over the surveyed day. |
-| `daily_veh` | Vehicles counted over the survey day. |
+| `daily_veh` | Vehicles counted over the analysis day. |
 | `delay_veh_hr_day` | Vehicle-hours of delay accumulated per day. A lower bound. |
 | `demand` | Vehicles per peak hour that must use this bay. |
 | `dep_high` | Departure curve at the fast end of the discharge band. |
@@ -171,6 +172,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `excess_0_5_pct` | As terminal_digit_excess_pct. |
 | `excess_pcu` | Excess ARRIVALS per day, PCU. Not PCU-hours. |
 | `excluded` | Cost components deliberately not counted. |
+| `exposure_change_pct` | Change in flow-weighted crossing exposure under the scheme. |
 | `external_label` | A label held out of the fitting, used to test whether the clusters mean anything. |
 | `f_share_pct` | That as a percentage. |
 | `factor` | Expansion factor, the mean of the approaches' total-over-partial ratios. |
@@ -307,10 +309,16 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `n_bays` | Bays assessed. |
 | `n_corridor` | Corridor approaches. |
 | `n_cross` | Cross-street approaches. |
+| `n_daily_veh` | Daily vehicles, scaled 0 to 1 across the six junctions. |
+| `n_exposure_change_pct` | Exposure change, scaled 0 to 1. |
 | `n_fail` | Bays failing a criterion. |
 | `n_features` | Dimensions in that representation. |
 | `n_junctions` | Junctions surveyed. |
+| `n_peak_veh` | Peak-hour vehicles, scaled 0 to 1. |
+| `n_turning_share_pct` | Turning share, scaled 0 to 1. |
 | `n_undecided` | Bays with no verdict because a criterion could not be evaluated. |
+| `n_uturn_demand` | U-turn demand, scaled 0 to 1. |
+| `n_worst_vc` | Worst approach v/c, scaled 0 to 1. |
 | `nearest_label` | Nearest text label in the drawing. |
 | `nearest_label_m` | Distance to it, metres. |
 | `net_grand_total` | Net effect of all discrepancies on the grand total. |
@@ -380,6 +388,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `queue_unconstrained_m` | What the deterministic model returns before the physical cap - published so the magnitude is not hidden, but it is not a queue the link can hold. |
 | `queue_vehicles` | That queue converted to vehicles using the observed composition. |
 | `radii_note` | That the design-vehicle radii are a policy input, banded, and that the governing IRC clause must be confirmed before design. |
+| `rank` | Position on that score. Ties share the lower rank. |
 | `rediscovered` | How many of them the screen re-found without being told. |
 | `ref_errors` | #REF! errors found in the flow-diagram sheets. |
 | `relief` | What an elevated through-carriageway returns to each approach. |
@@ -406,6 +415,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `scenarios` | Pre-computed cells of the assumption grid the scenario tool walks. |
 | `scheme_crossing_exposure` | The same measure under the signal-free scheme, including the U-turn openings the removed right turns move to. |
 | `scheme_junction_points` | Conflict points remaining after the right turn is removed. |
+| `score` | Sum of the six normalised indicators, 0 to 6. |
 | `series` | Movement-class series compared between the two survey days. |
 | `series_available` | Per-bin series split into a separate file and fetched on demand. |
 | `share` | That class's share of the stream. |
@@ -471,6 +481,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `total_excess_pcu_day` | Corridor sum of excess_pcu. |
 | `transects` | How many cross-sections the width was measured on. Fewer is weaker. |
 | `truck` | PCU factor for trucks. |
+| `turning_share_pct` | Share of traffic not going straight through. |
 | `two wheeler` | PCU factor for two-wheelers in the cited document. |
 | `two_wheeler_gap_basis` | Source for the two-wheeler critical gap actually used. |
 | `two_wheeler_gap_indo_hcm` | Indo-HCM's published base value for the same class. |
@@ -521,6 +532,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `worst_approach_pct` | Largest single-approach error. Not selected, so read it. |
 | `worst_direction` | Which of southbound/northbound is slower. |
 | `worst_residual_pct` | Largest single-link continuity mismatch. |
+| `worst_vc` | Highest approach volume/capacity at this junction. |
 | `years_to_first_failure` | Years from the base year to design_life_first_failure_med. |
 | `zebra_ceiling_pcu_dir` | IRC:103 draft: above this, pedestrian delay passes 45 s and a zebra crossing shall not be provided. |
 | `zebra_over` | Approaches above that ceiling. |

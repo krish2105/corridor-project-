@@ -204,8 +204,9 @@ export default function VolumeFlow({ junctions }: { junctions: J[] }) {
         </div>
 
         <p className="col">Ribbon width is peak-hour volume. <strong>Tap or click any
-        movement, or any row below, to isolate it</strong>; tap again to release. Left turns are the next arm clockwise because India drives on the
-        left, so they hug the kerb and cross nothing. The <strong>right turn</strong>
+        movement, or any row below, to isolate it</strong>; tap again to release. Left
+        turns are the next arm clockwise because India drives on the left, so they hug the
+        kerb and cross nothing. The <strong>right turn</strong>{" "}
         swings across the whole junction against opposing traffic &mdash; it is the
         capacity-limiting movement, and the one the signal-free scheme converts into a
         U-turn at a mid-block opening.</p>

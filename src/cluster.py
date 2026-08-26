@@ -278,8 +278,9 @@ def _main():
     (OUT_DATA / "cluster.json").write_text(json.dumps(dict(
         method="Ward linkage on volume-normalised approach share vectors",
         feature_sets_tested=len(results),
-        multiple_comparison_note=("two feature sets were fitted and both are published; "
-                                  "reporting only the winner would invalidate the p"),
+        multiple_comparison_note=("two feature sets were fitted and both are published, "
+                                  "because reporting only the winner is what makes a "
+                                  "p-value meaningless"),
         silhouette_min=SILHOUETTE_MIN, n_approaches=int(len(sets[0][0])),
         results=results,
         any_typology_found=bool(passed),

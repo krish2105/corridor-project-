@@ -527,6 +527,28 @@ FIELDS.update({
 })
 
 
+# --- the criticality ranking --------------------------------------------------
+# Published in corridor.json AND in the master workbook, from one function called on the
+# same payload, so the dashboard and the spreadsheet cannot rank the corridor differently.
+FIELDS.update({
+    "criticality": "Which junctions need attention first: six indicators normalised "
+                   "across the six and summed unweighted, with every component published.",
+    "score": "Sum of the six normalised indicators, 0 to 6.",
+    "rank": "Position on that score. Ties share the lower rank.",
+    "daily_veh": "Vehicles counted over the analysis day.",
+    "worst_vc": "Highest approach volume/capacity at this junction.",
+    "uturn_demand_under_scheme": "Both bays' peak-hour U-turn demand summed.",
+    "exposure_change_pct": "Change in flow-weighted crossing exposure under the scheme.",
+    "turning_share_pct": "Share of traffic not going straight through.",
+    "n_daily_veh": "Daily vehicles, scaled 0 to 1 across the six junctions.",
+    "n_peak_veh": "Peak-hour vehicles, scaled 0 to 1.",
+    "n_worst_vc": "Worst approach v/c, scaled 0 to 1.",
+    "n_uturn_demand": "U-turn demand, scaled 0 to 1.",
+    "n_exposure_change_pct": "Exposure change, scaled 0 to 1.",
+    "n_turning_share_pct": "Turning share, scaled 0 to 1.",
+})
+
+
 
 FIELDS.update({
     # safety and conflict analysis

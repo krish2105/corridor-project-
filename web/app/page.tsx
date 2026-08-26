@@ -9,6 +9,9 @@ import Downloads from "@/components/Downloads";
 import Exhibits from "@/components/Exhibits";
 import GapEvidence from "@/components/GapEvidence";
 import Evidence from "@/components/Evidence";
+import Compare from "@/components/Compare";
+import Ladder from "@/components/Ladder";
+import Learned from "@/components/Learned";
 import type { Corridor } from "@/lib/types";
 
 const nf = new Intl.NumberFormat("en-US");
@@ -34,6 +37,7 @@ const WHY: Record<string, string> = {
 const REQUIRED_SECTIONS = [
   "meta", "audit", "constraints", "capacity", "scheme", "sensitivity",
   "delay", "economics", "safety", "standards", "junctions", "corridor",
+  "criticality",
 ] as const;
 
 function load(): Corridor {
@@ -64,6 +68,7 @@ export default function Page() {
   const cp = d.capacity;
   const sc = d.scheme;
   const sen = d.sensitivity;
+  const uf = d.uturn_framework;
   const dl = d.delay;
   const ec = d.economics;
   const NOGAP = sc?.no_gap_vc_threshold ?? 3;
@@ -426,6 +431,31 @@ export default function Page() {
         <div style={{ marginTop: "1.6rem" }}>
           <Reveal delay={.1}><JunctionExplorer junctions={js} /></Reveal>
         </div>
+      </section>
+
+      {/* COMPARATIVE */}
+      <section>
+        <Reveal><h2>The six against each other</h2></Reveal>
+        <Reveal delay={.06}>
+          <p className="col lede" style={{ marginTop: "1rem" }}>
+            One junction at a time answers what each carries. It does not answer the
+            question a programme has to answer, which is where to start. Six junctions
+            ranked on one indicator, then on all six at once &mdash; and the useful part is
+            what moves between the two.
+          </p>
+        </Reveal>
+        <div style={{ marginTop: "1.4rem" }}>
+          <Reveal delay={.1}><Compare rows={d.criticality} /></Reveal>
+        </div>
+        <Reveal delay={.14}>
+          <p className="src col" style={{ marginTop: "1.1rem" }}>
+            Six indicators, because those are the ones this survey supports. Not included:
+            pedestrian volume, crash history and turning-vehicle delay, none of which exist
+            for this corridor &mdash; the survey has no pedestrian column, there is no
+            accident record, and delay is modelled rather than observed. A ranking is only
+            as complete as what went into it, and this is what went in.
+          </p>
+        </Reveal>
       </section>
 
       {/* CONSTRAINTS */}
@@ -980,6 +1010,33 @@ export default function Page() {
               </table>
             </div>
           </Reveal>
+
+          {uf && (
+            <Reveal delay={.06}>
+              <div className="card" style={{ marginTop: "1.1rem" }}>
+                <header><span className="chip">Framework</span>
+                  <h3>Which constraint binds, bay by bay &mdash; and what would change it</h3></header>
+                <div className="body">
+                  <p className="col">A verdict is not a decision. Five criteria in the
+                  order an engineer would apply them, first failure binding. A criterion
+                  below the binding one is marked <em>untested</em>, not passed: the order
+                  exists precisely so that geometry is not checked for a problem geometry
+                  cannot reach.</p>
+                  <p className="col"><strong>Gap capacity binds at all{" "}
+                  {uf.binding_counts["gap capacity"]} of {uf.n_bays} bays.</strong>{" "}
+                  {uf.bays_above_bay_ceiling > 0 && (
+                    <>And {uf.bays_above_bay_ceiling} of those are past the ceiling of the
+                    instrument itself: a single median opening passes at most{" "}
+                    <strong>{nf.format(uf.bay_ceiling_veh_hr ?? 0)} veh/h</strong> with
+                    nothing at all to yield to, because that is 3600 divided by the
+                    follow-up headway. Those bays are not badly sited. They are the wrong
+                    device for the demand.</>
+                  )}</p>
+                  <Ladder f={uf} />
+                </div>
+              </div>
+            </Reveal>
+          )}
         </section>
       )}
 
@@ -1111,6 +1168,30 @@ export default function Page() {
                 exhibits={d.exhibits as never} sensitivity={sen as never}
                 capacity={cp as never} standards={d.standards as never} scheme={sc as never} />
 
+      {/* LEARNED APPLICATIONS */}
+      {(d.anomaly || d.cluster || d.forecast) && (
+        <section>
+          <Reveal><p className="eyebrow">Where a model earns its place</p></Reveal>
+          <Reveal delay={.04}>
+            <h2 style={{ marginTop: ".5rem" }}>Three things worth learning from the counts</h2>
+          </Reveal>
+          <Reveal delay={.08}>
+            <p className="col lede" style={{ marginTop: "1rem" }}>
+              Everything above was arithmetic and a code book. These three are not, and
+              each is shown with the test it could have failed &mdash; a model reported
+              without one is a number with a confident voice. One of the three returns a
+              negative result and it is on the page beside the other two, because running
+              two tests and publishing the winner is how a p-value stops meaning anything.
+            </p>
+          </Reveal>
+          <div style={{ marginTop: "1.5rem" }}>
+            <Reveal delay={.12}>
+              <Learned anomaly={d.anomaly} cluster={d.cluster} forecast={d.forecast} />
+            </Reveal>
+          </div>
+        </section>
+      )}
+
       {/* CHECK THE WORK */}
       <section>
         <Reveal><h2>Check the work</h2></Reveal>
@@ -1136,12 +1217,13 @@ export default function Page() {
             <li><strong>E-rickshaws.</strong> No column anywhere holds them.</li>
             <li><strong>Half the PCU correction.</strong> Locked behind the composite class
             columns. Only re-counting to a proper class scheme resolves it.</li>
-            <li><strong>Three junction positions are inferred.</strong> Rajat Path, VT Road
-            and Patel Marg are fixed by an exact name match against JDA&rsquo;s scheme. The
-            other three are placed by position in that sequence. Flow continuity ranks this
-            ordering 128th of 720, sharing four of six positions with its own best &mdash;
-            but that best had a {c.order_margin_pct}% margin, which is noise. The survey
-            contractor&rsquo;s location schedule would settle it.</li>
+            <li><strong>The corridor order is not settled by the counts.</strong>{" "}
+            Positions themselves are no longer inferred &mdash; JDA supplied them, and our
+            own picks were wrong by 269 to 950 m, on a parallel road. But flow continuity
+            still cannot confirm the sequence on its own: its best ordering wins by{" "}
+            {c.order_margin_pct}%, which is noise. Chainage along JDA&rsquo;s alignment
+            resolves it, and the agreement between the two is a check rather than a
+            derivation.</li>
             {/* the U-turn item is already covered above in more detail */}
             {a.survey_design.filter((s) => !s.startsWith("U-turns")).map((s) => <li key={s}>{s}</li>)}
           </ul>
