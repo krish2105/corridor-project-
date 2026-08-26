@@ -69,7 +69,7 @@ Every module runs standalone and prints its own verification metric. A module th
 
 ## Caveats, stated
 
-3 junction positions are fixed by an exact name match against JDA's scheme and confirmed by chainage along the survey drawing; 3 are placed by position in that sequence and labelled inferred throughout.
+0 junction positions are fixed by an exact name match against JDA's scheme and confirmed by chainage along the survey drawing; 6 are placed by position in that sequence and labelled inferred throughout.
 
 The severity weighting in the constraint atlas is a judgement, not a measurement. Half the PCU correction is unresolvable because the survey's class scheme lumps roughly half the stream into one column, so those figures are published as bands.
 

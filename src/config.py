@@ -59,14 +59,32 @@ JUNCTIONS = {
 # CONFIDENCE is per junction and honest: the three name-matched ones are firm, the
 # rest are placed by position in the sequence. The survey contractor's location
 # schedule would settle it outright. Every downstream output carries this flag.
+# EVERY POSITION HERE IS UNCONFIRMED, and the distinction this table used to draw was
+# wrong in a way worth spelling out.
+#
+# Three rows were labelled "name match" and shown as confirmed on the map. What matched
+# was the NAME: the survey's own arm label, say "Patel Marg Crossing", against a junction
+# JDA names in its scheme. That tells us the junction exists. It says nothing about where
+# it is. The position of all six came from picking one of 39 signal clusters out of the
+# CAD, and JDA's reviewer says those picks sit on the wrong road.
+#
+# So "name match" was being presented as position confidence when it was only ever
+# identity confidence. Two different claims, one label, and the map showed the stronger
+# one. All six are now marked unconfirmed until JDA supplies the survey location
+# schedule or their own pins.
+#
+# Nothing else in the pipeline depends on these coordinates. The counts, the movement
+# matrices, the PCU correction and the U-turn analysis all come from the workbooks. What
+# they do drive is chainage, and therefore corridor ordering and the detour distances,
+# which is why those carry their own caveats.
 JUNCTION_COORDS = {
     #          lat        lon        JDA name        cluster  confidence
-    "TMC-01": (26.840536, 75.770289, "B-2 Bypass",   "C8",  "inferred"),
-    "TMC-02": (26.847800, 75.769429, "Vijay Path",   "C21", "inferred"),
-    "TMC-03": (26.852267, 75.767456, "Patel Marg",   "C26", "name match"),
-    "TMC-04": (26.860842, 75.763579, "VT Road",      "C18", "name match"),
-    "TMC-05": (26.864799, 75.758347, "Rajat Path",   "C22", "name match"),
-    "TMC-06": (26.871403, 75.755127, "Bhrigu Path",  "C28", "inferred"),
+    "TMC-01": (26.840536, 75.770289, "B-2 Bypass",   "C8",  "unconfirmed"),
+    "TMC-02": (26.847800, 75.769429, "Vijay Path",   "C21", "unconfirmed"),
+    "TMC-03": (26.852267, 75.767456, "Patel Marg",   "C26", "unconfirmed"),
+    "TMC-04": (26.860842, 75.763579, "VT Road",      "C18", "unconfirmed"),
+    "TMC-05": (26.864799, 75.758347, "Rajat Path",   "C22", "unconfirmed"),
+    "TMC-06": (26.871403, 75.755127, "Bhrigu Path",  "C28", "unconfirmed"),
 }
 # The road is deliberately UNNAMED. Every one of the six junctions carries
 # "Mansarover Metro" as its north arm and "Sanganer Stadium" as its south arm, so the

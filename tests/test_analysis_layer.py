@@ -277,11 +277,14 @@ def test_the_published_order_is_reported_as_inconclusive_where_it_is(published):
     assert len(c["order_candidates"]) > 1, "a tie needs its runner-up published"
 
 
-def test_chainage_places_every_junction_and_labels_inferred_ones(published):
+def test_chainage_places_every_junction_and_labels_them_unconfirmed(published):
     """
-    Chainage is what actually decided the published order, and nothing asserted it. It
-    only counts as evidence for the three junctions matched by name — for the inferred
-    ones it restates the position that was inferred, so the labels must survive.
+    Chainage is what decided the published order, and nothing asserted it.
+
+    It used to count as evidence for the three junctions "matched by name". That was
+    withdrawn: a name match says the junction exists, not where it is, and JDA's reviewer
+    says all six position picks sit on the wrong road. So chainage now restates an
+    unconfirmed position for every one of them, and the labels must say so.
     """
     from src.reports import chainage
     total, rows = chainage()
@@ -289,6 +292,6 @@ def test_chainage_places_every_junction_and_labels_inferred_ones(published):
     ch = [r["chainage_m"] for r in rows]
     assert ch == sorted(ch), "chainage rows are not in order along the alignment"
     assert all(0 <= c <= total for c in ch), "a junction sits off the alignment"
-    assert any(r["confidence"] == "inferred" for r in rows), (
-        "every junction now reads as confirmed; three positions are still inferred "
-        "pending the survey location schedule")
+    assert all(r["confidence"] == "unconfirmed" for r in rows), (
+        "a junction is claiming a confirmed position; none is confirmed until JDA "
+        "supplies the survey location schedule")

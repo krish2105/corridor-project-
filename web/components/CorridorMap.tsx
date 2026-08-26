@@ -109,7 +109,9 @@ export default function CorridorMap({ junctions }: { junctions: Junction[] }) {
     const bounds = new maplibregl.LngLatBounds();
     ordered.forEach((j) => {
       bounds.extend([j.lon, j.lat]);
-      const firm = j.location_confidence === "name match";
+      // No position is confirmed, so no marker claims to be. The solid/dashed
+      // split encoded a NAME match and was read as a POSITION match.
+      const firm = false;
       const el = document.createElement("div");
       const d = 16 + Math.round((j.daily_veh / 160000) * 18);
       el.style.cssText =
@@ -273,12 +275,19 @@ export default function CorridorMap({ junctions }: { junctions: Junction[] }) {
       </div>
       <div style={{ padding: ".8rem 1.15rem", borderTop: "1px solid var(--rule)",
                     fontSize: ".76rem", color: "var(--muted)" }}>
-        <span style={{ color: "var(--accent)", fontWeight: 600 }}>Solid</span> — the
-        survey&rsquo;s own arm name matches a junction JDA names in its signal-free scheme.{" "}
-        <span style={{ color: "var(--defect)", fontWeight: 600 }}>Dashed</span> — placed by
-        position in that sequence, not confirmed. Switch on <em>All 39 signal clusters</em>{" "}
-        to see every candidate considered and judge the choice yourself. Constraint layers
-        are read directly from the JDA survey drawing.
+        <span style={{ color: "var(--defect)", fontWeight: 600 }}>
+          Every position on this map is unconfirmed.</span>{" "}
+        Three of the six used to show as confirmed because the survey&rsquo;s own arm name
+        matched a junction JDA names in its scheme. That was the wrong claim to draw from
+        it: a name match tells you the junction <em>exists</em>, not where it is. All six
+        positions came from picking one of 39 signal clusters out of the CAD, and
+        JDA&rsquo;s reviewer says those picks sit on the wrong road.{" "}
+        <strong>Treat the markers as a sketch, not a survey.</strong> Switch on{" "}
+        <em>All 39 signal clusters</em> to see every candidate and judge for yourself.
+        The constraint layers underneath are read directly from the JDA drawing and are
+        not affected. Nothing else on this page depends on these coordinates: the counts,
+        the matrices, the PCU correction and the U-turn analysis all come from the
+        workbooks.
       </div>
     </div>
   );
