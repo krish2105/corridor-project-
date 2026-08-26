@@ -188,6 +188,7 @@ not use — including one it had evaluated and deliberately rejected.
 - `ultralytics` + `torch` — YOLO detection and fine-tuning
 - `supervision` — ByteTrack tracking
 - `matplotlib` — the constraint atlas PDF
+- `reportlab` — the meeting pack PDF and the reviewer question sheet
 - `pyyaml` — dataset manifests
 - Next.js + React, MapLibre GL, Recharts — dashboard, static JSON, no backend
 
@@ -269,6 +270,7 @@ corridor/
 │   ├── pipeline.py     # Phase 6 driver — fails at the first gate
 │   │
 │   ├── reports.py      # D6 capacity, D8 validation (pro forma), D9 method
+│   ├── meeting_pack.py # -> out/Corridor_Meeting_Pack.pdf + reviewer_questions.md
 │   ├── dictionary.py   # -> docs/data_dictionary.md; gates every published field
 │   ├── service_docs.py # -> README.md and out/service/; owns PIPELINE_ORDER
 │   ├── export.py       # -> out/data/corridor.json (both dashboards read this)

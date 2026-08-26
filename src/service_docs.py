@@ -59,6 +59,9 @@ DELIVERABLES = [
     # what makes that visible.
     ("D11", "Phase 6 field plan", "Camera positions, schedule, GCP capture list",
      "T3", OUT / "phase6_field_plan.md", "awaiting the field day"),
+    ("D15", "Meeting pack and question sheet",
+     "5-page PDF for the room, plus the open questions as a standalone hand-over",
+     "T1", OUT / "Corridor_Meeting_Pack.pdf"),
     ("D14", "Measurement register",
      "Every published dimension with its method, its uncertainty and what resolves it",
      "T2", OUT_DATA / "measurement.json"),
@@ -254,6 +257,7 @@ PIPELINE_ORDER = [
     ("service_docs", "-> out/service/ and README.md"),
     ("build_page",   "-> out/corridor_audit.html"),
     ("build_pitch",  "-> out/corridor_pitch.html"),
+    ("meeting_pack",  "-> out/Corridor_Meeting_Pack.pdf and out/reviewer_questions.md"),
 ]
 
 
