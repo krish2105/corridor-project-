@@ -286,6 +286,13 @@ def approach_pcu(bins, day):
     return pd.DataFrame(rows)
 
 
+def comp_share(bins, day, cls):
+    """That class's share of the movement stream on the analysis day."""
+    mv = bins[(bins.kind == "movement") & (bins.date == day)]
+    tot = mv["count"].sum()
+    return 0.0 if tot == 0 else mv.loc[mv.veh_class == cls, "count"].sum() / tot
+
+
 def observed_vehicles(bins, day):
     """Peak-hour VEHICLES on the busiest corridor approach of each junction."""
     from src.analyse import NORTH, SOUTH
@@ -378,13 +385,55 @@ if __name__ == "__main__":
         print(f"  {code:<10}{cap[code]:>13,}{ach[code]:>10,.0f}"
               f"{ach[code]/cap[code]:>8.2f}{veh[code]/lanes:>13,.0f}")
     ratio = float((ach / pd.Series(cap)).mean())
+    # Computed, not typed. This printed a literal 3,266 until a transect-spacing
+    # correction changed TMC-01's lane count, at which point the sentence was quoting a
+    # figure the run no longer produced.
+    per_lane = {c: veh[c] / (lanes_from_width(widths[c][0]) or 1) for c in cap}
+    worst_lane_code = max(per_lane, key=per_lane.get)
+    worst_per_lane = per_lane[worst_lane_code]
+    tw_share = 100 * float(comp_share(bins, day, "TWO_W"))
     print(f"\n  mean observed / planning capacity: **{ratio:.2f}x**")
-    print("\n  No. Peak flow reaches 3,266 vehicles per nominal lane per hour on the")
-    print("  binding approach, against a saturation flow of roughly 1,800-2,000. With")
-    print("  58% two-wheelers the constraint is not lane discipline, and a lane-based")
-    print("  v/c is not a meaningful denominator here. jaipur_corridor_study.md 2.2")
-    print("  predicts exactly this: nominal lanes and used streams diverge in mixed")
-    print("  traffic. Indo-HCM's sublane treatment is required, calibrated locally.")
+
+    # THIS SECTION HAD TO BE REWRITTEN, AND THE REASON IS THE POINT.
+    #
+    # It argued that a lane model does not describe this corridor because peak flow
+    # reached 3,266 veh per nominal lane per hour against a saturation flow near 1,800 to
+    # 2,000 - flow above saturation means the lanes are not what is being used. That was
+    # true on the widths this file measured at the time. It is not true on the corrected
+    # ones: wider carriageways mean more nominal lanes, and the same flow spread over them
+    # now sits BELOW saturation everywhere. The argument from exceeding saturation is
+    # withdrawn rather than restated with new numbers.
+    #
+    # The conclusion survives on the other leg, which the width correction does not touch:
+    # a stream that is half two-wheelers does not queue in lanes. That is weaker evidence
+    # than what was claimed before, and it is labelled as such.
+    sat_lo, sat_hi = 1800, 2000
+    over = [c for c, v in per_lane.items() if v > sat_lo]
+    print(f"\n  Per nominal lane, the busiest approach at each junction runs "
+          f"{min(per_lane.values()):,.0f} to {worst_per_lane:,.0f} veh/hour")
+    print(f"  ({worst_lane_code} highest), against a saturation flow near "
+          f"{sat_lo:,}-{sat_hi:,}.")
+    if over:
+        print(f"  {len(over)} of {len(per_lane)} exceed it: {', '.join(sorted(over))}. Flow "
+              f"above saturation means the")
+        print("  nominal lanes are not what is being used, and a lane-based v/c has no")
+        print("  meaningful denominator.")
+    else:
+        print(f"  None exceeds it. The argument this section used to make - that flow "
+              f"above saturation")
+        print("  proves the lane model broken - does NOT hold on the corrected widths and is")
+        print("  withdrawn. What remains is the composition argument, which is weaker:")
+        print(f"  {tw_share:.0f}% of this stream is two-wheelers, which do not queue in lanes,")
+        print("  so a nominal lane count is still the wrong denominator - but that is now an")
+        print("  argument from behaviour rather than from an observed impossibility.")
+        print("  jaipur_corridor_study.md 2.2 predicts the divergence either way.")
+        print(f"\n  Note which direction the doubt runs. These per-lane figures are low")
+        print("  BECAUSE the measured widths are generous, and those widths are the")
+        print("  corridor's least certain quantity: over half the transects read wide")
+        print("  enough to be a service road. If they are, the lane counts fall, the")
+        print("  per-lane flows rise, and the withdrawn argument returns.")
+    print("\n  Either way the remedy is the same: Indo-HCM's sublane treatment, "
+          "calibrated locally.")
     print("\n  So the v/c figures above are reported as what the STANDARD says, not as a")
     print("  measurement. The useful quantity is the observed throughput itself.")
 
@@ -492,6 +541,20 @@ if __name__ == "__main__":
         horizon_year=horizon,
         observed_vs_planning_ratio=round(ratio, 2),
         lane_model_applicable=False,
+        worst_veh_per_nominal_lane_hr=round(worst_per_lane),
+        worst_veh_per_nominal_lane_junction=worst_lane_code,
+        saturation_flow_reference=[1800, 2000],
+        approaches_over_saturation=len(over),
+        veh_per_nominal_lane_range=[round(min(per_lane.values())),
+                                    round(max(per_lane.values()))],
+        lane_model_basis=(
+            "composition only. The earlier basis - observed flow above saturation flow - "
+            "held on narrower measured widths and does not hold on the corrected ones, "
+            "so it is withdrawn rather than restated. If the wide transects turn out to be "
+            "service roads, the lane counts fall and that basis returns."
+            if not over else
+            "observed flow above saturation flow on at least one approach, and composition"),
+        two_wheeler_share_pct=round(tw_share, 1),
         # The width flag, published rather than left in a comment. It is the single most
         # consequential uncertainty in this file: capacity scales linearly with measured
         # width, and these widths are what turn a corridor that was over capacity on the

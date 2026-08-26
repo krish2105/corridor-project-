@@ -224,6 +224,19 @@
  "horizon_year": 2046,
  "observed_vs_planning_ratio": 0.7,
  "lane_model_applicable": false,
+ "worst_veh_per_nominal_lane_hr": 1418,
+ "worst_veh_per_nominal_lane_junction": "TMC-03",
+ "saturation_flow_reference": [
+  1800,
+  2000
+ ],
+ "approaches_over_saturation": 0,
+ "veh_per_nominal_lane_range": [
+  780,
+  1418
+ ],
+ "lane_model_basis": "composition only. The earlier basis - observed flow above saturation flow - held on narrower measured widths and does not hold on the corrected ones, so it is withdrawn rather than restated. If the wide transects turn out to be service roads, the lane counts fall and that basis returns.",
+ "two_wheeler_share_pct": 49.1,
  "wide_transects": 43,
  "transects_total": 77,
  "wide_transect_pct": 55.8,

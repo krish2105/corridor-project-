@@ -318,6 +318,11 @@ if __name__ == "__main__":
         elevated=[{k: (v if not hasattr(v, "item") else v.item()) for k, v in r.items()}
                   for r in df.to_dict("records")],
         elevated_all_pass_combinations=allpass, elevated_total_combinations=len(df),
+        # The worst corner of the grid, published rather than described. The dashboard
+        # said "the worst still returns 10 of 12" as literal text; it became 11 of 12
+        # when a transect-spacing correction changed a lane count, and the sentence would
+        # have gone on saying ten.
+        elevated_worst_ok=int(df.ok.min()), elevated_worst_of=int(df.total.max()),
         queue_axes=QUEUE_AXES,
         queue=[{k: (v if not hasattr(v, "item") else v.item()) for k, v in r.items()}
                for r in qrows],

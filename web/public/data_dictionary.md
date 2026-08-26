@@ -54,6 +54,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `approach_hours_total` | Approach-hours assessed: approaches x rolling hours. |
 | `approaches` | Per-approach rows. Two corridor approaches at each junction. |
 | `approaches_ok_after_grade_separation` | Approaches under capacity on opening. |
+| `approaches_over_saturation` | Approaches whose flow per nominal lane exceeds the saturation flow. Zero on the corrected widths, which is why the argument from exceedance is withdrawn. |
 | `arms` | Arm names, clockwise from north. |
 | `arrivals` | Cumulative PCU arriving at the stop line. Measured. |
 | `articulated` | Minimum turning radius band, metres. |
@@ -181,6 +182,8 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `elevated` | Approaches returned under capacity, per assumption combination. |
 | `elevated_all_pass_combinations` | Combinations where all approaches are relieved. |
 | `elevated_total_combinations` | Size of the elevated grid. |
+| `elevated_worst_of` | Approaches assessed there. |
+| `elevated_worst_ok` | Approaches recovering at the least favourable corner of the assumption grid. |
 | `excess_0_5_pct` | As terminal_digit_excess_pct. |
 | `excess_pcu` | Excess ARRIVALS per day, PCU. Not PCU-hours. |
 | `excluded` | Cost components deliberately not counted. |
@@ -270,6 +273,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `lane_cap` | Lane capacity tested, PCU per lane. |
 | `lane_capacity_pcu` | Lane capacity tested, PCU per lane. |
 | `lane_model_applicable` | Whether lane-based capacity describes this stream at all. |
+| `lane_model_basis` | What the claim that a lane model does not describe this corridor now rests on, and what it used to rest on. |
 | `lane_width_m` | Assumed lane width, metres. |
 | `lanes` | Lanes per direction tested. |
 | `lanes_per_dir` | Lanes per direction from the measured width. |
@@ -432,6 +436,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `s_flatline` | Flatline detector, normalised. |
 | `s_mix` | Composition detector, normalised. |
 | `s_spike` | Spike detector, normalised. |
+| `saturation_flow_reference` | [low, high] saturation flow those are compared against. |
 | `saving_min_per_trip` | Delay avoided by a through trip on an elevated carriageway. |
 | `scenarios` | Pre-computed cells of the assumption grid the scenario tool walks. |
 | `scheme_crossing_exposure` | The same measure under the signal-free scheme, including the U-turn openings the removed right turns move to. |
@@ -513,6 +518,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `two_wheeler_gap_basis` | Source for the two-wheeler critical gap actually used. |
 | `two_wheeler_gap_indo_hcm` | Indo-HCM's published base value for the same class. |
 | `two_wheeler_gap_ours` | Our optimistic two-wheeler critical gap, seconds. |
+| `two_wheeler_share_pct` | Two-wheeler share of the movement stream on the analysis day. |
 | `uncertainty` | How far it can be trusted, or why that cannot be quantified. |
 | `understate` | Discrepancies where the stored total was too low. |
 | `unservable` | Movements out of 12 whose demand exceeds the bay capacity on this basis. |
@@ -541,6 +547,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `veh` | Vehicle count, as counted rather than converted to PCU. |
 | `veh_class` | Vehicle class code. |
 | `veh_km_per_hour` | Extra vehicle-kilometres this bay generates in the peak hour. |
+| `veh_per_nominal_lane_range` | [low, high] vehicles per nominal lane per hour on the busiest approach at each junction. |
 | `vehicle_class` | The class being compared. |
 | `verdict` | fails, viable, or undecided. |
 | `volume_flow` | Peak-hour movement volumes for the volume-flow diagram. |
@@ -564,6 +571,8 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `worst_direction` | Which of southbound/northbound is slower. |
 | `worst_residual_pct` | Largest single-link continuity mismatch. |
 | `worst_vc` | Highest approach volume/capacity at this junction. |
+| `worst_veh_per_nominal_lane_hr` | The highest of those, vehicles per nominal lane per hour. |
+| `worst_veh_per_nominal_lane_junction` | Which junction that is. |
 | `years_to_first_failure` | Years from the base year to design_life_first_failure_med. |
 | `zebra_ceiling_pcu_dir` | IRC:103 draft: above this, pedestrian delay passes 45 s and a zebra crossing shall not be provided. |
 | `zebra_over` | Approaches above that ceiling. |

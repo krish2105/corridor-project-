@@ -74,6 +74,12 @@ export default function Page() {
   const widthsM = Object.values(cp?.widths ?? {}).map((w) => w.width_m);
   const widthRange: [number, number] = widthsM.length
     ? [Math.min(...widthsM), Math.max(...widthsM)] : [0, 0];
+  const lanesN = Object.values(cp?.widths ?? {}).map((w) => w.lanes_per_dir);
+  const laneRange: [number, number] = lanesN.length
+    ? [Math.min(...lanesN), Math.max(...lanesN)] : [0, 0];
+  const capsN = Object.values(cp?.widths ?? {}).map((w) => w.capacity_pcu_hr);
+  const capRange: [number, number] = capsN.length
+    ? [Math.min(...capsN), Math.max(...capsN)] : [0, 0];
   const sc = d.scheme;
   const sen = d.sensitivity;
   const uf = d.uturn_framework;
@@ -86,7 +92,6 @@ export default function Page() {
     return m;
   }, {} as Record<string, typeof cp.relief[number]>)).sort((a, b) =>
     a.junction.localeCompare(b.junction)) : [];
-  const width0 = cp ? Object.values(cp.widths)[0]?.width_m : 0;
 
   return (
     <main className="wrap">
@@ -551,29 +556,65 @@ export default function Page() {
               <header><span className="chip material">Method</span>
                 <h3>A lane-based capacity model does not describe this corridor</h3></header>
               <div className="body">
-                <p className="col">Carriageway width is measured, not assumed: 155
-                perpendicular transects from the alignment to the kerb linework, taking the
-                outermost hit each side and subtracting the median. The corridor runs{" "}
-                <strong>{width0?.toFixed(1)} m per direction</strong> &mdash; two nominal
-                lanes, about {nf.format(Math.round(Object.values(cp.widths ?? {})[0]?.capacity_pcu_hr ?? 0))}{" "}
-                PCU/hour at that measured width.</p>
+                <p className="col">Carriageway width is measured, not assumed:{" "}
+                {cp.transects_total} perpendicular transects from the alignment to the kerb
+                linework, taking the outermost hit each side and subtracting the median.
+                The corridor runs <strong>{widthRange[0]}&ndash;{widthRange[1]} m per
+                direction</strong>, {laneRange[0] === laneRange[1]
+                  ? <>{laneRange[0]} nominal lanes</>
+                  : <>{laneRange[0]} to {laneRange[1]} nominal lanes</>} &mdash;{" "}
+                {nf.format(capRange[0])} to {nf.format(capRange[1])} PCU/hour at those
+                measured widths.</p>
+                {/* This paragraph used to assert 3,266 veh per nominal lane against a
+                    1,800-2,000 saturation flow, and 58% two-wheelers. Both were literals.
+                    The first became false when a transect-spacing correction widened the
+                    carriageways and so raised the lane counts; the second was never
+                    re-checked against the composition it quotes. Both come from the
+                    pipeline now, and the argument branches on which one the data supports. */}
                 <p className="col">Observed peak flow is{" "}
-                <strong>{cp.observed_vs_planning_ratio}&times;</strong> that. On the binding
-                approach it reaches <strong>3,266 vehicles per nominal lane per hour</strong>{" "}
-                against a saturation flow near 1,800&ndash;2,000, with{" "}
-                <strong>58% two-wheelers</strong>. Lane discipline is not what limits this road.</p>
-                <p className="col">That is not a rounding problem, it is the wrong model. So
-                v/c here is reported as <em>what the standard says</em>, not as a measurement,
-                and Indo-HCM&rsquo;s sublane treatment with local calibration is what a
-                detailed design would need.</p>
+                <strong>{cp.observed_vs_planning_ratio}&times;</strong> that. Per nominal
+                lane the busiest approach at each junction runs{" "}
+                <strong>{nf.format(cp.veh_per_nominal_lane_range?.[0] ?? 0)}&ndash;
+                {nf.format(cp.veh_per_nominal_lane_range?.[1] ?? 0)} vehicles per hour</strong>{" "}
+                against a saturation flow near{" "}
+                {nf.format(cp.saturation_flow_reference?.[0] ?? 1800)}&ndash;
+                {nf.format(cp.saturation_flow_reference?.[1] ?? 2000)}.{" "}
+                {(cp.approaches_over_saturation ?? 0) > 0 ? (
+                  <><strong>{cp.approaches_over_saturation}</strong> exceed it. Flow above
+                  saturation means the nominal lanes are not what is being used.</>
+                ) : (
+                  <><strong>None exceeds it.</strong> This page used to argue from that
+                  exceedance and it no longer holds on the corrected widths, so the argument
+                  is withdrawn rather than restated. What remains is weaker and honest:{" "}
+                  <strong>{cp.two_wheeler_share_pct}% of this stream is two-wheelers</strong>,
+                  which do not queue in lanes, so a nominal lane count is still the wrong
+                  denominator &mdash; but that is an argument from behaviour, not from an
+                  observed impossibility.</>
+                )}</p>
+                {(cp.approaches_over_saturation ?? 0) === 0 && (
+                  <p className="col" style={{
+                    borderLeft: "3px solid var(--caution)", paddingLeft: ".9rem" }}>
+                    <strong>Note which way the doubt runs.</strong> These per-lane figures
+                    are low <em>because</em> the measured widths are generous, and those
+                    widths are the corridor&rsquo;s least certain quantity &mdash;{" "}
+                    {cp.wide_transect_pct}% of transects read wide enough to be a service
+                    road. If they are, the lane counts fall, the per-lane flows rise, and
+                    the withdrawn argument comes back.
+                  </p>
+                )}
+                <p className="col">Either way v/c here is reported as <em>what the standard
+                says</em>, not as a measurement, and Indo-HCM&rsquo;s sublane treatment with
+                local calibration is what a detailed design would need.</p>
                 <Evidence
                   label="The capacity figure, and where it comes from"
                   rows={[
-                    { k: "measured width", v: `${width0?.toFixed(1)} m per direction`,
-                      note: "155 perpendicular transects, outermost kerb hit each side, median subtracted" },
+                    { k: "measured width",
+                      v: `${widthRange[0]}-${widthRange[1]} m per direction`,
+                      note: `${cp.transects_total} perpendicular transects at ${d.measurement?.published_step_m ?? 5} m spacing, outermost kerb hit each side, median subtracted` },
                     { k: "base capacity", v: `${nf.format(cp.assumptions.base_capacity_pcu_per_dir)} PCU/hr/dir`,
                       note: `at the ${cp.assumptions.base_width_per_dir_m} m reference width` },
-                    { k: "scaled to this corridor", v: `${nf.format(Math.round(Object.values(cp.widths ?? {})[0]?.capacity_pcu_hr ?? 0))} PCU/hr` },
+                    { k: "scaled to this corridor",
+                      v: `${nf.format(capRange[0])}-${nf.format(capRange[1])} PCU/hr` },
                     { k: "observed vs planning", v: `${cp.observed_vs_planning_ratio}x`, tone: "bad" },
                     { k: "lane model applicable", v: cp.lane_model_applicable ? "yes" : "no",
                       tone: cp.lane_model_applicable ? "ok" : "bad",
@@ -1144,8 +1185,8 @@ export default function Page() {
                   <p>Across every combination of PCU uplift, lane capacity and effective
                   lane count, all approaches return under planning capacity in{" "}
                   <strong>{sen.elevated_all_pass_combinations} of{" "}
-                  {sen.elevated_total_combinations}</strong> cases. The worst still returns
-                  10 of 12.</p>
+                  {sen.elevated_total_combinations}</strong> cases. The worst still
+                  returns {sen.elevated_worst_ok} of {sen.elevated_worst_of}.</p>
                   <p>One-at-a-time analysis swings the result by <strong>zero</strong>{" "}
                   approaches on every axis, so no assumption is named most influential. The
                   finding is driven by the size of the through movement, not by anything
@@ -1157,7 +1198,9 @@ export default function Page() {
                         note: "PCU uplift x lane capacity x lanes per direction" },
                       { k: "all approaches recover", v: `${sen.elevated_all_pass_combinations} of ${sen.elevated_total_combinations}`,
                         tone: "ok" },
-                      { k: "worst combination", v: "10 of 12 recover", tone: "ok",
+                      { k: "worst combination",
+                        v: `${sen.elevated_worst_ok} of ${sen.elevated_worst_of} recover`,
+                        tone: "ok",
                         note: "still a majority, at the least favourable corner of the grid" },
                       { k: "most influential axis", v: "none",
                         note: "one-at-a-time swings the result by zero approaches on every axis" },

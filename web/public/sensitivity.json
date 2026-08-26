@@ -237,6 +237,8 @@
  ],
  "elevated_all_pass_combinations": 23,
  "elevated_total_combinations": 24,
+ "elevated_worst_ok": 11,
+ "elevated_worst_of": 12,
  "queue_axes": {
   "jam_packing": [
    0.85,

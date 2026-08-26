@@ -532,6 +532,21 @@ FIELDS.update({
 # Published in corridor.json AND in the master workbook, from one function called on the
 # same payload, so the dashboard and the spreadsheet cannot rank the corridor differently.
 FIELDS.update({
+    "approaches_over_saturation": "Approaches whose flow per nominal lane exceeds the "
+                                  "saturation flow. Zero on the corrected widths, which is "
+                                  "why the argument from exceedance is withdrawn.",
+    "worst_veh_per_nominal_lane_hr": "The highest of those, vehicles per nominal lane "
+                                     "per hour.",
+    "worst_veh_per_nominal_lane_junction": "Which junction that is.",
+    "veh_per_nominal_lane_range": "[low, high] vehicles per nominal lane per hour on the "
+                                  "busiest approach at each junction.",
+    "saturation_flow_reference": "[low, high] saturation flow those are compared against.",
+    "two_wheeler_share_pct": "Two-wheeler share of the movement stream on the analysis day.",
+    "lane_model_basis": "What the claim that a lane model does not describe this corridor "
+                        "now rests on, and what it used to rest on.",
+    "elevated_worst_ok": "Approaches recovering at the least favourable corner of the "
+                         "assumption grid.",
+    "elevated_worst_of": "Approaches assessed there.",
     "criticality": "Which junctions need attention first: six indicators normalised "
                    "across the six and summed unweighted, with every component published.",
     "score": "Sum of the six normalised indicators, 0 to 6.",

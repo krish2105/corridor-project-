@@ -88,6 +88,10 @@ export type Corridor = {
     approaches_ok_after_grade_separation: number;
     widths: Record<string, { width_m: number; lanes_per_dir: number; capacity_pcu_hr: number;
                              transects: number }>;
+    approaches_over_saturation?: number;
+    veh_per_nominal_lane_range?: [number, number];
+    saturation_flow_reference?: [number, number];
+    two_wheeler_share_pct?: number; lane_model_basis?: string;
     width_caveat?: string; wide_transects?: number; transects_total?: number;
     wide_transect_pct?: number; wide_transect_threshold_m?: number;
     wide_transect_range_m?: [number, number] | null;
@@ -205,6 +209,7 @@ export type Corridor = {
     combinations: number; uturn_robust: boolean;
     uturn: Record<string, { fails: number; of: number }>;
     elevated_all_pass_combinations: number; elevated_total_combinations: number;
+    elevated_worst_ok: number; elevated_worst_of: number;
     most_influential: string | null; swing: number; assumption_driven: boolean;
   } | null;
   criticality: Criticality[];
