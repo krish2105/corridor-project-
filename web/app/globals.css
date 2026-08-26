@@ -470,3 +470,13 @@ td.pub{background:var(--accent-soft);font-weight:600}
 @media (max-width: 40rem){
   .dim-k{min-width:0;margin-right:.4rem}
 }
+
+/* map popups --------------------------------------------------------------- */
+/* Content overflowed the panel and the last line was cut off mid-word. Cap the height
+   and let it scroll inside itself rather than off the bottom of the map. */
+.cm-pop .maplibregl-popup-content{max-height:19rem;overflow-y:auto;
+  padding:.7rem .9rem .7rem .8rem;border-radius:4px;
+  box-shadow:0 1px 3px rgba(20,24,26,.14), 0 10px 28px -18px rgba(20,24,26,.5)}
+.cm-pop .maplibregl-popup-close-button{font-size:1.05rem;line-height:1;
+  width:26px;height:26px;color:var(--muted)}
+.cm-pop .maplibregl-popup-close-button:hover{background:var(--sunk);color:var(--ink)}

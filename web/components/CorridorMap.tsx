@@ -19,6 +19,23 @@ import type { Junction } from "@/lib/types";
  */
 type LayerDef = { id: string; label: string; colour: string; kind: "line" | "circle" };
 
+/**
+ * A popup that closes whatever was open before it, and cannot outgrow the map.
+ *
+ * Two problems this fixes, both visible at once on a screenshot: popups accumulated
+ * because nothing ever closed one, and their content overflowed the panel so the last
+ * line was cut off mid-word. maxWidth caps the panel, the class caps its height and lets
+ * long content scroll inside itself rather than off the bottom of the map.
+ */
+function popupOnce(html: string, only: (p: maplibregl.Popup) => void, offset: number) {
+  const pop = new maplibregl.Popup({
+    offset, closeButton: true, closeOnClick: true, maxWidth: "260px",
+    className: "cm-pop",
+  }).setHTML(html);
+  pop.on("open", () => only(pop));
+  return pop;
+}
+
 const ATLAS_LAYERS: LayerDef[] = [
   { id: "structures", label: "Buildings", colour: "#9E2B25", kind: "line" },
   { id: "median", label: "Medians", colour: "#5C6663", kind: "line" },
@@ -42,6 +59,14 @@ export default function CorridorMap({
   const map = useRef<maplibregl.Map | null>(null);
   const atlas = useRef<unknown>(null);
   const fit = useRef<maplibregl.LngLatBounds | null>(null);
+  // The map had no idea how many popups were open. Marker popups toggle themselves and
+  // the median-opening handler built a fresh one on every click, so they accumulated:
+  // three panels stacked over the corridor, each covering the markers behind it and none
+  // of them closable except by clicking the exact marker that opened it.
+  const shown = useRef<maplibregl.Popup | null>(null);
+  // Whether the reader has moved the map themselves. Until they have, a container resize
+  // re-fits the corridor; afterwards it must not, or their pan would be undone.
+  const touched = useRef(false);
   const [on, setOn] = useState<Record<string, boolean>>({});
   const [cands, setCands] = useState(false);
   const [busy, setBusy] = useState<string | null>(null);
@@ -112,6 +137,11 @@ export default function CorridorMap({
       customAttribution: "Basemap: JDA survey drawing (EPSG:32643)",
     }));
     map.current = m;
+
+    const only = (pop: maplibregl.Popup) => {
+      if (shown.current && shown.current !== pop) shown.current.remove();
+      shown.current = pop;
+    };
     m.addControl(new maplibregl.NavigationControl(), "top-right");
 
     // Recentre.
@@ -175,7 +205,7 @@ export default function CorridorMap({
       el.textContent = String(j.scheme_no).padStart(2, "0");
       new maplibregl.Marker({ element: el })
         .setLngLat([j.lon, j.lat])
-        .setPopup(new maplibregl.Popup({ offset: 14, closeButton: false }).setHTML(
+        .setPopup(popupOnce(
           `<div style="font:12px/1.45 'IBM Plex Mono',monospace">
              <b>${j.scheme_label}</b> &middot; ${j.jda_name}<br>
              <span style="color:#5C6663">survey sheet ${j.code}</span><br>
@@ -187,7 +217,8 @@ export default function CorridorMap({
              ${w[j.code] ? ` &middot; ${w[j.code].width_m} m/dir, ${w[j.code].lanes_per_dir} lanes` : ""}
              ${rank[j.code] ? `<br>criticality rank ${rank[j.code]} of ${junctions.length}` : ""}
              <br><span style="color:#5C6663">${j.lat.toFixed(6)}, ${j.lon.toFixed(6)}<br>
-             position: ${j.location_confidence} &middot; width provisional</span></div>`))
+             position: ${j.location_confidence} &middot; width provisional</span></div>`,
+          only, 14))
         .addTo(m);
     });
 
@@ -250,7 +281,10 @@ export default function CorridorMap({
         for (const f of (data.features ?? [])) {
           if (!f.properties?.major) continue;
           const lab = document.createElement("div");
-          lab.textContent = `${f.properties.km} km`;
+          // "1 km" sat a centimetre from a scale bar also reading "1 km", which is two
+          // different quantities wearing the same label. Prefixed, so a station reads as
+          // a station.
+          lab.textContent = `ch ${f.properties.km.toFixed(1)}`;
           lab.style.cssText =
             "transform:translateY(-14px);font:600 9px/1 'IBM Plex Mono',monospace;" +
             "color:#1B3A6B;background:rgba(250,251,248,.92);padding:1px 4px;" +
@@ -282,15 +316,14 @@ export default function CorridorMap({
           const f = e.features?.[0];
           if (!f) return;
           const q = f.properties as Record<string, unknown>;
-          new maplibregl.Popup({ offset: 10, closeButton: false })
-            .setLngLat(e.lngLat)
-            .setHTML(
+          popupOnce(
               `<div style="font:12px/1.45 'IBM Plex Mono',monospace">
                  <b>Median opening</b><br>chainage ${Number(q.chainage_m).toFixed(0)} m<br>
                  width ${Number(q.width_m).toFixed(1)} m<br>${q.classification}<br>
                  <span style="color:${q.uturn_possible ? "#2C6249" : "#82600F"}">
                  ${q.uturn_possible ? "wide enough to turn in" : "too narrow to turn in"}
-                 </span></div>`)
+                 </span></div>`, only, 10)
+            .setLngLat(e.lngLat)
             .addTo(m);
         });
         m.on("mouseenter", "op-dot", () => { m.getCanvas().style.cursor = "pointer"; });
@@ -321,10 +354,33 @@ export default function CorridorMap({
 
       m.fitBounds(bounds, { padding: 70, maxZoom: 14, duration: 0 });
     };
+
+    // The corridor was sitting in the right-hand half of the map with dead space beside
+    // it. fitBounds runs once at build time, and this container is still growing then -
+    // the reveal animation and the layer row below it both settle afterwards. MapLibre
+    // handles the resize but keeps the centre it already had, so a fit computed at a
+    // narrower width leaves the content off to one side for good.
+    //
+    // Re-fit on resize, and stop as soon as the reader moves the map themselves: after
+    // that a re-fit would throw away their pan, which is worse than being off-centre.
+    for (const ev of ["dragstart", "zoomstart", "rotatestart"] as const) {
+      m.on(ev, (e: { originalEvent?: unknown }) => {
+        if (e.originalEvent) touched.current = true;
+      });
+    }
+    const ro = new ResizeObserver(() => {
+      if (!map.current) return;
+      m.resize();
+      if (!touched.current && fit.current) {
+        m.fitBounds(fit.current, { padding: 70, maxZoom: 14, duration: 0 });
+      }
+    });
+    ro.observe(box.current);
     if (m.isStyleLoaded()) build();
     else m.once("load", build);
 
     return () => {
+      ro.disconnect();
       themeWatch.disconnect();
       mq.removeEventListener("change", repaint);
       m.remove();
