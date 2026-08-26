@@ -1,6 +1,6 @@
 # Corridor — JDA survey audit, Jaipur
 
-An independent re-derivation of a classified turning movement survey commissioned by the Jaipur Development Authority: 6 junctions on **the Mansarover Metro – Sanganer Stadium corridor**, counted over 24 hours and issued as twelve Excel workbooks.
+An independent re-derivation of a classified turning movement survey commissioned by the Jaipur Development Authority: 6 junctions on **New Sanganer Road**, counted over 24 hours and issued as twelve Excel workbooks.
 
 The pipeline parses every cell, recomputes every stored total from its components, and reports what disagrees. It then reads the accompanying CAD survey drawing to establish what is physically on the corridor, tests the scheme being built on that data, and prices the delay the corridor is already carrying.
 
@@ -50,6 +50,7 @@ uv run python src/export.py        # -> out/data/corridor.json   (pass 1: report
 uv run python src/reports.py       # -> D6, D8, D9
 uv run python src/dictionary.py    # -> docs/data_dictionary.md
 uv run python src/export.py        # -> web/public/   (pass 2: publishes the documents above)
+uv run python src/masterdb.py      # -> out/Six_Junction_Master_Database.xlsx
 uv run python src/service_docs.py  # -> out/service/ and README.md
 uv run python src/build_page.py    # -> out/corridor_audit.html
 uv run python src/build_pitch.py   # -> out/corridor_pitch.html
@@ -60,7 +61,7 @@ Every module runs standalone and prints its own verification metric. A module th
 
 ## Layout
 
-- `src/` — 36 modules. `tmc_parse` and `audit` are the core; `atlas`, `medians` and `dxf_inventory` read the CAD survey; `capacity`, `scheme_test`, `delay` and `economics` carry the findings.
+- `src/` — 37 modules. `tmc_parse` and `audit` are the core; `atlas`, `medians` and `dxf_inventory` read the CAD survey; `capacity`, `scheme_test`, `delay` and `economics` carry the findings.
 - `web/` — Next.js dashboard, reading the same `corridor.json` as the static report.
 - `docs/data_dictionary.md` — every field in every published file, with units. Generated, so a field added without a description fails a test.
 - `docs/jaipur_corridor_study.md` — the methodology, with inline `ERRATUM` blocks correcting 9 defects in its own worked code.

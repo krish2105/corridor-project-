@@ -1,7 +1,8 @@
 {
  "meta": {
   "corridor": "Mansarover Metro \u2014 Sanganer Stadium",
-  "road": "the Mansarover Metro \u2013 Sanganer Stadium corridor",
+  "road": "New Sanganer Road",
+  "road_source": "named in JDA's supplied KML",
   "jda_scheme": "signal-free corridor, 7 U-turn bays",
   "city": "Jaipur",
   "survey_dates": [

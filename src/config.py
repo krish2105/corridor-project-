@@ -46,26 +46,14 @@ JUNCTIONS = {
 }
 
 # --- junction coordinates ---------------------------------------------------
-# The workbooks carry no georeference. These come from matching the survey's arm
-# names against the junctions JDA names in its signal-free
-# scheme (Bhrigu Path, Rajat Path, VT Road, Patel Marg, Vijay Path, B-2 Bypass),
-# then locating each on the survey drawing's own alignment.
-#
-# Three arm names match exactly - Rajatpath (TMC-05), VT Road (TMC-04), Patel Marg
-# Crossing (TMC-03) - and they fall in the same order JDA lists them, which is what
-# fixes the sequence. Positions are the centroid of the traffic-signal cluster at
-# each junction, all within 10 m of the alignment.
-#
-# CONFIDENCE is per junction and honest: the three name-matched ones are firm, the
-# rest are placed by position in the sequence. The survey contractor's location
-# schedule would settle it outright. Every downstream output carries this flag.
 # Junction positions and the corridor centreline, both supplied by JDA as a KML.
 #
-# These replace our own picks, which were wrong. We had chosen six of 39 signal clusters
-# out of the CAD and landed on a parallel road: the supplied points sit 269 to 950 m from
-# where we had put them. Three of ours were labelled "name match" and drawn as confirmed,
-# which conflated identity with position - the survey's arm name told us a junction
-# existed, never where it was.
+# The earlier derivation is gone, not amended, because it was wrong at the root: we
+# matched the survey's arm names against JDA's signal-free scheme names, then placed each
+# junction at the nearest traffic-signal cluster in the CAD. That put six junctions on a
+# parallel road, 269 to 950 m from where JDA's own points sit. Three were labelled
+# "name match" and drawn as confirmed, which conflated identity with position - the
+# survey's arm name told us a junction existed, never where it was.
 #
 # Checked on receipt, not taken on trust:
 #   every point falls inside a sane Jaipur box
@@ -101,13 +89,17 @@ CORRIDOR_CENTRELINE = [   # lon, lat
     (75.7648088, 26.8459617),
     (75.7662462, 26.8427872),
     (75.7677936, 26.8395192),
-]# The road is deliberately UNNAMED. Every one of the six junctions carries
-# "Mansarover Metro" as its north arm and "Sanganer Stadium" as its south arm, so the
-# corridor is defined by the survey itself. Which physical road that is was our
-# inference and it was challenged, so the name is withdrawn until JDA confirms it.
-# Nothing downstream depends on the name; the counts, the matrices and the movement
-# analysis are unaffected.
-CORRIDOR_ROAD = "the Mansarover Metro \u2013 Sanganer Stadium corridor"
+]
+
+# The road name, restored and now SOURCED rather than inferred.
+#
+# We named it New Sanganer Road by inference, JDA's reviewer challenged it, and it was
+# withdrawn. JDA then supplied a KML whose corridor LineString is itself named
+# "NEW SANGANER ROAD", so the name comes from them. The withdrawal stands as a record of
+# how it was arrived at the first time: by assumption, not by evidence.
+CORRIDOR_ROAD = "New Sanganer Road"
+CORRIDOR_ROAD_SOURCE = "named in JDA's supplied KML"
+
 # JDA is converting this road to signal-free operation with 7 U-turns, which is
 # almost certainly why the survey exists - and the survey counted no U-turns.
 JDA_SCHEME = "signal-free corridor, 7 U-turn bays"

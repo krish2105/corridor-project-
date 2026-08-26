@@ -14,7 +14,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from src.analyse import (composition, corridor_order, movements, peak_hours,
                          through_vs_turning, tmc_matrix)
-from src.config import (OUT, ROOT, CORRIDOR_NAME, CORRIDOR_ROAD, JDA_SCHEME, JUNCTIONS,
+from src.config import (OUT, ROOT, CORRIDOR_NAME, CORRIDOR_ROAD, CORRIDOR_ROAD_SOURCE,
+                        JDA_SCHEME, JUNCTIONS,
                         JUNCTION_COORDS, OUT_DATA, SURVEY_DATES)
 from src.pcu import SURVEYED, convert, factor_band
 from src.tmc_parse import CLASS_LABELS, parse_all
@@ -354,7 +355,8 @@ def build():
                             irc_high=round(hi, 2), composite=pt is None))
 
     payload = dict(
-        meta=dict(corridor=CORRIDOR_NAME, road=CORRIDOR_ROAD, jda_scheme=JDA_SCHEME,
+        meta=dict(corridor=CORRIDOR_NAME, road=CORRIDOR_ROAD,
+                  road_source=CORRIDOR_ROAD_SOURCE, jda_scheme=JDA_SCHEME,
                   city="Jaipur",
                   survey_dates=list(SURVEY_DATES), analysis_date=str(day),
                   n_junctions=len(JUNCTIONS), bins_parsed=int(len(bins)),

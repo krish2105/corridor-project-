@@ -59,6 +59,9 @@ DELIVERABLES = [
     # what makes that visible.
     ("D11", "Phase 6 field plan", "Camera positions, schedule, GCP capture list",
      "T3", OUT / "phase6_field_plan.md", "awaiting the field day"),
+    ("D12", "Six-junction master database",
+     "One Excel workbook: inventory, hourly, composition, movements, PCU, criticality",
+     "T1", OUT / "Six_Junction_Master_Database.xlsx"),
 ]
 
 
@@ -236,6 +239,7 @@ PIPELINE_ORDER = [
     ("reports",      "-> D6, D8, D9"),
     ("dictionary",   "-> docs/data_dictionary.md"),
     ("export",       "-> web/public/   (pass 2: publishes the documents above)"),
+    ("masterdb",     "-> out/Six_Junction_Master_Database.xlsx"),
     ("service_docs", "-> out/service/ and README.md"),
     ("build_page",   "-> out/corridor_audit.html"),
     ("build_pitch",  "-> out/corridor_pitch.html"),

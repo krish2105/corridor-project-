@@ -1,5 +1,5 @@
 # Capacity and design-year assessment
-### the Mansarover Metro – Sanganer Stadium corridor, Jaipur — six surveyed junctions
+### New Sanganer Road, Jaipur — six surveyed junctions
 
 **Base year** 2026  |  **Design horizon** 20 years to 2046  |  **Survey date** 2026-05-11
 **Generated** 2026-08-26 from `out/data/capacity.json`. Every figure in this document is read from the pipeline output at generation time; none is transcribed.

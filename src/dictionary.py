@@ -172,7 +172,9 @@ VALUE_KEYS = {
 
 FIELDS.update({
     # survey identity and audit
-    "road": "Corridor name.", "city": "City.", "n_junctions": "Junctions surveyed.",
+    "road": "Corridor name.",
+    "road_source": "Where the road name came from. It was our inference once, and wrong; it is now JDA's, from their KML.",
+    "city": "City.", "n_junctions": "Junctions surveyed.",
     "bins_parsed": "15-minute class bins parsed across all workbooks.",
     "survey_dates": "Dates as stated in the workbooks.",
     "survey_design": "What the survey design was against IRC:SP:19.",

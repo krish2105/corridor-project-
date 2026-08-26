@@ -315,6 +315,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `residual_pcu` | What remains at grade once the through movement is elevated. |
 | `right_turn_becomes_uturn` | Whether removed right turns are re-added as U-turns. |
 | `road` | Corridor name. |
+| `road_source` | Where the road name came from. It was our inference once, and wrong; it is now JDA's, from their KML. |
 | `s0_los` | Do-nothing level of service. |
 | `s0_vc` | Do-nothing v/c. |
 | `s1_serviceable` | Junctions the JDA scheme serves. |

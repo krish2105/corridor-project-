@@ -85,19 +85,18 @@ export default function Page() {
         <Reveal delay={.06}><h1>{meta.corridor}</h1></Reveal>
         <Reveal delay={.12}>
           <p className="lede col" style={{ marginTop: "1.1rem" }}>
-            {/* The heading already names the corridor by its end points. Repeating
-                {meta.road} here read as a placeholder that had failed to fill in, which
-                is exactly how it looked once the road name was withdrawn. Say what the
-                survey states instead: the arms every junction shares. */}
-            Six junctions on one corridor in <strong>{meta.city}</strong>, every one of
+            {/* The heading names the corridor by its end points, which is how the survey
+                labels it; the lede names the road, which is how everyone else does. Both
+                now come from JDA - the arms from the workbooks, the road from the KML. */}
+            Six junctions on <strong>{meta.road}</strong>, {meta.city}, every one of
             them carrying <strong>Mansarover Metro</strong> as its north arm and{" "}
             <strong>Sanganer Stadium</strong> as its south. Surveyed{" "}
             {meta.survey_dates[0]} and {meta.survey_dates[1]} by the appointed contractor
             and issued to JDA as twelve workbooks. This is an independent re-derivation of
             every number in them, checked against the survey drawing.{" "}
-            <em>The road is deliberately unnamed here.</em> Which physical road these six
-            junctions sit on was our inference, it was questioned, and no figure on this
-            page depends on it.
+            <em>The road name and the alignment come from JDA&rsquo;s own KML.</em> We had
+            inferred both, and both were wrong: our junction picks sat 269 to 950 m off, on
+            a parallel road.
           </p>
         </Reveal>
         <Reveal delay={.18}>
