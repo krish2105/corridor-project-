@@ -516,6 +516,11 @@ FIELDS.update({
     "demand_reduction_pct": "Share of the demand that would have to go elsewhere.",
     "gap_needed_s": "Critical gap at which the bay would exactly serve its demand.",
     "gap_ours_s": "The composition-weighted gap actually used, optimistic end.",
+    "width_measured_on": "That only the corridor arms have a measured width. Transects "
+                         "are cast along JDA's centreline, so no cross street has ever "
+                         "been measured by this pipeline.",
+    "detours": "Per bay at this junction: how far to the nearest opening, and whether "
+               "that opening is a junction mouth. Drawn as the travel-path overlay.",
     "opening_kinds": "Whether the corridor's median openings are junction mouths or "
                      "genuine mid-block bays. It decides what the detour figures measure.",
     "junction_mouths": "Openings within midblock_threshold_m of a junction centre. Turning "

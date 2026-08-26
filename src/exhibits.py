@@ -61,6 +61,30 @@ def volume_flow(bins, day):
         out.append(dict(junction=code, jda_name=JUNCTION_COORDS[code][2],
                         arms=list(arms), peak_start=str(win[0])[11:16],
                         movements=sorted(rows, key=lambda r: (r["from_i"], r["to_i"]))))
+
+    # Dimensions, so the diagram can be drawn to scale rather than as a cartoon.
+    #
+    # Only the CORRIDOR arms have a measured width: transects are cast along JDA's
+    # centreline, which runs north-south, so nothing in this pipeline has ever measured a
+    # cross street. The diagram says so rather than drawing all four arms alike and
+    # letting a reader assume otherwise.
+    cap = OUT_DATA / "capacity.json"
+    widths = json.loads(cap.read_text())["widths"] if cap.exists() else {}
+    sch = OUT_DATA / "scheme_test.json"
+    det = json.loads(sch.read_text()).get("uturn_detour", []) if sch.exists() else []
+    by_j = {}
+    for d in det:
+        by_j.setdefault(d["junction"], []).append(d)
+    for j in out:
+        w = widths.get(j["junction"], {})
+        j["width_m"] = w.get("width_m")
+        j["lanes_per_dir"] = w.get("lanes_per_dir")
+        j["width_measured_on"] = "corridor arms only; cross streets are not measured"
+        j["detours"] = [dict(bay=d["bay"], detour_m=d.get("detour_m"),
+                             one_way_m=d.get("one_way_m"),
+                             beyond=d["bay_beyond_drawing"],
+                             at_junction_mouth=d.get("bay_is_junction_mouth"))
+                        for d in by_j.get(j["junction"], [])]
     return out
 
 

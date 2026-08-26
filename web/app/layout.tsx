@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: "Corridor Survey Audit",
   description:
     "Independent re-derivation of the JDA classified turning movement survey for six " +
-    "junctions on the Mansarover Metro–Sanganer Stadium corridor, Jaipur.",
+    "junctions on the Mansarovar Metro–Sanganer Stadium corridor, Jaipur.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

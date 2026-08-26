@@ -107,6 +107,25 @@
      "turn": "Right",
      "veh": 568
     }
+   ],
+   "width_m": 15.6,
+   "lanes_per_dir": 4,
+   "width_measured_on": "corridor arms only; cross streets are not measured",
+   "detours": [
+    {
+     "bay": "northbound",
+     "detour_m": 1537,
+     "one_way_m": 769,
+     "beyond": false,
+     "at_junction_mouth": true
+    },
+    {
+     "bay": "southbound",
+     "detour_m": null,
+     "one_way_m": null,
+     "beyond": true,
+     "at_junction_mouth": null
+    }
    ]
   },
   {
@@ -215,6 +234,25 @@
      "to_i": 2,
      "turn": "Right",
      "veh": 577
+    }
+   ],
+   "width_m": 12.5,
+   "lanes_per_dir": 3,
+   "width_measured_on": "corridor arms only; cross streets are not measured",
+   "detours": [
+    {
+     "bay": "northbound",
+     "detour_m": 1019,
+     "one_way_m": 510,
+     "beyond": false,
+     "at_junction_mouth": true
+    },
+    {
+     "bay": "southbound",
+     "detour_m": 23,
+     "one_way_m": 12,
+     "beyond": false,
+     "at_junction_mouth": true
     }
    ]
   },
@@ -325,6 +363,25 @@
      "turn": "Right",
      "veh": 362
     }
+   ],
+   "width_m": 13.0,
+   "lanes_per_dir": 3,
+   "width_measured_on": "corridor arms only; cross streets are not measured",
+   "detours": [
+    {
+     "bay": "northbound",
+     "detour_m": 1559,
+     "one_way_m": 780,
+     "beyond": false,
+     "at_junction_mouth": true
+    },
+    {
+     "bay": "southbound",
+     "detour_m": 23,
+     "one_way_m": 12,
+     "beyond": false,
+     "at_junction_mouth": true
+    }
    ]
   },
   {
@@ -433,6 +490,25 @@
      "to_i": 2,
      "turn": "Right",
      "veh": 291
+    }
+   ],
+   "width_m": 17.6,
+   "lanes_per_dir": 5,
+   "width_measured_on": "corridor arms only; cross streets are not measured",
+   "detours": [
+    {
+     "bay": "northbound",
+     "detour_m": 1724,
+     "one_way_m": 862,
+     "beyond": false,
+     "at_junction_mouth": true
+    },
+    {
+     "bay": "southbound",
+     "detour_m": 5,
+     "one_way_m": 3,
+     "beyond": false,
+     "at_junction_mouth": true
     }
    ]
   },
@@ -543,6 +619,25 @@
      "turn": "Right",
      "veh": 328
     }
+   ],
+   "width_m": 18.2,
+   "lanes_per_dir": 5,
+   "width_measured_on": "corridor arms only; cross streets are not measured",
+   "detours": [
+    {
+     "bay": "northbound",
+     "detour_m": 1586,
+     "one_way_m": 793,
+     "beyond": false,
+     "at_junction_mouth": false
+    },
+    {
+     "bay": "southbound",
+     "detour_m": 24,
+     "one_way_m": 12,
+     "beyond": false,
+     "at_junction_mouth": true
+    }
    ]
   },
   {
@@ -651,6 +746,25 @@
      "to_i": 2,
      "turn": "Right",
      "veh": 80
+    }
+   ],
+   "width_m": 19.3,
+   "lanes_per_dir": 5,
+   "width_measured_on": "corridor arms only; cross streets are not measured",
+   "detours": [
+    {
+     "bay": "northbound",
+     "detour_m": null,
+     "one_way_m": null,
+     "beyond": true,
+     "at_junction_mouth": null
+    },
+    {
+     "bay": "southbound",
+     "detour_m": 1708,
+     "one_way_m": 854,
+     "beyond": false,
+     "at_junction_mouth": false
     }
    ]
   }

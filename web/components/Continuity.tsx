@@ -9,7 +9,7 @@ import {
  * Corridor continuity, with the residual PUBLISHED.
  *
  * Southbound traffic leaving one junction must arrive at the next as traffic entering
- * from Mansarover Metro. The difference is mid-block access — driveways, side lanes,
+ * from Mansarovar Metro. The difference is mid-block access — driveways, side lanes,
  * parking — plus whatever the counts got wrong. The two cannot be separated without a
  * cordon survey nobody ran.
  *

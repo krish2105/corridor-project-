@@ -183,6 +183,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `detour_tolerable_m` | Round-trip detour above which the diversion is the problem. A stated threshold, not a standard. |
 | `detour_veh_km_per_hour` | Extra vehicle-kilometres per peak hour, all measured bays. |
 | `detour_veh_km_typical` | The same, excluding the over-1-km rows. |
+| `detours` | Per bay at this junction: how far to the nearest opening, and whether that opening is a junction mouth. Drawn as the travel-path overlay. |
 | `digit_min_count` | Counts below this are excluded from the digit test: their last digit IS the count, so it is skewed for honest reasons. |
 | `dimension` | What is being measured. |
 | `dimensions` | Every published dimension, with its method and its uncertainty. |
@@ -589,6 +590,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `wide_transects` | How many measured transects exceed the width above which a service road is a likelier reading than five running lanes. |
 | `width_caveat` | Why the widths on the northern junctions should be read as an upper bound: capacity scales linearly with them, and a transect cannot tell a through lane from a service road. |
 | `width_m` | Carriageway width, metres, ONE direction. Measured, not assumed. |
+| `width_measured_on` | That only the corridor arms have a measured width. Transects are cast along JDA's centreline, so no cross street has ever been measured by this pipeline. |
 | `widths_checked` | Openings whose width was measurable. |
 | `windows` | Every window-target combination evaluated. |
 | `within_18_20m` | Openings within the IRC:SP:84 18-20 m length rule. |

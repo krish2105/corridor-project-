@@ -531,7 +531,11 @@ if __name__ == "__main__":
         _s, heavy = _split(name)
         if heavy:
             f = webdir / f"{name}_series.json"
-            f.write_text(json.dumps(heavy, separators=(",", ":")))
+            # Through the same correction as corridor.json. These files are lazily
+            # fetched by the page, so they are read by exactly the same reader - and
+            # missing them left "Mansarover Metro" in the movement table of an exhibit
+            # sitting under a heading that said Mansarovar.
+            f.write_text(json.dumps(spell_payload(heavy), separators=(",", ":")))
             print(f"{name+'_series':<15}: {f.stat().st_size/1024:.0f} KB, lazily fetched")
     ch_n, ch_len = _write_chainage_markers(webdir)
     print(f"chainage       : {ch_n} posts over {ch_len:,} m, "

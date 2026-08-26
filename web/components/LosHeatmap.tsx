@@ -47,7 +47,7 @@ const MEANING: Record<string, string> = {
 };
 
 export default function LosHeatmap({ grid, junctions }: { grid: Cell[]; junctions: string[] }) {
-  const [dir, setDir] = useState<"Mansarover" | "Sanganer">("Mansarover");
+  const [dir, setDir] = useState<"Mansarovar" | "Sanganer">("Mansarovar");
   const rows = junctions;
   const hours = [...new Set(grid.map((c) => c.hour))].sort();
   const shown = grid.filter((c) => c.approach.includes(dir));
@@ -71,7 +71,7 @@ export default function LosHeatmap({ grid, junctions }: { grid: Cell[]; junction
       </header>
       <div className="body">
         <div className="picker" role="group" aria-label="Choose a direction">
-          {(["Mansarover", "Sanganer"] as const).map((d) => (
+          {(["Mansarovar", "Sanganer"] as const).map((d) => (
             <button key={d} aria-pressed={d === dir} onClick={() => { setDir(d); clear(); }}>
               {d === dir && <span className="pill" />}
               <span className="lab">from {d}</span>

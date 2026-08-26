@@ -113,7 +113,7 @@ export default function Page() {
                 labels it; the lede names the road, which is how everyone else does. Both
                 now come from JDA - the arms from the workbooks, the road from the KML. */}
             Six junctions on <strong>{meta.road}</strong>, {meta.city}, every one of
-            them carrying <strong>Mansarover Metro</strong> as its north arm and{" "}
+            them carrying <strong>Mansarovar Metro</strong> as its north arm and{" "}
             <strong>Sanganer Stadium</strong> as its south. Surveyed{" "}
             {meta.survey_dates[0]} and {meta.survey_dates[1]} by the appointed contractor
             and issued to JDA as twelve workbooks. This is an independent re-derivation of
@@ -954,7 +954,7 @@ export default function Page() {
                             <tr key={i}>
                               <td className="mono">{r.junction}</td>
                               <td style={{ textAlign: "left" }}>
-                                {r.approach.includes("Mansarover") ? "from north" : "from south"}</td>
+                                {r.approach.includes("Mansarovar") ? "from north" : "from south"}</td>
                               <td className="num">{nf.format(Math.round(r.uturn_demand))}</td>
                               <td className="num">{nf.format(Math.round(r.conflicting_flow))}</td>
                               <td className="num">{nf.format(Math.round(r.cap_conservative))}</td>

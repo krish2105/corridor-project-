@@ -138,3 +138,30 @@ def test_known_still_rejects_the_errors_this_module_exists_for(words):
             assert not sp.known(w, words), w
         finally:
             sp.ALLOW = real
+
+
+# --- the web layer -----------------------------------------------------------
+
+def test_no_web_source_carries_a_spelling_the_boundary_corrects_away():
+    """
+    A literal in a component that matches against DATA is the silent failure mode here.
+
+    export corrects at the publishing boundary, so `r.approach.includes("Mansarover")`
+    stopped matching anything the moment the correction shipped - and it does not throw,
+    it just labels every approach "from south". The heatmap's direction picker had the
+    same shape. Neither would have been caught by a type check or a render test.
+    """
+    from src.config import ROOT
+    web = ROOT / "web"
+    bad = []
+    for p in list((web / "app").rglob("*.tsx")) + list((web / "components").rglob("*.tsx")) \
+            + list((web / "lib").rglob("*.ts")):
+        text = p.read_text(errors="ignore")
+        for c in CORRECTIONS:
+            if not c["confirmed"]:
+                continue
+            for token in ("Mansarover", "Rajatpath", "Motar", "Trailor", "Corts"):
+                if token in c["as_received"] and token in text:
+                    bad.append(f"{p.relative_to(ROOT)}: {token}")
+    assert not bad, ("web source carries a spelling the publishing boundary corrects, so "
+                     f"any comparison against it silently fails: {sorted(set(bad))}")
