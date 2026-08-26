@@ -550,7 +550,7 @@ def scenarios(bins, day, res):
 
 def gap_evidence_spread(uturns, t_c_ours, t_c_ours_conservative, of):
     """
-    Re-run the servability test on every published critical-gap basis.
+    Re-run the serviceability test on every published critical-gap basis.
 
     The single most attackable number in this audit is the critical gap, because we chose
     it and it is not measured on this corridor. So rather than defend one value, the same

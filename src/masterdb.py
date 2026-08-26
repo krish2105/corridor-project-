@@ -29,6 +29,7 @@ import pandas as pd
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from src.config import (CORRIDOR_ROAD, CORRIDOR_ROAD_SOURCE, JUNCTION_COORDS,
                         OUT, OUT_DATA, ROOT)
+from src.spelling import CORRECTIONS, fix as spell
 
 BOOK = OUT / "Six_Junction_Master_Database.xlsx"
 
@@ -88,7 +89,7 @@ def inventory(d):
         arms = j["arms"]
         rows.append({
             "Junction": code,
-            "JDA scheme name": jda,
+            "JDA scheme name": jda.strip(),
             "Latitude": lat, "Longitude": lon,
             "Position source": src,
             "North arm": arms[0], "East arm": arms[1],
@@ -168,10 +169,17 @@ def _by_day(bins, keys):
 
 def composition(bins):
     """Deliverable 4. Share and volume of every vehicle class, per day."""
+    from src.tmc_parse import CLASS_LABELS
     t = _by_day(bins, ["junction", "veh_class"])
     tot = t.groupby("junction")["Day 1 vehicles"].transform("sum")
     t["Share of junction, day 1 %"] = (100 * t["Day 1 vehicles"] / tot).round(2)
-    return t.rename(columns={"junction": "Junction", "veh_class": "Vehicle class"})
+    # The survey column heading, corrected, with the heading as issued beside it. A
+    # workbook that reproduces "Motar Cycle" reads as careless; one that silently fixes it
+    # cannot be traced back to a source cell. Both, then.
+    src = t.veh_class.map(CLASS_LABELS)
+    t.insert(1, "Survey column", src.map(spell))
+    t.insert(2, "Survey column as issued", src)
+    return t.rename(columns={"junction": "Junction", "veh_class": "Class code"})
 
 
 def movements(bins):
@@ -181,6 +189,8 @@ def movements(bins):
     t["Share of junction, day 1 %"] = (100 * t["Day 1 vehicles"] / tot).round(2)
     t = t.rename(columns={"junction": "Junction", "arm_from": "From arm",
                           "movement": "Movement", "arm_to": "To arm"})
+    for c in ("From arm", "To arm"):
+        t[c] = t[c].map(spell)
     return t.sort_values(["Junction", "Day 1 vehicles"], ascending=[True, False])
 
 
@@ -269,6 +279,23 @@ def criticality_sheet(d):
     return criticality(d).rename(columns=cols)
 
 
+def spelling_sheet():
+    """
+    Sheet 9. Every label this workbook prints differently from the issued survey.
+
+    Included because the reviewer will notice the difference and is entitled to see the
+    full list rather than discover it one cell at a time. The two marked ASK JDA change a
+    word rather than a letter and are on the question sheet.
+    """
+    return pd.DataFrame([{
+        "As issued in the survey": c["as_received"],
+        "As shown here": c["corrected"],
+        "Kind": c["kind"],
+        "Confirmed": "yes" if c["confirmed"] else "ASK JDA",
+        "Note": c["note"],
+    } for c in CORRECTIONS])
+
+
 def build():
     d = _load("corridor")
     from src.tmc_parse import parse_all
@@ -284,6 +311,7 @@ def build():
         ("5 Turning movements", movements(bins)),
         ("6 Peak hour and PCU", peak_pcu(d)),
         ("8 Criticality ranking", criticality_sheet(d)),
+        ("9 Spelling corrections", spelling_sheet()),
     ]
     OUT.mkdir(exist_ok=True)
     with pd.ExcelWriter(BOOK, engine="openpyxl") as xw:

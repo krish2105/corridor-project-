@@ -237,6 +237,7 @@ corridor/
 │   ├── dxf_inventory.py# Phase 1 — layer inventory, junction candidates
 │   ├── inspect_tmc.py  # raw workbook structure probe, no reshaping
 │   ├── tmc_parse.py    # workbooks -> tidy frames; never trusts a stored total
+│   ├── spelling.py     # corrected labels at display; source spelling preserved
 │   ├── audit.py        # integrity audit -> out/audit_report.md
 │   ├── pcu.py          # IRC:106 share-dependent PCU, bands for composites
 │   ├── analyse.py      # peak hour, TMC matrices, through/turning split

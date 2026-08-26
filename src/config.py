@@ -60,13 +60,16 @@ JUNCTIONS = {
 #   every point sits 2 to 10 m off JDA's own centreline, so they are on that road
 #   ordering along that centreline matches the placemark numbering, so 1 = TMC-01
 #   the CAD drawing covers the centreline, all 14 vertices inside its extent
+# The JDA names carried NO trailing padding until it was added here to line the columns
+# up, and that padding travelled all the way into the published JSON and the workbook as
+# "B-2 Bypass ". Source-file cosmetics are not data. Aligned with the comment instead.
 JUNCTION_COORDS = {
-    #          lat          lon          JDA name       cluster  source
-    "TMC-01": (26.8395707, 75.7678008, "B-2 Bypass ", "C8 ", "JDA KML"),
-    "TMC-02": (26.8460752, 75.7647913, "Vijay Path ", "C21", "JDA KML"),
-    "TMC-03": (26.8504204, 75.7627824, "Patel Marg ", "C26", "JDA KML"),
-    "TMC-04": (26.8564306, 75.7586546, "VT Road    ", "C18", "JDA KML"),
-    "TMC-05": (26.8630543, 75.7541118, "Rajat Path ", "C22", "JDA KML"),
+    #            lat          lon           JDA name        cluster  source
+    "TMC-01": (26.8395707, 75.7678008, "B-2 Bypass",  "C8",  "JDA KML"),
+    "TMC-02": (26.8460752, 75.7647913, "Vijay Path",  "C21", "JDA KML"),
+    "TMC-03": (26.8504204, 75.7627824, "Patel Marg",  "C26", "JDA KML"),
+    "TMC-04": (26.8564306, 75.7586546, "VT Road",     "C18", "JDA KML"),
+    "TMC-05": (26.8630543, 75.7541118, "Rajat Path",  "C22", "JDA KML"),
     "TMC-06": (26.8767054, 75.7476133, "Bhrigu Path", "C28", "JDA KML"),
 }
 

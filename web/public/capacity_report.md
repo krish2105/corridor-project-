@@ -27,11 +27,11 @@ The corridor carries **0.70x** the traffic that the planning-stage assumption im
 
 | Junction | JDA name | Measured width | Transects | Lanes/dir | Capacity |
 |---|---|---|---|---|---|
-| TMC-01 | B-2 Bypass  | 15.6 m | 7 | 4 | 5,616 PCU/hr |
-| TMC-02 | Vijay Path  | 12.5 m | 9 | 3 | 4,500 PCU/hr |
-| TMC-03 | Patel Marg  | 13.0 m | 4 | 3 | 4,680 PCU/hr |
-| TMC-04 | VT Road     | 17.6 m | 13 | 5 | 6,336 PCU/hr |
-| TMC-05 | Rajat Path  | 18.2 m | 32 | 5 | 6,552 PCU/hr |
+| TMC-01 | B-2 Bypass | 15.6 m | 7 | 4 | 5,616 PCU/hr |
+| TMC-02 | Vijay Path | 12.5 m | 9 | 3 | 4,500 PCU/hr |
+| TMC-03 | Patel Marg | 13.0 m | 4 | 3 | 4,680 PCU/hr |
+| TMC-04 | VT Road | 17.6 m | 13 | 5 | 6,336 PCU/hr |
+| TMC-05 | Rajat Path | 18.2 m | 32 | 5 | 6,552 PCU/hr |
 | TMC-06 | Bhrigu Path | 19.4 m | 9 | 5 | 6,984 PCU/hr |
 
 ## 3. Demand against capacity, by approach
@@ -164,7 +164,7 @@ This resolves a question the flow data could not. Deriving the order from corrid
 
 ## The critical gap, across every published basis
 
-The critical gap is the single most attackable input in this report: it was chosen from the literature, not measured on this corridor. Rather than defend one value, the servability test is re-run on every basis reachable.
+The critical gap is the single most attackable input in this report: it was chosen from the literature, not measured on this corridor. Rather than defend one value, the serviceability test is re-run on every basis reachable.
 
 | Basis | t_c (s) | t_f (s) | Unservable | Geometric match |
 |---|---:|---:|---:|---|

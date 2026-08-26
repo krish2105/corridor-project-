@@ -23,6 +23,7 @@ from src.config import (OUT, ROOT, CORRIDOR_NAME, CORRIDOR_ROAD, CORRIDOR_ROAD_S
 # implementation of a scoring rule, and two implementations of a scoring rule drift.
 from src.masterdb import criticality
 from src.pcu import SURVEYED, convert, factor_band
+from src.spelling import fix as spell
 from src.tmc_parse import CLASS_LABELS, parse_all
 
 
@@ -352,7 +353,8 @@ def build():
             uplift_pct=round(float(pcu_day.loc[code, "uplift_floor_pct"]), 1),
             matrix_veh=[[int(v) for v in row] for row in veh.values],
             matrix_pcu=[[round(float(v), 1) for v in row] for row in pcu.values],
-            composition=[dict(cls=r.veh_class, label=CLASS_LABELS[r.veh_class],
+            composition=[dict(cls=r.veh_class, label=spell(CLASS_LABELS[r.veh_class]),
+                              label_as_received=CLASS_LABELS[r.veh_class],
                               count=int(r["count"]), share=round(float(r.share), 5))
                          for _, r in c.iterrows()],
             profile=[dict(t=t.strftime("%H:%M"), v=int(v)) for t, v in profile.items()],
@@ -364,7 +366,9 @@ def build():
     factors = []
     for cls, sh in corridor_share.sort_values(ascending=False).items():
         lo, pt, hi = factor_band(cls, sh)
-        factors.append(dict(cls=cls, label=CLASS_LABELS[cls], share=round(float(sh), 5),
+        factors.append(dict(cls=cls, label=spell(CLASS_LABELS[cls]),
+                            label_as_received=CLASS_LABELS[cls],
+                            share=round(float(sh), 5),
                             surveyed=SURVEYED[cls], irc_low=round(lo, 2),
                             irc_point=(round(pt, 2) if pt is not None else None),
                             irc_high=round(hi, 2), composite=pt is None))
@@ -429,7 +433,39 @@ def build():
         ),
     )
     payload["criticality"] = criticality(payload).to_dict("records")
-    return payload
+    payload["spelling"] = _spelling_section()
+    # Correct spelling ONCE, at the publishing boundary, rather than at a dozen call
+    # sites. Every module below writes the survey's labels as issued - which is right,
+    # because those files are the check-the-work artefacts - and the dashboard reads only
+    # this payload, so this is the single place a reader's copy is produced.
+    return spell_payload(payload)
+
+
+def spell_payload(obj):
+    """
+    Apply the correction register to every string in the payload, recursively.
+
+    Skips anything under a key that records provenance, because correcting the field
+    whose whole job is to preserve the source spelling would erase the evidence for the
+    correction. That is not hypothetical: `label_as_received` sits two lines from `label`
+    in the same dict.
+    """
+    if isinstance(obj, dict):
+        return {k: (v if (k == "as_received" or k.endswith("_as_received"))
+                    else spell_payload(v))
+                for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [spell_payload(v) for v in obj]
+    return spell(obj) if isinstance(obj, str) else obj
+
+
+def _spelling_section():
+    from src.spelling import CORRECTIONS, unconfirmed
+    return dict(
+        policy=("source labels are left exactly as issued; correction happens at the "
+                "publishing boundary and both spellings are published"),
+        corrections=CORRECTIONS, n_corrections=len(CORRECTIONS),
+        n_unconfirmed=len(unconfirmed()))
 
 
 if __name__ == "__main__":

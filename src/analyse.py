@@ -18,6 +18,7 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from src.config import JUNCTIONS
+from src.spelling import fix as spell
 from src.tmc_parse import CLASS_LABELS, parse_all
 from src.pcu import SURVEYED, factor_band
 
@@ -163,7 +164,7 @@ if __name__ == "__main__":
     comp = composition(bins, day)
     tot = comp.groupby("veh_class")["count"].sum()
     for cls, n in tot.sort_values(ascending=False).items():
-        print(f"  {CLASS_LABELS[cls][:52]:<54} {n:>9,.0f}  {100*n/tot.sum():>5.2f}%")
+        print(f"  {spell(CLASS_LABELS[cls])[:52]:<54} {n:>9,.0f}  {100*n/tot.sum():>5.2f}%")
     print("\n  Note: summed across six junctions, so a vehicle traversing the corridor is")
     print("  counted once per junction it passes. This is junction throughput, not a")
     print("  corridor vehicle count.\n")

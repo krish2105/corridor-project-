@@ -67,7 +67,28 @@ def test_composition_flags_identity_directly(two_days):
     """At class granularity the flag is the plain boolean, and only CAR_BUCKET moves."""
     t = composition(two_days)
     moved = t[~t["Day 2 identical to day 1"]]
-    assert set(moved["Vehicle class"]) == {"CAR_BUCKET"}
+    assert set(moved["Class code"]) == {"CAR_BUCKET"}
+
+
+def test_composition_shows_the_corrected_label_and_the_issued_one(two_days):
+    """
+    A workbook that reproduces "Motar Cycle" reads as careless; one that silently fixes
+    it cannot be traced to a source cell. The sheet has to carry both.
+    """
+    from src.spelling import fix as spell
+    from src.tmc_parse import CLASS_LABELS
+    t = composition(two_days)
+    assert {"Survey column", "Survey column as issued", "Class code"} <= set(t.columns)
+    row = t[t["Class code"] == "TWO_W"].iloc[0]
+    assert row["Survey column as issued"] == CLASS_LABELS["TWO_W"] == "Motar Cycle, Scooter"
+    assert row["Survey column"] == spell(CLASS_LABELS["TWO_W"]) == "Motor Cycle, Scooter"
+
+
+def test_movement_arm_names_are_corrected(two_days):
+    t = movements(two_days)
+    arms = set(t["From arm"]) | set(t["To arm"])
+    assert "Mansarovar Metro" in arms
+    assert not any("Mansarover" in a for a in arms)
 
 
 def test_shares_are_day_one_only_and_sum_to_100(two_days):

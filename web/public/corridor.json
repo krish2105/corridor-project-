@@ -1,6 +1,6 @@
 {
  "meta": {
-  "corridor": "Mansarover Metro \u2014 Sanganer Stadium",
+  "corridor": "Mansarovar Metro \u2014 Sanganer Stadium",
   "road": "New Sanganer Road",
   "road_source": "named in JDA's supplied KML",
   "jda_scheme": "signal-free corridor, 7 U-turn bays",
@@ -36,7 +36,8 @@
    "factors": [
     {
      "cls": "TWO_W",
-     "label": "Motar Cycle, Scooter",
+     "label": "Motor Cycle, Scooter",
+     "label_as_received": "Motar Cycle, Scooter",
      "share": 0.49121,
      "surveyed": 0.5,
      "irc_low": 0.75,
@@ -46,7 +47,8 @@
     },
     {
      "cls": "CAR_BUCKET",
-     "label": "Car, Taxi, Tempo, Auto Rickshaw & Pick up",
+     "label": "Car, Taxi, Tempo, Auto Rickshaw & Pickup",
+     "label_as_received": "Car, Taxi, Tempo, Auto Rickshaw & Pick up",
      "share": 0.47956,
      "surveyed": 1.0,
      "irc_low": 1.0,
@@ -57,6 +59,7 @@
     {
      "cls": "HORSE_DRAWN",
      "label": "Horse Drawn",
+     "label_as_received": "Horse Drawn",
      "share": 0.01138,
      "surveyed": 4.0,
      "irc_low": 4.0,
@@ -66,7 +69,8 @@
     },
     {
      "cls": "AGRI_LCV",
-     "label": "Agriculture Tractor, LCV Mini Bus",
+     "label": "Agricultural Tractor, LCV, Mini Bus",
+     "label_as_received": "Agriculture Tractor, LCV Mini Bus",
      "share": 0.00652,
      "surveyed": 1.5,
      "irc_low": 1.4,
@@ -76,7 +80,8 @@
     },
     {
      "cls": "TRL_MAV",
-     "label": "Tractor Trailor, Truck Trailor Units (3 Axle & MAV)",
+     "label": "Tractor Trailer, Truck Trailer Units (3 Axle & MAV)",
+     "label_as_received": "Tractor Trailor, Truck Trailor Units (3 Axle & MAV)",
      "share": 0.00648,
      "surveyed": 4.5,
      "irc_low": 3.7,
@@ -86,7 +91,8 @@
     },
     {
      "cls": "AUTO_TRK_BUS",
-     "label": "Three Wheeler (Auto) Axle Truck, Buses",
+     "label": "Three Wheeler (Auto), 3 Axle Truck, Buses",
+     "label_as_received": "Three Wheeler (Auto) Axle Truck, Buses",
      "share": 0.00258,
      "surveyed": 3.0,
      "irc_low": 1.2,
@@ -97,6 +103,7 @@
     {
      "cls": "CYCLE",
      "label": "Cycle",
+     "label_as_received": "Cycle",
      "share": 0.00156,
      "surveyed": 0.5,
      "irc_low": 0.4,
@@ -107,6 +114,7 @@
     {
      "cls": "CYCLE_RIK",
      "label": "Cycle Rickshaw",
+     "label_as_received": "Cycle Rickshaw",
      "share": 0.00039,
      "surveyed": 1.5,
      "irc_low": 1.5,
@@ -117,6 +125,7 @@
     {
      "cls": "HAND_CART",
      "label": "Hand Cart",
+     "label_as_received": "Hand Cart",
      "share": 0.00023,
      "surveyed": 3.0,
      "irc_low": 3.0,
@@ -126,7 +135,8 @@
     },
     {
      "cls": "BULLOCK",
-     "label": "Bullock Corts",
+     "label": "Bullock Carts",
+     "label_as_received": "Bullock Corts",
      "share": 9e-05,
      "surveyed": 8.0,
      "irc_low": 4.0,
@@ -146,12 +156,12 @@
     [
      "Taxi",
      19012,
-     "Motar Cycle, Scooter (two-wheelers)"
+     "Motor Cycle, Scooter (two-wheelers)"
     ],
     [
      "TW",
      305,
-     "Agriculture Tractor, LCV Mini Bus"
+     "Agricultural Tractor, LCV, Mini Bus"
     ],
     [
      "E-Rickshaw",
@@ -316,7 +326,7 @@
   "junctions": [
    {
     "junction": "TMC-01",
-    "approach": "from Mansarover Metro",
+    "approach": "from Mansarovar Metro",
     "capacity": 5616,
     "peak": "09:15",
     "pcu_lo": 3301.2,
@@ -344,7 +354,7 @@
    },
    {
     "junction": "TMC-02",
-    "approach": "from Mansarover Metro",
+    "approach": "from Mansarovar Metro",
     "capacity": 4500,
     "peak": "09:15",
     "pcu_lo": 3114.75,
@@ -372,7 +382,7 @@
    },
    {
     "junction": "TMC-03",
-    "approach": "from Mansarover Metro",
+    "approach": "from Mansarovar Metro",
     "capacity": 4680,
     "peak": "09:00",
     "pcu_lo": 3743.95,
@@ -400,7 +410,7 @@
    },
    {
     "junction": "TMC-04",
-    "approach": "from Mansarover Metro",
+    "approach": "from Mansarovar Metro",
     "capacity": 6336,
     "peak": "09:15",
     "pcu_lo": 3501.65,
@@ -428,7 +438,7 @@
    },
    {
     "junction": "TMC-05",
-    "approach": "from Mansarover Metro",
+    "approach": "from Mansarovar Metro",
     "capacity": 6552,
     "peak": "09:45",
     "pcu_lo": 5772.85,
@@ -456,7 +466,7 @@
    },
    {
     "junction": "TMC-06",
-    "approach": "from Mansarover Metro",
+    "approach": "from Mansarovar Metro",
     "capacity": 6984,
     "peak": "09:15",
     "pcu_lo": 3787.5499999999997,
@@ -511,7 +521,7 @@
   "relief": [
    {
     "junction": "TMC-01",
-    "approach": "from Mansarover Metro",
+    "approach": "from Mansarovar Metro",
     "through_pct": 57.2,
     "peak_pcu": 3317,
     "residual_pcu": 1420,
@@ -531,7 +541,7 @@
    },
    {
     "junction": "TMC-02",
-    "approach": "from Mansarover Metro",
+    "approach": "from Mansarovar Metro",
     "through_pct": 68.3,
     "peak_pcu": 3126,
     "residual_pcu": 991,
@@ -551,7 +561,7 @@
    },
    {
     "junction": "TMC-03",
-    "approach": "from Mansarover Metro",
+    "approach": "from Mansarovar Metro",
     "through_pct": 77.4,
     "peak_pcu": 3750,
     "residual_pcu": 847,
@@ -571,7 +581,7 @@
    },
    {
     "junction": "TMC-04",
-    "approach": "from Mansarover Metro",
+    "approach": "from Mansarovar Metro",
     "through_pct": 67.9,
     "peak_pcu": 3510,
     "residual_pcu": 1127,
@@ -591,7 +601,7 @@
    },
    {
     "junction": "TMC-05",
-    "approach": "from Mansarover Metro",
+    "approach": "from Mansarovar Metro",
     "through_pct": 78.7,
     "peak_pcu": 5777,
     "residual_pcu": 1231,
@@ -611,7 +621,7 @@
    },
    {
     "junction": "TMC-06",
-    "approach": "from Mansarover Metro",
+    "approach": "from Mansarovar Metro",
     "through_pct": 72.9,
     "peak_pcu": 3797,
     "residual_pcu": 1029,
@@ -634,7 +644,7 @@
   "design_life": [
    {
     "junction": "TMC-01",
-    "approach": "from Mansarover Metro",
+    "approach": "from Mansarovar Metro",
     "vc_after": 0.25,
     "fails_low": 2062,
     "fails_med": 2050,
@@ -650,7 +660,7 @@
    },
    {
     "junction": "TMC-02",
-    "approach": "from Mansarover Metro",
+    "approach": "from Mansarovar Metro",
     "vc_after": 0.22,
     "fails_low": 2065,
     "fails_med": 2052,
@@ -666,7 +676,7 @@
    },
    {
     "junction": "TMC-03",
-    "approach": "from Mansarover Metro",
+    "approach": "from Mansarovar Metro",
     "vc_after": 0.18,
     "fails_low": 2070,
     "fails_med": 2056,
@@ -682,7 +692,7 @@
    },
    {
     "junction": "TMC-04",
-    "approach": "from Mansarover Metro",
+    "approach": "from Mansarovar Metro",
     "vc_after": 0.18,
     "fails_low": 2070,
     "fails_med": 2056,
@@ -698,7 +708,7 @@
    },
    {
     "junction": "TMC-05",
-    "approach": "from Mansarover Metro",
+    "approach": "from Mansarovar Metro",
     "vc_after": 0.19,
     "fails_low": 2069,
     "fails_med": 2055,
@@ -714,7 +724,7 @@
    },
    {
     "junction": "TMC-06",
-    "approach": "from Mansarover Metro",
+    "approach": "from Mansarovar Metro",
     "vc_after": 0.15,
     "fails_low": 2075,
     "fails_med": 2059,
@@ -766,9 +776,9 @@
   "uturns": [
    {
     "junction": "TMC-01",
-    "approach": "Mansarover Metro",
+    "approach": "Mansarovar Metro",
     "bay": "northbound",
-    "jda_name": "B-2 Bypass ",
+    "jda_name": "B-2 Bypass",
     "uturn_demand": 975.0,
     "conflicting_flow": 3094.0,
     "t_c_lo": 3.93,
@@ -783,7 +793,7 @@
     "junction": "TMC-01",
     "approach": "Sanganer Stadium",
     "bay": "southbound",
-    "jda_name": "B-2 Bypass ",
+    "jda_name": "B-2 Bypass",
     "uturn_demand": 2755.0,
     "conflicting_flow": 2182.0,
     "t_c_lo": 3.93,
@@ -796,9 +806,9 @@
    },
    {
     "junction": "TMC-02",
-    "approach": "Mansarover Metro",
+    "approach": "Mansarovar Metro",
     "bay": "northbound",
-    "jda_name": "Vijay Path ",
+    "jda_name": "Vijay Path",
     "uturn_demand": 1487.0,
     "conflicting_flow": 2555.0,
     "t_c_lo": 3.88,
@@ -813,7 +823,7 @@
     "junction": "TMC-02",
     "approach": "Sanganer Stadium",
     "bay": "southbound",
-    "jda_name": "Vijay Path ",
+    "jda_name": "Vijay Path",
     "uturn_demand": 1257.0,
     "conflicting_flow": 2727.0,
     "t_c_lo": 3.88,
@@ -826,9 +836,9 @@
    },
    {
     "junction": "TMC-03",
-    "approach": "Mansarover Metro",
+    "approach": "Mansarovar Metro",
     "bay": "northbound",
-    "jda_name": "Patel Marg ",
+    "jda_name": "Patel Marg",
     "uturn_demand": 1148.0,
     "conflicting_flow": 3433.0,
     "t_c_lo": 3.84,
@@ -843,7 +853,7 @@
     "junction": "TMC-03",
     "approach": "Sanganer Stadium",
     "bay": "southbound",
-    "jda_name": "Patel Marg ",
+    "jda_name": "Patel Marg",
     "uturn_demand": 1094.0,
     "conflicting_flow": 3000.0,
     "t_c_lo": 3.84,
@@ -856,9 +866,9 @@
    },
    {
     "junction": "TMC-04",
-    "approach": "Mansarover Metro",
+    "approach": "Mansarovar Metro",
     "bay": "northbound",
-    "jda_name": "VT Road    ",
+    "jda_name": "VT Road",
     "uturn_demand": 1493.0,
     "conflicting_flow": 2482.0,
     "t_c_lo": 3.86,
@@ -873,7 +883,7 @@
     "junction": "TMC-04",
     "approach": "Sanganer Stadium",
     "bay": "southbound",
-    "jda_name": "VT Road    ",
+    "jda_name": "VT Road",
     "uturn_demand": 1889.0,
     "conflicting_flow": 2781.0,
     "t_c_lo": 3.86,
@@ -886,9 +896,9 @@
    },
    {
     "junction": "TMC-05",
-    "approach": "Mansarover Metro",
+    "approach": "Mansarovar Metro",
     "bay": "northbound",
-    "jda_name": "Rajat Path ",
+    "jda_name": "Rajat Path",
     "uturn_demand": 819.0,
     "conflicting_flow": 3978.0,
     "t_c_lo": 3.86,
@@ -903,7 +913,7 @@
     "junction": "TMC-05",
     "approach": "Sanganer Stadium",
     "bay": "southbound",
-    "jda_name": "Rajat Path ",
+    "jda_name": "Rajat Path",
     "uturn_demand": 1156.0,
     "conflicting_flow": 5763.0,
     "t_c_lo": 3.86,
@@ -916,7 +926,7 @@
    },
    {
     "junction": "TMC-06",
-    "approach": "Mansarover Metro",
+    "approach": "Mansarovar Metro",
     "bay": "northbound",
     "jda_name": "Bhrigu Path",
     "uturn_demand": 699.0,
@@ -948,7 +958,7 @@
   "scenarios": [
    {
     "junction": "TMC-01",
-    "jda_name": "B-2 Bypass ",
+    "jda_name": "B-2 Bypass",
     "s0_vc": 0.71,
     "s0_los": "-",
     "s1_uturn_vc_cons": 23.80276434973617,
@@ -960,7 +970,7 @@
    },
    {
     "junction": "TMC-02",
-    "jda_name": "Vijay Path ",
+    "jda_name": "Vijay Path",
     "s0_vc": 0.66,
     "s0_los": "-",
     "s1_uturn_vc_cons": 18.7802589760515,
@@ -972,7 +982,7 @@
    },
    {
     "junction": "TMC-03",
-    "jda_name": "Patel Marg ",
+    "jda_name": "Patel Marg",
     "s0_vc": 0.8,
     "s0_los": "-",
     "s1_uturn_vc_cons": 36.26143278167955,
@@ -984,7 +994,7 @@
    },
    {
     "junction": "TMC-04",
-    "jda_name": "VT Road    ",
+    "jda_name": "VT Road",
     "s0_vc": 0.5,
     "s0_los": "-",
     "s1_uturn_vc_cons": 29.27065093967726,
@@ -996,7 +1006,7 @@
    },
    {
     "junction": "TMC-05",
-    "jda_name": "Rajat Path ",
+    "jda_name": "Rajat Path",
     "s0_vc": 0.62,
     "s0_los": "-",
     "s1_uturn_vc_cons": 615.7946713210491,
@@ -1029,7 +1039,7 @@
   "gap_benchmark": [
    {
     "junction": "TMC-01",
-    "approach": "Mansarover Metro",
+    "approach": "Mansarovar Metro",
     "t_c_optimistic": 3.93,
     "t_c_conservative": 5.12,
     "t_c_required": 1.57,
@@ -1047,7 +1057,7 @@
    },
    {
     "junction": "TMC-02",
-    "approach": "Mansarover Metro",
+    "approach": "Mansarovar Metro",
     "t_c_optimistic": 3.88,
     "t_c_conservative": 5.04,
     "t_c_required": 1.15,
@@ -1065,7 +1075,7 @@
    },
    {
     "junction": "TMC-03",
-    "approach": "Mansarover Metro",
+    "approach": "Mansarovar Metro",
     "t_c_optimistic": 3.84,
     "t_c_conservative": 4.98,
     "t_c_required": 1.32,
@@ -1083,7 +1093,7 @@
    },
    {
     "junction": "TMC-04",
-    "approach": "Mansarover Metro",
+    "approach": "Mansarovar Metro",
     "t_c_optimistic": 3.86,
     "t_c_conservative": 5.01,
     "t_c_required": 1.16,
@@ -1101,7 +1111,7 @@
    },
    {
     "junction": "TMC-05",
-    "approach": "Mansarover Metro",
+    "approach": "Mansarovar Metro",
     "t_c_optimistic": 3.86,
     "t_c_conservative": 5.02,
     "t_c_required": 1.54,
@@ -1119,7 +1129,7 @@
    },
    {
     "junction": "TMC-06",
-    "approach": "Mansarover Metro",
+    "approach": "Mansarovar Metro",
     "t_c_optimistic": 3.89,
     "t_c_conservative": 5.05,
     "t_c_required": 1.89,
@@ -1915,7 +1925,7 @@
   "approaches": [
    {
     "junction": "TMC-01",
-    "approach": "from Mansarover Metro",
+    "approach": "from Mansarovar Metro",
     "vc": 0.59,
     "capacity_pcu_hr": 5616,
     "los": "C",
@@ -1951,7 +1961,7 @@
    },
    {
     "junction": "TMC-02",
-    "approach": "from Mansarover Metro",
+    "approach": "from Mansarovar Metro",
     "vc": 0.69,
     "capacity_pcu_hr": 4500,
     "los": "C",
@@ -1987,7 +1997,7 @@
    },
    {
     "junction": "TMC-03",
-    "approach": "from Mansarover Metro",
+    "approach": "from Mansarovar Metro",
     "vc": 0.8,
     "capacity_pcu_hr": 4680,
     "los": "D",
@@ -2023,7 +2033,7 @@
    },
    {
     "junction": "TMC-04",
-    "approach": "from Mansarover Metro",
+    "approach": "from Mansarovar Metro",
     "vc": 0.55,
     "capacity_pcu_hr": 6336,
     "los": "C",
@@ -2059,7 +2069,7 @@
    },
    {
     "junction": "TMC-05",
-    "approach": "from Mansarover Metro",
+    "approach": "from Mansarovar Metro",
     "vc": 0.88,
     "capacity_pcu_hr": 6552,
     "los": "E",
@@ -2095,7 +2105,7 @@
    },
    {
     "junction": "TMC-06",
-    "approach": "from Mansarover Metro",
+    "approach": "from Mansarovar Metro",
     "vc": 0.54,
     "capacity_pcu_hr": 6984,
     "los": "C",
@@ -2146,7 +2156,7 @@
   "after_grade_separation": [
    {
     "junction": "TMC-01",
-    "approach": "from Mansarover Metro",
+    "approach": "from Mansarovar Metro",
     "vc": 0.25,
     "mean_delay_min": 0.0,
     "los": "A"
@@ -2160,7 +2170,7 @@
    },
    {
     "junction": "TMC-02",
-    "approach": "from Mansarover Metro",
+    "approach": "from Mansarovar Metro",
     "vc": 0.22,
     "mean_delay_min": 0.0,
     "los": "A"
@@ -2174,7 +2184,7 @@
    },
    {
     "junction": "TMC-03",
-    "approach": "from Mansarover Metro",
+    "approach": "from Mansarovar Metro",
     "vc": 0.18,
     "mean_delay_min": 0.0,
     "los": "A"
@@ -2188,7 +2198,7 @@
    },
    {
     "junction": "TMC-04",
-    "approach": "from Mansarover Metro",
+    "approach": "from Mansarovar Metro",
     "vc": 0.18,
     "mean_delay_min": 0.0,
     "los": "A"
@@ -2202,7 +2212,7 @@
    },
    {
     "junction": "TMC-05",
-    "approach": "from Mansarover Metro",
+    "approach": "from Mansarovar Metro",
     "vc": 0.19,
     "mean_delay_min": 0.0,
     "los": "A"
@@ -2216,7 +2226,7 @@
    },
    {
     "junction": "TMC-06",
-    "approach": "from Mansarover Metro",
+    "approach": "from Mansarovar Metro",
     "vc": 0.15,
     "mean_delay_min": 0.0,
     "los": "A"
@@ -2338,7 +2348,7 @@
   "approaches": [
    {
     "junction": "TMC-01",
-    "approach": "from Mansarover Metro",
+    "approach": "from Mansarovar Metro",
     "hours_over": 0.0,
     "excess_pcu": 0.0,
     "max_pcu_hr": 3317.0
@@ -2352,7 +2362,7 @@
    },
    {
     "junction": "TMC-02",
-    "approach": "from Mansarover Metro",
+    "approach": "from Mansarovar Metro",
     "hours_over": 0.0,
     "excess_pcu": 0.0,
     "max_pcu_hr": 3125.55
@@ -2366,7 +2376,7 @@
    },
    {
     "junction": "TMC-03",
-    "approach": "from Mansarover Metro",
+    "approach": "from Mansarovar Metro",
     "hours_over": 0.0,
     "excess_pcu": 0.0,
     "max_pcu_hr": 3749.75
@@ -2380,7 +2390,7 @@
    },
    {
     "junction": "TMC-04",
-    "approach": "from Mansarover Metro",
+    "approach": "from Mansarovar Metro",
     "hours_over": 0.0,
     "excess_pcu": 0.0,
     "max_pcu_hr": 3509.6499999999996
@@ -2394,7 +2404,7 @@
    },
    {
     "junction": "TMC-05",
-    "approach": "from Mansarover Metro",
+    "approach": "from Mansarovar Metro",
     "hours_over": 0.0,
     "excess_pcu": 0.0,
     "max_pcu_hr": 5777.45
@@ -2408,7 +2418,7 @@
    },
    {
     "junction": "TMC-06",
-    "approach": "from Mansarover Metro",
+    "approach": "from Mansarovar Metro",
     "hours_over": 0.0,
     "excess_pcu": 0.0,
     "max_pcu_hr": 3796.85
@@ -2455,7 +2465,7 @@
   "junctions": [
    {
     "junction": "TMC-01",
-    "jda_name": "B-2 Bypass ",
+    "jda_name": "B-2 Bypass",
     "peak_veh": 11107,
     "today_points": 32,
     "today_crossing_exposure": 19.0,
@@ -2466,7 +2476,7 @@
    },
    {
     "junction": "TMC-02",
-    "jda_name": "Vijay Path ",
+    "jda_name": "Vijay Path",
     "peak_veh": 9476,
     "today_points": 32,
     "today_crossing_exposure": 12.2,
@@ -2477,7 +2487,7 @@
    },
    {
     "junction": "TMC-03",
-    "jda_name": "Patel Marg ",
+    "jda_name": "Patel Marg",
     "peak_veh": 9695,
     "today_points": 32,
     "today_crossing_exposure": 9.9,
@@ -2488,7 +2498,7 @@
    },
    {
     "junction": "TMC-04",
-    "jda_name": "VT Road    ",
+    "jda_name": "VT Road",
     "peak_veh": 10876,
     "today_points": 32,
     "today_crossing_exposure": 16.5,
@@ -2499,7 +2509,7 @@
    },
    {
     "junction": "TMC-05",
-    "jda_name": "Rajat Path ",
+    "jda_name": "Rajat Path",
     "peak_veh": 12433,
     "today_points": 32,
     "today_crossing_exposure": 11.6,
@@ -3025,19 +3035,19 @@
        "23"
       ],
       "members": [
-       "TMC-01 Mansarover Metro",
+       "TMC-01 Mansarovar Metro",
        "TMC-01 Patrika Gate",
        "TMC-02 Durgapur",
-       "TMC-02 Mansarover Metro",
+       "TMC-02 Mansarovar Metro",
        "TMC-02 Sanganer Stadium",
        "TMC-03 Patel Marg Crossing",
        "TMC-03 Sanganer Stadium",
        "TMC-03 Sumer Nagar",
        "TMC-04 Dholai",
-       "TMC-04 Mansarover Metro",
+       "TMC-04 Mansarovar Metro",
        "TMC-04 Sanganer Stadium",
-       "TMC-05 Rajatpath",
-       "TMC-06 Mansarover Metro",
+       "TMC-05 Rajat Path",
+       "TMC-06 Mansarovar Metro",
        "TMC-06 New Aatish Market",
        "TMC-06 Sanganer Stadium"
       ],
@@ -3105,9 +3115,9 @@
        "TMC-01 Sanganer Stadium",
        "TMC-01 Sumer Nagar",
        "TMC-02 Mohanpura",
-       "TMC-03 Mansarover Metro",
+       "TMC-03 Mansarovar Metro",
        "TMC-04 VT Road",
-       "TMC-06 Mansarover"
+       "TMC-06 Mansarovar"
       ],
       "peak_hour": 9,
       "share_in_busiest_4h": 0.287
@@ -3171,7 +3181,7 @@
       ],
       "members": [
        "TMC-05 Mangyawas",
-       "TMC-05 Mansarover Metro",
+       "TMC-05 Mansarovar Metro",
        "TMC-05 Sanganer Stadium"
       ],
       "peak_hour": 9,
@@ -3233,7 +3243,7 @@
       ],
       "members": [
        "TMC-02 Durgapur",
-       "TMC-06 Mansarover"
+       "TMC-06 Mansarovar"
       ],
       "dominant_class": "TWO_W",
       "dominant_share": 0.624
@@ -3271,7 +3281,7 @@
        "TMC-02 Mohanpura",
        "TMC-03 Patel Marg Crossing",
        "TMC-03 Sumer Nagar",
-       "TMC-05 Rajatpath",
+       "TMC-05 Rajat Path",
        "TMC-06 New Aatish Market"
       ],
       "dominant_class": "TWO_W",
@@ -3309,7 +3319,7 @@
       "members": [
        "TMC-01 Patrika Gate",
        "TMC-01 Sumer Nagar",
-       "TMC-02 Mansarover Metro"
+       "TMC-02 Mansarovar Metro"
       ],
       "dominant_class": "CAR_BUCKET",
       "dominant_share": 0.587
@@ -3344,10 +3354,10 @@
        "TWO_W"
       ],
       "members": [
-       "TMC-03 Mansarover Metro",
+       "TMC-03 Mansarovar Metro",
        "TMC-03 Sanganer Stadium",
        "TMC-04 Dholai",
-       "TMC-04 Mansarover Metro",
+       "TMC-04 Mansarovar Metro",
        "TMC-04 VT Road"
       ],
       "dominant_class": "TWO_W",
@@ -3383,14 +3393,14 @@
        "TWO_W"
       ],
       "members": [
-       "TMC-01 Mansarover Metro",
+       "TMC-01 Mansarovar Metro",
        "TMC-01 Sanganer Stadium",
        "TMC-02 Sanganer Stadium",
        "TMC-04 Sanganer Stadium",
        "TMC-05 Mangyawas",
-       "TMC-05 Mansarover Metro",
+       "TMC-05 Mansarovar Metro",
        "TMC-05 Sanganer Stadium",
-       "TMC-06 Mansarover Metro",
+       "TMC-06 Mansarovar Metro",
        "TMC-06 Sanganer Stadium"
       ],
       "dominant_class": "CAR_BUCKET",
@@ -4738,15 +4748,15 @@
   {
    "code": "TMC-01",
    "arms": [
-    "Mansarover Metro",
+    "Mansarovar Metro",
     "Patrika Gate",
     "Sanganer Stadium",
     "Sumer Nagar"
    ],
    "lat": 26.8395707,
    "lon": 75.7678008,
-   "jda_name": "B-2 Bypass ",
-   "signal_cluster": "C8 ",
+   "jda_name": "B-2 Bypass",
+   "signal_cluster": "C8",
    "location_confidence": "JDA KML",
    "daily_veh": 127998,
    "peak_start": "09:00",
@@ -4817,61 +4827,71 @@
    "composition": [
     {
      "cls": "CAR_BUCKET",
-     "label": "Car, Taxi, Tempo, Auto Rickshaw & Pick up",
+     "label": "Car, Taxi, Tempo, Auto Rickshaw & Pickup",
+     "label_as_received": "Car, Taxi, Tempo, Auto Rickshaw & Pick up",
      "count": 68716,
      "share": 0.53685
     },
     {
      "cls": "TWO_W",
-     "label": "Motar Cycle, Scooter",
+     "label": "Motor Cycle, Scooter",
+     "label_as_received": "Motar Cycle, Scooter",
      "count": 54391,
      "share": 0.42494
     },
     {
      "cls": "HORSE_DRAWN",
      "label": "Horse Drawn",
+     "label_as_received": "Horse Drawn",
      "count": 1743,
      "share": 0.01362
     },
     {
      "cls": "AGRI_LCV",
-     "label": "Agriculture Tractor, LCV Mini Bus",
+     "label": "Agricultural Tractor, LCV, Mini Bus",
+     "label_as_received": "Agriculture Tractor, LCV Mini Bus",
      "count": 1254,
      "share": 0.0098
     },
     {
      "cls": "TRL_MAV",
-     "label": "Tractor Trailor, Truck Trailor Units (3 Axle & MAV)",
+     "label": "Tractor Trailer, Truck Trailer Units (3 Axle & MAV)",
+     "label_as_received": "Tractor Trailor, Truck Trailor Units (3 Axle & MAV)",
      "count": 1251,
      "share": 0.00977
     },
     {
      "cls": "AUTO_TRK_BUS",
-     "label": "Three Wheeler (Auto) Axle Truck, Buses",
+     "label": "Three Wheeler (Auto), 3 Axle Truck, Buses",
+     "label_as_received": "Three Wheeler (Auto) Axle Truck, Buses",
      "count": 365,
      "share": 0.00285
     },
     {
      "cls": "CYCLE",
      "label": "Cycle",
+     "label_as_received": "Cycle",
      "count": 239,
      "share": 0.00187
     },
     {
      "cls": "HAND_CART",
      "label": "Hand Cart",
+     "label_as_received": "Hand Cart",
      "count": 26,
      "share": 0.0002
     },
     {
      "cls": "CYCLE_RIK",
      "label": "Cycle Rickshaw",
+     "label_as_received": "Cycle Rickshaw",
      "count": 13,
      "share": 0.0001
     },
     {
      "cls": "BULLOCK",
-     "label": "Bullock Corts",
+     "label": "Bullock Carts",
+     "label_as_received": "Bullock Corts",
      "count": 0,
      "share": 0.0
     }
@@ -5266,14 +5286,14 @@
   {
    "code": "TMC-02",
    "arms": [
-    "Mansarover Metro",
+    "Mansarovar Metro",
     "Durgapur",
     "Sanganer Stadium",
     "Mohanpura"
    ],
    "lat": 26.8460752,
    "lon": 75.7647913,
-   "jda_name": "Vijay Path ",
+   "jda_name": "Vijay Path",
    "signal_cluster": "C21",
    "location_confidence": "JDA KML",
    "daily_veh": 129047,
@@ -5345,61 +5365,71 @@
    "composition": [
     {
      "cls": "TWO_W",
-     "label": "Motar Cycle, Scooter",
+     "label": "Motor Cycle, Scooter",
+     "label_as_received": "Motar Cycle, Scooter",
      "count": 63730,
      "share": 0.49385
     },
     {
      "cls": "CAR_BUCKET",
-     "label": "Car, Taxi, Tempo, Auto Rickshaw & Pick up",
+     "label": "Car, Taxi, Tempo, Auto Rickshaw & Pickup",
+     "label_as_received": "Car, Taxi, Tempo, Auto Rickshaw & Pick up",
      "count": 60376,
      "share": 0.46786
     },
     {
      "cls": "HORSE_DRAWN",
      "label": "Horse Drawn",
+     "label_as_received": "Horse Drawn",
      "count": 2298,
      "share": 0.01781
     },
     {
      "cls": "TRL_MAV",
-     "label": "Tractor Trailor, Truck Trailor Units (3 Axle & MAV)",
+     "label": "Tractor Trailer, Truck Trailer Units (3 Axle & MAV)",
+     "label_as_received": "Tractor Trailor, Truck Trailor Units (3 Axle & MAV)",
      "count": 1119,
      "share": 0.00867
     },
     {
      "cls": "AGRI_LCV",
-     "label": "Agriculture Tractor, LCV Mini Bus",
+     "label": "Agricultural Tractor, LCV, Mini Bus",
+     "label_as_received": "Agriculture Tractor, LCV Mini Bus",
      "count": 861,
      "share": 0.00667
     },
     {
      "cls": "AUTO_TRK_BUS",
-     "label": "Three Wheeler (Auto) Axle Truck, Buses",
+     "label": "Three Wheeler (Auto), 3 Axle Truck, Buses",
+     "label_as_received": "Three Wheeler (Auto) Axle Truck, Buses",
      "count": 360,
      "share": 0.00279
     },
     {
      "cls": "CYCLE",
      "label": "Cycle",
+     "label_as_received": "Cycle",
      "count": 176,
      "share": 0.00136
     },
     {
      "cls": "CYCLE_RIK",
      "label": "Cycle Rickshaw",
+     "label_as_received": "Cycle Rickshaw",
      "count": 113,
      "share": 0.00088
     },
     {
      "cls": "HAND_CART",
      "label": "Hand Cart",
+     "label_as_received": "Hand Cart",
      "count": 14,
      "share": 0.00011
     },
     {
      "cls": "BULLOCK",
-     "label": "Bullock Corts",
+     "label": "Bullock Carts",
+     "label_as_received": "Bullock Corts",
      "count": 0,
      "share": 0.0
     }
@@ -5794,14 +5824,14 @@
   {
    "code": "TMC-03",
    "arms": [
-    "Mansarover Metro",
+    "Mansarovar Metro",
     "Patel Marg Crossing",
     "Sanganer Stadium",
     "Sumer Nagar"
    ],
    "lat": 26.8504204,
    "lon": 75.7627824,
-   "jda_name": "Patel Marg ",
+   "jda_name": "Patel Marg",
    "signal_cluster": "C26",
    "location_confidence": "JDA KML",
    "daily_veh": 128195,
@@ -5873,61 +5903,71 @@
    "composition": [
     {
      "cls": "TWO_W",
-     "label": "Motar Cycle, Scooter",
+     "label": "Motor Cycle, Scooter",
+     "label_as_received": "Motar Cycle, Scooter",
      "count": 69210,
      "share": 0.53988
     },
     {
      "cls": "CAR_BUCKET",
-     "label": "Car, Taxi, Tempo, Auto Rickshaw & Pick up",
+     "label": "Car, Taxi, Tempo, Auto Rickshaw & Pickup",
+     "label_as_received": "Car, Taxi, Tempo, Auto Rickshaw & Pick up",
      "count": 55099,
      "share": 0.42981
     },
     {
      "cls": "HORSE_DRAWN",
      "label": "Horse Drawn",
+     "label_as_received": "Horse Drawn",
      "count": 1358,
      "share": 0.01059
     },
     {
      "cls": "TRL_MAV",
-     "label": "Tractor Trailor, Truck Trailor Units (3 Axle & MAV)",
+     "label": "Tractor Trailer, Truck Trailer Units (3 Axle & MAV)",
+     "label_as_received": "Tractor Trailor, Truck Trailor Units (3 Axle & MAV)",
      "count": 1054,
      "share": 0.00822
     },
     {
      "cls": "AGRI_LCV",
-     "label": "Agriculture Tractor, LCV Mini Bus",
+     "label": "Agricultural Tractor, LCV, Mini Bus",
+     "label_as_received": "Agriculture Tractor, LCV Mini Bus",
      "count": 694,
      "share": 0.00541
     },
     {
      "cls": "AUTO_TRK_BUS",
-     "label": "Three Wheeler (Auto) Axle Truck, Buses",
+     "label": "Three Wheeler (Auto), 3 Axle Truck, Buses",
+     "label_as_received": "Three Wheeler (Auto) Axle Truck, Buses",
      "count": 349,
      "share": 0.00272
     },
     {
      "cls": "CYCLE",
      "label": "Cycle",
+     "label_as_received": "Cycle",
      "count": 306,
      "share": 0.00239
     },
     {
      "cls": "CYCLE_RIK",
      "label": "Cycle Rickshaw",
+     "label_as_received": "Cycle Rickshaw",
      "count": 99,
      "share": 0.00077
     },
     {
      "cls": "HAND_CART",
      "label": "Hand Cart",
+     "label_as_received": "Hand Cart",
      "count": 24,
      "share": 0.00019
     },
     {
      "cls": "BULLOCK",
-     "label": "Bullock Corts",
+     "label": "Bullock Carts",
+     "label_as_received": "Bullock Corts",
      "count": 2,
      "share": 2e-05
     }
@@ -6322,14 +6362,14 @@
   {
    "code": "TMC-04",
    "arms": [
-    "Mansarover Metro",
+    "Mansarovar Metro",
     "VT Road",
     "Sanganer Stadium",
     "Dholai"
    ],
    "lat": 26.8564306,
    "lon": 75.7586546,
-   "jda_name": "VT Road    ",
+   "jda_name": "VT Road",
    "signal_cluster": "C18",
    "location_confidence": "JDA KML",
    "daily_veh": 153323,
@@ -6401,61 +6441,71 @@
    "composition": [
     {
      "cls": "TWO_W",
-     "label": "Motar Cycle, Scooter",
+     "label": "Motor Cycle, Scooter",
+     "label_as_received": "Motar Cycle, Scooter",
      "count": 78444,
      "share": 0.51163
     },
     {
      "cls": "CAR_BUCKET",
-     "label": "Car, Taxi, Tempo, Auto Rickshaw & Pick up",
+     "label": "Car, Taxi, Tempo, Auto Rickshaw & Pickup",
+     "label_as_received": "Car, Taxi, Tempo, Auto Rickshaw & Pick up",
      "count": 70185,
      "share": 0.45776
     },
     {
      "cls": "HORSE_DRAWN",
      "label": "Horse Drawn",
+     "label_as_received": "Horse Drawn",
      "count": 2298,
      "share": 0.01499
     },
     {
      "cls": "AGRI_LCV",
-     "label": "Agriculture Tractor, LCV Mini Bus",
+     "label": "Agricultural Tractor, LCV, Mini Bus",
+     "label_as_received": "Agriculture Tractor, LCV Mini Bus",
      "count": 1034,
      "share": 0.00674
     },
     {
      "cls": "TRL_MAV",
-     "label": "Tractor Trailor, Truck Trailor Units (3 Axle & MAV)",
+     "label": "Tractor Trailer, Truck Trailer Units (3 Axle & MAV)",
+     "label_as_received": "Tractor Trailor, Truck Trailor Units (3 Axle & MAV)",
      "count": 628,
      "share": 0.0041
     },
     {
      "cls": "AUTO_TRK_BUS",
-     "label": "Three Wheeler (Auto) Axle Truck, Buses",
+     "label": "Three Wheeler (Auto), 3 Axle Truck, Buses",
+     "label_as_received": "Three Wheeler (Auto) Axle Truck, Buses",
      "count": 298,
      "share": 0.00194
     },
     {
      "cls": "CYCLE",
      "label": "Cycle",
+     "label_as_received": "Cycle",
      "count": 222,
      "share": 0.00145
     },
     {
      "cls": "HAND_CART",
      "label": "Hand Cart",
+     "label_as_received": "Hand Cart",
      "count": 95,
      "share": 0.00062
     },
     {
      "cls": "BULLOCK",
-     "label": "Bullock Corts",
+     "label": "Bullock Carts",
+     "label_as_received": "Bullock Corts",
      "count": 64,
      "share": 0.00042
     },
     {
      "cls": "CYCLE_RIK",
      "label": "Cycle Rickshaw",
+     "label_as_received": "Cycle Rickshaw",
      "count": 55,
      "share": 0.00036
     }
@@ -6850,14 +6900,14 @@
   {
    "code": "TMC-05",
    "arms": [
-    "Mansarover Metro",
-    "Rajatpath",
+    "Mansarovar Metro",
+    "Rajat Path",
     "Sanganer Stadium",
     "Mangyawas"
    ],
    "lat": 26.8630543,
    "lon": 75.7541118,
-   "jda_name": "Rajat Path ",
+   "jda_name": "Rajat Path",
    "signal_cluster": "C22",
    "location_confidence": "JDA KML",
    "daily_veh": 127981,
@@ -6929,61 +6979,71 @@
    "composition": [
     {
      "cls": "CAR_BUCKET",
-     "label": "Car, Taxi, Tempo, Auto Rickshaw & Pick up",
+     "label": "Car, Taxi, Tempo, Auto Rickshaw & Pickup",
+     "label_as_received": "Car, Taxi, Tempo, Auto Rickshaw & Pick up",
      "count": 63260,
      "share": 0.49429
     },
     {
      "cls": "TWO_W",
-     "label": "Motar Cycle, Scooter",
+     "label": "Motor Cycle, Scooter",
+     "label_as_received": "Motar Cycle, Scooter",
      "count": 62587,
      "share": 0.48903
     },
     {
      "cls": "HORSE_DRAWN",
      "label": "Horse Drawn",
+     "label_as_received": "Horse Drawn",
      "count": 1194,
      "share": 0.00933
     },
     {
      "cls": "AGRI_LCV",
-     "label": "Agriculture Tractor, LCV Mini Bus",
+     "label": "Agricultural Tractor, LCV, Mini Bus",
+     "label_as_received": "Agriculture Tractor, LCV Mini Bus",
      "count": 452,
      "share": 0.00353
     },
     {
      "cls": "CYCLE",
      "label": "Cycle",
+     "label_as_received": "Cycle",
      "count": 192,
      "share": 0.0015
     },
     {
      "cls": "TRL_MAV",
-     "label": "Tractor Trailor, Truck Trailor Units (3 Axle & MAV)",
+     "label": "Tractor Trailer, Truck Trailer Units (3 Axle & MAV)",
+     "label_as_received": "Tractor Trailor, Truck Trailor Units (3 Axle & MAV)",
      "count": 134,
      "share": 0.00105
     },
     {
      "cls": "AUTO_TRK_BUS",
-     "label": "Three Wheeler (Auto) Axle Truck, Buses",
+     "label": "Three Wheeler (Auto), 3 Axle Truck, Buses",
+     "label_as_received": "Three Wheeler (Auto) Axle Truck, Buses",
      "count": 128,
      "share": 0.001
     },
     {
      "cls": "HAND_CART",
      "label": "Hand Cart",
+     "label_as_received": "Hand Cart",
      "count": 18,
      "share": 0.00014
     },
     {
      "cls": "CYCLE_RIK",
      "label": "Cycle Rickshaw",
+     "label_as_received": "Cycle Rickshaw",
      "count": 11,
      "share": 9e-05
     },
     {
      "cls": "BULLOCK",
-     "label": "Bullock Corts",
+     "label": "Bullock Carts",
+     "label_as_received": "Bullock Corts",
      "count": 5,
      "share": 4e-05
     }
@@ -7378,10 +7438,10 @@
   {
    "code": "TMC-06",
    "arms": [
-    "Mansarover Metro",
+    "Mansarovar Metro",
     "New Aatish Market",
     "Sanganer Stadium",
-    "Mansarover"
+    "Mansarovar"
    ],
    "lat": 26.8767054,
    "lon": 75.7476133,
@@ -7457,61 +7517,71 @@
    "composition": [
     {
      "cls": "CAR_BUCKET",
-     "label": "Car, Taxi, Tempo, Auto Rickshaw & Pick up",
+     "label": "Car, Taxi, Tempo, Auto Rickshaw & Pickup",
+     "label_as_received": "Car, Taxi, Tempo, Auto Rickshaw & Pick up",
      "count": 57073,
      "share": 0.4971
     },
     {
      "cls": "TWO_W",
-     "label": "Motar Cycle, Scooter",
+     "label": "Motor Cycle, Scooter",
+     "label_as_received": "Motar Cycle, Scooter",
      "count": 55446,
      "share": 0.48293
     },
     {
      "cls": "TRL_MAV",
-     "label": "Tractor Trailor, Truck Trailor Units (3 Axle & MAV)",
+     "label": "Tractor Trailer, Truck Trailer Units (3 Axle & MAV)",
+     "label_as_received": "Tractor Trailor, Truck Trailor Units (3 Axle & MAV)",
      "count": 880,
      "share": 0.00766
     },
     {
      "cls": "AGRI_LCV",
-     "label": "Agriculture Tractor, LCV Mini Bus",
+     "label": "Agricultural Tractor, LCV, Mini Bus",
+     "label_as_received": "Agriculture Tractor, LCV Mini Bus",
      "count": 800,
      "share": 0.00697
     },
     {
      "cls": "AUTO_TRK_BUS",
-     "label": "Three Wheeler (Auto) Axle Truck, Buses",
+     "label": "Three Wheeler (Auto), 3 Axle Truck, Buses",
+     "label_as_received": "Three Wheeler (Auto) Axle Truck, Buses",
      "count": 512,
      "share": 0.00446
     },
     {
      "cls": "CYCLE",
      "label": "Cycle",
+     "label_as_received": "Cycle",
      "count": 85,
      "share": 0.00074
     },
     {
      "cls": "CYCLE_RIK",
      "label": "Cycle Rickshaw",
+     "label_as_received": "Cycle Rickshaw",
      "count": 12,
      "share": 0.0001
     },
     {
      "cls": "HAND_CART",
      "label": "Hand Cart",
+     "label_as_received": "Hand Cart",
      "count": 3,
      "share": 3e-05
     },
     {
      "cls": "BULLOCK",
-     "label": "Bullock Corts",
+     "label": "Bullock Carts",
+     "label_as_received": "Bullock Corts",
      "count": 0,
      "share": 0.0
     },
     {
      "cls": "HORSE_DRAWN",
      "label": "Horse Drawn",
+     "label_as_received": "Horse Drawn",
      "count": 0,
      "share": 0.0
     }
@@ -8135,5 +8205,75 @@
    "score": 1.27,
    "rank": 6
   }
- ]
+ ],
+ "spelling": {
+  "policy": "source labels are left exactly as issued; correction happens at the publishing boundary and both spellings are published",
+  "corrections": [
+   {
+    "as_received": "Motar Cycle, Scooter",
+    "corrected": "Motor Cycle, Scooter",
+    "kind": "typo",
+    "confirmed": true,
+    "note": "Motar -> Motor."
+   },
+   {
+    "as_received": "Tractor Trailor, Truck Trailor Units (3 Axle & MAV)",
+    "corrected": "Tractor Trailer, Truck Trailer Units (3 Axle & MAV)",
+    "kind": "typo",
+    "confirmed": true,
+    "note": "Trailor -> Trailer, twice."
+   },
+   {
+    "as_received": "Bullock Corts",
+    "corrected": "Bullock Carts",
+    "kind": "typo",
+    "confirmed": true,
+    "note": "Corts -> Carts."
+   },
+   {
+    "as_received": "Car, Taxi, Tempo, Auto Rickshaw & Pick up",
+    "corrected": "Car, Taxi, Tempo, Auto Rickshaw & Pickup",
+    "kind": "style",
+    "confirmed": true,
+    "note": "Pick up -> Pickup, as one noun."
+   },
+   {
+    "as_received": "Three Wheeler (Auto) Axle Truck, Buses",
+    "corrected": "Three Wheeler (Auto), 3 Axle Truck, Buses",
+    "kind": "inferred",
+    "confirmed": false,
+    "note": "Comma and the 3 restored from IRC:SP:41 Table 3.1. NOT confirmed by JDA: a missing 3 changes what was counted, not how it was spelled."
+   },
+   {
+    "as_received": "Agriculture Tractor, LCV Mini Bus",
+    "corrected": "Agricultural Tractor, LCV, Mini Bus",
+    "kind": "inferred",
+    "confirmed": false,
+    "note": "Agriculture -> Agricultural, and a comma restored from IRC:SP:41 Table 3.1. The comma is NOT confirmed by JDA."
+   },
+   {
+    "as_received": "Mansarover Metro",
+    "corrected": "Mansarovar Metro",
+    "kind": "place",
+    "confirmed": true,
+    "note": "The Jaipur locality and its Pink Line metro station are Mansarovar. The survey writes Mansarovar throughout."
+   },
+   {
+    "as_received": "Mansarover",
+    "corrected": "Mansarovar",
+    "kind": "place",
+    "confirmed": true,
+    "note": "As above, where the arm is the locality rather than the station."
+   },
+   {
+    "as_received": "Rajatpath",
+    "corrected": "Rajat Path",
+    "kind": "place",
+    "confirmed": true,
+    "note": "Two words in JDA's own scheme documents, which name the junction Rajat Path. The survey closes it up."
+   }
+  ],
+  "n_corrections": 9,
+  "n_unconfirmed": 2
+ }
 }

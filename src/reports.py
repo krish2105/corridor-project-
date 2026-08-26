@@ -611,7 +611,7 @@ def capacity_report():
             "",
             "The critical gap is the single most attackable input in this report: it was "
             "chosen from the literature, not measured on this corridor. Rather than "
-            "defend one value, the servability test is re-run on every basis reachable.",
+            "defend one value, the serviceability test is re-run on every basis reachable.",
             "",
             _table(["Basis", "t_c (s)", "t_f (s)", "Unservable", "Geometric match"],
                    [[r["label"], f"{r['t_c']:.2f}", f"{r['t_f']:.2f}",

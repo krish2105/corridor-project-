@@ -32,6 +32,7 @@ uv sync
 uv run pytest                     # 463 tests
 uv run python src/inspect_tmc.py   # raw workbook structure, no reshaping
 uv run python src/tmc_parse.py     # workbooks -> tidy frames; never trusts a stored total
+uv run python src/spelling.py      # corrected labels, source preserved; gates our own prose too
 uv run python src/audit.py         # -> out/audit_report.md
 uv run python src/atlas.py         # -> out/corridor_constraint_atlas.pdf
 uv run python src/medians.py       # U-turn feasibility from the DIVIDER linework
@@ -67,7 +68,7 @@ Every module runs standalone and prints its own verification metric. A module th
 
 ## Layout
 
-- `src/` — 43 modules. `tmc_parse` and `audit` are the core; `atlas`, `medians` and `dxf_inventory` read the CAD survey; `capacity`, `scheme_test`, `delay` and `economics` carry the findings.
+- `src/` — 44 modules. `tmc_parse` and `audit` are the core; `atlas`, `medians` and `dxf_inventory` read the CAD survey; `capacity`, `scheme_test`, `delay` and `economics` carry the findings.
 - `web/` — Next.js dashboard, reading the same `corridor.json` as the static report.
 - `docs/data_dictionary.md` — every field in every published file, with units. Generated, so a field added without a description fails a test.
 - `docs/jaipur_corridor_study.md` — the methodology, with inline `ERRATUM` blocks correcting 9 defects in its own worked code.

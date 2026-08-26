@@ -46,6 +46,7 @@ FILES = {
     "forecast.json":    "How short a count can be and still predict the day, with its error.",
     "uturn_framework.json": "Per-bay criteria ladder, the binding constraint, and the back-solve.",
     "measurement.json": "Every published dimension: how it was derived, its uncertainty, what resolves it.",
+    "spelling.json":    "Labels corrected for the reader, with the survey's own spelling preserved.",
 }
 
 # Units are stated because a number without one is not checkable.
@@ -605,6 +606,26 @@ FIELDS.update({
     "uncertainty": "How far it can be trusted, or why that cannot be quantified.",
     "resolved_by": "The field measurement that would settle it.",
     "status": "That every dimension here is provisional pending a total station survey.",
+})
+
+
+# --- the spelling register ----------------------------------------------------
+FIELDS.update({
+    "spelling": "Labels corrected at the publishing boundary, with the source spelling "
+                "kept so any figure remains traceable to a survey cell.",
+    "policy": "That the source is left as issued and correction happens at display.",
+    "corrections": "One entry per label this project prints differently from the survey.",
+    "n_corrections": "How many.", "n_unconfirmed": "How many change a word, not a letter.",
+    "as_received": "The label exactly as the survey issued it.",
+    "corrected": "The label as shown to a reader.",
+    "kind": "typo, style, place, or inferred.",
+    "confirmed": "False where the change alters what was counted rather than how it was "
+                 "spelled. Those are on the reviewer question sheet, not applied quietly.",
+    "unconfirmed_note": "Why the unconfirmed ones are held back.",
+    "label_as_received": "The survey's own spelling of this class label.",
+    "prose_documents_checked": "Generated documents run through the word-list check.",
+    "prose_unrecognised": "Words in our own documents that are neither in the dictionary "
+                          "nor allowlisted. Must be empty.",
 })
 
 

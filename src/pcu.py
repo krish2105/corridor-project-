@@ -18,6 +18,7 @@ from pathlib import Path
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from src.spelling import fix as spell
 from src.tmc_parse import CLASS_LABELS, parse_all
 
 # --- IRC:106-1990 Table 2, (pcu at share <=5%, pcu at share >=10%) -----------
@@ -123,7 +124,7 @@ if __name__ == "__main__":
     print("-" * 94)
     for _, r in g.sort_values("count", ascending=False).iterrows():
         lo, pt, hi = factor_band(r.veh_class, r.share)
-        print(f"{CLASS_LABELS[r.veh_class][:50]:<52} {100*r.share:>6.2f}% "
+        print(f"{spell(CLASS_LABELS[r.veh_class])[:50]:<52} {100*r.share:>6.2f}% "
               f"{SURVEYED[r.veh_class]:>6.2f} {lo:>8.2f} "
               f"{(f'{pt:.2f}' if pt is not None else '  --'):>7} {hi:>9.2f}")
     print("\n'--' = composite column, no defensible point estimate. Band only.\n")

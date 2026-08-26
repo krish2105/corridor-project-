@@ -84,16 +84,16 @@ Factors back-solved from every workbook's own `Total (Veh.)` and `Total (PCUs)` 
 
 | cls                                                 | code         |   factor | constant   |
 |:----------------------------------------------------|:-------------|---------:|:-----------|
-| Car, Taxi, Tempo, Auto Rickshaw & Pick up           | CAR_BUCKET   |      1   | yes        |
-| Motar Cycle, Scooter                                | TWO_W        |      0.5 | yes        |
-| Agriculture Tractor, LCV Mini Bus                   | AGRI_LCV     |      1.5 | yes        |
-| Three Wheeler (Auto) Axle Truck, Buses              | AUTO_TRK_BUS |      3   | yes        |
-| Tractor Trailor, Truck Trailor Units (3 Axle & MAV) | TRL_MAV      |      4.5 | yes        |
+| Car, Taxi, Tempo, Auto Rickshaw & Pickup            | CAR_BUCKET   |      1   | yes        |
+| Motor Cycle, Scooter                                | TWO_W        |      0.5 | yes        |
+| Agricultural Tractor, LCV, Mini Bus                 | AGRI_LCV     |      1.5 | yes        |
+| Three Wheeler (Auto), 3 Axle Truck, Buses           | AUTO_TRK_BUS |      3   | yes        |
+| Tractor Trailer, Truck Trailer Units (3 Axle & MAV) | TRL_MAV      |      4.5 | yes        |
 | Cycle                                               | CYCLE        |      0.5 | yes        |
 | Cycle Rickshaw                                      | CYCLE_RIK    |      1.5 | yes        |
 | Hand Cart                                           | HAND_CART    |      3   | yes        |
 | Horse Drawn                                         | HORSE_DRAWN  |      4   | yes        |
-| Bullock Corts                                       | BULLOCK      |      8   | yes        |
+| Bullock Carts                                       | BULLOCK      |      8   | yes        |
 
 Interval-level test: the static factors above are applied to each class count on every 15-minute row and compared against that row's own stored `Grand Total (PCU's)`.
 

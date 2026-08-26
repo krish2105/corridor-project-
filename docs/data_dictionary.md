@@ -29,6 +29,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `forecast.json` | How short a count can be and still predict the day, with its error. |
 | `uturn_framework.json` | Per-bay criteria ladder, the binding constraint, and the back-solve. |
 | `measurement.json` | Every published dimension: how it was derived, its uncertainty, what resolves it. |
+| `spelling.json` | Labels corrected for the reader, with the survey's own spelling preserved. |
 
 ## Fields
 
@@ -58,6 +59,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `arms` | Arm names, clockwise from north. |
 | `arrivals` | Cumulative PCU arriving at the stop line. Measured. |
 | `articulated` | Minimum turning radius band, metres. |
+| `as_received` | The label exactly as the survey issued it. |
 | `assumption_driven` | Whether any single assumption changes the conclusion. |
 | `auto` | PCU factor for auto-rickshaws. |
 | `back_solve` | What would have to change for the binding criterion to clear. |
@@ -124,12 +126,15 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `combinations_uturn` | How many assumption combinations the U-turn conclusion is actually run across - not the size of the whole space. |
 | `composition` | Share of each vehicle class. |
 | `conclusion` | Which conclusion this row belongs to. |
+| `confirmed` | False where the change alters what was counted rather than how it was spelled. Those are on the reviewer question sheet, not applied quietly. |
 | `conflicting_flow` | Opposing through movement the U-turn must cross, veh/hour. |
 | `conflicting_stream` | Which movement the U-turn must cross. |
 | `continuity` | Southbound outflow against next-junction inflow, per link. |
 | `converged_at_step` | Coarsest spacing agreeing with the next finer one. null means the answer was still moving at the finest step tested. |
 | `converged_tolerance_m` | Agreement between consecutive steps that counts as settled. |
 | `convergence` | Per junction, the width at each step and where it settles. |
+| `corrected` | The label as shown to a reader. |
+| `corrections` | One entry per label this project prints differently from the survey. |
 | `corridor` | Corridor-level aggregates. |
 | `corridor_arms_pcu` | Peak PCU on the two corridor approaches. A FLOOR on all-arm volume: the cross-street arms are counted but unmeasured. |
 | `corridor_km` | Length of the surveyed alignment between the end junctions. |
@@ -268,8 +273,10 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `junctions_above_wide_threshold` | How many junctions are in that state. |
 | `junctions_worse` | Junctions where crossing exposure rises under the scheme. |
 | `k` | Clusters chosen, by silhouette across k = 2..6. |
+| `kind` | typo, style, place, or inferred. |
 | `known_defects` | Defects the audit proved independently of this screen. |
 | `label` | Human-readable name. |
+| `label_as_received` | The survey's own spelling of this class label. |
 | `lane_cap` | Lane capacity tested, PCU per lane. |
 | `lane_capacity_pcu` | Lane capacity tested, PCU per lane. |
 | `lane_model_applicable` | Whether lane-based capacity describes this stream at all. |
@@ -328,6 +335,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `n` | Count of constraints at that station. |
 | `n_approaches` | Approaches clustered: six junctions by four arms. |
 | `n_bays` | Bays assessed. |
+| `n_corrections` | How many. |
 | `n_corridor` | Corridor approaches. |
 | `n_cross` | Cross-street approaches. |
 | `n_daily_veh` | Daily vehicles, scaled 0 to 1 across the six junctions. |
@@ -337,6 +345,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `n_junctions` | Junctions surveyed. |
 | `n_peak_veh` | Peak-hour vehicles, scaled 0 to 1. |
 | `n_turning_share_pct` | Turning share, scaled 0 to 1. |
+| `n_unconfirmed` | How many change a word, not a letter. |
 | `n_undecided` | Bays with no verdict because a criterion could not be evaluated. |
 | `n_uturn_demand` | U-turn demand, scaled 0 to 1. |
 | `n_worst_vc` | Worst approach v/c, scaled 0 to 1. |
@@ -393,9 +402,11 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `phf` | Peak hour factor: peak hour over four times the busiest 15 minutes. |
 | `phf_applied` | Whether a peak hour factor was applied. |
 | `pier_radius_m` | Half-footprint used when testing a pier position, metres. |
+| `policy` | That the source is left as issued and correction happens at display. |
 | `predictable` | Targets predictable from a short count at the gate. |
 | `previous` | Junction before this one along the alignment. |
 | `profile` | The cluster's mean share vector. |
+| `prose_documents_checked` | Generated documents run through the word-list check. |
 | `published_step_m` | Transect spacing actually used. Chosen where the width stops moving, not by convenience. |
 | `queue` | Spillback count per combination of packing, footprint and lane capacity. |
 | `queue_carryover` | Whether queues carrying between hours are modelled. |
@@ -520,6 +531,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `two_wheeler_gap_ours` | Our optimistic two-wheeler critical gap, seconds. |
 | `two_wheeler_share_pct` | Two-wheeler share of the movement stream on the analysis day. |
 | `uncertainty` | How far it can be trusted, or why that cannot be quantified. |
+| `unconfirmed_note` | Why the unconfirmed ones are held back. |
 | `understate` | Discrepancies where the stored total was too low. |
 | `unservable` | Movements out of 12 whose demand exceeds the bay capacity on this basis. |
 | `unverified` | Clauses that could not be checked against a primary source. |

@@ -230,6 +230,7 @@ def proven_table(c):
 PIPELINE_ORDER = [
     ("inspect_tmc",  "raw workbook structure, no reshaping"),
     ("tmc_parse",    "workbooks -> tidy frames; never trusts a stored total"),
+    ("spelling",     "corrected labels, source preserved; gates our own prose too"),
     ("audit",        "-> out/audit_report.md"),
     ("atlas",        "-> out/corridor_constraint_atlas.pdf"),
     ("medians",      "U-turn feasibility from the DIVIDER linework"),

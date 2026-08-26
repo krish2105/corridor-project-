@@ -1305,7 +1305,6 @@ export default function Page() {
           <ul className="col" style={{ marginTop: "1rem" }}>
             <li><strong>U-turn demand.</strong> Never counted. Unmeasured, not zero &mdash;
             and U-turns concentrate at median openings, where they cost the most capacity.</li>
-            <li><strong>E-rickshaws.</strong> No column anywhere holds them.</li>
             <li><strong>Half the PCU correction.</strong> Locked behind the composite class
             columns. Only re-counting to a proper class scheme resolves it.</li>
             <li><strong>The corridor order is not settled by the counts.</strong>{" "}

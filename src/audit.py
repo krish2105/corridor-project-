@@ -24,6 +24,7 @@ from openpyxl import load_workbook
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from src.config import SOURCE, OUT, PROCESSED, SURVEY_DIRS, JUNCTIONS
+from src.spelling import fix as spell
 from src.tmc_parse import (workbooks, CLASS_COLS, CLASS_LABELS, FAST_COLS, SLOW_COLS,
                            ROW_TOTAL_VEH, ROW_TOTAL_PCU, ROW_BINS, ROW_HOURS, COL_PCU,
                            COL_GRAND, parse_all, num)
@@ -192,7 +193,7 @@ def check_pcu(bins):
     say("Factors back-solved from every workbook's own `Total (Veh.)` and `Total (PCUs)` rows:\n")
     rows = []
     for code, vals in factors.items():
-        rows.append(dict(cls=CLASS_LABELS[code], code=code,
+        rows.append(dict(cls=spell(CLASS_LABELS[code]), code=code,
                          factor=sorted(vals)[0] if len(vals) == 1 else sorted(vals),
                          constant="yes" if len(vals) == 1 else "NO"))
     fdf = pd.DataFrame(rows)
