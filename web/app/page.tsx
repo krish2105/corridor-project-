@@ -83,6 +83,12 @@ export default function Page() {
   const sc = d.scheme;
   const sen = d.sensitivity;
   const uf = d.uturn_framework;
+  // Junction chainage, read off the U-turn detour rows rather than republished. Each
+  // junction appears there once per bay with the same value, so a dict collapses it.
+  const junctionChainage: Record<string, number> = Object.fromEntries(
+    (sc?.uturn_detour ?? [])
+      .filter((r) => r.junction_chainage_m !== undefined && r.junction_chainage_m !== null)
+      .map((r) => [r.junction, r.junction_chainage_m as number]));
   const dl = d.delay;
   const ec = d.economics;
   const NOGAP = sc?.no_gap_vc_threshold ?? 3;
@@ -483,7 +489,14 @@ export default function Page() {
           </p>
         </Reveal>
         <div style={{ marginTop: "1.4rem" }}>
-          <Reveal delay={.1}><CorridorMap junctions={js} /></Reveal>
+          <Reveal delay={.1}>
+            <CorridorMap
+              junctions={js}
+              widths={cp?.widths ?? {}}
+              chainage={junctionChainage}
+              ranks={Object.fromEntries(d.criticality.map((r) => [r.junction, r.rank]))}
+            />
+          </Reveal>
         </div>
         {c2 && (
           <Reveal delay={.14}>
@@ -1024,16 +1037,38 @@ export default function Page() {
                   median opening, through 180&deg;, back, and only then the left turn.
                   That distance is measurable off the drawing.</p>
                   <div className="scope">
-                    <div><span className="k num">{sc.detour_mean_typical_m}</span>
-                      <span className="l">m, typical detour</span></div>
-                    <div><span className="k num">{sc.detour_min_m}&ndash;{sc.detour_max_m}</span>
+                    <div><span className="k num" style={{ color: "var(--defect)" }}>
+                      {nf.format(sc.detour_midblock_mean_m ?? 0)}</span>
+                      <span className="l">m mean, to a real mid-block opening</span></div>
+                    <div><span className="k num">{sc.detour_min_m}&ndash;{nf.format(sc.detour_max_m ?? 0)}</span>
                       <span className="l">m, full range</span></div>
                     <div><span className="k num" style={{ color: "var(--defect)" }}>
-                      {nf.format(Math.round(sc.detour_veh_km_typical ?? 0))}</span>
+                      {nf.format(Math.round(sc.detour_midblock_veh_km ?? 0))}</span>
                       <span className="l">extra vehicle-km, peak hr</span></div>
-                    <div><span className="k num">{sc.detour_bays_measured}</span>
-                      <span className="l">of {sc.uturn_detour.length} bays measurable</span></div>
+                    <div><span className="k num">{sc.opening_kinds?.midblock ?? 0}</span>
+                      <span className="l">of {sc.opening_kinds?.openings ?? 0} openings
+                        are mid-block</span></div>
                   </div>
+                  {/* This panel used to headline a "typical detour" of 29 m, taken by
+                      dropping every row over 1 km as an outlier. The figure was an
+                      artefact: almost every opening on this corridor sits inside a
+                      junction mouth, so 29 m was the distance to an opening that IS the
+                      junction. Split by what the bay actually is, not by how large the
+                      number looked. */}
+                  <p className="col" style={{
+                    borderLeft: "3px solid var(--defect)", paddingLeft: ".9rem" }}>
+                    <strong>There is almost nowhere to turn round.</strong>{" "}
+                    {sc.opening_kinds?.junction_mouths} of{" "}
+                    {sc.opening_kinds?.openings} median openings on this corridor sit
+                    within {sc.opening_kinds?.midblock_threshold_m} m of a junction centre
+                    &mdash; they are junction mouths, not mid-block bays. Turning at one is
+                    not a detour; it is the driver turning <em>at the junction</em>, which
+                    is the movement the scheme exists to remove. Only{" "}
+                    <strong>{sc.opening_kinds?.midblock}</strong> genuine mid-block opening
+                    exists, so all seven proposed bays would have to be built new, and the
+                    realistic detour is junction-to-junction: a mean of{" "}
+                    <strong>{nf.format(sc.detour_midblock_mean_m ?? 0)} m</strong>.
+                  </p>
                   <div className="tscroll">
                     <table>
                       <caption>Junction to the nearest median opening wide enough to turn

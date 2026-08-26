@@ -83,6 +83,11 @@ FOLLOW_UP_FOUR_LANE_MEASURED_S = 2.04
 # viable gaps", not a number.
 NO_GAP_VC = 3.0
 
+# An opening within this of a junction centre is part of that junction, not a
+# mid-block bay. 100 m is generous: it is longer than any junction on this
+# corridor is wide, so anything it calls a mouth unambiguously is one.
+MIDBLOCK_M = 100.0
+
 ASSUMPTIONS = {
     "model": "Siegloch / HCM gap acceptance, unsignalised",
     "conflicting_stream": "opposing through movement at the U-turn bay",
@@ -498,7 +503,9 @@ def uturn_detour(uturns):
     total, jrows = _chainage()
     p = OUT_DATA / "median_openings.geojson"
     if not p.exists():
-        return []
+        return [], dict(openings=0, junction_mouths=0, midblock=0,
+                        midblock_threshold_m=MIDBLOCK_M, mouth_detail=[],
+                        midblock_detail=[])
     g = _j.loads(p.read_text())
     ops = sorted(f["properties"]["chainage_m"] for f in g["features"]
                  if f["properties"].get("uturn_possible"))
@@ -519,6 +526,22 @@ def uturn_detour(uturns):
         behind = (o for o in ops if (o < c) if (direction == "northbound") != north_is_up)
         return sorted(ahead) + sorted(behind)
 
+    # ARE ANY OF THESE OPENINGS ACTUALLY MID-BLOCK?
+    #
+    # The detour figures assume a driver reaches an existing opening. That is only a
+    # detour in the sense the scheme means if the opening is somewhere between junctions.
+    # Every one of these sits within a junction's own mouth, which means the nearest
+    # existing place to turn round is the NEXT JUNCTION - the thing the scheme exists to
+    # stop people driving to. Counted rather than eyeballed, because it changes what the
+    # detour numbers are measuring.
+    jch = {r["junction"]: r["chainage_m"] for r in jrows}
+    mouths, midblock = [], []
+    for o in ops:
+        near = min((abs(o - c), j) for j, c in jch.items())
+        (mouths if near[0] <= MIDBLOCK_M else midblock).append(
+            dict(chainage_m=round(o), nearest_junction=near[1],
+                 metres_from_junction=round(near[0])))
+
     out = []
     for r in jrows:
         c = r["chainage_m"]
@@ -538,8 +561,12 @@ def uturn_detour(uturns):
                             bay_beyond_drawing=False,
                             junction_chainage_m=round(c), bay_chainage_m=round(b),
                             one_way_m=round(leg), detour_m=round(2 * leg),
-                            veh_km_per_hour=round(2 * leg / 1000 * d, 1)))
-    return out
+                            veh_km_per_hour=round(2 * leg / 1000 * d, 1),
+                            bay_is_junction_mouth=any(
+                                m["chainage_m"] == round(b) for m in mouths)))
+    return out, dict(openings=len(ops), junction_mouths=len(mouths),
+                     midblock=len(midblock), midblock_threshold_m=MIDBLOCK_M,
+                     mouth_detail=mouths, midblock_detail=midblock)
 
 
 def scenarios(bins, day, res):
@@ -778,8 +805,9 @@ if __name__ == "__main__":
     payload["feeds_bay"] = FEEDS_BAY
 
     # what the detour actually costs, measured off the drawing
-    det = uturn_detour(payload["uturns"])
+    det, opening_kinds = uturn_detour(payload["uturns"])
     payload["uturn_detour"] = det
+    payload["opening_kinds"] = opening_kinds
     measured = [d for d in det if not d["bay_beyond_drawing"]]
     if measured:
         payload["detour_min_m"] = min(d["detour_m"] for d in measured)
@@ -801,28 +829,67 @@ if __name__ == "__main__":
         else:
             print(f"  {d['junction']:<9}{d['bay']:<12}{d['one_way_m']:>9,}{d['detour_m']:>9,}"
                   f"{d['demand']:>9.0f}{d['veh_km_per_hour']:>10,.0f}")
-    # One row can dominate the mean, and here it does. TMC-01 sits at the end of the
-    # drawing with no opening for 2 km beyond it, AND its position is one of the three
-    # inferred ones. Both reasons to quote the corridor figure without it as well as
-    # with it, rather than let the least certain row set the headline.
-    typical = [d for d in measured if d["detour_m"] < 1000]
-    if typical:
-        payload["detour_mean_typical_m"] = round(sum(d["detour_m"] for d in typical) / len(typical))
-        payload["detour_veh_km_typical"] = round(sum(d["veh_km_per_hour"] for d in typical), 1)
-        payload["detour_outliers_excluded"] = len(measured) - len(typical)
+    # SPLIT BY WHAT THE BAY IS, not by whether the number is large.
+    #
+    # This used to drop rows over 1 km as outliers and quote the rest as "typical",
+    # yielding a typical detour of 19 m. That figure was an artefact. Almost every
+    # opening on this corridor sits inside a junction mouth, so a 19 m "detour" is the
+    # distance to an opening that IS the junction, where the driver is not detouring at
+    # all - they are turning at the junction, which is the movement the scheme exists to
+    # remove. Splitting on junction-mouth versus mid-block describes the manoeuvre; a
+    # 1 km cutoff described nothing.
+    at_mouth = [d for d in measured if d.get("bay_is_junction_mouth")]
+    real = [d for d in measured if not d.get("bay_is_junction_mouth")]
+    payload["detour_bays_at_junction_mouth"] = len(at_mouth)
+    payload["detour_bays_midblock"] = len(real)
+    if real:
+        payload["detour_midblock_mean_m"] = round(
+            sum(d["detour_m"] for d in real) / len(real))
+        payload["detour_midblock_veh_km"] = round(
+            sum(d["veh_km_per_hour"] for d in real), 1)
+    if at_mouth:
+        payload["detour_mouth_mean_m"] = round(
+            sum(d["detour_m"] for d in at_mouth) / len(at_mouth))
+    # kept so nothing downstream that reads them breaks; they mean what they say
+    typical = real
+    payload["detour_mean_typical_m"] = payload.get("detour_midblock_mean_m",
+                                                  payload.get("detour_mean_m", 0))
+    payload["detour_veh_km_typical"] = payload.get("detour_midblock_veh_km",
+                                                  payload.get("detour_veh_km_per_hour", 0))
+    payload["detour_outliers_excluded"] = len(at_mouth)
+
+    ok = opening_kinds
+    if ok["openings"]:
+        print(f"\n=== Are any of these openings mid-block? ===")
+        print(f"  {ok['junction_mouths']} of {ok['openings']} sit within "
+              f"{ok['midblock_threshold_m']:.0f} m of a junction centre; "
+              f"{ok['midblock']} are mid-block.")
+        for m in ok["mouth_detail"]:
+            print(f"    ch {m['chainage_m']:>5,} m  is {m['metres_from_junction']:>4} m "
+                  f"from {m['nearest_junction']}")
+        if ok["midblock"] <= 1:
+            print(f"\n  {'None' if not ok['midblock'] else 'One'}, on this corridor. "
+                  f"That changes what the detour figures measure.")
+            print("  A driver turning at a junction-mouth opening is not detouring - they")
+            print("  are turning AT the junction, which is the movement the scheme exists")
+            print("  to remove from junctions. For almost every approach the nearest")
+            print("  existing place to turn round mid-block is the next junction.")
+            print("  All seven proposed bays would have to be built new: there is very")
+            print("  nearly no existing mid-block opening on this corridor to adapt.")
 
     if measured:
         print(f"\n  detour {payload['detour_min_m']:,} to {payload['detour_max_m']:,} m, "
               f"mean {payload['detour_mean_m']:,} m, over "
               f"{payload['detour_bays_measured']} bays the drawing covers")
         print(f"  extra {payload['detour_veh_km_per_hour']:,.0f} vehicle-km in the peak hour")
-        if typical and len(typical) < len(measured):
-            print(f"\n  Excluding {len(measured)-len(typical)} row(s) over 1 km: mean "
-                  f"{payload['detour_mean_typical_m']:,} m, "
-                  f"{payload['detour_veh_km_typical']:,.0f} extra vehicle-km/h.")
-            print("  TMC-01 is the excluded one. It sits at the end of the drawing with no")
-            print("  opening for 2 km beyond it, and its position is one of the three")
-            print("  inferred. Least certain row, largest number: quoted both ways.")
+        if real:
+            print(f"\n  {len(real)} of those reach a genuine MID-BLOCK opening: mean "
+                  f"{payload['detour_midblock_mean_m']:,} m, "
+                  f"{payload['detour_midblock_veh_km']:,.0f} vehicle-km/h.")
+        if at_mouth:
+            print(f"  The other {len(at_mouth)} reach an opening inside a junction mouth, "
+                  f"mean {payload['detour_mouth_mean_m']:,} m. That is not a detour: it is")
+            print("  the driver turning at the junction, which the scheme forbids.")
         print("\n  This is the SHORTEST detour available: the nearest opening wide enough to")
         print("  turn in. A purpose-built bay further out makes every figure here larger.")
     payload["gap_direction_note"] = GAP_DIRECTION_NOTE

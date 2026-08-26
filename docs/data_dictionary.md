@@ -76,6 +76,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `bay_beyond_drawing` | True where the CAD ends before the next opening, so the detour cannot be measured in that direction. A limit of the survey extent, not a finding about the road. |
 | `bay_ceiling_veh_hr` | The most a single opening can pass, 3600 / follow-up headway, with no opposing traffic at all. Nothing lifts it. |
 | `bay_chainage_m` | Distance of the U-turn opening along the same alignment, metres. |
+| `bay_is_junction_mouth` | Whether the opening this bay is matched to is a junction mouth rather than a mid-block bay. |
 | `bay_storage_m` | Assumed deceleration and storage length. No bay geometry supplied. |
 | `bays` | One entry per U-turn bay: two per junction, north and south. |
 | `bays_above_bay_ceiling` | Bays whose demand exceeds that ceiling. For these the bay is the wrong instrument, not a badly sited one. |
@@ -166,13 +167,18 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `design_life_last_failure_med` | Latest of fails_med. |
 | `design_life_survives_horizon` | How many approaches still hold at horizon_year. |
 | `detour burden` | What the diversion costs the traffic it diverts. |
+| `detour_bays_at_junction_mouth` | Bays whose nearest opening is a junction mouth. |
 | `detour_bays_beyond_drawing` | How many it does not. |
 | `detour_bays_measured` | How many bays the drawing covers in that direction. |
+| `detour_bays_midblock` | Bays that reach a genuine mid-block opening. |
 | `detour_m` | Extra distance a converted movement travels, out and back, metres. |
 | `detour_max_m` | Longest measured detour, metres. |
 | `detour_mean_m` | Mean detour across every bay the drawing covers, metres. |
 | `detour_mean_typical_m` | Mean detour excluding rows over 1 km, which are driven by the drawing ending rather than by the road. |
+| `detour_midblock_mean_m` | Mean round trip for those, metres. The figure that describes the manoeuvre the scheme creates. |
+| `detour_midblock_veh_km` | Vehicle-km per peak hour those impose. |
 | `detour_min_m` | Shortest measured detour on the corridor, metres. |
+| `detour_mouth_mean_m` | Mean round trip to a junction-mouth opening. Reported for completeness, not as a detour. |
 | `detour_outliers_excluded` | Rows over 1 km held out of the typical figure. |
 | `detour_tolerable_m` | Round-trip detour above which the diversion is the problem. A stated threshold, not a standard. |
 | `detour_veh_km_per_hour` | Extra vehicle-kilometres per peak hour, all measured bays. |
@@ -271,6 +277,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `jda_turning_claim_pct` | JDA's stated basis for the scheme: the share of traffic it says is turning. News reporting, not a JDA document. |
 | `junction` | Survey code, TMC-01 to TMC-06. |
 | `junction_chainage_m` | Distance of the junction along the surveyed alignment, metres. |
+| `junction_mouths` | Openings within midblock_threshold_m of a junction centre. Turning at one is not a detour - it is turning at the junction. |
 | `junctions` | Per-junction rows. One entry for each of the six. |
 | `junctions_above_wide_threshold` | How many junctions are in that state. |
 | `junctions_worse` | Junctions where crossing exposure rises under the scheme. |
@@ -323,6 +330,10 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `median_openings` | Median gaps found. |
 | `merging` | Points where two streams join. |
 | `method` | How the figure was produced. |
+| `metres_from_junction` | How far it is from that junction's centre. |
+| `midblock` | Openings that are genuinely between junctions. |
+| `midblock_detail` | The same for the mid-block ones. |
+| `midblock_threshold_m` | Distance from a junction centre inside which an opening is part of that junction. |
 | `min_m` | Narrowest single transect near the junction. |
 | `min_share` | Lowest share on any approach. |
 | `minutes_to_spillback` | Minutes into the peak before the upstream junction blocks. |
@@ -331,6 +342,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `mix_l1` | L1 distance between share vectors that counts as a changed mix. |
 | `model` | Which model produced the figure. |
 | `most_influential` | Assumption with the largest swing, or null when none swings. |
+| `mouth_detail` | Each junction-mouth opening, with which junction and how far. |
 | `movements` | The twelve arm x turn movements at a junction. |
 | `multiple` | Demand multiple by the horizon year. |
 | `multiple_comparison_note` | Statement of that, carried with the data. |
@@ -351,6 +363,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `n_undecided` | Bays with no verdict because a criterion could not be evaluated. |
 | `n_uturn_demand` | U-turn demand, scaled 0 to 1. |
 | `n_worst_vc` | Worst approach v/c, scaled 0 to 1. |
+| `nearest_junction` | Closest junction to this opening. |
 | `nearest_label` | Nearest text label in the drawing. |
 | `nearest_label_m` | Distance to it, metres. |
 | `net_grand_total` | Net effect of all discrepancies on the grand total. |

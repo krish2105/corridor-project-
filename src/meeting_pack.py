@@ -382,14 +382,25 @@ def build():
         f"removes the conflicting flow rather than asking the U-turn to find gaps in it - "
         f"and for the two bays above the ceiling it works by removing the need for a "
         f"U-turn, not by making the bay work.", BODY))
-    F.append(Paragraph(
-        f"Detour: a right turn becomes four manoeuvres. Typical "
-        f"{sch['detour_mean_typical_m']} m round trip, range {sch['detour_min_m']} to "
-        f"{nf(sch['detour_max_m'])} m, imposing about "
-        f"{nf(sch['detour_veh_km_typical'])} extra vehicle-km in the peak hour. "
-        f"{sch['detour_bays_measured']} of {len(sch['uturn_detour'])} bays measurable; the "
-        f"rest lie beyond the drawing. These are the SHORTEST detours physically "
-        f"available, so every figure is a lower bound.", NOTE))
+    ok = sch.get("opening_kinds", {})
+    F.append(KeepTogether([
+        Paragraph("There is almost nowhere on this corridor to turn round", H3),
+        Paragraph(
+            f"A right turn becomes four manoeuvres: past the junction, out to a median "
+            f"opening, through 180 degrees, back, then the left turn. But "
+            f"<b>{ok.get('junction_mouths')} of {ok.get('openings')} median openings sit "
+            f"within {ok.get('midblock_threshold_m', 100):.0f} m of a junction centre</b> "
+            f"- they are junction mouths, not mid-block bays. Turning at one is not a "
+            f"detour; it is the driver turning AT the junction, which is the movement the "
+            f"scheme exists to remove. Only <b>{ok.get('midblock')}</b> genuine mid-block "
+            f"opening exists on {sch['detour_bays_measured']} measurable bays' worth of "
+            f"corridor, so all seven proposed bays would have to be built new. The "
+            f"realistic detour is junction to junction: mean "
+            f"<b>{nf(sch.get('detour_midblock_mean_m', 0))} m</b>, "
+            f"{nf(sch.get('detour_midblock_veh_km', 0))} extra vehicle-km in the peak "
+            f"hour, against a full range of {sch['detour_min_m']} to "
+            f"{nf(sch['detour_max_m'])} m. These remain the SHORTEST detours physically "
+            f"available, so every figure is a lower bound.", BODY)]))
 
     # ---- 3. capacity -------------------------------------------------------
     F.append(Paragraph("3 &nbsp; Capacity, and the one number that decides it", H2))

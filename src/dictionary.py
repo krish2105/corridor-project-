@@ -516,6 +516,26 @@ FIELDS.update({
     "demand_reduction_pct": "Share of the demand that would have to go elsewhere.",
     "gap_needed_s": "Critical gap at which the bay would exactly serve its demand.",
     "gap_ours_s": "The composition-weighted gap actually used, optimistic end.",
+    "opening_kinds": "Whether the corridor's median openings are junction mouths or "
+                     "genuine mid-block bays. It decides what the detour figures measure.",
+    "junction_mouths": "Openings within midblock_threshold_m of a junction centre. Turning "
+                       "at one is not a detour - it is turning at the junction.",
+    "midblock": "Openings that are genuinely between junctions.",
+    "midblock_threshold_m": "Distance from a junction centre inside which an opening is "
+                            "part of that junction.",
+    "mouth_detail": "Each junction-mouth opening, with which junction and how far.",
+    "midblock_detail": "The same for the mid-block ones.",
+    "nearest_junction": "Closest junction to this opening.",
+    "metres_from_junction": "How far it is from that junction's centre.",
+    "bay_is_junction_mouth": "Whether the opening this bay is matched to is a junction "
+                             "mouth rather than a mid-block bay.",
+    "detour_bays_at_junction_mouth": "Bays whose nearest opening is a junction mouth.",
+    "detour_bays_midblock": "Bays that reach a genuine mid-block opening.",
+    "detour_midblock_mean_m": "Mean round trip for those, metres. The figure that "
+                              "describes the manoeuvre the scheme creates.",
+    "detour_midblock_veh_km": "Vehicle-km per peak hour those impose.",
+    "detour_mouth_mean_m": "Mean round trip to a junction-mouth opening. Reported for "
+                           "completeness, not as a detour.",
     "alternatives": "The ladder of what to do instead, ordered by cost.",
     "measure": "The alternative.", "live": "Whether it can move the binding term here.",
     "swept_allowance_m": "Working allowance either side of the turning path.",

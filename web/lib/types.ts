@@ -176,6 +176,15 @@ export type Corridor = {
     detour_mean_typical_m?: number; detour_veh_km_per_hour?: number;
     detour_veh_km_typical?: number; detour_bays_measured?: number;
     detour_bays_beyond_drawing?: number; detour_outliers_excluded?: number;
+    detour_bays_at_junction_mouth?: number; detour_bays_midblock?: number;
+    detour_midblock_mean_m?: number; detour_midblock_veh_km?: number;
+    detour_mouth_mean_m?: number;
+    opening_kinds?: { openings: number; junction_mouths: number; midblock: number;
+                      midblock_threshold_m: number;
+                      mouth_detail: { chainage_m: number; nearest_junction: string;
+                                      metres_from_junction: number }[];
+                      midblock_detail: { chainage_m: number; nearest_junction: string;
+                                         metres_from_junction: number }[] };
     gap_evidence_spread: { label: string; t_c: number; t_f: number; unservable: number;
       no_viable_gap: number; of: number; source: string; geometric_match: string }[];
     gap_conclusion_holds_in: number;

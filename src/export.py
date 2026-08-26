@@ -219,6 +219,52 @@ def _write_basemap(webdir):
     return len(feats), out.stat().st_size
 
 
+def _write_chainage_markers(webdir, every=500.0):
+    """
+    Chainage posts along JDA's centreline, every `every` metres.
+
+    Computed here in EPSG:32643 rather than in the browser. The map is in WGS84 and a
+    kilometre reckoned in degrees at this latitude is out by enough to put a post on the
+    wrong side of a junction - and the project rule is that no distance is ever computed
+    in degrees.
+
+    Each post carries its chainage and a bearing, so the map can show which way the
+    numbering runs rather than leaving a reader to infer it from two labels.
+    """
+    import math
+    from pyproj import Transformer
+    from src.config import CHAINAGE_FROM, CHAINAGE_ZERO_AT, CORRIDOR_CENTRELINE
+    to_utm = Transformer.from_crs("EPSG:4326", "EPSG:32643", always_xy=True)
+    to_geo = Transformer.from_crs("EPSG:32643", "EPSG:4326", always_xy=True)
+    pts = [to_utm.transform(lon, lat) for lon, lat in CORRIDOR_CENTRELINE]
+
+    feats, acc, target = [], 0.0, 0.0
+    for i in range(len(pts) - 1):
+        (ax, ay), (bx, by) = pts[i], pts[i + 1]
+        seg = math.dist((ax, ay), (bx, by))
+        if seg == 0:
+            continue
+        brg = (math.degrees(math.atan2(bx - ax, by - ay)) + 360) % 360
+        while target <= acc + seg:
+            f = (target - acc) / seg
+            lon, lat = to_geo.transform(ax + f * (bx - ax), ay + f * (by - ay))
+            feats.append(dict(type="Feature",
+                              geometry=dict(type="Point", coordinates=[lon, lat]),
+                              properties=dict(ch=int(round(target)),
+                                              km=round(target / 1000, 1),
+                                              major=int(round(target)) % 1000 == 0,
+                                              bearing=round(brg, 1))))
+            target += every
+        acc += seg
+    out = webdir / "chainage.geojson"
+    out.write_text(json.dumps(dict(
+        type="FeatureCollection",
+        properties=dict(interval_m=every, chainage_from=CHAINAGE_FROM,
+                        zero_at=CHAINAGE_ZERO_AT, total_m=round(acc)),
+        features=feats), separators=(",", ":")))
+    return len(feats), round(acc)
+
+
 def _write_web_layers(webdir):
     """Constraint atlas + junction candidates, simplified for the browser."""
     src = OUT_DATA / "atlas.geojson"
@@ -487,6 +533,9 @@ if __name__ == "__main__":
             f = webdir / f"{name}_series.json"
             f.write_text(json.dumps(heavy, separators=(",", ":")))
             print(f"{name+'_series':<15}: {f.stat().st_size/1024:.0f} KB, lazily fetched")
+    ch_n, ch_len = _write_chainage_markers(webdir)
+    print(f"chainage       : {ch_n} posts over {ch_len:,} m, "
+          f"zero at the {CHAINAGE_ZERO_AT}")
     bm = _write_basemap(webdir)
     if bm:
         print(f"basemap        : {bm[0]:,} surveyed features, {bm[1]/1024:.0f} KB "

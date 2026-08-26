@@ -30,10 +30,18 @@ const ATLAS_LAYERS: LayerDef[] = [
   { id: "religious", label: "Temples", colour: "#6B2D8C", kind: "circle" },
 ];
 
-export default function CorridorMap({ junctions }: { junctions: Junction[] }) {
+export default function CorridorMap({
+  junctions, widths = {}, chainage = {}, ranks = {},
+}: {
+  junctions: Junction[];
+  widths?: Record<string, { width_m: number; lanes_per_dir: number }>;
+  chainage?: Record<string, number>;
+  ranks?: Record<string, number>;
+}) {
   const box = useRef<HTMLDivElement>(null);
   const map = useRef<maplibregl.Map | null>(null);
   const atlas = useRef<unknown>(null);
+  const fit = useRef<maplibregl.LngLatBounds | null>(null);
   const [on, setOn] = useState<Record<string, boolean>>({});
   const [cands, setCands] = useState(false);
   const [busy, setBusy] = useState<string | null>(null);
@@ -105,10 +113,47 @@ export default function CorridorMap({ junctions }: { junctions: Junction[] }) {
     }));
     map.current = m;
     m.addControl(new maplibregl.NavigationControl(), "top-right");
+
+    // Recentre.
+    //
+    // A map you can pan is a map you can lose, and this one occupies most of a screen
+    // with no landmarks outside the corridor: two drags and the reader is looking at
+    // empty ground with no way back except reloading the page. MapLibre ships zoom and
+    // compass and no home button, so this adds one.
+    //
+    // Written as a real <button> inside the control container rather than a div with a
+    // click handler, so it is in the tab order and announces itself like the zoom
+    // controls beside it.
+    class Recentre {
+      _c!: HTMLDivElement;
+      onAdd() {
+        this._c = document.createElement("div");
+        this._c.className = "maplibregl-ctrl maplibregl-ctrl-group";
+        const b = document.createElement("button");
+        b.type = "button";
+        b.title = "Recentre on the corridor";
+        b.setAttribute("aria-label", "Recentre on the corridor");
+        b.innerHTML =
+          '<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" ' +
+          'fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">' +
+          '<circle cx="12" cy="12" r="3.2"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/>' +
+          "</svg>";
+        b.onclick = () => {
+          const bb = fit.current;
+          if (bb) m.fitBounds(bb, { padding: 70, maxZoom: 14, duration: 600 });
+        };
+        this._c.appendChild(b);
+        return this._c;
+      }
+      onRemove() { this._c.remove(); }
+    }
+    m.addControl(new Recentre() as unknown as maplibregl.IControl, "top-right");
     m.addControl(new maplibregl.ScaleControl({ maxWidth: 110, unit: "metric" }));
 
+    const w = widths, ch = chainage, rank = ranks;
     const ordered = [...junctions].sort((a, b) => b.lat - a.lat);
     const bounds = new maplibregl.LngLatBounds();
+    fit.current = bounds;
     ordered.forEach((j) => {
       bounds.extend([j.lon, j.lat]);
       // No position is confirmed, so no marker claims to be. The solid/dashed
@@ -127,11 +172,16 @@ export default function CorridorMap({ junctions }: { junctions: Junction[] }) {
         .setLngLat([j.lon, j.lat])
         .setPopup(new maplibregl.Popup({ offset: 14, closeButton: false }).setHTML(
           `<div style="font:12px/1.45 'IBM Plex Mono',monospace">
-             <b>${j.code}</b> &middot; ${j.jda_name}<br>${j.arms[1]} / ${j.arms[3]}<br>
+             <b>${j.code}</b> &middot; ${j.jda_name}<br>
+             ${j.arms[0]} / ${j.arms[2]}<br>
+             <span style="color:#5C6663">cross: ${j.arms[1]} / ${j.arms[3]}</span><br>
+             ${ch[j.code] !== undefined ? `chainage ${ch[j.code]} m<br>` : ""}
              ${j.daily_veh.toLocaleString("en-US")} veh/day &middot; peak ${j.peak_start}<br>
-             through ${j.through_pct}%<br>
-             <span style="color:#5C6663">${j.lat.toFixed(6)}, ${j.lon.toFixed(6)}<br>
-             location: ${j.location_confidence}</span></div>`))
+             through ${j.through_pct}%
+             ${w[j.code] ? ` &middot; ${w[j.code].width_m} m/dir, ${w[j.code].lanes_per_dir} lanes` : ""}
+             ${rank[j.code] ? `<br>criticality rank ${rank[j.code]} of ${junctions.length}` : ""}
+             <br><span style="color:#5C6663">${j.lat.toFixed(6)}, ${j.lon.toFixed(6)}<br>
+             position: ${j.location_confidence} &middot; width provisional</span></div>`))
         .addTo(m);
     });
 
@@ -170,6 +220,77 @@ export default function CorridorMap({ junctions }: { junctions: Junction[] }) {
       // being told which road connects them. Restore this when JDA confirms the
       // alignment, from their centreline rather than by joining our own pins.
 
+      // Chainage posts, and the direction the numbering runs.
+      //
+      // A corridor drawing without chainage is a picture. With it a reviewer can put a
+      // finger on a station and say what is there, which is how every conversation about
+      // this scheme actually goes. Computed in EPSG:32643 upstream, never in degrees.
+      fetch("/chainage.geojson").then((r) => r.json()).then((data) => {
+        if (!map.current || m.getSource("chainage")) return;
+        m.addSource("chainage", { type: "geojson", data });
+        m.addLayer({ id: "ch-tick", type: "circle", source: "chainage",
+          paint: {
+            "circle-radius": ["case", ["get", "major"], 3.4, 2.2],
+            "circle-color": "#FAFBF8",
+            "circle-stroke-color": "#1B3A6B",
+            "circle-stroke-width": ["case", ["get", "major"], 1.8, 1.1],
+          } });
+        // Labels as DOM markers, not a symbol layer.
+        //
+        // A symbol layer needs a glyph endpoint, and this style deliberately has no
+        // sources at all - the basemap is our own GeoJSON so the page makes zero
+        // cross-origin requests. Adding text-field here would silently render nothing
+        // and reintroduce the remote dependency the basemap was rewritten to remove.
+        for (const f of (data.features ?? [])) {
+          if (!f.properties?.major) continue;
+          const lab = document.createElement("div");
+          lab.textContent = `${f.properties.km} km`;
+          lab.style.cssText =
+            "transform:translateY(-14px);font:600 9px/1 'IBM Plex Mono',monospace;" +
+            "color:#1B3A6B;background:rgba(250,251,248,.92);padding:1px 4px;" +
+            "border-radius:2px;white-space:nowrap;pointer-events:none";
+          new maplibregl.Marker({ element: lab, anchor: "bottom" })
+            .setLngLat(f.geometry.coordinates as [number, number])
+            .addTo(m);
+        }
+      }).catch(() => { /* the corridor reads without stations */ });
+
+      // Median openings: where a U-turn is physically possible today.
+      //
+      // The single most relevant layer to the scheme under review, and it was not on the
+      // map. Every U-turn bay in the assessment is matched to one of these, and the
+      // detour figures are the distance from a junction to the nearest one wide enough
+      // to turn in.
+      fetch("/median_openings.geojson").then((r) => r.json()).then((data) => {
+        if (!map.current || m.getSource("openings")) return;
+        m.addSource("openings", { type: "geojson", data });
+        m.addLayer({ id: "op-dot", type: "circle", source: "openings",
+          paint: {
+            "circle-radius": 6,
+            "circle-color": ["case", ["get", "uturn_possible"], "#2C6249", "#82600F"],
+            "circle-opacity": .28,
+            "circle-stroke-color": ["case", ["get", "uturn_possible"], "#2C6249", "#82600F"],
+            "circle-stroke-width": 1.6,
+          } });
+        m.on("click", "op-dot", (e) => {
+          const f = e.features?.[0];
+          if (!f) return;
+          const q = f.properties as Record<string, unknown>;
+          new maplibregl.Popup({ offset: 10, closeButton: false })
+            .setLngLat(e.lngLat)
+            .setHTML(
+              `<div style="font:12px/1.45 'IBM Plex Mono',monospace">
+                 <b>Median opening</b><br>chainage ${Number(q.chainage_m).toFixed(0)} m<br>
+                 width ${Number(q.width_m).toFixed(1)} m<br>${q.classification}<br>
+                 <span style="color:${q.uturn_possible ? "#2C6249" : "#82600F"}">
+                 ${q.uturn_possible ? "wide enough to turn in" : "too narrow to turn in"}
+                 </span></div>`)
+            .addTo(m);
+        });
+        m.on("mouseenter", "op-dot", () => { m.getCanvas().style.cursor = "pointer"; });
+        m.on("mouseleave", "op-dot", () => { m.getCanvas().style.cursor = ""; });
+      }).catch(() => { /* openings are context, not the corridor */ });
+
       // Surveyed basemap. Fetched after the corridor so the junctions paint first and
       // the map is useful before 408 KB of context has arrived.
       fetch("/basemap.geojson").then((r) => r.json()).then((base) => {
@@ -203,7 +324,7 @@ export default function CorridorMap({ junctions }: { junctions: Junction[] }) {
       m.remove();
       map.current = null;
     };
-  }, [junctions]);
+  }, [junctions, widths, chainage, ranks]);
 
   async function toggleLayer(def: LayerDef) {
     const m = map.current;
