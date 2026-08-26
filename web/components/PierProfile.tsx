@@ -22,7 +22,14 @@ export default function PierProfile() {
   if (!rows) return <p style={{ color: "var(--muted)", fontSize: ".8rem" }}>Loading profile…</p>;
   if (!rows.length) return null;
 
-  const data = rows.map((r) => ({ km: r.ch / 1000, all: r.score, hard: r.hard * 5 }));
+  // Coerce, because these come off a fetched JSON file rather than out of the type
+  // system. A raw-shaped constraint_profile once put `chainage_m` here instead of `ch`,
+  // every km became NaN, and Recharts threw "e.toFixed is not a function" from inside a
+  // tick with nothing on screen but a client-side exception. Number() and a filter are
+  // cheaper than that failure mode.
+  const data = rows
+    .map((r) => ({ km: Number(r.ch) / 1000, all: Number(r.score), hard: Number(r.hard) * 5 }))
+    .filter((d) => Number.isFinite(d.km) && Number.isFinite(d.all) && Number.isFinite(d.hard));
   const pinch = rows.filter((r) => r.hard > 0);
 
   return (
@@ -39,7 +46,7 @@ export default function PierProfile() {
               <CartesianGrid stroke="var(--rule)" vertical={false} />
               <XAxis dataKey="km" tick={{ fontSize: 11, fill: "var(--faint)" }}
                 tickLine={false} axisLine={{ stroke: "var(--rule)" }}
-                tickFormatter={(v: number) => v.toFixed(1)}
+                tickFormatter={(v) => (Number.isFinite(Number(v)) ? Number(v).toFixed(1) : "")}
                 label={{ value: "chainage (km)", position: "insideBottom", offset: -2,
                          fontSize: 10, fill: "var(--muted)" }} />
               <YAxis tick={{ fontSize: 11, fill: "var(--faint)" }} tickLine={false}
@@ -49,7 +56,7 @@ export default function PierProfile() {
                 fontFamily: "IBM Plex Mono, monospace", color: "var(--ink)" }}
                 labelFormatter={(v) => `ch ${(Number(v) * 1000).toFixed(0)} m`}
                 formatter={(v: number, n: string) =>
-                  [n === "hard" ? (v / 5).toFixed(0) : v.toFixed(0),
+                  [n === "hard" ? (Number(v) / 5).toFixed(0) : Number(v).toFixed(0),
                    n === "hard" ? "hard constraints" : "weighted score"]} />
               <ReferenceLine y={0} stroke="var(--rule)" />
               <Area type="stepAfter" dataKey="all" stroke="#8B938E" fill="#8B938E"
