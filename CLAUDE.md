@@ -266,6 +266,7 @@ corridor/
 │   ├── dictionary.py   # -> docs/data_dictionary.md; gates every published field
 │   ├── service_docs.py # -> README.md and out/service/; owns PIPELINE_ORDER
 │   ├── export.py       # -> out/data/corridor.json (both dashboards read this)
+│   ├── sync_web.py     # out/ -> web/public/; refuses the files export reshapes
 │   ├── build_page.py   # -> out/corridor_audit.html
 │   ├── build_pitch.py  # -> out/corridor_pitch.html
 │   └── build_picker.py # local map for assigning TMC codes to candidates
