@@ -873,6 +873,71 @@ export default function Page() {
               </div>
             </div>
           </Reveal>
+
+          {sc.uturn_detour && sc.uturn_detour.length > 0 && (
+            <Reveal delay={.15}>
+              <div className="card" style={{ marginTop: "1.1rem" }}>
+                <header><span className="chip critical">Second-order</span>
+                  <h3>How much further every converted vehicle travels</h3></header>
+                <div className="body">
+                  <p className="col">A right turn used to be one manoeuvre at the stop
+                  line. Under this scheme it becomes four: past the junction, out to the
+                  median opening, through 180&deg;, back, and only then the left turn.
+                  That distance is measurable off the drawing.</p>
+                  <div className="scope">
+                    <div><span className="k num">{sc.detour_mean_typical_m}</span>
+                      <span className="l">m, typical detour</span></div>
+                    <div><span className="k num">{sc.detour_min_m}&ndash;{sc.detour_max_m}</span>
+                      <span className="l">m, full range</span></div>
+                    <div><span className="k num" style={{ color: "var(--defect)" }}>
+                      {nf.format(Math.round(sc.detour_veh_km_typical ?? 0))}</span>
+                      <span className="l">extra vehicle-km, peak hr</span></div>
+                    <div><span className="k num">{sc.detour_bays_measured}</span>
+                      <span className="l">of {sc.uturn_detour.length} bays measurable</span></div>
+                  </div>
+                  <div className="tscroll">
+                    <table>
+                      <caption>Junction to the nearest median opening wide enough to turn
+                        in, and back again.</caption>
+                      <thead><tr><th>Junction</th><th>Bay</th>
+                        <th className="num">To bay</th><th className="num">Detour</th>
+                        <th className="num">Demand</th><th className="num">Veh-km/hr</th></tr></thead>
+                      <tbody>
+                        {sc.uturn_detour.map((d, i) => (
+                          <tr key={i}>
+                            <td className="mono">{d.junction}</td>
+                            <td style={{ textAlign: "left" }}>{d.bay}</td>
+                            <td className="num">{d.bay_beyond_drawing ? "\u2014"
+                              : `${nf.format(d.one_way_m ?? 0)} m`}</td>
+                            <td className={"num " + ((d.detour_m ?? 0) > 1000 ? "bad" : "")}>
+                              {d.bay_beyond_drawing ? "beyond drawing"
+                                : `${nf.format(d.detour_m ?? 0)} m`}</td>
+                            <td className="num">{nf.format(Math.round(d.demand))}</td>
+                            <td className="num">{d.bay_beyond_drawing ? "\u2014"
+                              : nf.format(Math.round(d.veh_km_per_hour ?? 0))}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <p className="src">Two limits, stated rather than smoothed. The drawing
+                  ENDS, so {sc.detour_bays_beyond_drawing} of these bays have no opening
+                  beyond them in the CAD and cannot be measured in that direction. And
+                  these are the <em>shortest</em> detours physically available: JDA names
+                  seven purpose-built bays and we do not hold their chainages, so a bay
+                  placed further out makes every figure here larger. TMC-01 at{" "}
+                  {nf.format(sc.detour_max_m ?? 0)} m sits at the end of the drawing and is
+                  one of the three inferred positions, so the least certain row carries
+                  the largest number. The typical figure excludes it.</p>
+                  <p className="col">The detour is not the whole cost. That vehicle then
+                  has to merge into the through stream, which is the capacity failure
+                  above, and weave across to make its left at the junction. On a 250 m
+                  detour there is not much room to do it in.</p>
+                </div>
+              </div>
+            </Reveal>
+          )}
+
           <Reveal delay={.16}>
             <h3 style={{ marginTop: "1.4rem" }}>Three futures for the corridor</h3>
             <div className="tscroll" style={{ marginTop: ".7rem" }}>

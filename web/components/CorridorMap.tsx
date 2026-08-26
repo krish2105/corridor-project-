@@ -246,7 +246,10 @@ export default function CorridorMap({ junctions }: { junctions: Junction[] }) {
     <div className="card">
       <header>
         <h3>The six junctions, and what is around them</h3>
-        <span className="tag">New Sanganer Road</span>
+        {/* The road name was our inference and it was challenged, so it is not
+            asserted here. What the survey states is the two end points, and
+            every junction carries them. */}
+        <span className="tag">Mansarover Metro &ndash; Sanganer Stadium</span>
         <span className="tag">marker size = vehicles/day</span>
       </header>
       <div className="body" style={{ padding: 0 }}>

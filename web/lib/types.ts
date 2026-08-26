@@ -108,6 +108,14 @@ export type Corridor = {
     csir_crri_design_gap_s: number;
     csir_crri_design_source: string;
     follow_up_measured_s: number[];
+    uturn_detour?: { junction: string; bay: string; demand: number;
+      bay_beyond_drawing: boolean; junction_chainage_m?: number; bay_chainage_m?: number;
+      one_way_m?: number | null; detour_m?: number | null;
+      veh_km_per_hour?: number | null }[];
+    detour_min_m?: number; detour_max_m?: number; detour_mean_m?: number;
+    detour_mean_typical_m?: number; detour_veh_km_per_hour?: number;
+    detour_veh_km_typical?: number; detour_bays_measured?: number;
+    detour_bays_beyond_drawing?: number; detour_outliers_excluded?: number;
     gap_evidence_spread: { label: string; t_c: number; t_f: number; unservable: number;
       no_viable_gap: number; of: number; source: string; geometric_match: string }[];
     gap_conclusion_holds_in: number;
