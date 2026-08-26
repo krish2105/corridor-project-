@@ -296,6 +296,28 @@ FIELDS.update({
     "csir_crri_design_source": "Where the CSIR-CRRI design gap comes from.",
     "follow_up_measured_s": ("The only measured Indian follow-up headways found, seconds, "
                              "against which our assumed band is checked."),
+    "junction_chainage_m": "Distance of the junction along the surveyed alignment, metres.",
+    "bay_chainage_m": "Distance of the U-turn opening along the same alignment, metres.",
+    "demand": "Vehicles per peak hour that must use this bay.",
+    "uturn_detour": ("Per bay: how much further a converted movement travels, measured "
+                     "from the drawing as junction chainage against the nearest median "
+                     "opening wide enough to turn in, doubled for the return leg."),
+    "bay_beyond_drawing": ("True where the CAD ends before the next opening, so the "
+                           "detour cannot be measured in that direction. A limit of the "
+                           "survey extent, not a finding about the road."),
+    "one_way_m": "Junction to U-turn bay, metres.",
+    "detour_m": "Extra distance a converted movement travels, out and back, metres.",
+    "veh_km_per_hour": "Extra vehicle-kilometres this bay generates in the peak hour.",
+    "detour_min_m": "Shortest measured detour on the corridor, metres.",
+    "detour_max_m": "Longest measured detour, metres.",
+    "detour_mean_m": "Mean detour across every bay the drawing covers, metres.",
+    "detour_mean_typical_m": ("Mean detour excluding rows over 1 km, which are driven by "
+                              "the drawing ending rather than by the road."),
+    "detour_veh_km_per_hour": "Extra vehicle-kilometres per peak hour, all measured bays.",
+    "detour_veh_km_typical": "The same, excluding the over-1-km rows.",
+    "detour_bays_measured": "How many bays the drawing covers in that direction.",
+    "detour_bays_beyond_drawing": "How many it does not.",
+    "detour_outliers_excluded": "Rows over 1 km held out of the typical figure.",
     "bay": ("Which U-turn bay the demand feeds: the one merging into northbound "
             "traffic, or into southbound."),
     "feeds_bay": ("Which movements have to use a U-turn bay under the scheme. Right "

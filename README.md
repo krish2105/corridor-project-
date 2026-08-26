@@ -1,6 +1,6 @@
 # Corridor — JDA survey audit, Jaipur
 
-An independent re-derivation of a classified turning movement survey commissioned by the Jaipur Development Authority: 6 junctions on **New Sanganer Road**, counted over 24 hours and issued as twelve Excel workbooks.
+An independent re-derivation of a classified turning movement survey commissioned by the Jaipur Development Authority: 6 junctions on **the Mansarover Metro – Sanganer Stadium corridor**, counted over 24 hours and issued as twelve Excel workbooks.
 
 The pipeline parses every cell, recomputes every stored total from its components, and reports what disagrees. It then reads the accompanying CAD survey drawing to establish what is physically on the corridor, tests the scheme being built on that data, and prices the delay the corridor is already carrying.
 

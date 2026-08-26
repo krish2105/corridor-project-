@@ -3,7 +3,7 @@ scheme_test.py — Phase 8. Will JDA's seven U-turn bays carry the traffic?
 
 The question this project exists to answer.
 
-JDA is converting New Sanganer Road to signal-free operation, replacing junction
+JDA is converting this corridor to signal-free operation, replacing junction
 signals with seven U-turn bays. The survey commissioned for it counted no U-turns, so
 on the face of it the scheme has no traffic evidence base.
 
@@ -472,6 +472,61 @@ def analyse(bins, day, full_mut=True):
     return pd.DataFrame(rows)
 
 
+def uturn_detour(uturns):
+    """
+    How much further a converted movement actually has to travel.
+
+    A right turn at a signalised junction is one manoeuvre. Under a median U-turn scheme
+    the same driver goes past the junction, runs to the median opening, turns through
+    180 degrees, comes back, and only then makes the left. The distance is measurable
+    from the drawing: junction chainage against the nearest opening wide enough to turn
+    in, doubled for the return leg.
+
+    Two honest limits, both reported rather than smoothed:
+
+      The drawing ENDS. A junction near either end has no opening beyond it in the CAD,
+      so its detour cannot be measured in that direction. That is a limit of the survey
+      extent, not a finding about the road, and those rows are returned with
+      bay_beyond_drawing set rather than dropped or guessed at.
+
+      The nearest opening is not necessarily the one the scheme will use. JDA names seven
+      bays and we do not have their chainages, so this is the SHORTEST detour physically
+      available. A purpose-built bay placed further out makes every number here larger.
+    """
+    import json as _j
+    from src.reports import chainage as _chainage
+    total, jrows = _chainage()
+    p = OUT_DATA / "median_openings.geojson"
+    if not p.exists():
+        return []
+    g = _j.loads(p.read_text())
+    ops = sorted(f["properties"]["chainage_m"] for f in g["features"]
+                 if f["properties"].get("uturn_possible"))
+    demand = {(u["junction"], u["bay"]): u["uturn_demand"] for u in uturns}
+
+    out = []
+    for r in jrows:
+        c = r["chainage_m"]
+        for bay, cand in (("northbound", [o for o in ops if o > c]),
+                          ("southbound", [o for o in ops if o < c])):
+            d = demand.get((r["junction"], bay))
+            if d is None:
+                continue
+            if not cand:
+                out.append(dict(junction=r["junction"], bay=bay, demand=d,
+                                bay_beyond_drawing=True, one_way_m=None,
+                                detour_m=None, veh_km_per_hour=None))
+                continue
+            b = min(cand, key=lambda o: abs(o - c))
+            leg = abs(b - c)
+            out.append(dict(junction=r["junction"], bay=bay, demand=d,
+                            bay_beyond_drawing=False,
+                            junction_chainage_m=round(c), bay_chainage_m=round(b),
+                            one_way_m=round(leg), detour_m=round(2 * leg),
+                            veh_km_per_hour=round(2 * leg / 1000 * d, 1)))
+    return out
+
+
 def scenarios(bins, day, res):
     """Three futures for the corridor, scored on whether the movement can be served."""
     tv = through_vs_turning(bins, day).set_index("junction")
@@ -706,6 +761,55 @@ if __name__ == "__main__":
 
     payload["uturn_analogue"] = UTURN_ANALOGUE
     payload["feeds_bay"] = FEEDS_BAY
+
+    # what the detour actually costs, measured off the drawing
+    det = uturn_detour(payload["uturns"])
+    payload["uturn_detour"] = det
+    measured = [d for d in det if not d["bay_beyond_drawing"]]
+    if measured:
+        payload["detour_min_m"] = min(d["detour_m"] for d in measured)
+        payload["detour_max_m"] = max(d["detour_m"] for d in measured)
+        payload["detour_mean_m"] = round(sum(d["detour_m"] for d in measured) / len(measured))
+        payload["detour_veh_km_per_hour"] = round(sum(d["veh_km_per_hour"] for d in measured), 1)
+        payload["detour_bays_measured"] = len(measured)
+        payload["detour_bays_beyond_drawing"] = len(det) - len(measured)
+
+    print("\n=== What the detour costs, measured off the drawing ===")
+    print("  A right turn was one manoeuvre. Now it is: past the junction, out to the")
+    print("  median opening, through 180 degrees, back, then the left turn.\n")
+    print(f"  {'junction':<9}{'bay':<12}{'to bay':>9}{'detour':>9}{'demand':>9}{'veh-km/h':>10}")
+    print("  " + "-" * 60)
+    for d in det:
+        if d["bay_beyond_drawing"]:
+            print(f"  {d['junction']:<9}{d['bay']:<12}{'--':>9}{'--':>9}"
+                  f"{d['demand']:>9.0f}{'  beyond drawing':>10}")
+        else:
+            print(f"  {d['junction']:<9}{d['bay']:<12}{d['one_way_m']:>9,}{d['detour_m']:>9,}"
+                  f"{d['demand']:>9.0f}{d['veh_km_per_hour']:>10,.0f}")
+    # One row can dominate the mean, and here it does. TMC-01 sits at the end of the
+    # drawing with no opening for 2 km beyond it, AND its position is one of the three
+    # inferred ones. Both reasons to quote the corridor figure without it as well as
+    # with it, rather than let the least certain row set the headline.
+    typical = [d for d in measured if d["detour_m"] < 1000]
+    if typical:
+        payload["detour_mean_typical_m"] = round(sum(d["detour_m"] for d in typical) / len(typical))
+        payload["detour_veh_km_typical"] = round(sum(d["veh_km_per_hour"] for d in typical), 1)
+        payload["detour_outliers_excluded"] = len(measured) - len(typical)
+
+    if measured:
+        print(f"\n  detour {payload['detour_min_m']:,} to {payload['detour_max_m']:,} m, "
+              f"mean {payload['detour_mean_m']:,} m, over "
+              f"{payload['detour_bays_measured']} bays the drawing covers")
+        print(f"  extra {payload['detour_veh_km_per_hour']:,.0f} vehicle-km in the peak hour")
+        if typical and len(typical) < len(measured):
+            print(f"\n  Excluding {len(measured)-len(typical)} row(s) over 1 km: mean "
+                  f"{payload['detour_mean_typical_m']:,} m, "
+                  f"{payload['detour_veh_km_typical']:,.0f} extra vehicle-km/h.")
+            print("  TMC-01 is the excluded one. It sits at the end of the drawing with no")
+            print("  opening for 2 km beyond it, and its position is one of the three")
+            print("  inferred. Least certain row, largest number: quoted both ways.")
+        print("\n  This is the SHORTEST detour available: the nearest opening wide enough to")
+        print("  turn in. A purpose-built bay further out makes every figure here larger.")
     payload["gap_direction_note"] = GAP_DIRECTION_NOTE
     payload["two_wheeler_gap_basis"] = TWO_WHEELER_GAP_BASIS
     payload["gap_evidence_spread"] = spread

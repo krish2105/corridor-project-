@@ -57,6 +57,8 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `base_width_per_dir_m` | Carriageway width per direction the tabulated capacity applies to, metres. |
 | `base_year` | Year the survey and all present-day figures refer to. |
 | `bay` | Which U-turn bay the demand feeds: the one merging into northbound traffic, or into southbound. |
+| `bay_beyond_drawing` | True where the CAD ends before the next opening, so the detour cannot be measured in that direction. A limit of the survey extent, not a finding about the road. |
+| `bay_chainage_m` | Distance of the U-turn opening along the same alignment, metres. |
 | `bays_planned_by_jda` | U-turn bays in the published scheme. |
 | `benefit_to_first_failure_crore` | Undiscounted benefit over the years the relief lasts. |
 | `binding_need_pcu` | What the binding approach would need by then, PCU/hour. |
@@ -105,6 +107,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `daily_out` | Vehicles leaving the junction over the surveyed day. |
 | `daily_veh` | Vehicles counted over the survey day. |
 | `delay_veh_hr_day` | Vehicle-hours of delay accumulated per day. A lower bound. |
+| `demand` | Vehicles per peak hour that must use this bay. |
 | `dep_high` | Departure curve at the fast end of the discharge band. |
 | `dep_low` | Departure curve at the slow end of the discharge band. |
 | `departures` | Cumulative PCU discharged. ASSUMED - the contestable line. |
@@ -113,6 +116,16 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `design_life_first_failure_med` | Earliest of fails_med across all approaches. |
 | `design_life_last_failure_med` | Latest of fails_med. |
 | `design_life_survives_horizon` | How many approaches still hold at horizon_year. |
+| `detour_bays_beyond_drawing` | How many it does not. |
+| `detour_bays_measured` | How many bays the drawing covers in that direction. |
+| `detour_m` | Extra distance a converted movement travels, out and back, metres. |
+| `detour_max_m` | Longest measured detour, metres. |
+| `detour_mean_m` | Mean detour across every bay the drawing covers, metres. |
+| `detour_mean_typical_m` | Mean detour excluding rows over 1 km, which are driven by the drawing ending rather than by the road. |
+| `detour_min_m` | Shortest measured detour on the corridor, metres. |
+| `detour_outliers_excluded` | Rows over 1 km held out of the typical figure. |
+| `detour_veh_km_per_hour` | Extra vehicle-kilometres per peak hour, all measured bays. |
+| `detour_veh_km_typical` | The same, excluding the over-1-km rows. |
 | `discharge_band` | The capacity multipliers the departure band is drawn across. |
 | `discrepancies` | Stored totals that disagreed with their own components. |
 | `diverging` | Points where one stream splits. |
@@ -186,6 +199,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `jda_scheme` | The authority's scheme as described in its documents. |
 | `jda_turning_claim_pct` | JDA's stated basis for the scheme: the share of traffic it says is turning. News reporting, not a JDA document. |
 | `junction` | Survey code, TMC-01 to TMC-06. |
+| `junction_chainage_m` | Distance of the junction along the surveyed alignment, metres. |
 | `junctions` | Per-junction rows. One entry for each of the six. |
 | `junctions_worse` | Junctions where crossing exposure rises under the scheme. |
 | `label` | Human-readable name. |
@@ -246,6 +260,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `observed_vs_planning_ratio` | Counted flow divided by the planning-stage assumption. |
 | `of` | Approaches assessed. |
 | `ok` | Approaches under capacity in that combination. |
+| `one_way_m` | Junction to U-turn bay, metres. |
 | `openings` | Median openings found in the survey drawing. |
 | `order` | Junction order along the corridor. |
 | `order_best` | Best-scoring order from flow continuity. |
@@ -375,6 +390,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `uturn_analogue` | Which manoeuvre the U-turn is modelled as. Load-bearing: a merge into the opposing stream needs a smaller gap than a crossing of it. |
 | `uturn_crossing_exposure` | The share of that arising at the mid-block U-turn openings. |
 | `uturn_demand` | Right-turn demand that becomes a U-turn once signals are removed. |
+| `uturn_detour` | Per bay: how much further a converted movement travels, measured from the drawing as junction chainage against the nearest median opening wide enough to turn in, doubled for the return leg. |
 | `uturn_per_km` | Those per kilometre. |
 | `uturn_possible` | Gaps wide enough to turn in. |
 | `uturn_robust` | Whether the U-turn conclusion holds across the whole grid. |
@@ -389,6 +405,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `vc_pt` | Volume/capacity at pcu_pt. |
 | `veh` | Vehicle count, as counted rather than converted to PCU. |
 | `veh_class` | Vehicle class code. |
+| `veh_km_per_hour` | Extra vehicle-kilometres this bay generates in the peak hour. |
 | `volume_flow` | Peak-hour movement volumes for the volume-flow diagram. |
 | `vot_status` | That value of time is a policy input, not a measurement. |
 | `width_m` | Carriageway width, metres, ONE direction. Measured, not assumed. |

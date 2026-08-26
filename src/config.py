@@ -47,7 +47,7 @@ JUNCTIONS = {
 
 # --- junction coordinates ---------------------------------------------------
 # The workbooks carry no georeference. These come from matching the survey's arm
-# names against the junctions JDA names on New Sanganer Road in its signal-free
+# names against the junctions JDA names in its signal-free
 # scheme (Bhrigu Path, Rajat Path, VT Road, Patel Marg, Vijay Path, B-2 Bypass),
 # then locating each on the survey drawing's own alignment.
 #
@@ -68,10 +68,16 @@ JUNCTION_COORDS = {
     "TMC-05": (26.864799, 75.758347, "Rajat Path",   "C22", "name match"),
     "TMC-06": (26.871403, 75.755127, "Bhrigu Path",  "C28", "inferred"),
 }
-CORRIDOR_ROAD = "New Sanganer Road"
+# The road is deliberately UNNAMED. Every one of the six junctions carries
+# "Mansarover Metro" as its north arm and "Sanganer Stadium" as its south arm, so the
+# corridor is defined by the survey itself. Which physical road that is was our
+# inference and it was challenged, so the name is withdrawn until JDA confirms it.
+# Nothing downstream depends on the name; the counts, the matrices and the movement
+# analysis are unaffected.
+CORRIDOR_ROAD = "the Mansarover Metro \u2013 Sanganer Stadium corridor"
 # JDA is converting this road to signal-free operation with 7 U-turns, which is
 # almost certainly why the survey exists - and the survey counted no U-turns.
-JDA_SCHEME = "signal-free New Sanganer Road, 7 U-turns"
+JDA_SCHEME = "signal-free corridor, 7 U-turn bays"
 
 # The survey counts LEFT / STRAIGHT / RIGHT only. U-turns were never surveyed —
 # that is a gap to report, not a zero to assume.

@@ -1,5 +1,5 @@
 # Capacity and design-year assessment
-### New Sanganer Road, Jaipur — six surveyed junctions
+### the Mansarover Metro – Sanganer Stadium corridor, Jaipur — six surveyed junctions
 
 **Base year** 2026  |  **Design horizon** 20 years to 2046  |  **Survey date** 2026-05-11
 **Generated** 2026-08-26 from `out/data/capacity.json`. Every figure in this document is read from the pipeline output at generation time; none is transcribed.
@@ -55,7 +55,7 @@ PCU is reported as a band, not a point. The survey's composite vehicle classes (
 
 ## 4. The published scheme does not resolve this
 
-The scheme under construction — signal-free New Sanganer Road, 7 U-turns — replaces signalised turning with U-turn bays. Tested by gap acceptance against the measured opposing flow, **12 of 12 approaches fail** under conservative critical-gap assumptions and **12 still fail** under optimistic ones.
+The scheme under construction — signal-free corridor, 7 U-turn bays — replaces signalised turning with U-turn bays. Tested by gap acceptance against the measured opposing flow, **12 of 12 approaches fail** under conservative critical-gap assumptions and **12 still fail** under optimistic ones.
 
 On **12** approaches the opposing flow is heavy enough that gap acceptance degenerates entirely: there is no usable gap, and no capacity figure is quoted because none would be meaningful.
 
