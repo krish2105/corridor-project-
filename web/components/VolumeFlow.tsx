@@ -118,8 +118,23 @@ export default function VolumeFlow({ junctions }: { junctions: J[] }) {
               const [x1, y1] = node(m.from_i, true);
               const [x2, y2] = node(m.to_i, false);
               const off = (m.to_i - m.from_i + 4) % 4;
-              // left turns hug the kerb, through runs straight, right swings wide
-              const pull = off === 1 ? 0.78 : off === 2 ? 1.0 : 0.34;
+              // Left turns hug the kerb, through runs straight, right swings wide.
+              //
+              // The comment said that before and the numbers did the opposite of all
+              // three. `pull` runs the wrong way round: at pull = 1 the control point
+              // lands on the junction centre, which is MAXIMUM bow, and at pull = 0 it
+              // lands on the chord, which is a straight line. So through movements
+              // (pull 1.0) were the most bowed thing on the diagram, left turns swung
+              // through the middle, and right turns were drawn as near-straight
+              // diagonals. A reader could not tell which traffic was going straight,
+              // and the turns curved the wrong way.
+              //
+              //   negative -> control pushed OUTWARD, away from the junction centre
+              //   zero     -> control on the chord, a straight line
+              //   positive -> control pulled toward the centre, a wide swing
+              const pull = off === 1 ? -0.40   // left: tight, hugging the near kerb
+                         : off === 2 ? 0       // through: dead straight
+                         : 0.55;               // right: swings wide across the junction
               const cx = C + (x1 + x2 - 2 * C) * (1 - pull) * 0.5;
               const cy = C + (y1 + y2 - 2 * C) * (1 - pull) * 0.5;
               const w = 1.6 + 10 * (m.veh / max);
