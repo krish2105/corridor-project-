@@ -102,7 +102,9 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `category` | Constraint category. |
 | `caveat` | What the figure is NOT. Read before quoting it. |
 | `cells_checked` | Cells re-derived when checking stored totals. |
+| `chainage_from` | Which end chainage is measured from, so that it increases with the junction number. JDA has not stated its own convention; see the reviewer question sheet. |
 | `chainage_m` | Distance along the alignment from its start, metres. |
+| `chainage_zero_at` | The junction chainage zero sits at. |
 | `change_pct` | Change in crossing exposure between the two schemes, %. |
 | `checks` | The five criteria for this bay, each with status, value and reason. |
 | `chi2` | Chi-square statistic of the last-digit test. |

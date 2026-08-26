@@ -6,13 +6,13 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     75.7508402,
-     26.8697042
+     75.7647732,
+     26.8460423
     ]
    },
    "properties": {
-    "chainage_m": 833.1,
-    "width_m": 23.8,
+    "chainage_m": 773.6,
+    "width_m": 17.7,
     "classification": "wide / junction mouth",
     "uturn_possible": true
    }
@@ -22,29 +22,13 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     75.754129,
-     26.8630841
+     75.7628238,
+     26.8504548
     ]
    },
    "properties": {
-    "chainage_m": 1633.4,
-    "width_m": 28.9,
-    "classification": "wide / junction mouth",
-    "uturn_possible": true
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     75.7584837,
-     26.8564574
-    ]
-   },
-   "properties": {
-    "chainage_m": 2493.9,
-    "width_m": 32.7,
+    "chainage_m": 1294.7,
+    "width_m": 26.8,
     "classification": "wide / junction mouth",
     "uturn_possible": true
    }
@@ -59,7 +43,7 @@
     ]
    },
    "properties": {
-    "chainage_m": 2528.4,
+    "chainage_m": 2085.9,
     "width_m": 10.3,
     "classification": "typical opening",
     "uturn_possible": true
@@ -70,13 +54,13 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     75.7628238,
-     26.8504548
+     75.7584837,
+     26.8564574
     ]
    },
    "properties": {
-    "chainage_m": 3303.2,
-    "width_m": 26.8,
+    "chainage_m": 2098.0,
+    "width_m": 32.7,
     "classification": "wide / junction mouth",
     "uturn_possible": true
    }
@@ -86,13 +70,29 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     75.7647732,
-     26.8460423
+     75.754129,
+     26.8630841
     ]
    },
    "properties": {
-    "chainage_m": 3833.4,
-    "width_m": 17.7,
+    "chainage_m": 2962.4,
+    "width_m": 28.9,
+    "classification": "wide / junction mouth",
+    "uturn_possible": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     75.7508402,
+     26.8697042
+    ]
+   },
+   "properties": {
+    "chainage_m": 3767.7,
+    "width_m": 23.8,
     "classification": "wide / junction mouth",
     "uturn_possible": true
    }

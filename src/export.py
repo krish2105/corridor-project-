@@ -14,7 +14,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from src.analyse import (composition, corridor_order, movements, peak_hours,
                          through_vs_turning, tmc_matrix)
-from src.config import (OUT, ROOT, CORRIDOR_NAME, CORRIDOR_ROAD, CORRIDOR_ROAD_SOURCE,
+from src.config import (CHAINAGE_FROM, CHAINAGE_ZERO_AT,
+                        OUT, ROOT, CORRIDOR_NAME, CORRIDOR_ROAD, CORRIDOR_ROAD_SOURCE,
                         JDA_SCHEME, JUNCTIONS,
                         JUNCTION_COORDS, OUT_DATA, SURVEY_DATES)
 # The criticality ranking is computed HERE as well as in the workbook, by calling the
@@ -376,6 +377,7 @@ def build():
     payload = dict(
         meta=dict(corridor=CORRIDOR_NAME, road=CORRIDOR_ROAD,
                   road_source=CORRIDOR_ROAD_SOURCE, jda_scheme=JDA_SCHEME,
+                  chainage_from=CHAINAGE_FROM, chainage_zero_at=CHAINAGE_ZERO_AT,
                   city="Jaipur",
                   survey_dates=list(SURVEY_DATES), analysis_date=str(day),
                   n_junctions=len(JUNCTIONS), bins_parsed=int(len(bins)),

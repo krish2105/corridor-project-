@@ -40,7 +40,7 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from src.analyse import NORTH, SOUTH, through_vs_turning
-from src.config import JUNCTION_COORDS, OUT_DATA
+from src.config import CHAINAGE_FROM, JUNCTION_COORDS, OUT_DATA
 from src.pcu import SURVEYED, factor_band
 from src.tmc_parse import parse_all
 
@@ -504,11 +504,26 @@ def uturn_detour(uturns):
                  if f["properties"].get("uturn_possible"))
     demand = {(u["junction"], u["bay"]): u["uturn_demand"] for u in uturns}
 
+    # WHICH WAY IS NORTH ALONG THE CHAINAGE, derived rather than assumed.
+    #
+    # This read `northbound -> openings at higher chainage` as a bare fact. It was not one:
+    # chainage used to start at the NORTHERN end, so higher chainage meant further SOUTH
+    # and every bay here was matched to an opening on the wrong side of its junction. The
+    # figures looked entirely reasonable, which is why it survived. Reversing the chainage
+    # direction fixed it by accident; deriving the sign from the convention fixes it on
+    # purpose, and flipping CHAINAGE_FROM will not silently swap them again.
+    north_is_up = CHAINAGE_FROM == "south"
+
+    def toward(direction, c):
+        ahead = (o for o in ops if (o > c) if (direction == "northbound") == north_is_up)
+        behind = (o for o in ops if (o < c) if (direction == "northbound") != north_is_up)
+        return sorted(ahead) + sorted(behind)
+
     out = []
     for r in jrows:
         c = r["chainage_m"]
-        for bay, cand in (("northbound", [o for o in ops if o > c]),
-                          ("southbound", [o for o in ops if o < c])):
+        for bay, cand in (("northbound", toward("northbound", c)),
+                          ("southbound", toward("southbound", c))):
             d = demand.get((r["junction"], bay))
             if d is None:
                 continue

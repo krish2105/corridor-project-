@@ -77,7 +77,14 @@ JUNCTION_COORDS = {
 # taking the longest "alignment" line out of the CAD, which is the error this fixes.
 # Chainage, corridor ordering and the U-turn detour distances are all measured along
 # THIS, and the map draws it rather than joining our own pins.
-CORRIDOR_CENTRELINE = [   # lon, lat
+#
+# STORED NORTH TO SOUTH, WHICH IS HOW THE KML ORDERS IT, AND REVERSED BELOW.
+# The KML runs from Bhrigu Path down to B-2 Bypass, so chainage taken straight off it
+# started at TMC-06 and counted DOWN to 4,620 m at TMC-01 - the reverse of the survey's
+# own junction numbering, and unreadable against any drawing that numbers the other way.
+# The vertex list is kept in the order JDA supplied it, and the direction is applied in
+# one place so the convention is a stated decision rather than a property of a file.
+_KML_CENTRELINE_N_TO_S = [   # lon, lat
     (75.7475901, 26.8767279),
     (75.7476610, 26.8761611),
     (75.7489347, 26.8736845),
@@ -93,6 +100,18 @@ CORRIDOR_CENTRELINE = [   # lon, lat
     (75.7662462, 26.8427872),
     (75.7677936, 26.8395192),
 ]
+
+# Which end is chainage zero. South, so that chainage increases with the junction number:
+# TMC-01 at the Sanganer Stadium end is 0 and TMC-06 at Mansarovar Metro is the far end.
+# Distances BETWEEN points are unaffected either way, so every detour and every width is
+# unchanged by this - only the station a feature is reported at moves.
+#
+# JDA has not stated its own convention. Reviewer question 2 asks for it; if they chain
+# from the north this flips to "north" and nothing else changes.
+CHAINAGE_FROM = "south"
+CHAINAGE_ZERO_AT = "Sanganer Stadium end (TMC-01)"
+CORRIDOR_CENTRELINE = (list(reversed(_KML_CENTRELINE_N_TO_S))
+                       if CHAINAGE_FROM == "south" else list(_KML_CENTRELINE_N_TO_S))
 
 # The road name, restored and now SOURCED rather than inferred.
 #

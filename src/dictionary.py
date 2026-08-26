@@ -179,6 +179,10 @@ VALUE_KEYS = {
 FIELDS.update({
     # survey identity and audit
     "road": "Corridor name.",
+    "chainage_from": "Which end chainage is measured from, so that it increases with the "
+                     "junction number. JDA has not stated its own convention; see the "
+                     "reviewer question sheet.",
+    "chainage_zero_at": "The junction chainage zero sits at.",
     "road_source": "Where the road name came from. It was our inference once, and wrong; it is now JDA's, from their KML.",
     "city": "City.", "n_junctions": "Junctions surveyed.",
     "bins_parsed": "15-minute class bins parsed across all workbooks.",

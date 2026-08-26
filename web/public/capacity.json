@@ -34,7 +34,7 @@
   },
   "TMC-04": {
    "width_m": 17.6,
-   "transects": 13,
+   "transects": 14,
    "lanes_per_dir": 5,
    "capacity_pcu_hr": 6336
   },
@@ -45,10 +45,10 @@
    "capacity_pcu_hr": 6552
   },
   "TMC-06": {
-   "width_m": 19.4,
-   "transects": 9,
+   "width_m": 19.3,
+   "transects": 8,
    "lanes_per_dir": 5,
-   "capacity_pcu_hr": 6984
+   "capacity_pcu_hr": 6948
   }
  },
  "junctions": [
@@ -195,28 +195,28 @@
   {
    "junction": "TMC-06",
    "approach": "from Mansarover Metro",
-   "capacity": 6984,
+   "capacity": 6948,
    "peak": "09:15",
    "pcu_lo": 3787.5499999999997,
    "pcu_pt": 3796.85,
    "pcu_hi": 5435.75,
-   "vc_lo": 0.5423181557846506,
-   "vc_pt": 0.5436497709049255,
-   "vc_hi": 0.7783147193585338,
+   "vc_lo": 0.5451280944156591,
+   "vc_pt": 0.5464666090961428,
+   "vc_hi": 0.7823474381116868,
    "los_pt": "C",
    "los_hi": "D"
   },
   {
    "junction": "TMC-06",
    "approach": "from Sanganer Stadium",
-   "capacity": 6984,
+   "capacity": 6948,
    "peak": "09:30",
    "pcu_lo": 3537.2,
    "pcu_pt": 3565.8,
    "pcu_hi": 5648.999999999999,
-   "vc_lo": 0.5064719358533791,
-   "vc_pt": 0.5105670103092784,
-   "vc_hi": 0.808848797250859,
+   "vc_lo": 0.5090961427748992,
+   "vc_pt": 0.5132124352331606,
+   "vc_hi": 0.8130397236614851,
    "los_pt": "C",
    "los_hi": "D"
   }
@@ -353,7 +353,7 @@
    "through_pct": 72.9,
    "peak_pcu": 3797,
    "residual_pcu": 1029,
-   "vc_before": 0.54,
+   "vc_before": 0.55,
    "vc_after": 0.15,
    "los_after": "A"
   },
