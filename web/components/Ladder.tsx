@@ -24,19 +24,21 @@ const MARK: Record<string, string> = {
 };
 
 export default function Ladder({ f }: { f: NonNullable<Corridor["uturn_framework"]> }) {
-  const [open, setOpen] = useState<string>(f.bays[0].junction + f.bays[0].bay);
-  const bay = f.bays.find((b) => b.junction + b.bay === open) ?? f.bays[0];
+  const bays = [...f.bays].sort((a, b) => a.scheme_no - b.scheme_no
+    || a.bay.localeCompare(b.bay));
+  const [open, setOpen] = useState<string>(bays[0].junction + bays[0].bay);
+  const bay = bays.find((b) => b.junction + b.bay === open) ?? bays[0];
   const s = bay.back_solve;
 
   return (
     <div className="stack">
       <div className="picker" role="group" aria-label="Choose a U-turn bay">
-        {f.bays.map((b) => {
+        {bays.map((b) => {
           const id = b.junction + b.bay;
           return (
             <button key={id} aria-pressed={id === open} onClick={() => setOpen(id)}>
               {id === open && <span className="pill" />}
-              <span className="lab">{b.junction} {b.bay === "northbound" ? "N" : "S"}</span>
+              <span className="lab">{b.scheme_label} {b.bay === "northbound" ? "N" : "S"}</span>
             </button>
           );
         })}
@@ -44,7 +46,7 @@ export default function Ladder({ f }: { f: NonNullable<Corridor["uturn_framework
 
       <div className="lad">
         <div className="lad-head">
-          <span className="mono">{bay.junction} &middot; {bay.jda_name} &middot; {bay.bay}</span>
+          <span className="mono">{bay.scheme_label} &middot; {bay.jda_name} &middot; {bay.bay}<br /><span style={{ color: "var(--faint)" }}>survey sheet {bay.junction}</span></span>
           <span className={"chip " + (bay.verdict === "fails" ? "critical" : "")}>
             {bay.verdict} &middot; {nf.format(bay.uturn_demand)} veh/h
           </span>

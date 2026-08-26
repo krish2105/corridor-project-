@@ -506,7 +506,7 @@
     {
      "bay": "southbound",
      "detour_m": 19,
-     "one_way_m": 9,
+     "one_way_m": 10,
      "beyond": false,
      "at_junction_mouth": true
     }
@@ -748,7 +748,7 @@
      "veh": 80
     }
    ],
-   "width_m": 19.3,
+   "width_m": 19.4,
    "lanes_per_dir": 5,
    "width_measured_on": "corridor arms only; cross streets are not measured",
    "detours": [

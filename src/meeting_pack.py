@@ -33,7 +33,8 @@ from reportlab.platypus import (BaseDocTemplate, Frame, KeepTogether, PageTempla
                                 Paragraph, Spacer, Table, TableStyle)
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from src.config import CORRIDOR_ROAD, CORRIDOR_ROAD_SOURCE, OUT, OUT_DATA
+from src.config import (CORRIDOR_ROAD, CORRIDOR_ROAD_SOURCE, NUMBERING_NOTE,
+                        SCHEME_LABEL, OUT, OUT_DATA)
 
 PDF = OUT / "Corridor_Meeting_Pack.pdf"
 QMD = OUT / "reviewer_questions.md"
@@ -278,11 +279,12 @@ def build():
                        "MOVEMENT SURVEY", EYE))
     F.append(Paragraph(f"{CORRIDOR_ROAD}, {meta['city']}", H1))
     F.append(Paragraph(
-        f"Six junctions, TMC-01 to TMC-06, between Mansarovar Metro and Sanganer Stadium. "
+        f"Six junctions, J1 to J6 north to south from Mansarovar Metro to Sanganer "
+        f"Stadium. "
         f"Surveyed {meta['survey_dates'][0]} and {meta['survey_dates'][1]} by the appointed "
         f"contractor and issued to JDA as twelve workbooks. This is an independent "
         f"re-derivation of every number in them, checked against the survey drawing. "
-        f"Road name and alignment are {CORRIDOR_ROAD_SOURCE}. "
+        f"Road name and alignment are {CORRIDOR_ROAD_SOURCE}. {NUMBERING_NOTE} "
         f"Prepared {date.today().strftime('%d %B %Y')}.", SUB))
 
     F.append(kpis([
@@ -354,9 +356,9 @@ def build():
             f"divided by the follow-up headway. A single median opening therefore passes "
             f"at most <b>{nf(ceiling)} veh/hour with nothing at all to yield to</b>. "
             f"<b>{uf['bays_above_bay_ceiling']} of the {uf['n_bays']} bays are above that "
-            f"ceiling</b> - TMC-01 southbound at "
+            f"ceiling</b> - {SCHEME_LABEL['TMC-01']} southbound at "
             f"{nf([b for b in uf['bays'] if b['junction']=='TMC-01' and b['bay']=='southbound'][0]['uturn_demand'])} "
-            f"and TMC-04 southbound at "
+            f"and {SCHEME_LABEL['TMC-04']} southbound at "
             f"{nf([b for b in uf['bays'] if b['junction']=='TMC-04' and b['bay']=='southbound'][0]['uturn_demand'])} "
             f"veh/hour. Those are not badly sited bays. They are the wrong instrument for "
             f"the demand, and no metering, median widening or opposing-flow relief reaches "
@@ -448,7 +450,8 @@ def build():
         f"corrected ones.", BODY))
     F.append(table(
         ["JUNCTION"] + [f"{b['step_m']:g} m" for b in t1["by_step"]] + ["SETTLES AT"],
-        [[c["junction"]] + [f"{b['width_m']:.1f}" if b["width_m"] else "-"
+        [[SCHEME_LABEL.get(c["junction"], c["junction"])]
+         + [f"{b['width_m']:.1f}" if b["width_m"] else "-"
                             for b in c["by_step"]]
          + [f"{c['converged_at_step']:g} m" if c["converged_at_step"] else "still moving"]
          for c in m["convergence"]],
@@ -524,8 +527,8 @@ def build():
           "cross-street through. Demand rose from 4,523 to 15,536 veh/hour."],
          ["Transect spacing of 25 m was too coarse to measure a width.",
           "Re-running our own method across spacings.",
-          "TMC-01 went 11.7 m to 15.6 m - three lanes to four - and with it the capacity, "
-          "v/c and design-life results in section 3."],
+          f"{SCHEME_LABEL['TMC-01']} went 11.7 m to 15.6 m - three lanes to four - and "
+          "with it the capacity, v/c and design-life results in section 3."],
          ["We argued a lane model does not fit because flow exceeds saturation flow.",
           "The width correction above.",
           "On corrected widths every approach runs below saturation. The argument is "

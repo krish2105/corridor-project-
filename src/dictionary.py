@@ -179,6 +179,15 @@ VALUE_KEYS = {
 FIELDS.update({
     # survey identity and audit
     "road": "Corridor name.",
+    "scheme_no": "Junction number along the corridor, 1 to 6 north to south from "
+                 "Mansarovar Metro. This is what a scheme drawing shows.",
+    "scheme_label": "The same as J1 to J6.",
+    "survey_sheet": "The workbook this junction's figures come from, "
+                    "TMC-01 to TMC-06. Numbered the other way round.",
+    "scheme_numbering": "The map from survey sheet to scheme number.",
+    "numbering_note": "Why there are two numberings and which is which. The survey "
+                      "workbooks run the other way and their codes stay beside every "
+                      "figure, because that is what it traces back to.",
     "chainage_from": "Which end chainage is measured from, so that it increases with the "
                      "junction number. JDA has not stated its own convention; see the "
                      "reviewer question sheet.",

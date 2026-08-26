@@ -68,7 +68,7 @@ export default function Learned({
               <tbody>
                 {an.junctions.map((r) => (
                   <tr key={r.junction}>
-                    <td className="mono">{r.junction}</td>
+                    <td className="mono">{r.scheme_label}</td>
                     <td style={{ textAlign: "left" }}>{r.jda_name}</td>
                     <td className="num">{(100 * r.duplicate_series_share).toFixed(0)}%</td>
                     <td className="num">{r.terminal_digit_excess_pct > 0 ? "+" : ""}

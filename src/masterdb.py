@@ -28,6 +28,7 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from src.config import (CORRIDOR_ROAD, CORRIDOR_ROAD_SOURCE, JUNCTION_COORDS,
+                        NUMBERING_NOTE, SCHEME_LABEL,
                         OUT, OUT_DATA, ROOT)
 from src.spelling import CORRECTIONS, fix as spell
 
@@ -51,6 +52,7 @@ def cover(d):
     rows = [
         ("Deliverable", "Six-Junction Master Database"),
         ("Corridor", CORRIDOR_ROAD),
+        ("Junction numbering", NUMBERING_NOTE),
         ("Road name source", CORRIDOR_ROAD_SOURCE),
         ("Junctions", f"{len(JUNCTION_COORDS)} (TMC-01 to TMC-06)"),
         ("Survey dates", " and ".join(d["meta"]["survey_dates"])),
@@ -88,7 +90,8 @@ def inventory(d):
         lat, lon, jda, cluster, src = JUNCTION_COORDS[code]
         arms = j["arms"]
         rows.append({
-            "Junction": code,
+            "Junction": SCHEME_LABEL[code],
+            "Survey sheet": code,
             "JDA scheme name": jda.strip(),
             "Latitude": lat, "Longitude": lon,
             "Position source": src,
@@ -115,7 +118,9 @@ def hourly(bins):
     g = (mv.groupby(["junction", "date", "hour"])["count"].sum()
            .reset_index().rename(columns={"count": "Vehicles"}))
     g["date"] = g["date"].astype(str)
-    return g.rename(columns={"junction": "Junction", "date": "Date", "hour": "Hour"})
+    g = g.rename(columns={"junction": "Survey sheet", "date": "Date", "hour": "Hour"})
+    g.insert(0, "Junction", g["Survey sheet"].map(SCHEME_LABEL))
+    return g.sort_values(["Junction", "Date", "Hour"])
 
 
 def hourly_extremes(h):
@@ -123,7 +128,7 @@ def hourly_extremes(h):
     for (j, dt), g in h.groupby(["Junction", "Date"]):
         hi = g.loc[g.Vehicles.idxmax()]
         lo = g.loc[g.Vehicles.idxmin()]
-        rows.append({"Junction": j, "Date": dt,
+        rows.append({"Junction": SCHEME_LABEL.get(j, j), "Survey sheet": j, "Date": dt,
                      "Busiest hour": hi.Hour, "Busiest hour vehicles": int(hi.Vehicles),
                      "Quietest hour": lo.Hour, "Quietest hour vehicles": int(lo.Vehicles),
                      "Peak to trough ratio": round(hi.Vehicles / max(1, lo.Vehicles), 1)})
@@ -179,7 +184,12 @@ def composition(bins):
     src = t.veh_class.map(CLASS_LABELS)
     t.insert(1, "Survey column", src.map(spell))
     t.insert(2, "Survey column as issued", src)
-    return t.rename(columns={"junction": "Junction", "veh_class": "Class code"})
+    # Lead with the scheme number, keep the survey sheet beside it. A reviewer reads
+    # J1 to J6 off a drawing, north to south; the workbook codes run the other way and
+    # are what a figure traces back to, so both travel together.
+    t = t.rename(columns={"junction": "Survey sheet", "veh_class": "Class code"})
+    t.insert(0, "Junction", t["Survey sheet"].map(SCHEME_LABEL))
+    return t.sort_values(["Junction", "Class code"])
 
 
 def movements(bins):
@@ -187,10 +197,11 @@ def movements(bins):
     t = _by_day(bins, ["junction", "arm_from", "movement", "arm_to"])
     tot = t.groupby("junction")["Day 1 vehicles"].transform("sum")
     t["Share of junction, day 1 %"] = (100 * t["Day 1 vehicles"] / tot).round(2)
-    t = t.rename(columns={"junction": "Junction", "arm_from": "From arm",
+    t = t.rename(columns={"junction": "Survey sheet", "arm_from": "From arm",
                           "movement": "Movement", "arm_to": "To arm"})
     for c in ("From arm", "To arm"):
         t[c] = t[c].map(spell)
+    t.insert(0, "Junction", t["Survey sheet"].map(SCHEME_LABEL))
     return t.sort_values(["Junction", "Day 1 vehicles"], ascending=[True, False])
 
 
@@ -200,7 +211,8 @@ def peak_pcu(d):
     for j in d["junctions"]:
         code = j["code"]
         rows.append({
-            "Junction": code,
+            "Junction": SCHEME_LABEL[code],
+            "Survey sheet": code,
             "Peak hour starts": j.get("peak_start"),
             "Peak hour vehicles": j.get("peak_veh"),
             "Peak 15-min": j.get("peak15"),
@@ -250,7 +262,8 @@ def criticality(d):
         c = j["code"]
         vcs = [x.get("vc_pt", 0) for x in d["capacity"]["junctions"] if x["junction"] == c]
         rows.append({
-            "junction": c,
+            "junction": SCHEME_LABEL[c],
+            "survey_sheet": c,
             "jda_name": JUNCTION_COORDS[c][2].strip(),
             "daily_veh": j.get("daily_veh", 0),
             "peak_veh": j.get("peak_veh", 0),
@@ -272,7 +285,8 @@ def criticality(d):
 
 def criticality_sheet(d):
     """The same table with the labels a reviewer reads rather than the keys code reads."""
-    cols = {"junction": "Junction", "jda_name": "JDA name",
+    cols = {"junction": "Junction", "survey_sheet": "Survey sheet",
+            "jda_name": "JDA name",
             "score": "Criticality score", "rank": "Rank"}
     cols.update(INDICATORS)
     cols.update({f"n_{k}": f"{v} (normalised)" for k, v in INDICATORS.items()})

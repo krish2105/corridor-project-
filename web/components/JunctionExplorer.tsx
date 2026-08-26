@@ -10,7 +10,10 @@ import type { Junction } from "@/lib/types";
 const nf = new Intl.NumberFormat("en-US");
 
 export default function JunctionExplorer({ junctions }: { junctions: Junction[] }) {
-  const [code, setCode] = useState(junctions[0].code);
+  // Ordered and labelled by SCHEME number: J1 at the top of the corridor. The survey
+  // code stays as the selection key, because that is what every figure is keyed on.
+  const ordered = [...junctions].sort((a, b) => a.scheme_no - b.scheme_no);
+  const [code, setCode] = useState(ordered[0].code);
   // Composition bars: click to isolate a class, same pattern as every other exhibit here.
   // They were the last block on the page carrying numbers with no way to reach them.
   const [pinnedCls, setPinnedCls] = useState<string | null>(null);
@@ -29,7 +32,7 @@ export default function JunctionExplorer({ junctions }: { junctions: Junction[] 
   return (
     <div className="stack">
       <div className="picker" role="group" aria-label="Choose a junction">
-        {junctions.map((x) => (
+        {ordered.map((x) => (
           <button
             key={x.code}
             aria-pressed={x.code === code}
@@ -40,7 +43,7 @@ export default function JunctionExplorer({ junctions }: { junctions: Junction[] 
                 transition={{ type: "spring", stiffness: 420, damping: 34 }} />
             )}
             {x.code === code && reduce && <span className="pill" />}
-            <span className="lab">{x.code}</span>
+            <span className="lab">{x.scheme_label}</span>
           </button>
         ))}
       </div>

@@ -440,7 +440,7 @@
     },
     "weaving": {
      "status": "not reached",
-     "value": 9,
+     "value": 10,
      "detail": "not reached: gap capacity binds first."
     },
     "detour burden": {

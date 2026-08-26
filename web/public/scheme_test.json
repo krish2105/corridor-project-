@@ -393,123 +393,6 @@
  "feeds_bay": "right turns from all four arms, plus the cross-street through movement",
  "uturn_detour": [
   {
-   "junction": "TMC-01",
-   "bay": "northbound",
-   "demand": 975.0,
-   "bay_beyond_drawing": false,
-   "junction_chainage_m": 5,
-   "bay_chainage_m": 782,
-   "one_way_m": 777,
-   "detour_m": 1555,
-   "veh_km_per_hour": 1516.0,
-   "bay_is_junction_mouth": true
-  },
-  {
-   "junction": "TMC-01",
-   "bay": "southbound",
-   "demand": 2755.0,
-   "bay_beyond_drawing": true,
-   "one_way_m": null,
-   "detour_m": null,
-   "veh_km_per_hour": null
-  },
-  {
-   "junction": "TMC-02",
-   "bay": "northbound",
-   "demand": 1487.0,
-   "bay_beyond_drawing": false,
-   "junction_chainage_m": 785,
-   "bay_chainage_m": 1308,
-   "one_way_m": 523,
-   "detour_m": 1046,
-   "veh_km_per_hour": 1555.3,
-   "bay_is_junction_mouth": true
-  },
-  {
-   "junction": "TMC-02",
-   "bay": "southbound",
-   "demand": 1257.0,
-   "bay_beyond_drawing": false,
-   "junction_chainage_m": 785,
-   "bay_chainage_m": 782,
-   "one_way_m": 3,
-   "detour_m": 5,
-   "veh_km_per_hour": 6.9,
-   "bay_is_junction_mouth": true
-  },
-  {
-   "junction": "TMC-03",
-   "bay": "northbound",
-   "demand": 1148.0,
-   "bay_beyond_drawing": false,
-   "junction_chainage_m": 1306,
-   "bay_chainage_m": 1308,
-   "one_way_m": 2,
-   "detour_m": 4,
-   "veh_km_per_hour": 4.2,
-   "bay_is_junction_mouth": true
-  },
-  {
-   "junction": "TMC-03",
-   "bay": "southbound",
-   "demand": 1094.0,
-   "bay_beyond_drawing": false,
-   "junction_chainage_m": 1306,
-   "bay_chainage_m": 782,
-   "one_way_m": 524,
-   "detour_m": 1048,
-   "veh_km_per_hour": 1146.3,
-   "bay_is_junction_mouth": true
-  },
-  {
-   "junction": "TMC-04",
-   "bay": "northbound",
-   "demand": 1493.0,
-   "bay_beyond_drawing": false,
-   "junction_chainage_m": 2101,
-   "bay_chainage_m": 2114,
-   "one_way_m": 14,
-   "detour_m": 28,
-   "veh_km_per_hour": 41.2,
-   "bay_is_junction_mouth": true
-  },
-  {
-   "junction": "TMC-04",
-   "bay": "southbound",
-   "demand": 1889.0,
-   "bay_beyond_drawing": false,
-   "junction_chainage_m": 2101,
-   "bay_chainage_m": 2091,
-   "one_way_m": 9,
-   "detour_m": 19,
-   "veh_km_per_hour": 35.9,
-   "bay_is_junction_mouth": true
-  },
-  {
-   "junction": "TMC-05",
-   "bay": "northbound",
-   "demand": 819.0,
-   "bay_beyond_drawing": false,
-   "junction_chainage_m": 2974,
-   "bay_chainage_m": 2977,
-   "one_way_m": 2,
-   "detour_m": 5,
-   "veh_km_per_hour": 3.8,
-   "bay_is_junction_mouth": true
-  },
-  {
-   "junction": "TMC-05",
-   "bay": "southbound",
-   "demand": 1156.0,
-   "bay_beyond_drawing": false,
-   "junction_chainage_m": 2974,
-   "bay_chainage_m": 2114,
-   "one_way_m": 860,
-   "detour_m": 1720,
-   "veh_km_per_hour": 1988.5,
-   "bay_is_junction_mouth": true
-  },
-  {
    "junction": "TMC-06",
    "bay": "northbound",
    "demand": 699.0,
@@ -523,12 +406,129 @@
    "bay": "southbound",
    "demand": 764.0,
    "bay_beyond_drawing": false,
-   "junction_chainage_m": 4622,
-   "bay_chainage_m": 3780,
+   "junction_chainage_m": 3,
+   "bay_chainage_m": 845,
    "one_way_m": 842,
    "detour_m": 1685,
    "veh_km_per_hour": 1287.1,
    "bay_is_junction_mouth": false
+  },
+  {
+   "junction": "TMC-05",
+   "bay": "northbound",
+   "demand": 819.0,
+   "bay_beyond_drawing": false,
+   "junction_chainage_m": 1650,
+   "bay_chainage_m": 1648,
+   "one_way_m": 2,
+   "detour_m": 5,
+   "veh_km_per_hour": 3.9,
+   "bay_is_junction_mouth": true
+  },
+  {
+   "junction": "TMC-05",
+   "bay": "southbound",
+   "demand": 1156.0,
+   "bay_beyond_drawing": false,
+   "junction_chainage_m": 1650,
+   "bay_chainage_m": 2510,
+   "one_way_m": 860,
+   "detour_m": 1720,
+   "veh_km_per_hour": 1988.6,
+   "bay_is_junction_mouth": true
+  },
+  {
+   "junction": "TMC-04",
+   "bay": "northbound",
+   "demand": 1493.0,
+   "bay_beyond_drawing": false,
+   "junction_chainage_m": 2524,
+   "bay_chainage_m": 2510,
+   "one_way_m": 14,
+   "detour_m": 28,
+   "veh_km_per_hour": 41.2,
+   "bay_is_junction_mouth": true
+  },
+  {
+   "junction": "TMC-04",
+   "bay": "southbound",
+   "demand": 1889.0,
+   "bay_beyond_drawing": false,
+   "junction_chainage_m": 2524,
+   "bay_chainage_m": 2534,
+   "one_way_m": 10,
+   "detour_m": 19,
+   "veh_km_per_hour": 35.9,
+   "bay_is_junction_mouth": true
+  },
+  {
+   "junction": "TMC-03",
+   "bay": "northbound",
+   "demand": 1148.0,
+   "bay_beyond_drawing": false,
+   "junction_chainage_m": 3318,
+   "bay_chainage_m": 3317,
+   "one_way_m": 2,
+   "detour_m": 4,
+   "veh_km_per_hour": 4.1,
+   "bay_is_junction_mouth": true
+  },
+  {
+   "junction": "TMC-03",
+   "bay": "southbound",
+   "demand": 1094.0,
+   "bay_beyond_drawing": false,
+   "junction_chainage_m": 3318,
+   "bay_chainage_m": 3842,
+   "one_way_m": 524,
+   "detour_m": 1048,
+   "veh_km_per_hour": 1146.3,
+   "bay_is_junction_mouth": true
+  },
+  {
+   "junction": "TMC-02",
+   "bay": "northbound",
+   "demand": 1487.0,
+   "bay_beyond_drawing": false,
+   "junction_chainage_m": 3840,
+   "bay_chainage_m": 3317,
+   "one_way_m": 523,
+   "detour_m": 1046,
+   "veh_km_per_hour": 1555.3,
+   "bay_is_junction_mouth": true
+  },
+  {
+   "junction": "TMC-02",
+   "bay": "southbound",
+   "demand": 1257.0,
+   "bay_beyond_drawing": false,
+   "junction_chainage_m": 3840,
+   "bay_chainage_m": 3842,
+   "one_way_m": 3,
+   "detour_m": 5,
+   "veh_km_per_hour": 6.9,
+   "bay_is_junction_mouth": true
+  },
+  {
+   "junction": "TMC-01",
+   "bay": "northbound",
+   "demand": 975.0,
+   "bay_beyond_drawing": false,
+   "junction_chainage_m": 4620,
+   "bay_chainage_m": 3842,
+   "one_way_m": 777,
+   "detour_m": 1555,
+   "veh_km_per_hour": 1515.9,
+   "bay_is_junction_mouth": true
+  },
+  {
+   "junction": "TMC-01",
+   "bay": "southbound",
+   "demand": 2755.0,
+   "bay_beyond_drawing": true,
+   "one_way_m": null,
+   "detour_m": null,
+   "veh_km_per_hour": null
   }
  ],
  "opening_kinds": {
@@ -538,34 +538,34 @@
   "midblock_threshold_m": 100.0,
   "mouth_detail": [
    {
-    "chainage_m": 782,
-    "nearest_junction": "TMC-02",
-    "metres_from_junction": 3
-   },
-   {
-    "chainage_m": 1308,
-    "nearest_junction": "TMC-03",
+    "chainage_m": 1648,
+    "nearest_junction": "TMC-05",
     "metres_from_junction": 2
    },
    {
-    "chainage_m": 2091,
-    "nearest_junction": "TMC-04",
-    "metres_from_junction": 9
-   },
-   {
-    "chainage_m": 2114,
+    "chainage_m": 2510,
     "nearest_junction": "TMC-04",
     "metres_from_junction": 14
    },
    {
-    "chainage_m": 2977,
-    "nearest_junction": "TMC-05",
+    "chainage_m": 2534,
+    "nearest_junction": "TMC-04",
+    "metres_from_junction": 10
+   },
+   {
+    "chainage_m": 3317,
+    "nearest_junction": "TMC-03",
     "metres_from_junction": 2
+   },
+   {
+    "chainage_m": 3842,
+    "nearest_junction": "TMC-02",
+    "metres_from_junction": 3
    }
   ],
   "midblock_detail": [
    {
-    "chainage_m": 3780,
+    "chainage_m": 845,
     "nearest_junction": "TMC-05",
     "metres_from_junction": 805
    }

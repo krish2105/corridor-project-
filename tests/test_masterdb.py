@@ -140,8 +140,26 @@ def test_criticality_is_bounded_and_ordered():
     t = criticality(d)
     assert t.score.between(0, 6).all()
     assert t["rank"].tolist() == [1, 2, 3, 4, 5, 6]
-    # every indicator rises with the index, so the last junction must rank first
-    assert t.iloc[0].junction == "TMC-06"
+    # every indicator rises with the index, so the last junction must rank first.
+    # The table leads with the SCHEME number and keeps the survey sheet beside it, so
+    # both are pinned: TMC-06 sits at the north end and is therefore J1.
+    assert t.iloc[0].junction == "J1"
+    assert t.iloc[0].survey_sheet == "TMC-06"
+
+
+def test_criticality_carries_both_numberings():
+    """
+    Two numbering systems travel together everywhere. Dropping the survey sheet would
+    make a figure untraceable; dropping the scheme number would show a reviewer the
+    workbook index where they expect the corridor position.
+    """
+    d = _payload(*[list(range(1, 7))] * 6)
+    t = criticality(d)
+    assert set(t.junction) == {f"J{i}" for i in range(1, 7)}
+    assert set(t.survey_sheet) == {f"TMC-0{i}" for i in range(1, 7)}
+    # and they map the opposite way round: J1 is TMC-06
+    row = t[t.junction == "J1"].iloc[0]
+    assert row.survey_sheet == "TMC-06"
 
 
 def test_criticality_does_not_invent_an_order_from_identical_inputs():

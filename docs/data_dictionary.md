@@ -75,8 +75,6 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `bay` | Which U-turn bay the demand feeds: the one merging into northbound traffic, or into southbound. |
 | `bay_beyond_drawing` | True where the CAD ends before the next opening, so the detour cannot be measured in that direction. A limit of the survey extent, not a finding about the road. |
 | `bay_ceiling_veh_hr` | The most a single opening can pass, 3600 / follow-up headway, with no opposing traffic at all. Nothing lifts it. |
-| `bay_chainage_m` | Distance of the U-turn opening along the same alignment, metres. |
-| `bay_is_junction_mouth` | Whether the opening this bay is matched to is a junction mouth rather than a mid-block bay. |
 | `bay_storage_m` | Assumed deceleration and storage length. No bay geometry supplied. |
 | `bays` | One entry per U-turn bay: two per junction, north and south. |
 | `bays_above_bay_ceiling` | Bays whose demand exceeds that ceiling. For these the bay is the wrong instrument, not a badly sited one. |
@@ -277,7 +275,6 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `jda_scheme` | The authority's scheme as described in its documents. |
 | `jda_turning_claim_pct` | JDA's stated basis for the scheme: the share of traffic it says is turning. News reporting, not a JDA document. |
 | `junction` | Survey code, TMC-01 to TMC-06. |
-| `junction_chainage_m` | Distance of the junction along the surveyed alignment, metres. |
 | `junction_mouths` | Openings within midblock_threshold_m of a junction centre. Turning at one is not a detour - it is turning at the junction. |
 | `junctions` | Per-junction rows. One entry for each of the six. |
 | `junctions_above_wide_threshold` | How many junctions are in that state. |
@@ -378,6 +375,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `northbound_out` | Northbound flow leaving the southern junction. |
 | `northing` | Northing, EPSG:32643. |
 | `note` | Free-text qualifier. |
+| `numbering_note` | Why there are two numberings and which is which. The survey workbooks run the other way and their codes stay beside every figure, because that is what it traces back to. |
 | `observed_vs_planning_ratio` | Counted flow divided by the planning-stage assumption. |
 | `of` | Approaches assessed. |
 | `ok` | Approaches under capacity in that combination. |
@@ -468,6 +466,8 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `scenarios` | Pre-computed cells of the assumption grid the scenario tool walks. |
 | `scheme_crossing_exposure` | The same measure under the signal-free scheme, including the U-turn openings the removed right turns move to. |
 | `scheme_junction_points` | Conflict points remaining after the right turn is removed. |
+| `scheme_label` | The same as J1 to J6. |
+| `scheme_no` | Junction number along the corridor, 1 to 6 north to south from Mansarovar Metro. This is what a scheme drawing shows. |
 | `score` | Sum of the six normalised indicators, 0 to 6. |
 | `series` | Movement-class series compared between the two survey days. |
 | `series_available` | Per-bin series split into a separate file and fetched on demand. |
@@ -503,6 +503,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `structure_found` | Whether the silhouette cleared that threshold. |
 | `survey_dates` | Dates as stated in the workbooks. |
 | `survey_design` | What the survey design was against IRC:SP:19. |
+| `survey_sheet` | The workbook this junction's figures come from, TMC-01 to TMC-06. Numbered the other way round. |
 | `surveyed_factor` | The static PCU factor the survey applied. |
 | `surveys_required_by_sp90` | Traffic surveys IRC:SP:90 cl. 5.6 requires. |
 | `surveys_run` | How many this programme ran. |

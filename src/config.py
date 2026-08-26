@@ -108,8 +108,8 @@ _KML_CENTRELINE_N_TO_S = [   # lon, lat
 #
 # JDA has not stated its own convention. Reviewer question 2 asks for it; if they chain
 # from the north this flips to "north" and nothing else changes.
-CHAINAGE_FROM = "south"
-CHAINAGE_ZERO_AT = "Sanganer Stadium end (TMC-01)"
+CHAINAGE_FROM = "north"
+CHAINAGE_ZERO_AT = "Mansarovar Metro end (J1 / survey sheet TMC-06)"
 CORRIDOR_CENTRELINE = (list(reversed(_KML_CENTRELINE_N_TO_S))
                        if CHAINAGE_FROM == "south" else list(_KML_CENTRELINE_N_TO_S))
 
@@ -125,6 +125,32 @@ CORRIDOR_ROAD_SOURCE = "named in JDA's supplied KML"
 # JDA is converting this road to signal-free operation with 7 U-turns, which is
 # almost certainly why the survey exists - and the survey counted no U-turns.
 JDA_SCHEME = "signal-free corridor, 7 U-turn bays"
+
+# --- scheme junction numbering ------------------------------------------------
+# TWO NUMBERINGS, AND THE REASON THERE ARE TWO.
+#
+# The workbooks are named 01_TMC .. 06_TMC and their codes run SOUTH to north, so TMC-01
+# is at Sanganer Stadium. A scheme drawing numbers junctions along the corridor from its
+# start, and this corridor starts at Mansarovar Metro - so the scheme numbering runs the
+# other way: J1 at Mansarovar Metro, J6 at Sanganer Stadium.
+#
+# JDA's reviewer reads the map, not the workbook index, so J-numbers are what is DISPLAYED
+# everywhere. The TMC code is kept beside it on every table, popup and sheet, because it
+# is the survey sheet a figure traces back to and renaming it would break that. Renumbering
+# a client's own survey files is not something a consultant gets to do; cross-referencing
+# them is standard practice.
+#
+# Derived from position, not typed. Sorting by latitude descending gives north to south on
+# this corridor, and a test asserts that ordering agrees with chainage along JDA's
+# centreline - so if a junction ever moves, the numbering follows rather than going stale.
+SCHEME_NO = {code: i for i, code in enumerate(
+    sorted(JUNCTION_COORDS, key=lambda c: -JUNCTION_COORDS[c][0]), start=1)}
+SCHEME_LABEL = {code: f"J{n}" for code, n in SCHEME_NO.items()}
+SURVEY_OF = {label: code for code, label in SCHEME_LABEL.items()}
+NUMBERING_NOTE = ("J1 to J6 run north to south from Mansarovar Metro, which is how the "
+                  "scheme reads on a drawing. The survey workbooks are numbered the other "
+                  "way, TMC-01 at Sanganer Stadium, and that code is kept beside every "
+                  "figure so it traces back to its source sheet.")
 
 # The survey counts LEFT / STRAIGHT / RIGHT only. U-turns were never surveyed —
 # that is a gap to report, not a zero to assume.

@@ -23,7 +23,8 @@ type Move = { from_arm: string; to_arm: string; from_i: number; to_i: number;
               turn: string; veh: number };
 type Detour = { bay: string; detour_m: number | null; one_way_m: number | null;
                 beyond: boolean; at_junction_mouth: boolean | null };
-type J = { junction: string; jda_name: string; arms: string[]; peak_start: string;
+type J = { junction: string; scheme_no: number; scheme_label: string;
+           jda_name: string; arms: string[]; peak_start: string;
            movements: Move[]; width_m?: number | null; lanes_per_dir?: number | null;
            width_measured_on?: string; detours?: Detour[] };
 
@@ -157,7 +158,8 @@ function mutPath(j: J) {
 }
 
 export default function VolumeFlow({ junctions }: { junctions: J[] }) {
-  const [code, setCode] = useState(junctions[0].junction);
+  const ordered = [...junctions].sort((a, b) => a.scheme_no - b.scheme_no);
+  const [code, setCode] = useState(ordered[0].junction);
   // Click to isolate, hover to preview.
   //
   // Hover alone would have been wrong: there is no hover on a phone, and a phone in a
@@ -177,18 +179,19 @@ export default function VolumeFlow({ junctions }: { junctions: J[] }) {
   return (
     <div className="card">
       <header>
-        <h3>{j.junction} &mdash; {j.jda_name}</h3>
+        <h3>{j.scheme_label} &mdash; {j.jda_name}</h3>
         <span className="tag">peak hour from {j.peak_start}</span>
         <span className="tag">{nf.format(total)} veh</span>
+        <span className="tag">survey sheet {j.junction}</span>
         <span className="tag">no U-turn counted</span>
       </header>
       <div className="body">
         <div className="picker" role="group" aria-label="Choose a junction">
-          {junctions.map((x) => (
+          {ordered.map((x) => (
             <button key={x.junction} aria-pressed={x.junction === code}
                     onClick={() => { setCode(x.junction); setHover(null); setPinned(null); }}>
               {x.junction === code && <span className="pill" />}
-              <span className="lab">{x.junction}</span>
+              <span className="lab">{x.scheme_label}</span>
             </button>
           ))}
         </div>
@@ -205,7 +208,7 @@ export default function VolumeFlow({ junctions }: { junctions: J[] }) {
         <div style={{ overflowX: "auto" }}>
           <svg viewBox={`0 0 ${SIZE} ${SIZE}`} width="100%"
                style={{ maxWidth: SIZE, display: "block", margin: "0 auto" }}
-               role="img" aria-label={`Turning movements at ${j.junction}, peak hour`}>
+               role="img" aria-label={`Turning movements at ${j.scheme_label}, peak hour`}>
             <defs>
               <marker id="ah-Mut" viewBox="0 0 10 10" refX="9" refY="5"
                       markerWidth="5" markerHeight="5" orient="auto-start-reverse">

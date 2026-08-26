@@ -24,7 +24,8 @@ type S = {
 const nf = new Intl.NumberFormat("en-US");
 
 type Gap = {
-  gap_benchmark?: { junction: string; approach: string; t_c_optimistic: number;
+  gap_benchmark?: { junction: string; scheme_no: number; scheme_label: string;
+                    approach: string; t_c_optimistic: number;
                     t_c_required: number; margin_s: number; works_at_our_optimistic: boolean }[];
   gap_required_median_s?: number; gap_ours_median_s?: number; gap_margin_s?: number;
   irc_sp41_car_gap_s?: number;
@@ -143,7 +144,7 @@ export default function Standards({ s, gap }: { s: S; gap?: Gap }) {
                 <tbody>
                   {gap.gap_benchmark.map((r, i) => (
                     <tr key={i}>
-                      <td>{r.junction}</td><td>{r.approach}</td>
+                      <td className="mono">{r.scheme_label}</td><td>{r.approach}</td>
                       <td className="num">{r.t_c_optimistic.toFixed(2)}</td>
                       <td className="num">{r.t_c_required.toFixed(2)}</td>
                       <td className={"num " + (r.margin_s > 0 ? "bad" : "good")}>

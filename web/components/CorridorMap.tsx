@@ -151,7 +151,9 @@ export default function CorridorMap({
     m.addControl(new maplibregl.ScaleControl({ maxWidth: 110, unit: "metric" }));
 
     const w = widths, ch = chainage, rank = ranks;
-    const ordered = [...junctions].sort((a, b) => b.lat - a.lat);
+    // North to south, which is J1 to J6. The scheme numbering runs the opposite way to
+    // the survey's own workbook codes; see NUMBERING_NOTE in config.
+    const ordered = [...junctions].sort((a, b) => a.scheme_no - b.scheme_no);
     const bounds = new maplibregl.LngLatBounds();
     fit.current = bounds;
     ordered.forEach((j) => {
@@ -167,12 +169,16 @@ export default function CorridorMap({
         `border:2px ${firm ? "solid" : "dashed"} #fff;` +
         `box-shadow:0 1px 5px rgba(0,0,0,.45);display:flex;align-items:center;` +
         `justify-content:center;color:#fff;font:600 9px/1 "IBM Plex Mono",monospace`;
-      el.textContent = j.code.replace("TMC-", "");
+      // The SCHEME number, not the survey code. A reader looking at a corridor drawing
+      // expects 1 at the start of the corridor; the workbook index is a filing detail and
+      // it appears in the popup instead.
+      el.textContent = String(j.scheme_no).padStart(2, "0");
       new maplibregl.Marker({ element: el })
         .setLngLat([j.lon, j.lat])
         .setPopup(new maplibregl.Popup({ offset: 14, closeButton: false }).setHTML(
           `<div style="font:12px/1.45 'IBM Plex Mono',monospace">
-             <b>${j.code}</b> &middot; ${j.jda_name}<br>
+             <b>${j.scheme_label}</b> &middot; ${j.jda_name}<br>
+             <span style="color:#5C6663">survey sheet ${j.code}</span><br>
              ${j.arms[0]} / ${j.arms[2]}<br>
              <span style="color:#5C6663">cross: ${j.arms[1]} / ${j.arms[3]}</span><br>
              ${ch[j.code] !== undefined ? `chainage ${ch[j.code]} m<br>` : ""}

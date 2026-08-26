@@ -14,7 +14,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from src.analyse import (composition, corridor_order, movements, peak_hours,
                          through_vs_turning, tmc_matrix)
-from src.config import (CHAINAGE_FROM, CHAINAGE_ZERO_AT,
+from src.config import (CHAINAGE_FROM, CHAINAGE_ZERO_AT, NUMBERING_NOTE,
+                        SCHEME_LABEL, SCHEME_NO,
                         OUT, ROOT, CORRIDOR_NAME, CORRIDOR_ROAD, CORRIDOR_ROAD_SOURCE,
                         JDA_SCHEME, JUNCTIONS,
                         JUNCTION_COORDS, OUT_DATA, SURVEY_DATES)
@@ -424,6 +425,8 @@ def build():
         meta=dict(corridor=CORRIDOR_NAME, road=CORRIDOR_ROAD,
                   road_source=CORRIDOR_ROAD_SOURCE, jda_scheme=JDA_SCHEME,
                   chainage_from=CHAINAGE_FROM, chainage_zero_at=CHAINAGE_ZERO_AT,
+                  numbering_note=NUMBERING_NOTE,
+                  scheme_numbering={k: SCHEME_LABEL[k] for k in SCHEME_LABEL},
                   city="Jaipur",
                   survey_dates=list(SURVEY_DATES), analysis_date=str(day),
                   n_junctions=len(JUNCTIONS), bins_parsed=int(len(bins)),
@@ -482,11 +485,33 @@ def build():
     )
     payload["criticality"] = criticality(payload).to_dict("records")
     payload["spelling"] = _spelling_section()
+    _number(payload)
     # Correct spelling ONCE, at the publishing boundary, rather than at a dozen call
     # sites. Every module below writes the survey's labels as issued - which is right,
     # because those files are the check-the-work artefacts - and the dashboard reads only
     # this payload, so this is the single place a reader's copy is produced.
     return spell_payload(payload)
+
+
+def _number(obj):
+    """
+    Stamp the scheme number onto every record that names a junction.
+
+    Done here, recursively, rather than at thirty call sites. Every dict that carries a
+    `junction` or a `code` gets `scheme_no` and `scheme_label` alongside - the survey code
+    is never replaced, only accompanied, because it is what a figure traces back to.
+    """
+    if isinstance(obj, dict):
+        code = obj.get("junction") or obj.get("code")
+        if isinstance(code, str) and code in SCHEME_NO:
+            obj["scheme_no"] = SCHEME_NO[code]
+            obj["scheme_label"] = SCHEME_LABEL[code]
+        for v in obj.values():
+            _number(v)
+    elif isinstance(obj, list):
+        for v in obj:
+            _number(v)
+    return obj
 
 
 def spell_payload(obj):

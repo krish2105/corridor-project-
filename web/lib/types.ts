@@ -3,7 +3,8 @@ export type Factor = {
   irc_low: number; irc_point: number | null; irc_high: number; composite: boolean;
 };
 export type Junction = {
-  code: string; arms: string[]; daily_veh: number; peak_start: string;
+  code: string; scheme_no: number; scheme_label: string;
+  arms: string[]; daily_veh: number; peak_start: string;
   lat: number; lon: number; jda_name: string;
   signal_cluster: string; location_confidence: string;
   peak_veh: number; peak15: number; phf: number; through_pct: number;
@@ -15,6 +16,7 @@ export type Junction = {
 };
 export type Criticality = {
   junction: string; jda_name: string;
+  scheme_no: number; scheme_label: string;
   daily_veh: number; peak_veh: number; worst_vc: number; uturn_demand: number;
   exposure_change_pct: number; turning_share_pct: number;
   n_daily_veh: number; n_peak_veh: number; n_worst_vc: number; n_uturn_demand: number;
@@ -24,6 +26,7 @@ export type Criticality = {
 
 export type AnomalyScore = {
   junction: string; jda_name: string;
+  scheme_no: number; scheme_label: string;
   duplicate_series_share: number; terminal_digit_p: number;
   terminal_digit_excess_pct: number; flatline_series: number;
   spike_bins_per_1000: number; mix_intervals: number; stored_total_breaks: number;
@@ -52,6 +55,7 @@ export type BayCheck = { status: string; value: number | null; detail: string };
 
 export type Bay = {
   junction: string; jda_name: string; bay: string; uturn_demand: number;
+  scheme_no: number; scheme_label: string;
   verdict: string; binding_criterion: string | null;
   blocked_on: string[]; blocked_if_binding_cleared: string[];
   checks: Record<string, BayCheck>;
@@ -67,6 +71,8 @@ export type Bay = {
 export type Corridor = {
   meta: { corridor: string; road: string; road_source: string; jda_scheme: string;
           city: string; survey_dates: string[];
+          chainage_from?: string; chainage_zero_at?: string;
+          numbering_note?: string; scheme_numbering?: Record<string, string>;
           analysis_date: string; n_junctions: number; bins_parsed: number; note: string };
   audit: {
     arithmetic: { discrepancies: number; understate: number; overstate: number; net_grand_total: number };
@@ -95,7 +101,8 @@ export type Corridor = {
     width_caveat?: string; wide_transects?: number; transects_total?: number;
     wide_transect_pct?: number; wide_transect_threshold_m?: number;
     wide_transect_range_m?: [number, number] | null;
-    relief: { junction: string; approach: string; through_pct: number; peak_pcu: number;
+    relief: { junction: string; scheme_no: number; scheme_label: string;
+              approach: string; through_pct: number; peak_pcu: number;
               residual_pcu: number; vc_before: number; vc_after: number; los_after: string }[];
     growth: { growth_pct: number; multiple: number; binding_need_pcu: number }[];
     assumptions: { base_year: number; design_horizon_years: number;
@@ -114,7 +121,8 @@ export type Corridor = {
     assumptions?: { free_flow_kmh?: number; [k: string]: unknown };
     spillback_count: number; oversaturated_count: number; n_approaches: number;
     through_journey_min_after: number; saving_min_per_trip: number;
-    approaches: { junction: string; approach: string; vc: number; queue_vehicles: number;
+    approaches: { junction: string; scheme_no: number; scheme_label: string;
+                  approach: string; vc: number; queue_vehicles: number;
                   queue_m: number; storage_m: number | null; upstream: string | null;
                   spillback: boolean; minutes_to_spillback: number | null;
                   mean_delay_min: number }[];
@@ -168,7 +176,8 @@ export type Corridor = {
     csir_crri_design_gap_s: number;
     csir_crri_design_source: string;
     follow_up_measured_s: number[];
-    uturn_detour?: { junction: string; bay: string; demand: number;
+    uturn_detour?: { junction: string; scheme_no: number; scheme_label: string;
+      bay: string; demand: number;
       bay_beyond_drawing: boolean; junction_chainage_m?: number; bay_chainage_m?: number;
       one_way_m?: number | null; detour_m?: number | null;
       veh_km_per_hour?: number | null }[];
@@ -200,10 +209,12 @@ export type Corridor = {
     no_gap_vc_threshold: number; fails_conservative: number; fails_optimistic: number;
     no_viable_gap: number; forced_uturns_per_hour: number;
     s1_serviceable: number; n_junctions: number;
-    uturns: { junction: string; approach: string; uturn_demand: number;
+    uturns: { junction: string; scheme_no: number; scheme_label: string;
+              approach: string; uturn_demand: number;
               conflicting_flow: number; cap_conservative: number;
               vc_conservative: number }[];
-    scenarios: { junction: string; jda_name: string; s0_vc: number;
+    scenarios: { junction: string; scheme_no: number; scheme_label: string;
+                 jda_name: string; s0_vc: number;
                  s1_uturn_vc_cons: number; s1_works: boolean;
                  s2_vc: number; s2_los: string }[];
   } | null;
@@ -226,13 +237,15 @@ export type Corridor = {
     source: string; status: string;
     published_step_m: number; steps_tested: number[]; converged_tolerance_m: number;
     convergence: {
-      junction: string; jda_name: string; converged_at_step: number | null;
+      junction: string; scheme_no: number; scheme_label: string;
+      jda_name: string; converged_at_step: number | null;
       spread_m: number | null;
       by_step: { step_m: number; width_m: number | null; transects: number | null }[];
     }[];
     transects_by_step: { step_m: number; transects: number }[];
     bootstrap: {
-      junction: string; n: number; median_m: number | null;
+      junction: string; scheme_no: number; scheme_label: string;
+      n: number; median_m: number | null;
       ci_m: [number, number] | null; ci_width_m?: number;
       min_m?: number; max_m?: number; above_wide_threshold?: boolean;
       unquantified?: string;

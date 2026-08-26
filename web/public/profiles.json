@@ -7445,7 +7445,7 @@
    "approach": "from Mansarover Metro",
    "hour": "08:00",
    "pcu": 2496,
-   "vc": 0.359,
+   "vc": 0.357,
    "los": "B"
   },
   {
@@ -7453,7 +7453,7 @@
    "approach": "from Mansarover Metro",
    "hour": "08:15",
    "pcu": 2761,
-   "vc": 0.397,
+   "vc": 0.395,
    "los": "B"
   },
   {
@@ -7461,7 +7461,7 @@
    "approach": "from Mansarover Metro",
    "hour": "08:30",
    "pcu": 3124,
-   "vc": 0.45,
+   "vc": 0.447,
    "los": "B"
   },
   {
@@ -7469,7 +7469,7 @@
    "approach": "from Mansarover Metro",
    "hour": "08:45",
    "pcu": 3418,
-   "vc": 0.492,
+   "vc": 0.489,
    "los": "C"
   },
   {
@@ -7477,7 +7477,7 @@
    "approach": "from Mansarover Metro",
    "hour": "09:00",
    "pcu": 3661,
-   "vc": 0.527,
+   "vc": 0.524,
    "los": "C"
   },
   {
@@ -7485,7 +7485,7 @@
    "approach": "from Mansarover Metro",
    "hour": "09:15",
    "pcu": 3797,
-   "vc": 0.546,
+   "vc": 0.544,
    "los": "C"
   },
   {
@@ -7493,7 +7493,7 @@
    "approach": "from Mansarover Metro",
    "hour": "09:30",
    "pcu": 3670,
-   "vc": 0.528,
+   "vc": 0.526,
    "los": "C"
   },
   {
@@ -7501,7 +7501,7 @@
    "approach": "from Mansarover Metro",
    "hour": "09:45",
    "pcu": 3547,
-   "vc": 0.51,
+   "vc": 0.508,
    "los": "C"
   },
   {
@@ -7509,7 +7509,7 @@
    "approach": "from Mansarover Metro",
    "hour": "10:00",
    "pcu": 3475,
-   "vc": 0.5,
+   "vc": 0.498,
    "los": "C"
   },
   {
@@ -7517,7 +7517,7 @@
    "approach": "from Mansarover Metro",
    "hour": "10:15",
    "pcu": 3272,
-   "vc": 0.471,
+   "vc": 0.468,
    "los": "C"
   },
   {
@@ -7525,15 +7525,15 @@
    "approach": "from Mansarover Metro",
    "hour": "10:30",
    "pcu": 3136,
-   "vc": 0.451,
-   "los": "C"
+   "vc": 0.449,
+   "los": "B"
   },
   {
    "junction": "TMC-06",
    "approach": "from Mansarover Metro",
    "hour": "10:45",
    "pcu": 3007,
-   "vc": 0.433,
+   "vc": 0.431,
    "los": "B"
   },
   {
@@ -7541,7 +7541,7 @@
    "approach": "from Mansarover Metro",
    "hour": "11:00",
    "pcu": 2824,
-   "vc": 0.406,
+   "vc": 0.404,
    "los": "B"
   },
   {
@@ -7549,7 +7549,7 @@
    "approach": "from Mansarover Metro",
    "hour": "11:15",
    "pcu": 2822,
-   "vc": 0.406,
+   "vc": 0.404,
    "los": "B"
   },
   {
@@ -7557,7 +7557,7 @@
    "approach": "from Mansarover Metro",
    "hour": "11:30",
    "pcu": 2906,
-   "vc": 0.418,
+   "vc": 0.416,
    "los": "B"
   },
   {
@@ -7565,7 +7565,7 @@
    "approach": "from Mansarover Metro",
    "hour": "11:45",
    "pcu": 2984,
-   "vc": 0.429,
+   "vc": 0.427,
    "los": "B"
   },
   {
@@ -7573,7 +7573,7 @@
    "approach": "from Mansarover Metro",
    "hour": "12:00",
    "pcu": 2984,
-   "vc": 0.43,
+   "vc": 0.427,
    "los": "B"
   },
   {
@@ -7581,7 +7581,7 @@
    "approach": "from Mansarover Metro",
    "hour": "12:15",
    "pcu": 2969,
-   "vc": 0.427,
+   "vc": 0.425,
    "los": "B"
   },
   {
@@ -7589,7 +7589,7 @@
    "approach": "from Mansarover Metro",
    "hour": "12:30",
    "pcu": 2818,
-   "vc": 0.406,
+   "vc": 0.403,
    "los": "B"
   },
   {
@@ -7597,7 +7597,7 @@
    "approach": "from Mansarover Metro",
    "hour": "12:45",
    "pcu": 2798,
-   "vc": 0.403,
+   "vc": 0.401,
    "los": "B"
   },
   {
@@ -7605,7 +7605,7 @@
    "approach": "from Mansarover Metro",
    "hour": "13:00",
    "pcu": 2739,
-   "vc": 0.394,
+   "vc": 0.392,
    "los": "B"
   },
   {
@@ -7613,7 +7613,7 @@
    "approach": "from Mansarover Metro",
    "hour": "13:15",
    "pcu": 2695,
-   "vc": 0.388,
+   "vc": 0.386,
    "los": "B"
   },
   {
@@ -7621,7 +7621,7 @@
    "approach": "from Mansarover Metro",
    "hour": "13:30",
    "pcu": 2716,
-   "vc": 0.391,
+   "vc": 0.389,
    "los": "B"
   },
   {
@@ -7629,7 +7629,7 @@
    "approach": "from Mansarover Metro",
    "hour": "13:45",
    "pcu": 2623,
-   "vc": 0.377,
+   "vc": 0.376,
    "los": "B"
   },
   {
@@ -7637,7 +7637,7 @@
    "approach": "from Mansarover Metro",
    "hour": "14:00",
    "pcu": 2635,
-   "vc": 0.379,
+   "vc": 0.377,
    "los": "B"
   },
   {
@@ -7645,7 +7645,7 @@
    "approach": "from Mansarover Metro",
    "hour": "14:15",
    "pcu": 2629,
-   "vc": 0.378,
+   "vc": 0.376,
    "los": "B"
   },
   {
@@ -7653,7 +7653,7 @@
    "approach": "from Mansarover Metro",
    "hour": "14:30",
    "pcu": 2612,
-   "vc": 0.376,
+   "vc": 0.374,
    "los": "B"
   },
   {
@@ -7661,7 +7661,7 @@
    "approach": "from Mansarover Metro",
    "hour": "14:45",
    "pcu": 2564,
-   "vc": 0.369,
+   "vc": 0.367,
    "los": "B"
   },
   {
@@ -7669,7 +7669,7 @@
    "approach": "from Mansarover Metro",
    "hour": "15:00",
    "pcu": 2508,
-   "vc": 0.361,
+   "vc": 0.359,
    "los": "B"
   },
   {
@@ -7677,7 +7677,7 @@
    "approach": "from Mansarover Metro",
    "hour": "15:15",
    "pcu": 2407,
-   "vc": 0.346,
+   "vc": 0.345,
    "los": "B"
   },
   {
@@ -7685,7 +7685,7 @@
    "approach": "from Mansarover Metro",
    "hour": "15:30",
    "pcu": 2349,
-   "vc": 0.338,
+   "vc": 0.336,
    "los": "B"
   },
   {
@@ -7693,7 +7693,7 @@
    "approach": "from Mansarover Metro",
    "hour": "15:45",
    "pcu": 2319,
-   "vc": 0.334,
+   "vc": 0.332,
    "los": "B"
   },
   {
@@ -7701,7 +7701,7 @@
    "approach": "from Mansarover Metro",
    "hour": "16:00",
    "pcu": 2252,
-   "vc": 0.324,
+   "vc": 0.322,
    "los": "B"
   },
   {
@@ -7709,7 +7709,7 @@
    "approach": "from Mansarover Metro",
    "hour": "16:15",
    "pcu": 2320,
-   "vc": 0.334,
+   "vc": 0.332,
    "los": "B"
   },
   {
@@ -7717,7 +7717,7 @@
    "approach": "from Mansarover Metro",
    "hour": "16:30",
    "pcu": 2310,
-   "vc": 0.333,
+   "vc": 0.331,
    "los": "B"
   },
   {
@@ -7725,7 +7725,7 @@
    "approach": "from Mansarover Metro",
    "hour": "16:45",
    "pcu": 2325,
-   "vc": 0.335,
+   "vc": 0.333,
    "los": "B"
   },
   {
@@ -7733,7 +7733,7 @@
    "approach": "from Mansarover Metro",
    "hour": "17:00",
    "pcu": 2527,
-   "vc": 0.364,
+   "vc": 0.362,
    "los": "B"
   },
   {
@@ -7741,7 +7741,7 @@
    "approach": "from Mansarover Metro",
    "hour": "17:15",
    "pcu": 2665,
-   "vc": 0.384,
+   "vc": 0.382,
    "los": "B"
   },
   {
@@ -7749,7 +7749,7 @@
    "approach": "from Mansarover Metro",
    "hour": "17:30",
    "pcu": 2841,
-   "vc": 0.409,
+   "vc": 0.407,
    "los": "B"
   },
   {
@@ -7757,7 +7757,7 @@
    "approach": "from Mansarover Metro",
    "hour": "17:45",
    "pcu": 3070,
-   "vc": 0.442,
+   "vc": 0.44,
    "los": "B"
   },
   {
@@ -7765,7 +7765,7 @@
    "approach": "from Mansarover Metro",
    "hour": "18:00",
    "pcu": 3247,
-   "vc": 0.467,
+   "vc": 0.465,
    "los": "C"
   },
   {
@@ -7773,7 +7773,7 @@
    "approach": "from Mansarover Metro",
    "hour": "18:15",
    "pcu": 3311,
-   "vc": 0.477,
+   "vc": 0.474,
    "los": "C"
   },
   {
@@ -7781,7 +7781,7 @@
    "approach": "from Mansarover Metro",
    "hour": "18:30",
    "pcu": 3266,
-   "vc": 0.47,
+   "vc": 0.468,
    "los": "C"
   },
   {
@@ -7789,7 +7789,7 @@
    "approach": "from Mansarover Metro",
    "hour": "18:45",
    "pcu": 3158,
-   "vc": 0.455,
+   "vc": 0.452,
    "los": "C"
   },
   {
@@ -7797,7 +7797,7 @@
    "approach": "from Mansarover Metro",
    "hour": "19:00",
    "pcu": 2740,
-   "vc": 0.394,
+   "vc": 0.392,
    "los": "B"
   },
   {
@@ -7805,7 +7805,7 @@
    "approach": "from Mansarover Metro",
    "hour": "19:15",
    "pcu": 2390,
-   "vc": 0.344,
+   "vc": 0.342,
    "los": "B"
   },
   {
@@ -7813,7 +7813,7 @@
    "approach": "from Mansarover Metro",
    "hour": "19:30",
    "pcu": 2188,
-   "vc": 0.315,
+   "vc": 0.313,
    "los": "B"
   },
   {
@@ -7821,7 +7821,7 @@
    "approach": "from Mansarover Metro",
    "hour": "19:45",
    "pcu": 1867,
-   "vc": 0.269,
+   "vc": 0.267,
    "los": "A"
   },
   {
@@ -7829,7 +7829,7 @@
    "approach": "from Mansarover Metro",
    "hour": "20:00",
    "pcu": 1756,
-   "vc": 0.253,
+   "vc": 0.251,
    "los": "A"
   },
   {
@@ -7837,7 +7837,7 @@
    "approach": "from Mansarover Metro",
    "hour": "20:15",
    "pcu": 1691,
-   "vc": 0.243,
+   "vc": 0.242,
    "los": "A"
   },
   {
@@ -7845,7 +7845,7 @@
    "approach": "from Mansarover Metro",
    "hour": "20:30",
    "pcu": 1528,
-   "vc": 0.22,
+   "vc": 0.219,
    "los": "A"
   },
   {
@@ -7853,7 +7853,7 @@
    "approach": "from Mansarover Metro",
    "hour": "20:45",
    "pcu": 1494,
-   "vc": 0.215,
+   "vc": 0.214,
    "los": "A"
   },
   {
@@ -7861,7 +7861,7 @@
    "approach": "from Mansarover Metro",
    "hour": "21:00",
    "pcu": 1483,
-   "vc": 0.213,
+   "vc": 0.212,
    "los": "A"
   },
   {
@@ -7869,7 +7869,7 @@
    "approach": "from Mansarover Metro",
    "hour": "21:15",
    "pcu": 1398,
-   "vc": 0.201,
+   "vc": 0.2,
    "los": "A"
   },
   {
@@ -7877,7 +7877,7 @@
    "approach": "from Mansarover Metro",
    "hour": "21:30",
    "pcu": 1333,
-   "vc": 0.192,
+   "vc": 0.191,
    "los": "A"
   },
   {
@@ -7885,7 +7885,7 @@
    "approach": "from Mansarover Metro",
    "hour": "21:45",
    "pcu": 1235,
-   "vc": 0.178,
+   "vc": 0.177,
    "los": "A"
   },
   {
@@ -7893,7 +7893,7 @@
    "approach": "from Mansarover Metro",
    "hour": "22:00",
    "pcu": 1122,
-   "vc": 0.162,
+   "vc": 0.161,
    "los": "A"
   },
   {
@@ -7901,7 +7901,7 @@
    "approach": "from Mansarover Metro",
    "hour": "22:15",
    "pcu": 1021,
-   "vc": 0.147,
+   "vc": 0.146,
    "los": "A"
   },
   {
@@ -7909,7 +7909,7 @@
    "approach": "from Mansarover Metro",
    "hour": "22:30",
    "pcu": 924,
-   "vc": 0.133,
+   "vc": 0.132,
    "los": "A"
   },
   {
@@ -7925,7 +7925,7 @@
    "approach": "from Mansarover Metro",
    "hour": "23:00",
    "pcu": 763,
-   "vc": 0.11,
+   "vc": 0.109,
    "los": "A"
   },
   {
@@ -7973,7 +7973,7 @@
    "approach": "from Mansarover Metro",
    "hour": "00:30",
    "pcu": 422,
-   "vc": 0.061,
+   "vc": 0.06,
    "los": "A"
   },
   {
@@ -7997,7 +7997,7 @@
    "approach": "from Mansarover Metro",
    "hour": "01:15",
    "pcu": 393,
-   "vc": 0.057,
+   "vc": 0.056,
    "los": "A"
   },
   {
@@ -8029,7 +8029,7 @@
    "approach": "from Mansarover Metro",
    "hour": "02:15",
    "pcu": 386,
-   "vc": 0.056,
+   "vc": 0.055,
    "los": "A"
   },
   {
@@ -8037,7 +8037,7 @@
    "approach": "from Mansarover Metro",
    "hour": "02:30",
    "pcu": 400,
-   "vc": 0.058,
+   "vc": 0.057,
    "los": "A"
   },
   {
@@ -8053,7 +8053,7 @@
    "approach": "from Mansarover Metro",
    "hour": "03:00",
    "pcu": 388,
-   "vc": 0.056,
+   "vc": 0.055,
    "los": "A"
   },
   {
@@ -8061,7 +8061,7 @@
    "approach": "from Mansarover Metro",
    "hour": "03:15",
    "pcu": 379,
-   "vc": 0.055,
+   "vc": 0.054,
    "los": "A"
   },
   {
@@ -8069,7 +8069,7 @@
    "approach": "from Mansarover Metro",
    "hour": "03:30",
    "pcu": 387,
-   "vc": 0.056,
+   "vc": 0.055,
    "los": "A"
   },
   {
@@ -8077,7 +8077,7 @@
    "approach": "from Mansarover Metro",
    "hour": "03:45",
    "pcu": 400,
-   "vc": 0.058,
+   "vc": 0.057,
    "los": "A"
   },
   {
@@ -8101,7 +8101,7 @@
    "approach": "from Mansarover Metro",
    "hour": "04:30",
    "pcu": 533,
-   "vc": 0.077,
+   "vc": 0.076,
    "los": "A"
   },
   {
@@ -8141,7 +8141,7 @@
    "approach": "from Mansarover Metro",
    "hour": "05:45",
    "pcu": 1061,
-   "vc": 0.153,
+   "vc": 0.152,
    "los": "A"
   },
   {
@@ -8149,7 +8149,7 @@
    "approach": "from Mansarover Metro",
    "hour": "06:00",
    "pcu": 1262,
-   "vc": 0.182,
+   "vc": 0.181,
    "los": "A"
   },
   {
@@ -8157,7 +8157,7 @@
    "approach": "from Mansarover Metro",
    "hour": "06:15",
    "pcu": 1504,
-   "vc": 0.216,
+   "vc": 0.215,
    "los": "A"
   },
   {
@@ -8165,7 +8165,7 @@
    "approach": "from Mansarover Metro",
    "hour": "06:30",
    "pcu": 1677,
-   "vc": 0.241,
+   "vc": 0.24,
    "los": "A"
   },
   {
@@ -8173,7 +8173,7 @@
    "approach": "from Mansarover Metro",
    "hour": "06:45",
    "pcu": 1848,
-   "vc": 0.266,
+   "vc": 0.265,
    "los": "A"
   },
   {
@@ -8181,7 +8181,7 @@
    "approach": "from Mansarover Metro",
    "hour": "07:00",
    "pcu": 1883,
-   "vc": 0.271,
+   "vc": 0.27,
    "los": "A"
   },
   {
@@ -8189,7 +8189,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "08:00",
    "pcu": 2448,
-   "vc": 0.352,
+   "vc": 0.351,
    "los": "B"
   },
   {
@@ -8197,7 +8197,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "08:15",
    "pcu": 2726,
-   "vc": 0.392,
+   "vc": 0.39,
    "los": "B"
   },
   {
@@ -8205,7 +8205,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "08:30",
    "pcu": 2978,
-   "vc": 0.429,
+   "vc": 0.426,
    "los": "B"
   },
   {
@@ -8213,7 +8213,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "08:45",
    "pcu": 3206,
-   "vc": 0.461,
+   "vc": 0.459,
    "los": "C"
   },
   {
@@ -8221,7 +8221,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "09:00",
    "pcu": 3382,
-   "vc": 0.487,
+   "vc": 0.484,
    "los": "C"
   },
   {
@@ -8229,7 +8229,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "09:15",
    "pcu": 3498,
-   "vc": 0.503,
+   "vc": 0.501,
    "los": "C"
   },
   {
@@ -8237,7 +8237,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "09:30",
    "pcu": 3566,
-   "vc": 0.513,
+   "vc": 0.511,
    "los": "C"
   },
   {
@@ -8245,7 +8245,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "09:45",
    "pcu": 3453,
-   "vc": 0.497,
+   "vc": 0.494,
    "los": "C"
   },
   {
@@ -8253,7 +8253,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "10:00",
    "pcu": 3291,
-   "vc": 0.474,
+   "vc": 0.471,
    "los": "C"
   },
   {
@@ -8261,7 +8261,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "10:15",
    "pcu": 3053,
-   "vc": 0.439,
+   "vc": 0.437,
    "los": "B"
   },
   {
@@ -8269,7 +8269,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "10:30",
    "pcu": 2698,
-   "vc": 0.388,
+   "vc": 0.386,
    "los": "B"
   },
   {
@@ -8277,7 +8277,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "10:45",
    "pcu": 2467,
-   "vc": 0.355,
+   "vc": 0.353,
    "los": "B"
   },
   {
@@ -8285,7 +8285,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "11:00",
    "pcu": 2216,
-   "vc": 0.319,
+   "vc": 0.317,
    "los": "B"
   },
   {
@@ -8293,7 +8293,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "11:15",
    "pcu": 2229,
-   "vc": 0.321,
+   "vc": 0.319,
    "los": "B"
   },
   {
@@ -8301,7 +8301,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "11:30",
    "pcu": 2377,
-   "vc": 0.342,
+   "vc": 0.34,
    "los": "B"
   },
   {
@@ -8309,7 +8309,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "11:45",
    "pcu": 2562,
-   "vc": 0.369,
+   "vc": 0.367,
    "los": "B"
   },
   {
@@ -8317,7 +8317,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "12:00",
    "pcu": 2754,
-   "vc": 0.396,
+   "vc": 0.394,
    "los": "B"
   },
   {
@@ -8325,7 +8325,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "12:15",
    "pcu": 2725,
-   "vc": 0.392,
+   "vc": 0.39,
    "los": "B"
   },
   {
@@ -8333,7 +8333,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "12:30",
    "pcu": 2668,
-   "vc": 0.384,
+   "vc": 0.382,
    "los": "B"
   },
   {
@@ -8341,7 +8341,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "12:45",
    "pcu": 2664,
-   "vc": 0.383,
+   "vc": 0.381,
    "los": "B"
   },
   {
@@ -8349,7 +8349,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "13:00",
    "pcu": 2672,
-   "vc": 0.385,
+   "vc": 0.383,
    "los": "B"
   },
   {
@@ -8357,7 +8357,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "13:15",
    "pcu": 2718,
-   "vc": 0.391,
+   "vc": 0.389,
    "los": "B"
   },
   {
@@ -8365,7 +8365,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "13:30",
    "pcu": 2690,
-   "vc": 0.387,
+   "vc": 0.385,
    "los": "B"
   },
   {
@@ -8373,7 +8373,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "13:45",
    "pcu": 2551,
-   "vc": 0.367,
+   "vc": 0.365,
    "los": "B"
   },
   {
@@ -8381,7 +8381,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "14:00",
    "pcu": 2390,
-   "vc": 0.344,
+   "vc": 0.342,
    "los": "B"
   },
   {
@@ -8389,7 +8389,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "14:15",
    "pcu": 2227,
-   "vc": 0.321,
+   "vc": 0.319,
    "los": "B"
   },
   {
@@ -8397,7 +8397,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "14:30",
    "pcu": 2132,
-   "vc": 0.307,
+   "vc": 0.305,
    "los": "B"
   },
   {
@@ -8405,23 +8405,23 @@
    "approach": "from Sanganer Stadium",
    "hour": "14:45",
    "pcu": 2086,
-   "vc": 0.3,
-   "los": "B"
+   "vc": 0.299,
+   "los": "A"
   },
   {
    "junction": "TMC-06",
    "approach": "from Sanganer Stadium",
    "hour": "15:00",
    "pcu": 2086,
-   "vc": 0.3,
-   "los": "B"
+   "vc": 0.299,
+   "los": "A"
   },
   {
    "junction": "TMC-06",
    "approach": "from Sanganer Stadium",
    "hour": "15:15",
    "pcu": 2068,
-   "vc": 0.298,
+   "vc": 0.296,
    "los": "A"
   },
   {
@@ -8429,7 +8429,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "15:30",
    "pcu": 2049,
-   "vc": 0.295,
+   "vc": 0.293,
    "los": "A"
   },
   {
@@ -8437,7 +8437,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "15:45",
    "pcu": 2029,
-   "vc": 0.292,
+   "vc": 0.291,
    "los": "A"
   },
   {
@@ -8445,7 +8445,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "16:00",
    "pcu": 2064,
-   "vc": 0.297,
+   "vc": 0.296,
    "los": "A"
   },
   {
@@ -8453,7 +8453,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "16:15",
    "pcu": 2107,
-   "vc": 0.303,
+   "vc": 0.302,
    "los": "B"
   },
   {
@@ -8461,7 +8461,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "16:30",
    "pcu": 2197,
-   "vc": 0.316,
+   "vc": 0.315,
    "los": "B"
   },
   {
@@ -8469,7 +8469,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "16:45",
    "pcu": 2298,
-   "vc": 0.331,
+   "vc": 0.329,
    "los": "B"
   },
   {
@@ -8477,7 +8477,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "17:00",
    "pcu": 2343,
-   "vc": 0.337,
+   "vc": 0.335,
    "los": "B"
   },
   {
@@ -8485,7 +8485,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "17:15",
    "pcu": 2425,
-   "vc": 0.349,
+   "vc": 0.347,
    "los": "B"
   },
   {
@@ -8493,7 +8493,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "17:30",
    "pcu": 2534,
-   "vc": 0.365,
+   "vc": 0.363,
    "los": "B"
   },
   {
@@ -8501,7 +8501,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "17:45",
    "pcu": 2667,
-   "vc": 0.384,
+   "vc": 0.382,
    "los": "B"
   },
   {
@@ -8509,7 +8509,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "18:00",
    "pcu": 2823,
-   "vc": 0.406,
+   "vc": 0.404,
    "los": "B"
   },
   {
@@ -8517,7 +8517,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "18:15",
    "pcu": 2996,
-   "vc": 0.431,
+   "vc": 0.429,
    "los": "B"
   },
   {
@@ -8525,7 +8525,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "18:30",
    "pcu": 3107,
-   "vc": 0.447,
+   "vc": 0.445,
    "los": "B"
   },
   {
@@ -8533,7 +8533,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "18:45",
    "pcu": 3153,
-   "vc": 0.454,
+   "vc": 0.451,
    "los": "C"
   },
   {
@@ -8541,7 +8541,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "19:00",
    "pcu": 3156,
-   "vc": 0.454,
+   "vc": 0.452,
    "los": "C"
   },
   {
@@ -8549,7 +8549,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "19:15",
    "pcu": 3059,
-   "vc": 0.44,
+   "vc": 0.438,
    "los": "B"
   },
   {
@@ -8557,7 +8557,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "19:30",
    "pcu": 2924,
-   "vc": 0.421,
+   "vc": 0.419,
    "los": "B"
   },
   {
@@ -8565,7 +8565,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "19:45",
    "pcu": 2739,
-   "vc": 0.394,
+   "vc": 0.392,
    "los": "B"
   },
   {
@@ -8573,7 +8573,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "20:00",
    "pcu": 2536,
-   "vc": 0.365,
+   "vc": 0.363,
    "los": "B"
   },
   {
@@ -8581,7 +8581,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "20:15",
    "pcu": 2312,
-   "vc": 0.333,
+   "vc": 0.331,
    "los": "B"
   },
   {
@@ -8589,7 +8589,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "20:30",
    "pcu": 2132,
-   "vc": 0.307,
+   "vc": 0.305,
    "los": "B"
   },
   {
@@ -8597,7 +8597,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "20:45",
    "pcu": 2010,
-   "vc": 0.289,
+   "vc": 0.288,
    "los": "A"
   },
   {
@@ -8605,7 +8605,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "21:00",
    "pcu": 1947,
-   "vc": 0.28,
+   "vc": 0.279,
    "los": "A"
   },
   {
@@ -8613,7 +8613,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "21:15",
    "pcu": 1931,
-   "vc": 0.278,
+   "vc": 0.276,
    "los": "A"
   },
   {
@@ -8621,7 +8621,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "21:30",
    "pcu": 1894,
-   "vc": 0.273,
+   "vc": 0.271,
    "los": "A"
   },
   {
@@ -8629,7 +8629,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "21:45",
    "pcu": 1876,
-   "vc": 0.27,
+   "vc": 0.269,
    "los": "A"
   },
   {
@@ -8637,7 +8637,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "22:00",
    "pcu": 1792,
-   "vc": 0.258,
+   "vc": 0.257,
    "los": "A"
   },
   {
@@ -8645,7 +8645,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "22:15",
    "pcu": 1714,
-   "vc": 0.247,
+   "vc": 0.245,
    "los": "A"
   },
   {
@@ -8653,7 +8653,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "22:30",
    "pcu": 1629,
-   "vc": 0.234,
+   "vc": 0.233,
    "los": "A"
   },
   {
@@ -8661,7 +8661,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "22:45",
    "pcu": 1516,
-   "vc": 0.218,
+   "vc": 0.217,
    "los": "A"
   },
   {
@@ -8669,7 +8669,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "23:00",
    "pcu": 1430,
-   "vc": 0.206,
+   "vc": 0.205,
    "los": "A"
   },
   {
@@ -8677,7 +8677,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "23:15",
    "pcu": 1353,
-   "vc": 0.195,
+   "vc": 0.194,
    "los": "A"
   },
   {
@@ -8685,7 +8685,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "23:30",
    "pcu": 1306,
-   "vc": 0.188,
+   "vc": 0.187,
    "los": "A"
   },
   {
@@ -8693,7 +8693,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "23:45",
    "pcu": 1242,
-   "vc": 0.179,
+   "vc": 0.178,
    "los": "A"
   },
   {
@@ -8701,7 +8701,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "00:00",
    "pcu": 1174,
-   "vc": 0.169,
+   "vc": 0.168,
    "los": "A"
   },
   {
@@ -8709,7 +8709,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "00:15",
    "pcu": 1076,
-   "vc": 0.155,
+   "vc": 0.154,
    "los": "A"
   },
   {
@@ -8717,7 +8717,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "00:30",
    "pcu": 944,
-   "vc": 0.136,
+   "vc": 0.135,
    "los": "A"
   },
   {
@@ -8725,7 +8725,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "00:45",
    "pcu": 826,
-   "vc": 0.119,
+   "vc": 0.118,
    "los": "A"
   },
   {
@@ -8733,7 +8733,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "01:00",
    "pcu": 699,
-   "vc": 0.101,
+   "vc": 0.1,
    "los": "A"
   },
   {
@@ -8749,7 +8749,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "01:30",
    "pcu": 555,
-   "vc": 0.08,
+   "vc": 0.079,
    "los": "A"
   },
   {
@@ -8773,7 +8773,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "02:15",
    "pcu": 485,
-   "vc": 0.07,
+   "vc": 0.069,
    "los": "A"
   },
   {
@@ -8781,7 +8781,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "02:30",
    "pcu": 456,
-   "vc": 0.066,
+   "vc": 0.065,
    "los": "A"
   },
   {
@@ -8797,7 +8797,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "03:00",
    "pcu": 504,
-   "vc": 0.073,
+   "vc": 0.072,
    "los": "A"
   },
   {
@@ -8805,7 +8805,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "03:15",
    "pcu": 533,
-   "vc": 0.077,
+   "vc": 0.076,
    "los": "A"
   },
   {
@@ -8829,7 +8829,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "04:00",
    "pcu": 741,
-   "vc": 0.107,
+   "vc": 0.106,
    "los": "A"
   },
   {
@@ -8845,7 +8845,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "04:30",
    "pcu": 902,
-   "vc": 0.13,
+   "vc": 0.129,
    "los": "A"
   },
   {
@@ -8853,7 +8853,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "04:45",
    "pcu": 978,
-   "vc": 0.141,
+   "vc": 0.14,
    "los": "A"
   },
   {
@@ -8861,7 +8861,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "05:00",
    "pcu": 1027,
-   "vc": 0.148,
+   "vc": 0.147,
    "los": "A"
   },
   {
@@ -8869,7 +8869,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "05:15",
    "pcu": 1037,
-   "vc": 0.149,
+   "vc": 0.148,
    "los": "A"
   },
   {
@@ -8877,7 +8877,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "05:30",
    "pcu": 1030,
-   "vc": 0.148,
+   "vc": 0.147,
    "los": "A"
   },
   {
@@ -8893,7 +8893,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "06:00",
    "pcu": 1103,
-   "vc": 0.159,
+   "vc": 0.158,
    "los": "A"
   },
   {
@@ -8901,7 +8901,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "06:15",
    "pcu": 1230,
-   "vc": 0.177,
+   "vc": 0.176,
    "los": "A"
   },
   {
@@ -8909,7 +8909,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "06:30",
    "pcu": 1382,
-   "vc": 0.199,
+   "vc": 0.198,
    "los": "A"
   },
   {
@@ -8917,7 +8917,7 @@
    "approach": "from Sanganer Stadium",
    "hour": "06:45",
    "pcu": 1549,
-   "vc": 0.223,
+   "vc": 0.222,
    "los": "A"
   },
   {
@@ -8925,14 +8925,14 @@
    "approach": "from Sanganer Stadium",
    "hour": "07:00",
    "pcu": 1716,
-   "vc": 0.247,
+   "vc": 0.246,
    "los": "A"
   }
  ],
  "los_distribution": {
-  "A": 470,
-  "B": 299,
-  "C": 324,
+  "A": 472,
+  "B": 298,
+  "C": 323,
   "D": 22,
   "E": 1,
   "F": 0

@@ -14,6 +14,7 @@ import Readout from "./Readout";
  * invented; this is opportunity for conflict, reported as a ratio between schemes.
  */
 type Row = {
+  scheme_no: number; scheme_label: string;
   junction: string; jda_name: string; today_points: number; scheme_junction_points: number;
   today_crossing_exposure: number; scheme_crossing_exposure: number;
   uturn_crossing_exposure: number; change_pct: number | null;
@@ -92,7 +93,7 @@ export default function ConflictDiagram({ s }: { s: Safety }) {
             <tbody>
               {s.junctions.map((r) => (
                 <tr key={r.junction} {...rowProps(r.junction)}>
-                  <td>{r.junction}</td><td>{r.jda_name}</td>
+                  <td className="mono">{r.scheme_label}</td><td>{r.jda_name}</td>
                   <td className="num">{r.today_points}</td>
                   <td className="num good">{r.scheme_junction_points}</td>
                   <td className="num">{r.today_crossing_exposure.toLocaleString("en-US")}</td>
@@ -111,7 +112,7 @@ export default function ConflictDiagram({ s }: { s: Safety }) {
                  style={{ display: "grid", gridTemplateColumns: "5rem 1fr", gap: ".7rem",
                           alignItems: "center", opacity: dim(r.junction), transition: "opacity .15s",
                           cursor: "pointer" }}>
-              <span className="mono" style={{ fontSize: ".68rem", color: "var(--muted)" }}>{r.junction}</span>
+              <span className="mono" style={{ fontSize: ".68rem", color: "var(--muted)" }}>{r.scheme_label}</span>
               <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
                 <div style={{ height: 9, width: `${100 * r.today_crossing_exposure / worst}%`,
                               background: "var(--rule-hard)", borderRadius: 2 }} />

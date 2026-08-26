@@ -123,6 +123,13 @@ export default function Page() {
             a parallel road.
           </p>
         </Reveal>
+        <Reveal delay={.15}>
+          <p className="src col" style={{ marginTop: "1rem" }}>
+            <strong>Two junction numbers, and why.</strong> {meta.numbering_note}{" "}
+            Chainage runs the same way, zero at the {meta.chainage_zero_at}. Every table,
+            popup and sheet carries both.
+          </p>
+        </Reveal>
         <Reveal delay={.18}>
           <div className="col" style={{
             marginTop: "1.8rem", borderLeft: "3px solid var(--defect)",
@@ -658,7 +665,7 @@ export default function Page() {
                     <tbody>
                       {relief.map((r) => (
                         <tr key={r.junction}>
-                          <td className="mono">{r.junction}</td>
+                          <td className="mono">{r.scheme_label}</td>
                           <td className="num">{r.through_pct.toFixed(1)}%</td>
                           <td className="num">{nf.format(r.peak_pcu)}</td>
                           <td className="num">{nf.format(r.residual_pcu)}</td>
@@ -779,7 +786,7 @@ export default function Page() {
                     <tbody>
                       {dl.approaches.map((r, i) => (
                         <tr key={i}>
-                          <td>{r.junction}</td>
+                          <td className="mono">{r.scheme_label}</td>
                           <td>{r.approach.replace("from ", "")}</td>
                           <td className="num bad">{r.vc.toFixed(2)}</td>
                           <td className="num">{r.queue_vehicles.toLocaleString("en-US")}</td>
@@ -952,7 +959,7 @@ export default function Page() {
                           const fails = r.vc_conservative >= 1;
                           return (
                             <tr key={i}>
-                              <td className="mono">{r.junction}</td>
+                              <td className="mono">{r.scheme_label}</td>
                               <td style={{ textAlign: "left" }}>
                                 {r.approach.includes("Mansarovar") ? "from north" : "from south"}</td>
                               <td className="num">{nf.format(Math.round(r.uturn_demand))}</td>
@@ -1079,7 +1086,7 @@ export default function Page() {
                       <tbody>
                         {sc.uturn_detour.map((d, i) => (
                           <tr key={i}>
-                            <td className="mono">{d.junction}</td>
+                            <td className="mono">{d.scheme_label}</td>
                             <td style={{ textAlign: "left" }}>{d.bay}</td>
                             <td className="num">{d.bay_beyond_drawing ? "\u2014"
                               : `${nf.format(d.one_way_m ?? 0)} m`}</td>
@@ -1122,7 +1129,7 @@ export default function Page() {
                 <tbody>
                   {sc.scenarios.map((r) => (
                     <tr key={r.junction}>
-                      <td className="mono">{r.junction}</td>
+                      <td className="mono">{r.scheme_label}</td>
                       <td style={{ textAlign: "left" }}>{r.jda_name}</td>
                       <td className="num bad">{r.s0_vc.toFixed(2)} F</td>
                       <td className="bad" style={{ textAlign: "left" }}>

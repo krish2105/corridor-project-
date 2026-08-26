@@ -113,11 +113,11 @@ export default function Compare({ rows }: { rows: Criticality[] }) {
                 onFocus={() => setHover(r.junction)}
                 onClick={() => setPinned(pinned === r.junction ? null : r.junction)}
                 aria-pressed={pinned === r.junction}
-                aria-label={`${r.junction}, ${r.jda_name}, rank ${r.rank}`}
+                aria-label={`${r.scheme_label}, ${r.jda_name}, rank ${r.rank}`}
               >
                 <span className="cmp-rank">{i + 1}</span>
                 <span className="cmp-name">
-                  <b>{r.junction}</b>
+                  <b>{r.scheme_label}</b>
                   <em>{r.jda_name}</em>
                 </span>
                 <span className="cmp-track">
@@ -156,7 +156,7 @@ export default function Compare({ rows }: { rows: Criticality[] }) {
       )}
 
       <Readout
-        title={`${sel.junction} · ${sel.jda_name}`}
+        title={`${sel.scheme_label} · ${sel.jda_name} · survey sheet ${sel.junction}`}
         fields={fields}
         pinned={pinned !== null}
         onClear={() => setPinned(null)}

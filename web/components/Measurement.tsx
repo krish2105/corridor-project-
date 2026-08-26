@@ -50,7 +50,7 @@ export default function Measurement({
           <tbody>
             {m.convergence.map((c) => (
               <tr key={c.junction}>
-                <td className="mono">{c.junction}</td>
+                <td className="mono">{c.scheme_label}</td>
                 <td style={{ textAlign: "left" }}>{c.jda_name}</td>
                 {c.by_step.map((b) => (
                   <td key={b.step_m}
@@ -103,7 +103,7 @@ export default function Measurement({
               <tbody>
                 {m.bootstrap.map((b) => (
                   <tr key={b.junction}>
-                    <td className="mono">{b.junction}</td>
+                    <td className="mono">{b.scheme_label}</td>
                     <td className="num">{b.n}</td>
                     <td className="num">{b.median_m?.toFixed(1) ?? "—"}</td>
                     <td className="num">{b.ci_m
