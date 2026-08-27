@@ -27,10 +27,15 @@ import sys
 from datetime import date
 from pathlib import Path
 
+from reportlab.platypus import KeepTogether, Paragraph
+
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from src.config import OUT, OUT_DATA
+from src.config import CORRIDOR_ROAD, OUT, OUT_DATA
+from src.pdf_kit import (BODY, CAUTION, CELL, DEFECT, EYE, H1, H2, H3, INK, NOTE, OK,
+                         SUB, bullets, kpis, render, rule, table)
 
 MD = OUT / "precedent_review.md"
+PDF = OUT / "Precedent_Review.pdf"
 READ_ON = "2026-08-27"
 
 
@@ -266,6 +271,107 @@ def build_md():
     return MD
 
 
+def _ref(items):
+    """
+    Number the sources so the body reads as prose and the reviewer still gets a
+    reference list they can check line by line.
+
+    Inline URLs in a body paragraph are unreadable at twenty claims, and a reviewer who
+    wants to verify one wants them all in a list anyway.
+    """
+    seen, order = {}, []
+    for p in items:
+        key = (p["source"], p["url"])
+        if key not in seen:
+            seen[key] = len(order) + 1
+            order.append(dict(n=seen[key], source=p["source"], url=p["url"],
+                              read_on=p["read_on"], verified=p["verified"]))
+    return seen, order
+
+
+def build_pdf():
+    items = [p for _t, sec in SECTIONS for p in sec]
+    seen, refs = _ref(items)
+    verified = [p for p in items if p["verified"]]
+    # Counted rather than fudged: several entries are national or international rather
+    # than a city, and calling those "cities" would be the kind of rounding this document
+    # is arguing against.
+    places = sorted({p["place"] for _t, sec in SECTIONS for p in sec})
+    F = []
+
+    F.append(Paragraph("PRECEDENT REVIEW &middot; SIGNAL-FREE CORRIDORS AND MEDIAN "
+                       "U-TURNS IN INDIA", EYE))
+    F.append(Paragraph("Where this has been built before", H1))
+    F.append(Paragraph(
+        f"Assembled for the {CORRIDOR_ROAD} review, {date.today().strftime('%d %B %Y')}. "
+        f"Every claim carries the source it came from and the date it was read. A claim "
+        f"marked <b>reported</b> was seen only in a search engine's summary of a page "
+        f"rather than on a page we opened, and may merge several sources; it is not "
+        f"treated as fact. Nothing here is written from memory.", SUB))
+
+    F.append(kpis([
+        (str(len(items)), "SOURCED CLAIMS", INK),
+        (f"{len(verified)}/{len(items)}", "READ ON THE PAGE ITSELF", OK),
+        (str(len(places)), "PLACES CITED", INK),
+        ("200 ft", "STATED WIDTH OF THIS ROAD", DEFECT),
+        ("1", "CORRIDOR STOPPED MID-BUILD", CAUTION),
+    ]))
+
+    F.append(Paragraph("What this review changes", H2))
+    F.append(Paragraph(
+        "Three things, before the detail.", BODY))
+    F.extend(bullets([
+        "<b>JDA's own announcement describes this road as 200 feet wide</b> &mdash; 61 m "
+        "of right of way. Our transects measure 31 to 39 m of running carriageway, so 22 "
+        "to 30 m is unaccounted for and service roads are the obvious candidate. That is "
+        "the open question on our sheet, and it is the single number that decides whether "
+        "this corridor is over capacity today.",
+        "<b>A signal-free corridor in Bengaluru was stopped after construction began.</b> "
+        "An expert committee called it faulty and ordered the site restored. The reasons "
+        "were consultation and land use, not traffic engineering. The first risk to this "
+        "scheme is a process risk, not a modelling one.",
+        "<b>The published benefit of median U-turns is real and conditional.</b> Roughly "
+        "10% more capacity and 18 to 40% less delay &mdash; measured where the bay can "
+        "serve its demand. Gap capacity binds at all twelve bays here, so this corridor "
+        "sits outside the regime that benefit was measured in.",
+    ]))
+
+    for title, sec in SECTIONS:
+        F.append(Paragraph(title, H2))
+        F.append(table(
+            ["", "WHERE", "WHAT HAPPENED", "WHAT IT MEANS HERE"],
+            [[f"[{seen[(p['source'], p['url'])]}]",
+              Paragraph(f"<b>{p['place']}</b><br/>{p['topic']}"
+                        + ("" if p["verified"] else
+                           '<br/><font color="#82600F">reported</font>'), CELL),
+              p["claim"],
+              p["bearing"] or "\u2014"]
+             for p in sec],
+            widths=[9, 25, 67, 69]))
+
+    F.append(Paragraph("Sources", H2))
+    F.append(Paragraph(
+        f"{len(refs)} sources. Those marked reported were not opened; the claim resting "
+        f"on them is flagged in the tables above and should not be quoted as fact.", BODY))
+    F.append(table(
+        ["", "SOURCE", "URL", "READ"],
+        [[f"[{r['n']}]",
+          r["source"] + ("" if r["verified"] else "  (reported)"),
+          Paragraph(f'<font size="7">{r["url"]}</font>', CELL),
+          r["read_on"]] for r in refs],
+        widths=[9, 51, 89, 21]))
+
+    F.append(rule())
+    F.append(Paragraph(
+        "Compiled by web search and direct reading of the sources listed. No claim here "
+        "is drawn from the survey data; this document exists to sit beside the audit, "
+        "not to support it. Where a source could not be opened, the claim is marked and "
+        "left unsummarised rather than paraphrased from a search result.", NOTE))
+    render(PDF, F, title=f"Precedent review - {CORRIDOR_ROAD}",
+           footer=f"Precedent review - signal-free corridors and median U-turns in India")
+    return PDF
+
+
 def _main():
     items = [p for _t, sec in SECTIONS for p in sec]
     verified = [p for p in items if p["verified"]]
@@ -317,7 +423,9 @@ def _main():
         sections=[dict(title=t, items=sec) for t, sec in SECTIONS],
     ), indent=1))
     md = build_md()
-    print(f"\nwritten: {md}")
+    pdf = build_pdf()
+    print(f"\nwritten: {pdf}   ({pdf.stat().st_size/1024:.0f} KB)")
+    print(f"written: {md}")
     print(f"written: {OUT_DATA/'precedent.json'}")
 
 

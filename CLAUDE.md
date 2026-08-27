@@ -272,6 +272,7 @@ corridor/
 │   ├── pipeline.py     # Phase 6 driver — fails at the first gate
 │   │
 │   ├── reports.py      # D6 capacity, D8 validation (pro forma), D9 method
+│   ├── pdf_kit.py      # the house style every issued PDF shares
 │   ├── precedent.py    # where this has been built before; every claim sourced
 │   ├── meeting_pack.py # -> out/Corridor_Meeting_Pack.pdf + reviewer_questions.md
 │   ├── dictionary.py   # -> docs/data_dictionary.md; gates every published field
