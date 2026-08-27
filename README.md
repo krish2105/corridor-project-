@@ -29,7 +29,7 @@ Source data is not in this repo — the workbooks and CAD are the client's. Plac
 
 ```bash
 uv sync
-uv run pytest                     # 486 tests
+uv run pytest                     # 497 tests
 uv run python src/inspect_tmc.py   # raw workbook structure, no reshaping
 uv run python src/tmc_parse.py     # workbooks -> tidy frames; never trusts a stored total
 uv run python src/spelling.py      # corrected labels, source preserved; gates our own prose too
@@ -61,6 +61,7 @@ uv run python src/masterdb.py      # -> out/Six_Junction_Master_Database.xlsx
 uv run python src/service_docs.py  # -> out/service/ and README.md
 uv run python src/build_page.py    # -> out/corridor_audit.html
 uv run python src/build_pitch.py   # -> out/corridor_pitch.html
+uv run python src/precedent.py     # -> out/precedent_review.md; every claim carries its source
 uv run python src/meeting_pack.py  # -> out/Corridor_Meeting_Pack.pdf and out/reviewer_questions.md
 npm run dev --prefix web          # dashboard on :3210
 ```
@@ -69,12 +70,12 @@ Every module runs standalone and prints its own verification metric. A module th
 
 ## Layout
 
-- `src/` — 45 modules. `tmc_parse` and `audit` are the core; `atlas`, `medians` and `dxf_inventory` read the CAD survey; `capacity`, `scheme_test`, `delay` and `economics` carry the findings.
+- `src/` — 46 modules. `tmc_parse` and `audit` are the core; `atlas`, `medians` and `dxf_inventory` read the CAD survey; `capacity`, `scheme_test`, `delay` and `economics` carry the findings.
 - `web/` — Next.js dashboard, reading the same `corridor.json` as the static report.
 - `docs/data_dictionary.md` — every field in every published file, with units. Generated, so a field added without a description fails a test.
 - `docs/jaipur_corridor_study.md` — the methodology, with inline `ERRATUM` blocks correcting 9 defects in its own worked code.
 
-**Documents are generated, not written.** Reports, the data dictionary, the commercial pack and this README all build from pipeline output, because hand-written figures go stale silently — this file claimed 26 tests while the suite held 486.
+**Documents are generated, not written.** Reports, the data dictionary, the commercial pack and this README all build from pipeline output, because hand-written figures go stale silently — this file claimed 26 tests while the suite held 497.
 
 ## Caveats, stated
 

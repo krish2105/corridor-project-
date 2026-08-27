@@ -46,6 +46,7 @@ FILES = {
     "forecast.json":    "How short a count can be and still predict the day, with its error.",
     "uturn_framework.json": "Per-bay criteria ladder, the binding constraint, and the back-solve.",
     "routes.json":      "Every movement through a signal-free junction, and what it has to do.",
+    "precedent.json":   "Where this treatment has been built before, each claim with its source.",
     "measurement.json": "Every published dimension: how it was derived, its uncertainty, what resolves it.",
     "spelling.json":    "Labels corrected for the reader, with the survey's own spelling preserved.",
 }
@@ -590,6 +591,24 @@ FIELDS.update({
     "bus_truck": "Minimum turning radius band, metres.",
     "measurement_status": "That every width here is scaled from CAD linework and "
                           "provisional pending a total station survey.",
+})
+
+
+# --- the precedent review -----------------------------------------------------
+FIELDS.update({
+    "compiled": "Date the precedent review was assembled.",
+    "n_claims": "Claims in the review.",
+    "n_verified": "Of those, how many were read on a page we actually opened.",
+    "sections": "The review, grouped.",
+    "title": "Name of a section.",
+    "items": "The claims in a section.",
+    "topic": "What the claim is about.", "place": "Where it happened.",
+    "claim": "The claim itself.", "source": "Publication or paper it came from.",
+    "url": "Where to read it.", "read_on": "Date we read it.",
+    "verified": "False where the claim was seen only in a search engine's summary of a "
+                "page rather than on the page. Those are rendered as reported and are "
+                "not treated as fact.",
+    "bearing": "What it means for this corridor specifically.",
 })
 
 

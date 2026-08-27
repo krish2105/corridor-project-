@@ -29,6 +29,7 @@ Generated 2026-08-27 from the files in `out/data`. The field list is read from t
 | `forecast.json` | How short a count can be and still predict the day, with its error. |
 | `uturn_framework.json` | Per-bay criteria ladder, the binding constraint, and the back-solve. |
 | `routes.json` | Every movement through a signal-free junction, and what it has to do. |
+| `precedent.json` | Where this treatment has been built before, each claim with its source. |
 | `measurement.json` | Every published dimension: how it was derived, its uncertainty, what resolves it. |
 | `spelling.json` | Labels corrected for the reader, with the survey's own spelling preserved. |
 
@@ -129,6 +130,7 @@ Generated 2026-08-27 from the files in `out/data`. The field list is read from t
 | `combinations_queue` | How many combinations the queue-spillback conclusion is run across, on its own grid of packing, footprint and capacity. |
 | `combinations_searched` | Window-target combinations the shortest was picked from. |
 | `combinations_uturn` | How many assumption combinations the U-turn conclusion is actually run across - not the size of the whole space. |
+| `compiled` | Date the precedent review was assembled. |
 | `composition` | Share of each vehicle class. |
 | `conclusion` | Which conclusion this row belongs to. |
 | `confirmed` | False where the change alters what was counted rather than how it was spelled. Those are on the reviewer question sheet, not applied quietly. |
@@ -276,6 +278,7 @@ Generated 2026-08-27 from the files in `out/data`. The field list is read from t
 | `irc_low` | IRC:106 factor at or below 5% share. |
 | `irc_point` | Interpolated factor at the observed share. null for composites. |
 | `irc_sp41_car_gap_s` | IRC:SP:41-1994 App III Table III-2 passenger-car critical gap, four-lane crossing under stop control, large-city adjustment applied. Our weighted gaps sit below it because two-wheelers are half the stream, so our figures favour the scheme. |
+| `items` | The claims in a section. |
 | `jam_packing` | Packing efficiency of a jammed queue. |
 | `jda_name` | The authority's own name for the junction in its scheme documents. |
 | `jda_scheme` | The authority's scheme as described in its documents. |
@@ -355,6 +358,7 @@ Generated 2026-08-27 from the files in `out/data`. The field list is read from t
 | `n` | Count of constraints at that station. |
 | `n_approaches` | Approaches clustered: six junctions by four arms. |
 | `n_bays` | Bays assessed. |
+| `n_claims` | Claims in the review. |
 | `n_corrections` | How many. |
 | `n_corridor` | Corridor approaches. |
 | `n_cross` | Cross-street approaches. |
@@ -370,6 +374,7 @@ Generated 2026-08-27 from the files in `out/data`. The field list is read from t
 | `n_unconfirmed` | How many change a word, not a letter. |
 | `n_undecided` | Bays with no verdict because a criterion could not be evaluated. |
 | `n_uturn_demand` | U-turn demand, scaled 0 to 1. |
+| `n_verified` | Of those, how many were read on a page we actually opened. |
 | `n_worst_vc` | Worst approach v/c, scaled 0 to 1. |
 | `naming_note` | That a bay is named by the side it sits on, not by the direction its traffic leaves in. Conflating the two put every detour on the wrong side of the road. |
 | `nearest_junction` | Closest junction to this opening. |
@@ -483,6 +488,7 @@ Generated 2026-08-27 from the files in `out/data`. The field list is read from t
 | `scheme_label` | The same as J1 to J6. |
 | `scheme_no` | Junction number along the corridor, 1 to 6 north to south from Mansarovar Metro. This is what a scheme drawing shows. |
 | `score` | Sum of the six normalised indicators, 0 to 6. |
+| `sections` | The review, grouped. |
 | `series` | Movement-class series compared between the two survey days. |
 | `series_available` | Per-bin series split into a separate file and fetched on demand. |
 | `serves` | The movements this bay carries. Six of the twelve are re-routed by the scheme and each bay takes three. |
@@ -497,7 +503,7 @@ Generated 2026-08-27 from the files in `out/data`. The field list is read from t
 | `silhouette_by_k` | Silhouette at each k tested. |
 | `silhouette_min` | Below this, reported as no typology rather than forced into k groups. |
 | `smaller` | Series where it falls short. |
-| `source` | Publication the values are taken from. |
+| `source` | Publication or paper it came from. |
 | `southbound_in` | Southbound flow arriving at the southern one. |
 | `southbound_out` | Southbound flow leaving the northern junction. |
 | `speed_flow` | Why a speed-flow diagram is deliberately absent. |
@@ -546,6 +552,7 @@ Generated 2026-08-27 from the files in `out/data`. The field list is read from t
 | `through_pct_mean` | Mean through share across junctions, %. |
 | `through_pct_range` | [min, max] through share, %. |
 | `time_space` | Why a time-space diagram is deliberately absent. |
+| `title` | Name of a section. |
 | `to_arm` | Arm it leaves by. |
 | `to_next_m` | Distance to the next, metres. |
 | `to_previous_m` | Distance to the previous junction, metres. |
@@ -625,12 +632,6 @@ Generated 2026-08-27 from the files in `out/data`. The field list is read from t
 | `zebra_ceiling_pcu_dir` | IRC:103 draft: above this, pedestrian delay passes 45 s and a zebra crossing shall not be provided. |
 | `zebra_over` | Approaches above that ceiling. |
 | `zebra_total` | Approaches assessed for it. |
-
-## Undocumented fields
-
-Present in the data and not described above. This list should be empty; anything here is a gap in this document, not in the data.
-
-- `numberings`
 
 ## Reading the bands
 

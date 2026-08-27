@@ -59,6 +59,9 @@ DELIVERABLES = [
     # what makes that visible.
     ("D11", "Phase 6 field plan", "Camera positions, schedule, GCP capture list",
      "T3", OUT / "phase6_field_plan.md", "awaiting the field day"),
+    ("D16", "Precedent review",
+     "Where this treatment has been built in India, how it went, sourced throughout",
+     "T1", OUT / "precedent_review.md"),
     ("D15", "Meeting pack and question sheet",
      "5-page PDF for the room, plus the open questions as a standalone hand-over",
      "T1", OUT / "Corridor_Meeting_Pack.pdf"),
@@ -259,6 +262,7 @@ PIPELINE_ORDER = [
     ("service_docs", "-> out/service/ and README.md"),
     ("build_page",   "-> out/corridor_audit.html"),
     ("build_pitch",  "-> out/corridor_pitch.html"),
+    ("precedent",     "-> out/precedent_review.md; every claim carries its source"),
     ("meeting_pack",  "-> out/Corridor_Meeting_Pack.pdf and out/reviewer_questions.md"),
 ]
 

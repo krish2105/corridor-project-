@@ -165,7 +165,12 @@ def questions(d):
                  f"each way, or it is a service road being read as carriageway. Capacity "
                  f"scales linearly with the answer, and it is the single figure that "
                  f"decides whether this corridor is over capacity today.",
-             settles="Confirmation, or a typical cross-section for the northern half."),
+             settles="Confirmation, or a typical cross-section for the northern half. "
+                     "JDA's own announcement describes New Sanganer Road as 200 feet - "
+                     "61 m - of right of way. Our transects measure 31 to 39 m of running "
+                     "carriageway, so 22 to 30 m is unaccounted for and service roads are "
+                     "the obvious candidate. Confirming that is the single change that "
+                     "moves the most in this report."),
         dict(n=4, topic="Carriageway dimensions",
              q="Is there a dimensioned drawing or a survey control sheet for this "
                "corridor?",

@@ -130,6 +130,12 @@ ALLOW = {
     "jaipur", "jda", "mansarovar", "mansarover", "sanganer", "rajat", "rajatpath",
     "patrika", "sumer", "durgapur", "mohanpura", "dholai", "mangyawas", "aatish",
     "bhrigu", "patel", "marg", "vt", "tmc", "corridorwide", "sanganer's",
+    # places and bodies named in the precedent review
+    "bengaluru", "chennai", "ahmedabad", "trivandrum", "koramangala", "agara", "sirsi",
+    "iskcon", "kd", "sg", "bda", "dda", "uttipec", "uttipec's", "indot", "txdot",
+    "deccan", "deshgujarat", "mdpi", "arxiv", "asce", "skywalk", "mut", "mutis",
+    "offside", "criticised", "rationalised", "summarise", "sustainability", "ft",
+    "civ", "eng",
     # standards, codes and bodies
     "irc", "sp", "indo", "hcm", "csir", "crri", "easts", "epsg", "utm", "wgs", "kml",
     "dwg", "dxf", "cad", "geojson", "json", "parquet", "md", "html", "pdf", "xlsx",
