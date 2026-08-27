@@ -45,6 +45,7 @@ FILES = {
     "cluster.json":     "Approach typology learned from the counts, and its held-out test.",
     "forecast.json":    "How short a count can be and still predict the day, with its error.",
     "uturn_framework.json": "Per-bay criteria ladder, the binding constraint, and the back-solve.",
+    "routes.json":      "Every movement through a signal-free junction, and what it has to do.",
     "measurement.json": "Every published dimension: how it was derived, its uncertainty, what resolves it.",
     "spelling.json":    "Labels corrected for the reader, with the survey's own spelling preserved.",
 }
@@ -185,7 +186,8 @@ FIELDS.update({
     "survey_sheet": "The workbook this junction's figures come from, "
                     "TMC-01 to TMC-06. Numbered the other way round.",
     "scheme_numbering": "The map from survey sheet to scheme number.",
-    "numbering_note": "Why there are two numberings and which is which. The survey "
+    "numbering_note": "Why the corridor carries two junction numbers and which is "
+                      "which. The survey "
                       "workbooks run the other way and their codes stay beside every "
                       "figure, because that is what it traces back to.",
     "chainage_from": "Which end chainage is measured from, so that it increases with the "
@@ -346,6 +348,30 @@ FIELDS.update({
     "detour_bays_measured": "How many bays the drawing covers in that direction.",
     "detour_bays_beyond_drawing": "How many it does not.",
     "detour_outliers_excluded": "Rows over 1 km held out of the typical figure.",
+    "bay_side": "Which side of the junction the bay sits on, north or south. Named by "
+                "position because that is the unambiguous fact.",
+    "rejoins": "The direction a driver leaves the bay travelling, which is the opposite "
+               "of the side it sits on, and therefore the through movement they cross.",
+    "serves": "The movements this bay carries. Six of the twelve are re-routed by the "
+              "scheme and each bay takes three.",
+    "permitted": "Whether this movement survives the scheme (direct), is banned and "
+                 "re-routed through a median opening, or was never surveyed.",
+    "legs": "What a re-routed driver actually does, in order. Four manoeuvres where "
+            "there was one.",
+    "movements": "All twelve surveyed movements with their route under the scheme.",
+    "from_arm": "Arm the movement enters from.", "to_arm": "Arm it leaves by.",
+    "turn": "Left, Straight, Right or U-turn, by signed delta bearing under left-hand "
+            "traffic. The left turn is the next arm clockwise.",
+    "n_direct": "Movements the scheme leaves alone: the left turns and the corridor "
+                "through movement.",
+    "n_rerouted": "Movements the scheme bans at the junction.",
+    "bays": "What each bay carries and which stream it crosses.",
+    "side": "north or south of the junction.",
+    "naming_note": "That a bay is named by the side it sits on, not by the direction its "
+                   "traffic leaves in. Conflating the two put every detour on the wrong "
+                   "side of the road.",
+    "geometry": "The arm ordering and driving side the routes are derived under.",
+    "scheme": "What the junction permits once the signals are removed.",
     "bay": ("Which U-turn bay the demand feeds: the one merging into northbound "
             "traffic, or into southbound."),
     "feeds_bay": ("Which movements have to use a U-turn bay under the scheme. Right "

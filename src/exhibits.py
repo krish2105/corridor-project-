@@ -33,6 +33,7 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from src.config import JUNCTIONS, JUNCTION_COORDS, OUT_DATA
+from src.routes import route
 from src.pcu import EXACT, IRC106, SURVEYED, factor_band
 
 TURN = {1: "Left", 2: "Straight", 3: "Right"}
@@ -54,10 +55,15 @@ def volume_flow(bins, day):
             if fr not in idx or to not in idx:
                 continue
             offset = (idx[to] - idx[fr]) % 4
+            # What this movement actually does once the signals go, from routes.py so
+            # the diagram and the capacity test cannot describe it differently.
+            r = route(idx[fr], idx[to])
             rows.append(dict(from_arm=fr, to_arm=to,
                              from_i=idx[fr], to_i=idx[to],
                              turn=TURN.get(offset, "U-turn"),
-                             veh=int(gg["count"].sum())))
+                             veh=int(gg["count"].sum()),
+                             permitted=r["permitted"], bay=r["bay"],
+                             rejoins=r["rejoins"], legs=r["legs"]))
         out.append(dict(junction=code, jda_name=JUNCTION_COORDS[code][2],
                         arms=list(arms), peak_start=str(win[0])[11:16],
                         movements=sorted(rows, key=lambda r: (r["from_i"], r["to_i"]))))

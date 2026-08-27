@@ -20,7 +20,9 @@ import { useState } from "react";
  * The centre is left open. No U-turn was surveyed, and the hole is the finding.
  */
 type Move = { from_arm: string; to_arm: string; from_i: number; to_i: number;
-              turn: string; veh: number };
+              turn: string; veh: number;
+              permitted?: string; bay?: string | null; rejoins?: string | null;
+              legs?: string[] };
 type Detour = { bay: string; detour_m: number | null; one_way_m: number | null;
                 beyond: boolean; at_junction_mouth: boolean | null };
 type J = { junction: string; scheme_no: number; scheme_label: string;
@@ -111,46 +113,70 @@ function pathFor(fromI: number, toI: number, off: number) {
  * That truncation is the point rather than a compromise. The manoeuvre does not fit in
  * the junction, which is exactly what a diagram of the junction should show.
  */
-function mutPath(j: J) {
-  const d = (j.detours ?? []).find((x) => x.bay === "northbound");
-  // The movement being replaced: Sanganer Stadium (south arm) turning RIGHT, which under
-  // left-hand traffic lands on the east arm. Everything below follows from that.
-  const [ex, ey] = node(2, true);            // entry, northbound lane of the south arm
-  const backX = ex + 2 * LANE;               // the SOUTHBOUND lane, the far side of the median
-  const [exitX, exitY] = node(1, false);     // exits east, on the near side travelling east
-  const runTo = 52;                          // truncated run-out, above the junction box
+function mutPath(j: J, m: Move) {
+  const d = (j.detours ?? []).find((x) => x.bay === m.bay);
+
+  // The heading the driver leaves the junction on, which is NOT the way they wanted to
+  // go. A corridor right turn overshoots and keeps its heading; a cross-street movement
+  // can only turn LEFT out of its arm and takes whatever heading that gives it. Same rule
+  // as routes.py, and the bay side it produces is checked against the one published there.
+  const corridor = m.from_i === 0 || m.from_i === 2;
+  const headI = corridor ? (m.from_i + 2) % 4 : (m.from_i + 1) % 4;
+  const backI = (headI + 2) % 4;
+
+  const [x1, y1] = node(m.from_i, true);
+  // Out along the heading arm, then back on its opposite carriageway. `node(headI, false)`
+  // is the far-side lane of that arm, which is exactly the one a driver runs out on.
+  const [ox, oy] = node(headI, false);
+  const [rx, ry] = node(headI, true);
+  const [ex, ey] = node(m.to_i, false);
+
+  // Truncate the run-out: the opening is hundreds of metres away and drawing it to scale
+  // would leave the junction a dot. That the manoeuvre does not fit in the junction is
+  // the thing worth seeing, so the truncation is labelled rather than hidden.
+  const f = 0.78;
+  const tx = C + (ox - C) * f, ty = C + (oy - C) * f;
+  const bx = C + (rx - C) * f, by = C + (ry - C) * f;
+  const cap = 0.94;
+  const capx = C + (ox - C) * cap, capy = C + (oy - C) * cap;
+  const capbx = C + (rx - C) * cap, capby = C + (ry - C) * cap;
+
+  const leave = pathFor(m.from_i, headI, (headI - m.from_i + 4) % 4);
+  const rejoin = pathFor(backI, m.to_i, (m.to_i - backI + 4) % 4);
+
   return (
     <g style={{ pointerEvents: "none" }}>
-      {/* 1 - straight through the junction, past the exit the driver actually wants */}
-      <path d={`M ${ex} ${ey} L ${ex} ${runTo + 22}`} fill="none" stroke="var(--caution)"
-            strokeWidth={3} strokeDasharray="7 4" />
-      {/* 2 - the U-turn itself, crossing the median to the opposite carriageway */}
-      <path d={`M ${ex} ${runTo + 22} L ${ex} ${runTo + 10}
-                A ${LANE} ${LANE} 0 0 1 ${backX} ${runTo + 10}
-                L ${backX} ${runTo + 26}`}
+      {/* 1 - out of the junction on the only heading the scheme allows */}
+      <path d={leave} fill="none" stroke="var(--caution)" strokeWidth={3}
+            strokeDasharray="7 4" />
+      {/* 2 - the run out to the opening, truncated */}
+      <path d={`M ${node(headI, false)[0]} ${node(headI, false)[1]} L ${tx} ${ty}`}
             fill="none" stroke="var(--caution)" strokeWidth={3} strokeDasharray="7 4" />
-      {/* 3 - back down the opposite carriageway, then the left turn that was a right turn.
-             Southbound, so left is EAST - the arm the original right turn was aiming at. */}
-      <path d={`M ${backX} ${runTo + 26} L ${backX} ${exitY - 26}
-                Q ${backX} ${exitY} ${exitX} ${exitY}`}
-            fill="none" stroke="var(--caution)" strokeWidth={3} strokeDasharray="7 4"
-            markerEnd="url(#ah-Mut)" />
-      {/* Anchored to the right of the run-out and reading leftward, because the text is
-          wider than the space to the left of it and was running off the drawing. */}
-      <text x={ex - 12} y={runTo + 2} textAnchor="end" fontSize={9} fill="var(--caution)"
+      {/* 3 - the U-turn itself, crossing the median to the opposite carriageway */}
+      <path d={`M ${tx} ${ty} L ${capx} ${capy}
+                A ${LANE} ${LANE} 0 0 1 ${capbx} ${capby} L ${bx} ${by}`}
+            fill="none" stroke="var(--caution)" strokeWidth={3} strokeDasharray="7 4" />
+      {/* 4 - back to the junction and out the arm they wanted all along */}
+      <path d={`M ${bx} ${by} L ${node(backI, true)[0]} ${node(backI, true)[1]}`}
+            fill="none" stroke="var(--caution)" strokeWidth={3} strokeDasharray="7 4" />
+      <path d={rejoin} fill="none" stroke="var(--caution)" strokeWidth={3}
+            strokeDasharray="7 4" markerEnd="url(#ah-Mut)" />
+      <circle cx={x1} cy={y1} r={5} fill="var(--caution)" />
+
+      {/* Parked in the top-left rather than on the heading arm. On the arm it landed on
+          top of the carriageway dimension whenever the route ran south, and two captions
+          fighting for the same 40 px is how a drawing stops being readable. */}
+      <text x={14} y={20} fontSize={9} fill="var(--caution)"
             fontFamily="IBM Plex Mono, monospace">
-        {d?.beyond ? "no opening beyond this junction" : `${(d?.one_way_m ?? 0).toLocaleString("en-US")} m out`}
+        {d?.beyond || !d
+          ? "no opening on this side within the drawing"
+          : `${(d.one_way_m ?? 0).toLocaleString("en-US")} m out, ` +
+            `${(d.detour_m ?? 0).toLocaleString("en-US")} m round trip`}
       </text>
-      {!d?.beyond && (
-        <text x={ex - 12} y={runTo + 13} textAnchor="end" fontSize={9}
-              fill="var(--caution)" fontFamily="IBM Plex Mono, monospace">
-          {(d?.detour_m ?? 0).toLocaleString("en-US")} m round trip
-        </text>
-      )}
       {d && !d.beyond && d.at_junction_mouth && (
-        <text x={ex - 12} y={runTo + 24} textAnchor="end" fontSize={8.5}
-              fill="var(--defect)" fontFamily="IBM Plex Mono, monospace">
-          at the next junction&rsquo;s own mouth
+        <text x={14} y={32} fontSize={8.5} fill="var(--defect)"
+              fontFamily="IBM Plex Mono, monospace">
+          and that opening is a junction mouth
         </text>
       )}
     </g>
@@ -170,9 +196,14 @@ export default function VolumeFlow({ junctions }: { junctions: J[] }) {
   const active = pinned ?? hover;
   // Show how a right turn ACTUALLY travels once the signals are gone. Off by default:
   // the diagram's job is the survey, and the scheme is an overlay on it.
+  // The overlay follows whichever movement is selected, so a reader can trace ANY of
+  // them rather than the one route the component used to hard-code. That hard-coding is
+  // what the reviewer caught: it drew a single path and implied it was the only one.
   const [mut, setMut] = useState(false);
   const j = junctions.find((x) => x.junction === code)!;
   const mpp = scaleOf(j.width_m);
+  const sel = active !== null ? j.movements[active] : null;
+  const rerouted = j.movements.filter((m) => m.permitted === "re-routed");
   const max = Math.max(...j.movements.map((m) => m.veh));
   const total = j.movements.reduce((s, m) => s + m.veh, 0);
 
@@ -196,13 +227,52 @@ export default function VolumeFlow({ junctions }: { junctions: J[] }) {
           ))}
         </div>
 
-        <div className="picker" style={{ marginTop: ".5rem" }}>
-          <button aria-pressed={mut} onClick={() => setMut(!mut)}>
-            {mut && <span className="pill" />}
-            <span className="lab">
-              {mut ? "hide" : "show"} how a right turn travels under the scheme
-            </span>
-          </button>
+        <div className="stack" style={{ gap: ".45rem", marginTop: ".6rem" }}>
+          <div className="picker">
+            <button aria-pressed={mut} onClick={() => setMut(!mut)}>
+              {mut && <span className="pill" />}
+              <span className="lab">
+                {mut ? "hide" : "show"} how each banned movement has to travel
+              </span>
+            </button>
+          </div>
+          {mut && (
+            <>
+              <p className="src" style={{ margin: 0 }}>
+                <strong>{rerouted.length} of {j.movements.length} movements cannot be
+                made at this junction once the signals go.</strong> Pick one to trace the
+                route a driver is left with. The other {j.movements.length - rerouted.length}{" "}
+                &mdash; the left turns and the corridor through movement &mdash; are
+                unaffected.
+              </p>
+              <div className="picker">
+                {rerouted.map((m) => {
+                  const k = j.movements.indexOf(m);
+                  return (
+                    <button key={k} aria-pressed={pinned === k}
+                            onClick={() => setPinned(pinned === k ? null : k)}>
+                      {pinned === k && <span className="pill" />}
+                      <span className="lab">
+                        {m.from_arm.split(" ")[0]} &rarr; {m.to_arm.split(" ")[0]}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+              {sel && sel.permitted === "re-routed" && (
+                <ol className="legs">
+                  {(sel.legs ?? []).map((l, i) => <li key={i}>{l}</li>)}
+                </ol>
+              )}
+              {sel && sel.permitted !== "re-routed" && (
+                <p className="src" style={{ margin: 0 }}>
+                  <b>{sel.from_arm} &rarr; {sel.to_arm}</b> is unaffected by the scheme:
+                  it is {sel.turn === "Straight" ? "the corridor through movement"
+                    : "a left turn, which crosses nothing under left-hand traffic"}.
+                </p>
+              )}
+            </>
+          )}
         </div>
 
         <div style={{ overflowX: "auto" }}>
@@ -316,7 +386,7 @@ export default function VolumeFlow({ junctions }: { junctions: J[] }) {
                 opening, turns 180 degrees, comes back, and only then turns left. Four
                 manoeuvres where there was one, and the return leg re-enters the stream
                 the scheme exists to speed up. */}
-            {mut && mutPath(j)}
+            {mut && sel && sel.permitted === "re-routed" && mutPath(j, sel)}
 
             {/* the uncounted U-turn */}
             <circle cx={C} cy={C} r={19} fill="var(--paper)" stroke="var(--rule-hard)"

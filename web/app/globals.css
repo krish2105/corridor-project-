@@ -480,3 +480,10 @@ td.pub{background:var(--accent-soft);font-weight:600}
 .cm-pop .maplibregl-popup-close-button{font-size:1.05rem;line-height:1;
   width:26px;height:26px;color:var(--muted)}
 .cm-pop .maplibregl-popup-close-button:hover{background:var(--sunk);color:var(--ink)}
+
+/* the legs of a re-routed movement --------------------------------------- */
+/* Numbered because the order IS the finding: four manoeuvres where there was one. */
+.legs{margin:.2rem 0 0;padding-left:1.35rem;font-size:.78rem;line-height:1.6;
+  color:var(--muted)}
+.legs li{margin-bottom:.1rem}
+.legs li::marker{color:var(--caution);font-weight:600}

@@ -40,6 +40,7 @@ uv run python src/pcu.py           # IRC:106 share-dependent PCU, bands for the 
 uv run python src/analyse.py       # peak hour, TMC matrices, through/turning split
 uv run python src/capacity.py      # measured widths, v/c, design life
 uv run python src/measurement.py   # -> out/data/measurement.json; the uncertainty on every dimension
+uv run python src/routes.py        # every movement through a signal-free junction, enumerated
 uv run python src/scheme_test.py   # does the JDA U-turn scheme work?
 uv run python src/uturn_framework.py # where a bay belongs: criteria ladder, binding term back-solved
 uv run python src/delay.py         # queue, spillback, corridor journey time
@@ -68,7 +69,7 @@ Every module runs standalone and prints its own verification metric. A module th
 
 ## Layout
 
-- `src/` — 44 modules. `tmc_parse` and `audit` are the core; `atlas`, `medians` and `dxf_inventory` read the CAD survey; `capacity`, `scheme_test`, `delay` and `economics` carry the findings.
+- `src/` — 45 modules. `tmc_parse` and `audit` are the core; `atlas`, `medians` and `dxf_inventory` read the CAD survey; `capacity`, `scheme_test`, `delay` and `economics` carry the findings.
 - `web/` — Next.js dashboard, reading the same `corridor.json` as the static report.
 - `docs/data_dictionary.md` — every field in every published file, with units. Generated, so a field added without a description fails a test.
 - `docs/jaipur_corridor_study.md` — the methodology, with inline `ERRATUM` blocks correcting 9 defects in its own worked code.

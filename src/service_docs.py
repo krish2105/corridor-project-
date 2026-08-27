@@ -238,6 +238,7 @@ PIPELINE_ORDER = [
     ("analyse",      "peak hour, TMC matrices, through/turning split"),
     ("capacity",     "measured widths, v/c, design life"),
     ("measurement",  "-> out/data/measurement.json; the uncertainty on every dimension"),
+    ("routes",       "every movement through a signal-free junction, enumerated"),
     ("scheme_test",  "does the JDA U-turn scheme work?"),
     ("uturn_framework", "where a bay belongs: criteria ladder, binding term back-solved"),
     ("delay",        "queue, spillback, corridor journey time"),

@@ -356,13 +356,15 @@ def build():
             f"divided by the follow-up headway. A single median opening therefore passes "
             f"at most <b>{nf(ceiling)} veh/hour with nothing at all to yield to</b>. "
             f"<b>{uf['bays_above_bay_ceiling']} of the {uf['n_bays']} bays are above that "
-            f"ceiling</b> - {SCHEME_LABEL['TMC-01']} southbound at "
-            f"{nf([b for b in uf['bays'] if b['junction']=='TMC-01' and b['bay']=='southbound'][0]['uturn_demand'])} "
-            f"and {SCHEME_LABEL['TMC-04']} southbound at "
-            f"{nf([b for b in uf['bays'] if b['junction']=='TMC-04' and b['bay']=='southbound'][0]['uturn_demand'])} "
-            f"veh/hour. Those are not badly sited bays. They are the wrong instrument for "
-            f"the demand, and no metering, median widening or opposing-flow relief reaches "
-            f"them.", BODY)]))
+            f"ceiling</b> - "
+            + ", ".join(
+                f"{SCHEME_LABEL.get(b['junction'], b['junction'])} {b['bay']} bay at "
+                f"{nf(b['uturn_demand'])}"
+                for b in uf["bays"]
+                if (b.get("back_solve") or {}).get("above_bay_ceiling"))
+            + " veh/hour. Those are not badly sited bays. They are the wrong instrument "
+              "for the demand, and no metering, median widening or opposing-flow relief "
+              "reaches them.", BODY)]))
     F.append(Paragraph("The decision ladder: which constraint binds, bay by bay", H3))
     F.append(Paragraph(
         "Five criteria evaluated in order, first failure binding. A criterion below the "

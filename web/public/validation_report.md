@@ -1,7 +1,7 @@
 # Count validation report
 ### New Sanganer Road corridor — automated counts against manual counts
 
-**Generated** 2026-08-26. Structure and gates are final; measurements are outstanding.
+**Generated** 2026-08-27. Structure and gates are final; measurements are outstanding.
 
 **STATUS: PRO FORMA.** No footage has been processed, so no accuracy has been measured. The gates below are already fixed in code and are published here ahead of the measurement; they are not adjustable once a result exists.
 

@@ -38,7 +38,7 @@ export default function Ladder({ f }: { f: NonNullable<Corridor["uturn_framework
           return (
             <button key={id} aria-pressed={id === open} onClick={() => setOpen(id)}>
               {id === open && <span className="pill" />}
-              <span className="lab">{b.scheme_label} {b.bay === "northbound" ? "N" : "S"}</span>
+              <span className="lab">{b.scheme_label} {b.bay === "north" ? "N" : "S"}</span>
             </button>
           );
         })}
@@ -46,7 +46,7 @@ export default function Ladder({ f }: { f: NonNullable<Corridor["uturn_framework
 
       <div className="lad">
         <div className="lad-head">
-          <span className="mono">{bay.scheme_label} &middot; {bay.jda_name} &middot; {bay.bay}<br /><span style={{ color: "var(--faint)" }}>survey sheet {bay.junction}</span></span>
+          <span className="mono">{bay.scheme_label} &middot; {bay.jda_name} &middot; {bay.bay} bay<br /><span style={{ color: "var(--faint)" }}>survey sheet {bay.junction}</span></span>
           <span className={"chip " + (bay.verdict === "fails" ? "critical" : "")}>
             {bay.verdict} &middot; {nf.format(bay.uturn_demand)} veh/h
           </span>

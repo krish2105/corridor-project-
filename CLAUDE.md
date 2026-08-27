@@ -246,6 +246,7 @@ corridor/
 │   │
 │   ├── capacity.py     # measured widths, v/c, design life of the relief
 │   ├── measurement.py  # every published dimension: method, uncertainty, what fixes it
+│   ├── routes.py       # every path through a signal-free junction, enumerated
 │   ├── scheme_test.py  # gap acceptance — does the JDA U-turn scheme work?
 │   ├── uturn_framework.py # where a bay belongs: criteria ladder, binding term
 │   ├── delay.py        # queue, spillback, delay, corridor journey time

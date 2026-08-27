@@ -17,7 +17,13 @@
      "from_i": 0,
      "to_i": 1,
      "turn": "Left",
-     "veh": 1358
+     "veh": 1358,
+     "permitted": "direct",
+     "bay": null,
+     "rejoins": null,
+     "legs": [
+      "left out of the north arm into the east arm"
+     ]
     },
     {
      "from_arm": "Mansarover Metro",
@@ -25,7 +31,13 @@
      "from_i": 0,
      "to_i": 2,
      "turn": "Straight",
-     "veh": 2182
+     "veh": 2182,
+     "permitted": "direct",
+     "bay": null,
+     "rejoins": null,
+     "legs": [
+      "straight through, north to south"
+     ]
     },
     {
      "from_arm": "Mansarover Metro",
@@ -33,7 +45,16 @@
      "from_i": 0,
      "to_i": 3,
      "turn": "Right",
-     "veh": 137
+     "veh": 137,
+     "permitted": "re-routed",
+     "bay": "south",
+     "rejoins": "northbound",
+     "legs": [
+      "straight through the junction, overshooting the west arm it wants",
+      "U-turn at the median opening south of the junction",
+      "back northbound to the junction",
+      "left into the west arm"
+     ]
     },
     {
      "from_arm": "Patrika Gate",
@@ -41,7 +62,16 @@
      "from_i": 1,
      "to_i": 0,
      "turn": "Right",
-     "veh": 438
+     "veh": 438,
+     "permitted": "re-routed",
+     "bay": "south",
+     "rejoins": "northbound",
+     "legs": [
+      "left out of the east arm onto the corridor, southbound",
+      "U-turn at the median opening south of the junction",
+      "back northbound to the junction",
+      "straight through, exiting the north arm"
+     ]
     },
     {
      "from_arm": "Patrika Gate",
@@ -49,7 +79,13 @@
      "from_i": 1,
      "to_i": 2,
      "turn": "Left",
-     "veh": 445
+     "veh": 445,
+     "permitted": "direct",
+     "bay": null,
+     "rejoins": null,
+     "legs": [
+      "left out of the east arm into the south arm"
+     ]
     },
     {
      "from_arm": "Patrika Gate",
@@ -57,7 +93,16 @@
      "from_i": 1,
      "to_i": 3,
      "turn": "Straight",
-     "veh": 400
+     "veh": 400,
+     "permitted": "re-routed",
+     "bay": "south",
+     "rejoins": "northbound",
+     "legs": [
+      "left out of the east arm onto the corridor, southbound",
+      "U-turn at the median opening south of the junction",
+      "back northbound to the junction",
+      "left into the west arm"
+     ]
     },
     {
      "from_arm": "Sanganer Stadium",
@@ -65,7 +110,13 @@
      "from_i": 2,
      "to_i": 0,
      "turn": "Straight",
-     "veh": 3094
+     "veh": 3094,
+     "permitted": "direct",
+     "bay": null,
+     "rejoins": null,
+     "legs": [
+      "straight through, south to north"
+     ]
     },
     {
      "from_arm": "Sanganer Stadium",
@@ -73,7 +124,16 @@
      "from_i": 2,
      "to_i": 1,
      "turn": "Right",
-     "veh": 633
+     "veh": 633,
+     "permitted": "re-routed",
+     "bay": "north",
+     "rejoins": "southbound",
+     "legs": [
+      "straight through the junction, overshooting the east arm it wants",
+      "U-turn at the median opening north of the junction",
+      "back southbound to the junction",
+      "left into the east arm"
+     ]
     },
     {
      "from_arm": "Sanganer Stadium",
@@ -81,7 +141,13 @@
      "from_i": 2,
      "to_i": 3,
      "turn": "Left",
-     "veh": 281
+     "veh": 281,
+     "permitted": "direct",
+     "bay": null,
+     "rejoins": null,
+     "legs": [
+      "left out of the south arm into the west arm"
+     ]
     },
     {
      "from_arm": "Sumer Nagar",
@@ -89,7 +155,13 @@
      "from_i": 3,
      "to_i": 0,
      "turn": "Left",
-     "veh": 17
+     "veh": 17,
+     "permitted": "direct",
+     "bay": null,
+     "rejoins": null,
+     "legs": [
+      "left out of the west arm into the north arm"
+     ]
     },
     {
      "from_arm": "Sumer Nagar",
@@ -97,7 +169,16 @@
      "from_i": 3,
      "to_i": 1,
      "turn": "Straight",
-     "veh": 1554
+     "veh": 1554,
+     "permitted": "re-routed",
+     "bay": "north",
+     "rejoins": "southbound",
+     "legs": [
+      "left out of the west arm onto the corridor, northbound",
+      "U-turn at the median opening north of the junction",
+      "back southbound to the junction",
+      "left into the east arm"
+     ]
     },
     {
      "from_arm": "Sumer Nagar",
@@ -105,7 +186,16 @@
      "from_i": 3,
      "to_i": 2,
      "turn": "Right",
-     "veh": 568
+     "veh": 568,
+     "permitted": "re-routed",
+     "bay": "north",
+     "rejoins": "southbound",
+     "legs": [
+      "left out of the west arm onto the corridor, northbound",
+      "U-turn at the median opening north of the junction",
+      "back southbound to the junction",
+      "straight through, exiting the south arm"
+     ]
     }
    ],
    "width_m": 15.6,
@@ -113,18 +203,18 @@
    "width_measured_on": "corridor arms only; cross streets are not measured",
    "detours": [
     {
-     "bay": "northbound",
-     "detour_m": 1555,
-     "one_way_m": 777,
-     "beyond": false,
-     "at_junction_mouth": true
-    },
-    {
-     "bay": "southbound",
+     "bay": "south",
      "detour_m": null,
      "one_way_m": null,
      "beyond": true,
      "at_junction_mouth": null
+    },
+    {
+     "bay": "north",
+     "detour_m": 1555,
+     "one_way_m": 777,
+     "beyond": false,
+     "at_junction_mouth": true
     }
    ]
   },
@@ -145,7 +235,13 @@
      "from_i": 0,
      "to_i": 1,
      "turn": "Left",
-     "veh": 130
+     "veh": 130,
+     "permitted": "direct",
+     "bay": null,
+     "rejoins": null,
+     "legs": [
+      "left out of the north arm into the east arm"
+     ]
     },
     {
      "from_arm": "Mansarover Metro",
@@ -153,7 +249,13 @@
      "from_i": 0,
      "to_i": 2,
      "turn": "Straight",
-     "veh": 2727
+     "veh": 2727,
+     "permitted": "direct",
+     "bay": null,
+     "rejoins": null,
+     "legs": [
+      "straight through, north to south"
+     ]
     },
     {
      "from_arm": "Mansarover Metro",
@@ -161,7 +263,16 @@
      "from_i": 0,
      "to_i": 3,
      "turn": "Right",
-     "veh": 535
+     "veh": 535,
+     "permitted": "re-routed",
+     "bay": "south",
+     "rejoins": "northbound",
+     "legs": [
+      "straight through the junction, overshooting the west arm it wants",
+      "U-turn at the median opening south of the junction",
+      "back northbound to the junction",
+      "left into the west arm"
+     ]
     },
     {
      "from_arm": "Durgapur",
@@ -169,7 +280,16 @@
      "from_i": 1,
      "to_i": 0,
      "turn": "Right",
-     "veh": 280
+     "veh": 280,
+     "permitted": "re-routed",
+     "bay": "south",
+     "rejoins": "northbound",
+     "legs": [
+      "left out of the east arm onto the corridor, southbound",
+      "U-turn at the median opening south of the junction",
+      "back northbound to the junction",
+      "straight through, exiting the north arm"
+     ]
     },
     {
      "from_arm": "Durgapur",
@@ -177,7 +297,13 @@
      "from_i": 1,
      "to_i": 2,
      "turn": "Left",
-     "veh": 27
+     "veh": 27,
+     "permitted": "direct",
+     "bay": null,
+     "rejoins": null,
+     "legs": [
+      "left out of the east arm into the south arm"
+     ]
     },
     {
      "from_arm": "Durgapur",
@@ -185,7 +311,16 @@
      "from_i": 1,
      "to_i": 3,
      "turn": "Straight",
-     "veh": 672
+     "veh": 672,
+     "permitted": "re-routed",
+     "bay": "south",
+     "rejoins": "northbound",
+     "legs": [
+      "left out of the east arm onto the corridor, southbound",
+      "U-turn at the median opening south of the junction",
+      "back northbound to the junction",
+      "left into the west arm"
+     ]
     },
     {
      "from_arm": "Sanganer Stadium",
@@ -193,7 +328,13 @@
      "from_i": 2,
      "to_i": 0,
      "turn": "Straight",
-     "veh": 2555
+     "veh": 2555,
+     "permitted": "direct",
+     "bay": null,
+     "rejoins": null,
+     "legs": [
+      "straight through, south to north"
+     ]
     },
     {
      "from_arm": "Sanganer Stadium",
@@ -201,7 +342,16 @@
      "from_i": 2,
      "to_i": 1,
      "turn": "Right",
-     "veh": 39
+     "veh": 39,
+     "permitted": "re-routed",
+     "bay": "north",
+     "rejoins": "southbound",
+     "legs": [
+      "straight through the junction, overshooting the east arm it wants",
+      "U-turn at the median opening north of the junction",
+      "back southbound to the junction",
+      "left into the east arm"
+     ]
     },
     {
      "from_arm": "Sanganer Stadium",
@@ -209,7 +359,13 @@
      "from_i": 2,
      "to_i": 3,
      "turn": "Left",
-     "veh": 228
+     "veh": 228,
+     "permitted": "direct",
+     "bay": null,
+     "rejoins": null,
+     "legs": [
+      "left out of the south arm into the west arm"
+     ]
     },
     {
      "from_arm": "Mohanpura",
@@ -217,7 +373,13 @@
      "from_i": 3,
      "to_i": 0,
      "turn": "Left",
-     "veh": 1065
+     "veh": 1065,
+     "permitted": "direct",
+     "bay": null,
+     "rejoins": null,
+     "legs": [
+      "left out of the west arm into the north arm"
+     ]
     },
     {
      "from_arm": "Mohanpura",
@@ -225,7 +387,16 @@
      "from_i": 3,
      "to_i": 1,
      "turn": "Straight",
-     "veh": 641
+     "veh": 641,
+     "permitted": "re-routed",
+     "bay": "north",
+     "rejoins": "southbound",
+     "legs": [
+      "left out of the west arm onto the corridor, northbound",
+      "U-turn at the median opening north of the junction",
+      "back southbound to the junction",
+      "left into the east arm"
+     ]
     },
     {
      "from_arm": "Mohanpura",
@@ -233,7 +404,16 @@
      "from_i": 3,
      "to_i": 2,
      "turn": "Right",
-     "veh": 577
+     "veh": 577,
+     "permitted": "re-routed",
+     "bay": "north",
+     "rejoins": "southbound",
+     "legs": [
+      "left out of the west arm onto the corridor, northbound",
+      "U-turn at the median opening north of the junction",
+      "back southbound to the junction",
+      "straight through, exiting the south arm"
+     ]
     }
    ],
    "width_m": 12.5,
@@ -241,16 +421,16 @@
    "width_measured_on": "corridor arms only; cross streets are not measured",
    "detours": [
     {
-     "bay": "northbound",
-     "detour_m": 1046,
-     "one_way_m": 523,
+     "bay": "south",
+     "detour_m": 5,
+     "one_way_m": 3,
      "beyond": false,
      "at_junction_mouth": true
     },
     {
-     "bay": "southbound",
-     "detour_m": 5,
-     "one_way_m": 3,
+     "bay": "north",
+     "detour_m": 1046,
+     "one_way_m": 523,
      "beyond": false,
      "at_junction_mouth": true
     }
@@ -273,7 +453,13 @@
      "from_i": 0,
      "to_i": 1,
      "turn": "Left",
-     "veh": 184
+     "veh": 184,
+     "permitted": "direct",
+     "bay": null,
+     "rejoins": null,
+     "legs": [
+      "left out of the north arm into the east arm"
+     ]
     },
     {
      "from_arm": "Mansarover Metro",
@@ -281,7 +467,13 @@
      "from_i": 0,
      "to_i": 2,
      "turn": "Straight",
-     "veh": 3000
+     "veh": 3000,
+     "permitted": "direct",
+     "bay": null,
+     "rejoins": null,
+     "legs": [
+      "straight through, north to south"
+     ]
     },
     {
      "from_arm": "Mansarover Metro",
@@ -289,7 +481,16 @@
      "from_i": 0,
      "to_i": 3,
      "turn": "Right",
-     "veh": 330
+     "veh": 330,
+     "permitted": "re-routed",
+     "bay": "south",
+     "rejoins": "northbound",
+     "legs": [
+      "straight through the junction, overshooting the west arm it wants",
+      "U-turn at the median opening south of the junction",
+      "back northbound to the junction",
+      "left into the west arm"
+     ]
     },
     {
      "from_arm": "Patel Marg Crossing",
@@ -297,7 +498,16 @@
      "from_i": 1,
      "to_i": 0,
      "turn": "Right",
-     "veh": 244
+     "veh": 244,
+     "permitted": "re-routed",
+     "bay": "south",
+     "rejoins": "northbound",
+     "legs": [
+      "left out of the east arm onto the corridor, southbound",
+      "U-turn at the median opening south of the junction",
+      "back northbound to the junction",
+      "straight through, exiting the north arm"
+     ]
     },
     {
      "from_arm": "Patel Marg Crossing",
@@ -305,7 +515,13 @@
      "from_i": 1,
      "to_i": 2,
      "turn": "Left",
-     "veh": 210
+     "veh": 210,
+     "permitted": "direct",
+     "bay": null,
+     "rejoins": null,
+     "legs": [
+      "left out of the east arm into the south arm"
+     ]
     },
     {
      "from_arm": "Patel Marg Crossing",
@@ -313,7 +529,16 @@
      "from_i": 1,
      "to_i": 3,
      "turn": "Straight",
-     "veh": 574
+     "veh": 574,
+     "permitted": "re-routed",
+     "bay": "south",
+     "rejoins": "northbound",
+     "legs": [
+      "left out of the east arm onto the corridor, southbound",
+      "U-turn at the median opening south of the junction",
+      "back northbound to the junction",
+      "left into the west arm"
+     ]
     },
     {
      "from_arm": "Sanganer Stadium",
@@ -321,7 +546,13 @@
      "from_i": 2,
      "to_i": 0,
      "turn": "Straight",
-     "veh": 3433
+     "veh": 3433,
+     "permitted": "direct",
+     "bay": null,
+     "rejoins": null,
+     "legs": [
+      "straight through, south to north"
+     ]
     },
     {
      "from_arm": "Sanganer Stadium",
@@ -329,7 +560,16 @@
      "from_i": 2,
      "to_i": 1,
      "turn": "Right",
-     "veh": 386
+     "veh": 386,
+     "permitted": "re-routed",
+     "bay": "north",
+     "rejoins": "southbound",
+     "legs": [
+      "straight through the junction, overshooting the east arm it wants",
+      "U-turn at the median opening north of the junction",
+      "back southbound to the junction",
+      "left into the east arm"
+     ]
     },
     {
      "from_arm": "Sanganer Stadium",
@@ -337,7 +577,13 @@
      "from_i": 2,
      "to_i": 3,
      "turn": "Left",
-     "veh": 356
+     "veh": 356,
+     "permitted": "direct",
+     "bay": null,
+     "rejoins": null,
+     "legs": [
+      "left out of the south arm into the west arm"
+     ]
     },
     {
      "from_arm": "Sumer Nagar",
@@ -345,7 +591,13 @@
      "from_i": 3,
      "to_i": 0,
      "turn": "Left",
-     "veh": 270
+     "veh": 270,
+     "permitted": "direct",
+     "bay": null,
+     "rejoins": null,
+     "legs": [
+      "left out of the west arm into the north arm"
+     ]
     },
     {
      "from_arm": "Sumer Nagar",
@@ -353,7 +605,16 @@
      "from_i": 3,
      "to_i": 1,
      "turn": "Straight",
-     "veh": 346
+     "veh": 346,
+     "permitted": "re-routed",
+     "bay": "north",
+     "rejoins": "southbound",
+     "legs": [
+      "left out of the west arm onto the corridor, northbound",
+      "U-turn at the median opening north of the junction",
+      "back southbound to the junction",
+      "left into the east arm"
+     ]
     },
     {
      "from_arm": "Sumer Nagar",
@@ -361,7 +622,16 @@
      "from_i": 3,
      "to_i": 2,
      "turn": "Right",
-     "veh": 362
+     "veh": 362,
+     "permitted": "re-routed",
+     "bay": "north",
+     "rejoins": "southbound",
+     "legs": [
+      "left out of the west arm onto the corridor, northbound",
+      "U-turn at the median opening north of the junction",
+      "back southbound to the junction",
+      "straight through, exiting the south arm"
+     ]
     }
    ],
    "width_m": 13.0,
@@ -369,16 +639,16 @@
    "width_measured_on": "corridor arms only; cross streets are not measured",
    "detours": [
     {
-     "bay": "northbound",
-     "detour_m": 4,
-     "one_way_m": 2,
+     "bay": "south",
+     "detour_m": 1048,
+     "one_way_m": 524,
      "beyond": false,
      "at_junction_mouth": true
     },
     {
-     "bay": "southbound",
-     "detour_m": 1048,
-     "one_way_m": 524,
+     "bay": "north",
+     "detour_m": 4,
+     "one_way_m": 2,
      "beyond": false,
      "at_junction_mouth": true
     }
@@ -401,7 +671,13 @@
      "from_i": 0,
      "to_i": 1,
      "turn": "Left",
-     "veh": 476
+     "veh": 476,
+     "permitted": "direct",
+     "bay": null,
+     "rejoins": null,
+     "legs": [
+      "left out of the north arm into the east arm"
+     ]
     },
     {
      "from_arm": "Mansarover Metro",
@@ -409,7 +685,13 @@
      "from_i": 0,
      "to_i": 2,
      "turn": "Straight",
-     "veh": 2781
+     "veh": 2781,
+     "permitted": "direct",
+     "bay": null,
+     "rejoins": null,
+     "legs": [
+      "straight through, north to south"
+     ]
     },
     {
      "from_arm": "Mansarover Metro",
@@ -417,7 +699,16 @@
      "from_i": 0,
      "to_i": 3,
      "turn": "Right",
-     "veh": 641
+     "veh": 641,
+     "permitted": "re-routed",
+     "bay": "south",
+     "rejoins": "northbound",
+     "legs": [
+      "straight through the junction, overshooting the west arm it wants",
+      "U-turn at the median opening south of the junction",
+      "back northbound to the junction",
+      "left into the west arm"
+     ]
     },
     {
      "from_arm": "VT Road",
@@ -425,7 +716,16 @@
      "from_i": 1,
      "to_i": 0,
      "turn": "Right",
-     "veh": 411
+     "veh": 411,
+     "permitted": "re-routed",
+     "bay": "south",
+     "rejoins": "northbound",
+     "legs": [
+      "left out of the east arm onto the corridor, southbound",
+      "U-turn at the median opening south of the junction",
+      "back northbound to the junction",
+      "straight through, exiting the north arm"
+     ]
     },
     {
      "from_arm": "VT Road",
@@ -433,7 +733,13 @@
      "from_i": 1,
      "to_i": 2,
      "turn": "Left",
-     "veh": 224
+     "veh": 224,
+     "permitted": "direct",
+     "bay": null,
+     "rejoins": null,
+     "legs": [
+      "left out of the east arm into the south arm"
+     ]
     },
     {
      "from_arm": "VT Road",
@@ -441,7 +747,16 @@
      "from_i": 1,
      "to_i": 3,
      "turn": "Straight",
-     "veh": 441
+     "veh": 441,
+     "permitted": "re-routed",
+     "bay": "south",
+     "rejoins": "northbound",
+     "legs": [
+      "left out of the east arm onto the corridor, southbound",
+      "U-turn at the median opening south of the junction",
+      "back northbound to the junction",
+      "left into the west arm"
+     ]
     },
     {
      "from_arm": "Sanganer Stadium",
@@ -449,7 +764,13 @@
      "from_i": 2,
      "to_i": 0,
      "turn": "Straight",
-     "veh": 2482
+     "veh": 2482,
+     "permitted": "direct",
+     "bay": null,
+     "rejoins": null,
+     "legs": [
+      "straight through, south to north"
+     ]
     },
     {
      "from_arm": "Sanganer Stadium",
@@ -457,7 +778,16 @@
      "from_i": 2,
      "to_i": 1,
      "turn": "Right",
-     "veh": 441
+     "veh": 441,
+     "permitted": "re-routed",
+     "bay": "north",
+     "rejoins": "southbound",
+     "legs": [
+      "straight through the junction, overshooting the east arm it wants",
+      "U-turn at the median opening north of the junction",
+      "back southbound to the junction",
+      "left into the east arm"
+     ]
     },
     {
      "from_arm": "Sanganer Stadium",
@@ -465,7 +795,13 @@
      "from_i": 2,
      "to_i": 3,
      "turn": "Left",
-     "veh": 44
+     "veh": 44,
+     "permitted": "direct",
+     "bay": null,
+     "rejoins": null,
+     "legs": [
+      "left out of the south arm into the west arm"
+     ]
     },
     {
      "from_arm": "Dholai",
@@ -473,7 +809,13 @@
      "from_i": 3,
      "to_i": 0,
      "turn": "Left",
-     "veh": 1487
+     "veh": 1487,
+     "permitted": "direct",
+     "bay": null,
+     "rejoins": null,
+     "legs": [
+      "left out of the west arm into the north arm"
+     ]
     },
     {
      "from_arm": "Dholai",
@@ -481,7 +823,16 @@
      "from_i": 3,
      "to_i": 1,
      "turn": "Straight",
-     "veh": 1157
+     "veh": 1157,
+     "permitted": "re-routed",
+     "bay": "north",
+     "rejoins": "southbound",
+     "legs": [
+      "left out of the west arm onto the corridor, northbound",
+      "U-turn at the median opening north of the junction",
+      "back southbound to the junction",
+      "left into the east arm"
+     ]
     },
     {
      "from_arm": "Dholai",
@@ -489,7 +840,16 @@
      "from_i": 3,
      "to_i": 2,
      "turn": "Right",
-     "veh": 291
+     "veh": 291,
+     "permitted": "re-routed",
+     "bay": "north",
+     "rejoins": "southbound",
+     "legs": [
+      "left out of the west arm onto the corridor, northbound",
+      "U-turn at the median opening north of the junction",
+      "back southbound to the junction",
+      "straight through, exiting the south arm"
+     ]
     }
    ],
    "width_m": 17.6,
@@ -497,16 +857,16 @@
    "width_measured_on": "corridor arms only; cross streets are not measured",
    "detours": [
     {
-     "bay": "northbound",
-     "detour_m": 28,
-     "one_way_m": 14,
+     "bay": "south",
+     "detour_m": 19,
+     "one_way_m": 10,
      "beyond": false,
      "at_junction_mouth": true
     },
     {
-     "bay": "southbound",
-     "detour_m": 19,
-     "one_way_m": 10,
+     "bay": "north",
+     "detour_m": 28,
+     "one_way_m": 14,
      "beyond": false,
      "at_junction_mouth": true
     }
@@ -529,7 +889,13 @@
      "from_i": 0,
      "to_i": 1,
      "turn": "Left",
-     "veh": 141
+     "veh": 141,
+     "permitted": "direct",
+     "bay": null,
+     "rejoins": null,
+     "legs": [
+      "left out of the north arm into the east arm"
+     ]
     },
     {
      "from_arm": "Mansarover Metro",
@@ -537,7 +903,13 @@
      "from_i": 0,
      "to_i": 2,
      "turn": "Straight",
-     "veh": 5763
+     "veh": 5763,
+     "permitted": "direct",
+     "bay": null,
+     "rejoins": null,
+     "legs": [
+      "straight through, north to south"
+     ]
     },
     {
      "from_arm": "Mansarover Metro",
@@ -545,7 +917,16 @@
      "from_i": 0,
      "to_i": 3,
      "turn": "Right",
-     "veh": 241
+     "veh": 241,
+     "permitted": "re-routed",
+     "bay": "south",
+     "rejoins": "northbound",
+     "legs": [
+      "straight through the junction, overshooting the west arm it wants",
+      "U-turn at the median opening south of the junction",
+      "back northbound to the junction",
+      "left into the west arm"
+     ]
     },
     {
      "from_arm": "Rajatpath",
@@ -553,7 +934,16 @@
      "from_i": 1,
      "to_i": 0,
      "turn": "Right",
-     "veh": 192
+     "veh": 192,
+     "permitted": "re-routed",
+     "bay": "south",
+     "rejoins": "northbound",
+     "legs": [
+      "left out of the east arm onto the corridor, southbound",
+      "U-turn at the median opening south of the junction",
+      "back northbound to the junction",
+      "straight through, exiting the north arm"
+     ]
     },
     {
      "from_arm": "Rajatpath",
@@ -561,7 +951,13 @@
      "from_i": 1,
      "to_i": 2,
      "turn": "Left",
-     "veh": 126
+     "veh": 126,
+     "permitted": "direct",
+     "bay": null,
+     "rejoins": null,
+     "legs": [
+      "left out of the east arm into the south arm"
+     ]
     },
     {
      "from_arm": "Rajatpath",
@@ -569,7 +965,16 @@
      "from_i": 1,
      "to_i": 3,
      "turn": "Straight",
-     "veh": 386
+     "veh": 386,
+     "permitted": "re-routed",
+     "bay": "south",
+     "rejoins": "northbound",
+     "legs": [
+      "left out of the east arm onto the corridor, southbound",
+      "U-turn at the median opening south of the junction",
+      "back northbound to the junction",
+      "left into the west arm"
+     ]
     },
     {
      "from_arm": "Sanganer Stadium",
@@ -577,7 +982,13 @@
      "from_i": 2,
      "to_i": 0,
      "turn": "Straight",
-     "veh": 3978
+     "veh": 3978,
+     "permitted": "direct",
+     "bay": null,
+     "rejoins": null,
+     "legs": [
+      "straight through, south to north"
+     ]
     },
     {
      "from_arm": "Sanganer Stadium",
@@ -585,7 +996,16 @@
      "from_i": 2,
      "to_i": 1,
      "turn": "Right",
-     "veh": 444
+     "veh": 444,
+     "permitted": "re-routed",
+     "bay": "north",
+     "rejoins": "southbound",
+     "legs": [
+      "straight through the junction, overshooting the east arm it wants",
+      "U-turn at the median opening north of the junction",
+      "back southbound to the junction",
+      "left into the east arm"
+     ]
     },
     {
      "from_arm": "Sanganer Stadium",
@@ -593,7 +1013,13 @@
      "from_i": 2,
      "to_i": 3,
      "turn": "Left",
-     "veh": 185
+     "veh": 185,
+     "permitted": "direct",
+     "bay": null,
+     "rejoins": null,
+     "legs": [
+      "left out of the south arm into the west arm"
+     ]
     },
     {
      "from_arm": "Mangyawas",
@@ -601,7 +1027,13 @@
      "from_i": 3,
      "to_i": 0,
      "turn": "Left",
-     "veh": 265
+     "veh": 265,
+     "permitted": "direct",
+     "bay": null,
+     "rejoins": null,
+     "legs": [
+      "left out of the west arm into the north arm"
+     ]
     },
     {
      "from_arm": "Mangyawas",
@@ -609,7 +1041,16 @@
      "from_i": 3,
      "to_i": 1,
      "turn": "Straight",
-     "veh": 384
+     "veh": 384,
+     "permitted": "re-routed",
+     "bay": "north",
+     "rejoins": "southbound",
+     "legs": [
+      "left out of the west arm onto the corridor, northbound",
+      "U-turn at the median opening north of the junction",
+      "back southbound to the junction",
+      "left into the east arm"
+     ]
     },
     {
      "from_arm": "Mangyawas",
@@ -617,7 +1058,16 @@
      "from_i": 3,
      "to_i": 2,
      "turn": "Right",
-     "veh": 328
+     "veh": 328,
+     "permitted": "re-routed",
+     "bay": "north",
+     "rejoins": "southbound",
+     "legs": [
+      "left out of the west arm onto the corridor, northbound",
+      "U-turn at the median opening north of the junction",
+      "back southbound to the junction",
+      "straight through, exiting the south arm"
+     ]
     }
    ],
    "width_m": 18.2,
@@ -625,16 +1075,16 @@
    "width_measured_on": "corridor arms only; cross streets are not measured",
    "detours": [
     {
-     "bay": "northbound",
-     "detour_m": 5,
-     "one_way_m": 2,
+     "bay": "south",
+     "detour_m": 1720,
+     "one_way_m": 860,
      "beyond": false,
      "at_junction_mouth": true
     },
     {
-     "bay": "southbound",
-     "detour_m": 1720,
-     "one_way_m": 860,
+     "bay": "north",
+     "detour_m": 5,
+     "one_way_m": 2,
      "beyond": false,
      "at_junction_mouth": true
     }
@@ -657,7 +1107,13 @@
      "from_i": 0,
      "to_i": 1,
      "turn": "Left",
-     "veh": 956
+     "veh": 956,
+     "permitted": "direct",
+     "bay": null,
+     "rejoins": null,
+     "legs": [
+      "left out of the north arm into the east arm"
+     ]
     },
     {
      "from_arm": "Mansarover Metro",
@@ -665,7 +1121,13 @@
      "from_i": 0,
      "to_i": 2,
      "turn": "Straight",
-     "veh": 3377
+     "veh": 3377,
+     "permitted": "direct",
+     "bay": null,
+     "rejoins": null,
+     "legs": [
+      "straight through, north to south"
+     ]
     },
     {
      "from_arm": "Mansarover Metro",
@@ -673,7 +1135,16 @@
      "from_i": 0,
      "to_i": 3,
      "turn": "Right",
-     "veh": 146
+     "veh": 146,
+     "permitted": "re-routed",
+     "bay": "south",
+     "rejoins": "northbound",
+     "legs": [
+      "straight through the junction, overshooting the west arm it wants",
+      "U-turn at the median opening south of the junction",
+      "back northbound to the junction",
+      "left into the west arm"
+     ]
     },
     {
      "from_arm": "New Aatish Market",
@@ -681,7 +1152,16 @@
      "from_i": 1,
      "to_i": 0,
      "turn": "Right",
-     "veh": 413
+     "veh": 413,
+     "permitted": "re-routed",
+     "bay": "south",
+     "rejoins": "northbound",
+     "legs": [
+      "left out of the east arm onto the corridor, southbound",
+      "U-turn at the median opening south of the junction",
+      "back northbound to the junction",
+      "straight through, exiting the north arm"
+     ]
     },
     {
      "from_arm": "New Aatish Market",
@@ -689,7 +1169,13 @@
      "from_i": 1,
      "to_i": 2,
      "turn": "Left",
-     "veh": 150
+     "veh": 150,
+     "permitted": "direct",
+     "bay": null,
+     "rejoins": null,
+     "legs": [
+      "left out of the east arm into the south arm"
+     ]
     },
     {
      "from_arm": "New Aatish Market",
@@ -697,7 +1183,16 @@
      "from_i": 1,
      "to_i": 3,
      "turn": "Straight",
-     "veh": 140
+     "veh": 140,
+     "permitted": "re-routed",
+     "bay": "south",
+     "rejoins": "northbound",
+     "legs": [
+      "left out of the east arm onto the corridor, southbound",
+      "U-turn at the median opening south of the junction",
+      "back northbound to the junction",
+      "left into the west arm"
+     ]
     },
     {
      "from_arm": "Sanganer Stadium",
@@ -705,7 +1200,13 @@
      "from_i": 2,
      "to_i": 0,
      "turn": "Straight",
-     "veh": 3293
+     "veh": 3293,
+     "permitted": "direct",
+     "bay": null,
+     "rejoins": null,
+     "legs": [
+      "straight through, south to north"
+     ]
     },
     {
      "from_arm": "Sanganer Stadium",
@@ -713,7 +1214,16 @@
      "from_i": 2,
      "to_i": 1,
      "turn": "Right",
-     "veh": 550
+     "veh": 550,
+     "permitted": "re-routed",
+     "bay": "north",
+     "rejoins": "southbound",
+     "legs": [
+      "straight through the junction, overshooting the east arm it wants",
+      "U-turn at the median opening north of the junction",
+      "back southbound to the junction",
+      "left into the east arm"
+     ]
     },
     {
      "from_arm": "Sanganer Stadium",
@@ -721,7 +1231,13 @@
      "from_i": 2,
      "to_i": 3,
      "turn": "Left",
-     "veh": 48
+     "veh": 48,
+     "permitted": "direct",
+     "bay": null,
+     "rejoins": null,
+     "legs": [
+      "left out of the south arm into the west arm"
+     ]
     },
     {
      "from_arm": "Mansarover",
@@ -729,7 +1245,13 @@
      "from_i": 3,
      "to_i": 0,
      "turn": "Left",
-     "veh": 116
+     "veh": 116,
+     "permitted": "direct",
+     "bay": null,
+     "rejoins": null,
+     "legs": [
+      "left out of the west arm into the north arm"
+     ]
     },
     {
      "from_arm": "Mansarover",
@@ -737,7 +1259,16 @@
      "from_i": 3,
      "to_i": 1,
      "turn": "Straight",
-     "veh": 134
+     "veh": 134,
+     "permitted": "re-routed",
+     "bay": "north",
+     "rejoins": "southbound",
+     "legs": [
+      "left out of the west arm onto the corridor, northbound",
+      "U-turn at the median opening north of the junction",
+      "back southbound to the junction",
+      "left into the east arm"
+     ]
     },
     {
      "from_arm": "Mansarover",
@@ -745,7 +1276,16 @@
      "from_i": 3,
      "to_i": 2,
      "turn": "Right",
-     "veh": 80
+     "veh": 80,
+     "permitted": "re-routed",
+     "bay": "north",
+     "rejoins": "southbound",
+     "legs": [
+      "left out of the west arm onto the corridor, northbound",
+      "U-turn at the median opening north of the junction",
+      "back southbound to the junction",
+      "straight through, exiting the south arm"
+     ]
     }
    ],
    "width_m": 19.4,
@@ -753,18 +1293,18 @@
    "width_measured_on": "corridor arms only; cross streets are not measured",
    "detours": [
     {
-     "bay": "northbound",
-     "detour_m": null,
-     "one_way_m": null,
-     "beyond": true,
-     "at_junction_mouth": null
-    },
-    {
-     "bay": "southbound",
+     "bay": "south",
      "detour_m": 1685,
      "one_way_m": 842,
      "beyond": false,
      "at_junction_mouth": false
+    },
+    {
+     "bay": "north",
+     "detour_m": null,
+     "one_way_m": null,
+     "beyond": true,
+     "at_junction_mouth": null
     }
    ]
   }

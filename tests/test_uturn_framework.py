@@ -188,47 +188,46 @@ def test_weaving_fails_when_the_bay_lands_on_top_of_the_junction():
 
 # --- which way is north along the chainage ------------------------------------
 
-def test_bay_direction_survives_flipping_the_chainage_convention():
+def test_bay_side_survives_flipping_the_chainage_convention():
     """
     The claim this pins: flipping CHAINAGE_FROM is a one-line change that cannot silently
-    re-swap the bays.
+    move a bay to the other side of its junction.
 
-    It could before. The rule was written as "northbound means higher chainage", which is
-    a fact about the file, not about the road - and when chainage started at the northern
-    end it meant every bay was matched to an opening on the wrong side of its junction.
-    Nothing threw. The numbers looked reasonable. It was found only because reversing the
-    chainage direction happened to fix it.
-
-    So: a northbound driver must reach an opening that is physically NORTH, under either
-    convention.
+    openings_toward now takes a SIDE, not a travel direction, and that is the second fix
+    to this function. The first was that "northbound means higher chainage" is a fact
+    about the file, not the road. The second was worse: the argument used to be a bay
+    NAME, and the bay name meant the direction a driver LEAVES in - so a bay serving
+    northbound traffic, which sits SOUTH of its junction, was matched to an opening to
+    the north. Every detour was measured to the wrong side and nothing threw.
     """
     from src.scheme_test import openings_toward
     ops = [100, 500, 900]
     junction = 500
 
-    # chainage from the south: north is higher chainage
-    assert openings_toward("northbound", junction, ops, "south") == [900]
-    assert openings_toward("southbound", junction, ops, "south") == [100]
+    # chained from the south: north is higher chainage
+    assert openings_toward("north", junction, ops, "south") == [900]
+    assert openings_toward("south", junction, ops, "south") == [100]
 
-    # chainage from the north: north is LOWER chainage, and the answers must still be
-    # the same physical openings
-    assert openings_toward("northbound", junction, ops, "north") == [100]
-    assert openings_toward("southbound", junction, ops, "north") == [900]
+    # chained from the north: north is LOWER chainage, and the SAME physical openings
+    # must come back for the same side
+    assert openings_toward("north", junction, ops, "north") == [100]
+    assert openings_toward("south", junction, ops, "north") == [900]
 
 
-def test_an_opening_at_the_junction_itself_serves_neither_direction():
+def test_an_opening_at_the_junction_itself_serves_neither_side():
     """A driver does not detour to the opening they are already standing on."""
     from src.scheme_test import openings_toward
-    assert openings_toward("northbound", 500, [500], "south") == []
-    assert openings_toward("southbound", 500, [500], "south") == []
+    assert openings_toward("north", 500, [500], "south") == []
+    assert openings_toward("south", 500, [500], "south") == []
 
 
 def test_a_junction_at_the_end_of_the_drawing_has_no_opening_beyond_it():
     """
-    TMC-01 sits 5 m from the southern end. Reporting a southbound detour there would mean
-    inventing an opening outside the survey extent - which is what the old rule did.
+    TMC-01 sits at the southern end of the drawing, so there is nothing south of it.
+    Reporting a detour to its south bay would mean inventing an opening outside the
+    survey extent - which is what the old rule did, by looking north instead.
     """
     from src.scheme_test import openings_toward
     ops = [774, 1295, 2086]
-    assert openings_toward("southbound", 5, ops, "south") == []
-    assert openings_toward("northbound", 5, ops, "south") == [774, 1295, 2086]
+    assert openings_toward("south", 5, ops, "south") == []
+    assert openings_toward("north", 5, ops, "south") == [774, 1295, 2086]

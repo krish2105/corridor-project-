@@ -860,7 +860,14 @@
    {
     "junction": "TMC-01",
     "approach": "Mansarovar Metro",
-    "bay": "northbound",
+    "bay": "south",
+    "bay_side": "south",
+    "rejoins": "northbound",
+    "serves": [
+     "north -> west",
+     "east -> north",
+     "east -> west"
+    ],
     "jda_name": "B-2 Bypass",
     "uturn_demand": 975.0,
     "conflicting_flow": 3094.0,
@@ -877,7 +884,14 @@
    {
     "junction": "TMC-01",
     "approach": "Sanganer Stadium",
-    "bay": "southbound",
+    "bay": "north",
+    "bay_side": "north",
+    "rejoins": "southbound",
+    "serves": [
+     "south -> east",
+     "west -> east",
+     "west -> south"
+    ],
     "jda_name": "B-2 Bypass",
     "uturn_demand": 2755.0,
     "conflicting_flow": 2182.0,
@@ -894,7 +908,14 @@
    {
     "junction": "TMC-02",
     "approach": "Mansarovar Metro",
-    "bay": "northbound",
+    "bay": "south",
+    "bay_side": "south",
+    "rejoins": "northbound",
+    "serves": [
+     "north -> west",
+     "east -> north",
+     "east -> west"
+    ],
     "jda_name": "Vijay Path",
     "uturn_demand": 1487.0,
     "conflicting_flow": 2555.0,
@@ -911,7 +932,14 @@
    {
     "junction": "TMC-02",
     "approach": "Sanganer Stadium",
-    "bay": "southbound",
+    "bay": "north",
+    "bay_side": "north",
+    "rejoins": "southbound",
+    "serves": [
+     "south -> east",
+     "west -> east",
+     "west -> south"
+    ],
     "jda_name": "Vijay Path",
     "uturn_demand": 1257.0,
     "conflicting_flow": 2727.0,
@@ -928,7 +956,14 @@
    {
     "junction": "TMC-03",
     "approach": "Mansarovar Metro",
-    "bay": "northbound",
+    "bay": "south",
+    "bay_side": "south",
+    "rejoins": "northbound",
+    "serves": [
+     "north -> west",
+     "east -> north",
+     "east -> west"
+    ],
     "jda_name": "Patel Marg",
     "uturn_demand": 1148.0,
     "conflicting_flow": 3433.0,
@@ -945,7 +980,14 @@
    {
     "junction": "TMC-03",
     "approach": "Sanganer Stadium",
-    "bay": "southbound",
+    "bay": "north",
+    "bay_side": "north",
+    "rejoins": "southbound",
+    "serves": [
+     "south -> east",
+     "west -> east",
+     "west -> south"
+    ],
     "jda_name": "Patel Marg",
     "uturn_demand": 1094.0,
     "conflicting_flow": 3000.0,
@@ -962,7 +1004,14 @@
    {
     "junction": "TMC-04",
     "approach": "Mansarovar Metro",
-    "bay": "northbound",
+    "bay": "south",
+    "bay_side": "south",
+    "rejoins": "northbound",
+    "serves": [
+     "north -> west",
+     "east -> north",
+     "east -> west"
+    ],
     "jda_name": "VT Road",
     "uturn_demand": 1493.0,
     "conflicting_flow": 2482.0,
@@ -979,7 +1028,14 @@
    {
     "junction": "TMC-04",
     "approach": "Sanganer Stadium",
-    "bay": "southbound",
+    "bay": "north",
+    "bay_side": "north",
+    "rejoins": "southbound",
+    "serves": [
+     "south -> east",
+     "west -> east",
+     "west -> south"
+    ],
     "jda_name": "VT Road",
     "uturn_demand": 1889.0,
     "conflicting_flow": 2781.0,
@@ -996,7 +1052,14 @@
    {
     "junction": "TMC-05",
     "approach": "Mansarovar Metro",
-    "bay": "northbound",
+    "bay": "south",
+    "bay_side": "south",
+    "rejoins": "northbound",
+    "serves": [
+     "north -> west",
+     "east -> north",
+     "east -> west"
+    ],
     "jda_name": "Rajat Path",
     "uturn_demand": 819.0,
     "conflicting_flow": 3978.0,
@@ -1013,7 +1076,14 @@
    {
     "junction": "TMC-05",
     "approach": "Sanganer Stadium",
-    "bay": "southbound",
+    "bay": "north",
+    "bay_side": "north",
+    "rejoins": "southbound",
+    "serves": [
+     "south -> east",
+     "west -> east",
+     "west -> south"
+    ],
     "jda_name": "Rajat Path",
     "uturn_demand": 1156.0,
     "conflicting_flow": 5763.0,
@@ -1030,7 +1100,14 @@
    {
     "junction": "TMC-06",
     "approach": "Mansarovar Metro",
-    "bay": "northbound",
+    "bay": "south",
+    "bay_side": "south",
+    "rejoins": "northbound",
+    "serves": [
+     "north -> west",
+     "east -> north",
+     "east -> west"
+    ],
     "jda_name": "Bhrigu Path",
     "uturn_demand": 699.0,
     "conflicting_flow": 3293.0,
@@ -1047,7 +1124,14 @@
    {
     "junction": "TMC-06",
     "approach": "Sanganer Stadium",
-    "bay": "southbound",
+    "bay": "north",
+    "bay_side": "north",
+    "rejoins": "southbound",
+    "serves": [
+     "south -> east",
+     "west -> east",
+     "west -> south"
+    ],
     "jda_name": "Bhrigu Path",
     "uturn_demand": 764.0,
     "conflicting_flow": 3377.0,
@@ -1295,167 +1379,167 @@
   "irc_sp41_car_gap_s": 5.5,
   "gap_source": "composition-weighted from literature; benchmarked against IRC:SP:41-1994 Appendix III Table III-2 passenger-car value and Indo-HCM 2017 base gaps",
   "uturn_analogue": "merge into the opposing stream, not a crossing of it",
-  "feeds_bay": "right turns from all four arms, plus the cross-street through movement",
+  "feeds_bay": "right turns from all four arms, plus the cross-street through movement; see routes.py for the full enumeration",
   "uturn_detour": [
    {
     "junction": "TMC-06",
-    "bay": "northbound",
+    "bay": "south",
     "demand": 699.0,
-    "bay_beyond_drawing": true,
-    "one_way_m": null,
-    "detour_m": null,
-    "veh_km_per_hour": null,
-    "scheme_no": 1,
-    "scheme_label": "J1"
-   },
-   {
-    "junction": "TMC-06",
-    "bay": "southbound",
-    "demand": 764.0,
     "bay_beyond_drawing": false,
     "junction_chainage_m": 3,
     "bay_chainage_m": 845,
     "one_way_m": 842,
     "detour_m": 1685,
-    "veh_km_per_hour": 1287.1,
+    "veh_km_per_hour": 1177.6,
     "bay_is_junction_mouth": false,
     "scheme_no": 1,
     "scheme_label": "J1"
    },
    {
-    "junction": "TMC-05",
-    "bay": "northbound",
-    "demand": 819.0,
-    "bay_beyond_drawing": false,
-    "junction_chainage_m": 1650,
-    "bay_chainage_m": 1648,
-    "one_way_m": 2,
-    "detour_m": 5,
-    "veh_km_per_hour": 3.9,
-    "bay_is_junction_mouth": true,
-    "scheme_no": 2,
-    "scheme_label": "J2"
+    "junction": "TMC-06",
+    "bay": "north",
+    "demand": 764.0,
+    "bay_beyond_drawing": true,
+    "one_way_m": null,
+    "detour_m": null,
+    "veh_km_per_hour": null,
+    "scheme_no": 1,
+    "scheme_label": "J1"
    },
    {
     "junction": "TMC-05",
-    "bay": "southbound",
-    "demand": 1156.0,
+    "bay": "south",
+    "demand": 819.0,
     "bay_beyond_drawing": false,
     "junction_chainage_m": 1650,
     "bay_chainage_m": 2510,
     "one_way_m": 860,
     "detour_m": 1720,
-    "veh_km_per_hour": 1988.6,
+    "veh_km_per_hour": 1408.9,
+    "bay_is_junction_mouth": true,
+    "scheme_no": 2,
+    "scheme_label": "J2"
+   },
+   {
+    "junction": "TMC-05",
+    "bay": "north",
+    "demand": 1156.0,
+    "bay_beyond_drawing": false,
+    "junction_chainage_m": 1650,
+    "bay_chainage_m": 1648,
+    "one_way_m": 2,
+    "detour_m": 5,
+    "veh_km_per_hour": 5.5,
     "bay_is_junction_mouth": true,
     "scheme_no": 2,
     "scheme_label": "J2"
    },
    {
     "junction": "TMC-04",
-    "bay": "northbound",
+    "bay": "south",
     "demand": 1493.0,
     "bay_beyond_drawing": false,
     "junction_chainage_m": 2524,
-    "bay_chainage_m": 2510,
-    "one_way_m": 14,
-    "detour_m": 28,
-    "veh_km_per_hour": 41.2,
+    "bay_chainage_m": 2534,
+    "one_way_m": 10,
+    "detour_m": 19,
+    "veh_km_per_hour": 28.4,
     "bay_is_junction_mouth": true,
     "scheme_no": 3,
     "scheme_label": "J3"
    },
    {
     "junction": "TMC-04",
-    "bay": "southbound",
+    "bay": "north",
     "demand": 1889.0,
     "bay_beyond_drawing": false,
     "junction_chainage_m": 2524,
-    "bay_chainage_m": 2534,
-    "one_way_m": 10,
-    "detour_m": 19,
-    "veh_km_per_hour": 35.9,
+    "bay_chainage_m": 2510,
+    "one_way_m": 14,
+    "detour_m": 28,
+    "veh_km_per_hour": 52.1,
     "bay_is_junction_mouth": true,
     "scheme_no": 3,
     "scheme_label": "J3"
    },
    {
     "junction": "TMC-03",
-    "bay": "northbound",
+    "bay": "south",
     "demand": 1148.0,
     "bay_beyond_drawing": false,
     "junction_chainage_m": 3318,
-    "bay_chainage_m": 3317,
-    "one_way_m": 2,
-    "detour_m": 4,
-    "veh_km_per_hour": 4.1,
+    "bay_chainage_m": 3842,
+    "one_way_m": 524,
+    "detour_m": 1048,
+    "veh_km_per_hour": 1202.9,
     "bay_is_junction_mouth": true,
     "scheme_no": 4,
     "scheme_label": "J4"
    },
    {
     "junction": "TMC-03",
-    "bay": "southbound",
+    "bay": "north",
     "demand": 1094.0,
     "bay_beyond_drawing": false,
     "junction_chainage_m": 3318,
-    "bay_chainage_m": 3842,
-    "one_way_m": 524,
-    "detour_m": 1048,
-    "veh_km_per_hour": 1146.3,
+    "bay_chainage_m": 3317,
+    "one_way_m": 2,
+    "detour_m": 4,
+    "veh_km_per_hour": 3.9,
     "bay_is_junction_mouth": true,
     "scheme_no": 4,
     "scheme_label": "J4"
    },
    {
     "junction": "TMC-02",
-    "bay": "northbound",
+    "bay": "south",
     "demand": 1487.0,
     "bay_beyond_drawing": false,
     "junction_chainage_m": 3840,
-    "bay_chainage_m": 3317,
-    "one_way_m": 523,
-    "detour_m": 1046,
-    "veh_km_per_hour": 1555.3,
+    "bay_chainage_m": 3842,
+    "one_way_m": 3,
+    "detour_m": 5,
+    "veh_km_per_hour": 8.2,
     "bay_is_junction_mouth": true,
     "scheme_no": 5,
     "scheme_label": "J5"
    },
    {
     "junction": "TMC-02",
-    "bay": "southbound",
+    "bay": "north",
     "demand": 1257.0,
     "bay_beyond_drawing": false,
     "junction_chainage_m": 3840,
-    "bay_chainage_m": 3842,
-    "one_way_m": 3,
-    "detour_m": 5,
-    "veh_km_per_hour": 6.9,
+    "bay_chainage_m": 3317,
+    "one_way_m": 523,
+    "detour_m": 1046,
+    "veh_km_per_hour": 1314.7,
     "bay_is_junction_mouth": true,
     "scheme_no": 5,
     "scheme_label": "J5"
    },
    {
     "junction": "TMC-01",
-    "bay": "northbound",
+    "bay": "south",
     "demand": 975.0,
-    "bay_beyond_drawing": false,
-    "junction_chainage_m": 4620,
-    "bay_chainage_m": 3842,
-    "one_way_m": 777,
-    "detour_m": 1555,
-    "veh_km_per_hour": 1515.9,
-    "bay_is_junction_mouth": true,
+    "bay_beyond_drawing": true,
+    "one_way_m": null,
+    "detour_m": null,
+    "veh_km_per_hour": null,
     "scheme_no": 6,
     "scheme_label": "J6"
    },
    {
     "junction": "TMC-01",
-    "bay": "southbound",
+    "bay": "north",
     "demand": 2755.0,
-    "bay_beyond_drawing": true,
-    "one_way_m": null,
-    "detour_m": null,
-    "veh_km_per_hour": null,
+    "bay_beyond_drawing": false,
+    "junction_chainage_m": 4620,
+    "bay_chainage_m": 3842,
+    "one_way_m": 777,
+    "detour_m": 1555,
+    "veh_km_per_hour": 4283.5,
+    "bay_is_junction_mouth": true,
     "scheme_no": 6,
     "scheme_label": "J6"
    }
@@ -1503,16 +1587,16 @@
   "detour_min_m": 4,
   "detour_max_m": 1720,
   "detour_mean_m": 712,
-  "detour_veh_km_per_hour": 7585.2,
+  "detour_veh_km_per_hour": 9485.7,
   "detour_bays_measured": 10,
   "detour_bays_beyond_drawing": 2,
   "detour_bays_at_junction_mouth": 9,
   "detour_bays_midblock": 1,
   "detour_midblock_mean_m": 1685,
-  "detour_midblock_veh_km": 1287.1,
+  "detour_midblock_veh_km": 1177.6,
   "detour_mouth_mean_m": 603,
   "detour_mean_typical_m": 1685,
-  "detour_veh_km_typical": 1287.1,
+  "detour_veh_km_typical": 1177.6,
   "detour_outliers_excluded": 9,
   "gap_direction_note": "our gap sits mid-pack in the Indian field evidence - above the Kerala openings, below Gupta, CSIR-CRRI and IRC:SP:41 - so the finding rests on neither the generous nor the punitive end",
   "two_wheeler_gap_basis": "Gupta, Mondal & Sharma 2018 (Varanasi, four-lane divided, 7.03-8.90 m per direction) 3.83 s and Datta & Bhuyan 2014 (six four-lane median openings) 3.37-4.78 s; 3.5 s sits inside both",
@@ -4054,8 +4138,65 @@
    {
     "junction": "TMC-01",
     "jda_name": "B-2 Bypass",
-    "bay": "northbound",
+    "bay": "south",
     "uturn_demand": 975,
+    "verdict": "fails",
+    "binding_criterion": "gap capacity",
+    "blocked_on": [],
+    "blocked_if_binding_cleared": [
+     "median width",
+     "storage",
+     "weaving",
+     "detour burden"
+    ],
+    "checks": {
+     "gap capacity": {
+      "status": "fail",
+      "value": 7.6,
+      "detail": "v/c 7.6 exceeds 3.0. Reported as no viable gaps, not as a capacity number: past this ratio gap acceptance has degenerated and the model is out of regime."
+     },
+     "median width": {
+      "status": "not reached",
+      "value": null,
+      "detail": "not reached: gap capacity binds first."
+     },
+     "storage": {
+      "status": "not reached",
+      "value": null,
+      "detail": "not reached: gap capacity binds first."
+     },
+     "weaving": {
+      "status": "not reached",
+      "value": null,
+      "detail": "not reached: gap capacity binds first."
+     },
+     "detour burden": {
+      "status": "not reached",
+      "value": null,
+      "detail": "not reached: gap capacity binds first."
+     }
+    },
+    "back_solve": {
+     "conflicting_now": 3094,
+     "demand_now": 975,
+     "demand_servable": 129,
+     "demand_reduction_pct": 86.8,
+     "bay_ceiling_veh_hr": 1800,
+     "above_bay_ceiling": false,
+     "gap_needed_s": 1.57,
+     "gap_ours_s": 3.93,
+     "conflicting_needed": 745,
+     "conflicting_reduction_pct": 75.9,
+     "note": null
+    },
+    "scheme_no": 6,
+    "scheme_label": "J6"
+   },
+   {
+    "junction": "TMC-01",
+    "jda_name": "B-2 Bypass",
+    "bay": "north",
+    "uturn_demand": 2755,
     "verdict": "fails",
     "binding_criterion": "gap capacity",
     "blocked_on": [],
@@ -4065,8 +4206,8 @@
     "checks": {
      "gap capacity": {
       "status": "fail",
-      "value": 7.6,
-      "detail": "v/c 7.6 exceeds 3.0. Reported as no viable gaps, not as a capacity number: past this ratio gap acceptance has degenerated and the model is out of regime."
+      "value": 9.6,
+      "detail": "v/c 9.6 exceeds 3.0. Reported as no viable gaps, not as a capacity number: past this ratio gap acceptance has degenerated and the model is out of regime."
      },
      "median width": {
       "status": "not reached",
@@ -4090,63 +4231,6 @@
      }
     },
     "back_solve": {
-     "conflicting_now": 3094,
-     "demand_now": 975,
-     "demand_servable": 129,
-     "demand_reduction_pct": 86.8,
-     "bay_ceiling_veh_hr": 1800,
-     "above_bay_ceiling": false,
-     "gap_needed_s": 1.57,
-     "gap_ours_s": 3.93,
-     "conflicting_needed": 745,
-     "conflicting_reduction_pct": 75.9,
-     "note": null
-    },
-    "scheme_no": 6,
-    "scheme_label": "J6"
-   },
-   {
-    "junction": "TMC-01",
-    "jda_name": "B-2 Bypass",
-    "bay": "southbound",
-    "uturn_demand": 2755,
-    "verdict": "fails",
-    "binding_criterion": "gap capacity",
-    "blocked_on": [],
-    "blocked_if_binding_cleared": [
-     "median width",
-     "storage",
-     "weaving",
-     "detour burden"
-    ],
-    "checks": {
-     "gap capacity": {
-      "status": "fail",
-      "value": 9.6,
-      "detail": "v/c 9.6 exceeds 3.0. Reported as no viable gaps, not as a capacity number: past this ratio gap acceptance has degenerated and the model is out of regime."
-     },
-     "median width": {
-      "status": "not reached",
-      "value": null,
-      "detail": "not reached: gap capacity binds first."
-     },
-     "storage": {
-      "status": "not reached",
-      "value": null,
-      "detail": "not reached: gap capacity binds first."
-     },
-     "weaving": {
-      "status": "not reached",
-      "value": null,
-      "detail": "not reached: gap capacity binds first."
-     },
-     "detour burden": {
-      "status": "not reached",
-      "value": null,
-      "detail": "not reached: gap capacity binds first."
-     }
-    },
-    "back_solve": {
      "conflicting_now": 2182,
      "demand_now": 2755,
      "demand_servable": 287,
@@ -4165,7 +4249,7 @@
    {
     "junction": "TMC-02",
     "jda_name": "Vijay Path",
-    "bay": "northbound",
+    "bay": "south",
     "uturn_demand": 1487,
     "verdict": "fails",
     "binding_criterion": "gap capacity",
@@ -4178,60 +4262,6 @@
       "status": "fail",
       "value": 6.9,
       "detail": "v/c 6.9 exceeds 3.0. Reported as no viable gaps, not as a capacity number: past this ratio gap acceptance has degenerated and the model is out of regime."
-     },
-     "median width": {
-      "status": "not reached",
-      "value": 26.8,
-      "detail": "not reached: gap capacity binds first."
-     },
-     "storage": {
-      "status": "not reached",
-      "value": null,
-      "detail": "not reached: gap capacity binds first."
-     },
-     "weaving": {
-      "status": "not reached",
-      "value": 523,
-      "detail": "not reached: gap capacity binds first."
-     },
-     "detour burden": {
-      "status": "not reached",
-      "value": 1046,
-      "detail": "not reached: gap capacity binds first."
-     }
-    },
-    "back_solve": {
-     "conflicting_now": 2555,
-     "demand_now": 1487,
-     "demand_servable": 215,
-     "demand_reduction_pct": 85.6,
-     "bay_ceiling_veh_hr": 1800,
-     "above_bay_ceiling": false,
-     "gap_needed_s": 1.15,
-     "gap_ours_s": 3.88,
-     "conflicting_needed": 238,
-     "conflicting_reduction_pct": 90.7,
-     "note": null
-    },
-    "scheme_no": 5,
-    "scheme_label": "J5"
-   },
-   {
-    "junction": "TMC-02",
-    "jda_name": "Vijay Path",
-    "bay": "southbound",
-    "uturn_demand": 1257,
-    "verdict": "fails",
-    "binding_criterion": "gap capacity",
-    "blocked_on": [],
-    "blocked_if_binding_cleared": [
-     "storage"
-    ],
-    "checks": {
-     "gap capacity": {
-      "status": "fail",
-      "value": 6.8,
-      "detail": "v/c 6.8 exceeds 3.0. Reported as no viable gaps, not as a capacity number: past this ratio gap acceptance has degenerated and the model is out of regime."
      },
      "median width": {
       "status": "not reached",
@@ -4255,6 +4285,60 @@
      }
     },
     "back_solve": {
+     "conflicting_now": 2555,
+     "demand_now": 1487,
+     "demand_servable": 215,
+     "demand_reduction_pct": 85.6,
+     "bay_ceiling_veh_hr": 1800,
+     "above_bay_ceiling": false,
+     "gap_needed_s": 1.15,
+     "gap_ours_s": 3.88,
+     "conflicting_needed": 238,
+     "conflicting_reduction_pct": 90.7,
+     "note": null
+    },
+    "scheme_no": 5,
+    "scheme_label": "J5"
+   },
+   {
+    "junction": "TMC-02",
+    "jda_name": "Vijay Path",
+    "bay": "north",
+    "uturn_demand": 1257,
+    "verdict": "fails",
+    "binding_criterion": "gap capacity",
+    "blocked_on": [],
+    "blocked_if_binding_cleared": [
+     "storage"
+    ],
+    "checks": {
+     "gap capacity": {
+      "status": "fail",
+      "value": 6.8,
+      "detail": "v/c 6.8 exceeds 3.0. Reported as no viable gaps, not as a capacity number: past this ratio gap acceptance has degenerated and the model is out of regime."
+     },
+     "median width": {
+      "status": "not reached",
+      "value": 26.8,
+      "detail": "not reached: gap capacity binds first."
+     },
+     "storage": {
+      "status": "not reached",
+      "value": null,
+      "detail": "not reached: gap capacity binds first."
+     },
+     "weaving": {
+      "status": "not reached",
+      "value": 523,
+      "detail": "not reached: gap capacity binds first."
+     },
+     "detour burden": {
+      "status": "not reached",
+      "value": 1046,
+      "detail": "not reached: gap capacity binds first."
+     }
+    },
+    "back_solve": {
      "conflicting_now": 2727,
      "demand_now": 1257,
      "demand_servable": 185,
@@ -4273,7 +4357,7 @@
    {
     "junction": "TMC-03",
     "jda_name": "Patel Marg",
-    "bay": "northbound",
+    "bay": "south",
     "uturn_demand": 1148,
     "verdict": "fails",
     "binding_criterion": "gap capacity",
@@ -4286,60 +4370,6 @@
       "status": "fail",
       "value": 11.1,
       "detail": "v/c 11.1 exceeds 3.0. Reported as no viable gaps, not as a capacity number: past this ratio gap acceptance has degenerated and the model is out of regime."
-     },
-     "median width": {
-      "status": "not reached",
-      "value": 26.8,
-      "detail": "not reached: gap capacity binds first."
-     },
-     "storage": {
-      "status": "not reached",
-      "value": null,
-      "detail": "not reached: gap capacity binds first."
-     },
-     "weaving": {
-      "status": "not reached",
-      "value": 2,
-      "detail": "not reached: gap capacity binds first."
-     },
-     "detour burden": {
-      "status": "not reached",
-      "value": 4,
-      "detail": "not reached: gap capacity binds first."
-     }
-    },
-    "back_solve": {
-     "conflicting_now": 3433,
-     "demand_now": 1148,
-     "demand_servable": 104,
-     "demand_reduction_pct": 91.0,
-     "bay_ceiling_veh_hr": 1800,
-     "above_bay_ceiling": false,
-     "gap_needed_s": 1.32,
-     "gap_ours_s": 3.84,
-     "conflicting_needed": 565,
-     "conflicting_reduction_pct": 83.5,
-     "note": null
-    },
-    "scheme_no": 4,
-    "scheme_label": "J4"
-   },
-   {
-    "junction": "TMC-03",
-    "jda_name": "Patel Marg",
-    "bay": "southbound",
-    "uturn_demand": 1094,
-    "verdict": "fails",
-    "binding_criterion": "gap capacity",
-    "blocked_on": [],
-    "blocked_if_binding_cleared": [
-     "storage"
-    ],
-    "checks": {
-     "gap capacity": {
-      "status": "fail",
-      "value": 7.3,
-      "detail": "v/c 7.3 exceeds 3.0. Reported as no viable gaps, not as a capacity number: past this ratio gap acceptance has degenerated and the model is out of regime."
      },
      "median width": {
       "status": "not reached",
@@ -4363,6 +4393,60 @@
      }
     },
     "back_solve": {
+     "conflicting_now": 3433,
+     "demand_now": 1148,
+     "demand_servable": 104,
+     "demand_reduction_pct": 91.0,
+     "bay_ceiling_veh_hr": 1800,
+     "above_bay_ceiling": false,
+     "gap_needed_s": 1.32,
+     "gap_ours_s": 3.84,
+     "conflicting_needed": 565,
+     "conflicting_reduction_pct": 83.5,
+     "note": null
+    },
+    "scheme_no": 4,
+    "scheme_label": "J4"
+   },
+   {
+    "junction": "TMC-03",
+    "jda_name": "Patel Marg",
+    "bay": "north",
+    "uturn_demand": 1094,
+    "verdict": "fails",
+    "binding_criterion": "gap capacity",
+    "blocked_on": [],
+    "blocked_if_binding_cleared": [
+     "storage"
+    ],
+    "checks": {
+     "gap capacity": {
+      "status": "fail",
+      "value": 7.3,
+      "detail": "v/c 7.3 exceeds 3.0. Reported as no viable gaps, not as a capacity number: past this ratio gap acceptance has degenerated and the model is out of regime."
+     },
+     "median width": {
+      "status": "not reached",
+      "value": 26.8,
+      "detail": "not reached: gap capacity binds first."
+     },
+     "storage": {
+      "status": "not reached",
+      "value": null,
+      "detail": "not reached: gap capacity binds first."
+     },
+     "weaving": {
+      "status": "not reached",
+      "value": 2,
+      "detail": "not reached: gap capacity binds first."
+     },
+     "detour burden": {
+      "status": "not reached",
+      "value": 4,
+      "detail": "not reached: gap capacity binds first."
+     }
+    },
+    "back_solve": {
      "conflicting_now": 3000,
      "demand_now": 1094,
      "demand_servable": 151,
@@ -4381,7 +4465,7 @@
    {
     "junction": "TMC-04",
     "jda_name": "VT Road",
-    "bay": "northbound",
+    "bay": "south",
     "uturn_demand": 1493,
     "verdict": "fails",
     "binding_criterion": "gap capacity",
@@ -4394,60 +4478,6 @@
       "status": "fail",
       "value": 6.4,
       "detail": "v/c 6.4 exceeds 3.0. Reported as no viable gaps, not as a capacity number: past this ratio gap acceptance has degenerated and the model is out of regime."
-     },
-     "median width": {
-      "status": "not reached",
-      "value": 32.7,
-      "detail": "not reached: gap capacity binds first."
-     },
-     "storage": {
-      "status": "not reached",
-      "value": null,
-      "detail": "not reached: gap capacity binds first."
-     },
-     "weaving": {
-      "status": "not reached",
-      "value": 14,
-      "detail": "not reached: gap capacity binds first."
-     },
-     "detour burden": {
-      "status": "not reached",
-      "value": 28,
-      "detail": "not reached: gap capacity binds first."
-     }
-    },
-    "back_solve": {
-     "conflicting_now": 2482,
-     "demand_now": 1493,
-     "demand_servable": 232,
-     "demand_reduction_pct": 84.5,
-     "bay_ceiling_veh_hr": 1800,
-     "above_bay_ceiling": false,
-     "gap_needed_s": 1.16,
-     "gap_ours_s": 3.86,
-     "conflicting_needed": 234,
-     "conflicting_reduction_pct": 90.6,
-     "note": null
-    },
-    "scheme_no": 3,
-    "scheme_label": "J3"
-   },
-   {
-    "junction": "TMC-04",
-    "jda_name": "VT Road",
-    "bay": "southbound",
-    "uturn_demand": 1889,
-    "verdict": "fails",
-    "binding_criterion": "gap capacity",
-    "blocked_on": [],
-    "blocked_if_binding_cleared": [
-     "storage"
-    ],
-    "checks": {
-     "gap capacity": {
-      "status": "fail",
-      "value": 10.5,
-      "detail": "v/c 10.5 exceeds 3.0. Reported as no viable gaps, not as a capacity number: past this ratio gap acceptance has degenerated and the model is out of regime."
      },
      "median width": {
       "status": "not reached",
@@ -4471,6 +4501,60 @@
      }
     },
     "back_solve": {
+     "conflicting_now": 2482,
+     "demand_now": 1493,
+     "demand_servable": 232,
+     "demand_reduction_pct": 84.5,
+     "bay_ceiling_veh_hr": 1800,
+     "above_bay_ceiling": false,
+     "gap_needed_s": 1.16,
+     "gap_ours_s": 3.86,
+     "conflicting_needed": 234,
+     "conflicting_reduction_pct": 90.6,
+     "note": null
+    },
+    "scheme_no": 3,
+    "scheme_label": "J3"
+   },
+   {
+    "junction": "TMC-04",
+    "jda_name": "VT Road",
+    "bay": "north",
+    "uturn_demand": 1889,
+    "verdict": "fails",
+    "binding_criterion": "gap capacity",
+    "blocked_on": [],
+    "blocked_if_binding_cleared": [
+     "storage"
+    ],
+    "checks": {
+     "gap capacity": {
+      "status": "fail",
+      "value": 10.5,
+      "detail": "v/c 10.5 exceeds 3.0. Reported as no viable gaps, not as a capacity number: past this ratio gap acceptance has degenerated and the model is out of regime."
+     },
+     "median width": {
+      "status": "not reached",
+      "value": 32.7,
+      "detail": "not reached: gap capacity binds first."
+     },
+     "storage": {
+      "status": "not reached",
+      "value": null,
+      "detail": "not reached: gap capacity binds first."
+     },
+     "weaving": {
+      "status": "not reached",
+      "value": 14,
+      "detail": "not reached: gap capacity binds first."
+     },
+     "detour burden": {
+      "status": "not reached",
+      "value": 28,
+      "detail": "not reached: gap capacity binds first."
+     }
+    },
+    "back_solve": {
      "conflicting_now": 2781,
      "demand_now": 1889,
      "demand_servable": 179,
@@ -4489,7 +4573,7 @@
    {
     "junction": "TMC-05",
     "jda_name": "Rajat Path",
-    "bay": "northbound",
+    "bay": "south",
     "uturn_demand": 819,
     "verdict": "fails",
     "binding_criterion": "gap capacity",
@@ -4502,60 +4586,6 @@
       "status": "fail",
       "value": 13.1,
       "detail": "v/c 13.1 exceeds 3.0. Reported as no viable gaps, not as a capacity number: past this ratio gap acceptance has degenerated and the model is out of regime."
-     },
-     "median width": {
-      "status": "not reached",
-      "value": 28.9,
-      "detail": "not reached: gap capacity binds first."
-     },
-     "storage": {
-      "status": "not reached",
-      "value": null,
-      "detail": "not reached: gap capacity binds first."
-     },
-     "weaving": {
-      "status": "not reached",
-      "value": 2,
-      "detail": "not reached: gap capacity binds first."
-     },
-     "detour burden": {
-      "status": "not reached",
-      "value": 5,
-      "detail": "not reached: gap capacity binds first."
-     }
-    },
-    "back_solve": {
-     "conflicting_now": 3978,
-     "demand_now": 819,
-     "demand_servable": 63,
-     "demand_reduction_pct": 92.3,
-     "bay_ceiling_veh_hr": 1800,
-     "above_bay_ceiling": false,
-     "gap_needed_s": 1.54,
-     "gap_ours_s": 3.86,
-     "conflicting_needed": 976,
-     "conflicting_reduction_pct": 75.5,
-     "note": null
-    },
-    "scheme_no": 2,
-    "scheme_label": "J2"
-   },
-   {
-    "junction": "TMC-05",
-    "jda_name": "Rajat Path",
-    "bay": "southbound",
-    "uturn_demand": 1156,
-    "verdict": "fails",
-    "binding_criterion": "gap capacity",
-    "blocked_on": [],
-    "blocked_if_binding_cleared": [
-     "storage"
-    ],
-    "checks": {
-     "gap capacity": {
-      "status": "fail",
-      "value": 93.6,
-      "detail": "v/c 93.6 exceeds 3.0. Reported as no viable gaps, not as a capacity number: past this ratio gap acceptance has degenerated and the model is out of regime."
      },
      "median width": {
       "status": "not reached",
@@ -4579,6 +4609,60 @@
      }
     },
     "back_solve": {
+     "conflicting_now": 3978,
+     "demand_now": 819,
+     "demand_servable": 63,
+     "demand_reduction_pct": 92.3,
+     "bay_ceiling_veh_hr": 1800,
+     "above_bay_ceiling": false,
+     "gap_needed_s": 1.54,
+     "gap_ours_s": 3.86,
+     "conflicting_needed": 976,
+     "conflicting_reduction_pct": 75.5,
+     "note": null
+    },
+    "scheme_no": 2,
+    "scheme_label": "J2"
+   },
+   {
+    "junction": "TMC-05",
+    "jda_name": "Rajat Path",
+    "bay": "north",
+    "uturn_demand": 1156,
+    "verdict": "fails",
+    "binding_criterion": "gap capacity",
+    "blocked_on": [],
+    "blocked_if_binding_cleared": [
+     "storage"
+    ],
+    "checks": {
+     "gap capacity": {
+      "status": "fail",
+      "value": 93.6,
+      "detail": "v/c 93.6 exceeds 3.0. Reported as no viable gaps, not as a capacity number: past this ratio gap acceptance has degenerated and the model is out of regime."
+     },
+     "median width": {
+      "status": "not reached",
+      "value": 28.9,
+      "detail": "not reached: gap capacity binds first."
+     },
+     "storage": {
+      "status": "not reached",
+      "value": null,
+      "detail": "not reached: gap capacity binds first."
+     },
+     "weaving": {
+      "status": "not reached",
+      "value": 2,
+      "detail": "not reached: gap capacity binds first."
+     },
+     "detour burden": {
+      "status": "not reached",
+      "value": 5,
+      "detail": "not reached: gap capacity binds first."
+     }
+    },
+    "back_solve": {
      "conflicting_now": 5763,
      "demand_now": 1156,
      "demand_servable": 12,
@@ -4597,16 +4681,13 @@
    {
     "junction": "TMC-06",
     "jda_name": "Bhrigu Path",
-    "bay": "northbound",
+    "bay": "south",
     "uturn_demand": 699,
     "verdict": "fails",
     "binding_criterion": "gap capacity",
     "blocked_on": [],
     "blocked_if_binding_cleared": [
-     "median width",
-     "storage",
-     "weaving",
-     "detour burden"
+     "storage"
     ],
     "checks": {
      "gap capacity": {
@@ -4616,7 +4697,7 @@
      },
      "median width": {
       "status": "not reached",
-      "value": null,
+      "value": 23.8,
       "detail": "not reached: gap capacity binds first."
      },
      "storage": {
@@ -4626,12 +4707,12 @@
      },
      "weaving": {
       "status": "not reached",
-      "value": null,
+      "value": 842,
       "detail": "not reached: gap capacity binds first."
      },
      "detour burden": {
       "status": "not reached",
-      "value": null,
+      "value": 1685,
       "detail": "not reached: gap capacity binds first."
      }
     },
@@ -4654,13 +4735,16 @@
    {
     "junction": "TMC-06",
     "jda_name": "Bhrigu Path",
-    "bay": "southbound",
+    "bay": "north",
     "uturn_demand": 764,
     "verdict": "fails",
     "binding_criterion": "gap capacity",
     "blocked_on": [],
     "blocked_if_binding_cleared": [
-     "storage"
+     "median width",
+     "storage",
+     "weaving",
+     "detour burden"
     ],
     "checks": {
      "gap capacity": {
@@ -4670,7 +4754,7 @@
      },
      "median width": {
       "status": "not reached",
-      "value": 23.8,
+      "value": null,
       "detail": "not reached: gap capacity binds first."
      },
      "storage": {
@@ -4680,12 +4764,12 @@
      },
      "weaving": {
       "status": "not reached",
-      "value": 842,
+      "value": null,
       "detail": "not reached: gap capacity binds first."
      },
      "detour burden": {
       "status": "not reached",
-      "value": 1685,
+      "value": null,
       "detail": "not reached: gap capacity binds first."
      }
     },

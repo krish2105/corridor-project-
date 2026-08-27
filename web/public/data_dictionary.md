@@ -1,7 +1,7 @@
 # Data dictionary
 ### Every field in every published dataset
 
-Generated 2026-08-26 from the files in `out/data`. The field list is read from the data itself, so a field added to the pipeline and not described here is reported below as undocumented rather than quietly omitted.
+Generated 2026-08-27 from the files in `out/data`. The field list is read from the data itself, so a field added to the pipeline and not described here is reported below as undocumented rather than quietly omitted.
 
 **All spatial data is EPSG:32643 (UTM zone 43N, metres).** GeoJSON is written in EPSG:4326 because the format requires it, and is converted at that boundary only.
 
@@ -28,6 +28,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `cluster.json` | Approach typology learned from the counts, and its held-out test. |
 | `forecast.json` | How short a count can be and still predict the day, with its error. |
 | `uturn_framework.json` | Per-bay criteria ladder, the binding constraint, and the back-solve. |
+| `routes.json` | Every movement through a signal-free junction, and what it has to do. |
 | `measurement.json` | Every published dimension: how it was derived, its uncertainty, what resolves it. |
 | `spelling.json` | Labels corrected for the reader, with the survey's own spelling preserved. |
 
@@ -75,6 +76,9 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `bay` | Which U-turn bay the demand feeds: the one merging into northbound traffic, or into southbound. |
 | `bay_beyond_drawing` | True where the CAD ends before the next opening, so the detour cannot be measured in that direction. A limit of the survey extent, not a finding about the road. |
 | `bay_ceiling_veh_hr` | The most a single opening can pass, 3600 / follow-up headway, with no opposing traffic at all. Nothing lifts it. |
+| `bay_chainage_m` | Distance of the U-turn opening along the same alignment, metres. |
+| `bay_is_junction_mouth` | Whether the opening this bay is matched to is a junction mouth rather than a mid-block bay. |
+| `bay_side` | Which side of the junction the bay sits on, north or south. Named by position because that is the unambiguous fact. |
 | `bay_storage_m` | Assumed deceleration and storage length. No bay geometry supplied. |
 | `bays` | One entry per U-turn bay: two per junction, north and south. |
 | `bays_above_bay_ceiling` | Bays whose demand exceeds that ceiling. For these the bay is the wrong instrument, not a badly sited one. |
@@ -233,6 +237,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `frac` | ok divided by total. |
 | `free_flow_kmh` | Free-flow speed used for journey time, km/h. |
 | `free_flow_min` | Through journey time at the free-flow speed. |
+| `from_arm` | Arm the movement enters from. |
 | `gap capacity` | Can the bay serve its demand from gaps in the opposing stream? |
 | `gap_bases_tested` | How many published critical-gap bases the test was re-run on. |
 | `gap_benchmark` | Per-approach critical gap needed against the gap we assume. |
@@ -245,6 +250,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `gap_source` | Where the critical gaps come from and what they are benchmarked against. |
 | `gaps` | Spacings between consecutive openings. |
 | `geometric_match` | How closely the source geometry matches this corridor. |
+| `geometry` | The arm ordering and driving side the routes are derived under. |
 | `greater` | Series where day two exceeds day one. |
 | `growth` | Demand multiple at the horizon, one row per growth rate. |
 | `growth_handled_in` | Where the growth-rate assumption is varied, given it is not an axis in this module. |
@@ -275,6 +281,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `jda_scheme` | The authority's scheme as described in its documents. |
 | `jda_turning_claim_pct` | JDA's stated basis for the scheme: the share of traffic it says is turning. News reporting, not a JDA document. |
 | `junction` | Survey code, TMC-01 to TMC-06. |
+| `junction_chainage_m` | Distance of the junction along the surveyed alignment, metres. |
 | `junction_mouths` | Openings within midblock_threshold_m of a junction centre. Turning at one is not a detour - it is turning at the junction. |
 | `junctions` | Per-junction rows. One entry for each of the six. |
 | `junctions_above_wide_threshold` | How many junctions are in that state. |
@@ -295,6 +302,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `lat` | Latitude, EPSG:4326, display only. |
 | `layer` | Source CAD layer. |
 | `layers` | CAD layers read. |
+| `legs` | What a re-routed driver actually does, in order. Four manoeuvres where there was one. |
 | `link` | One corridor link, between two consecutive junctions. |
 | `links` | The five links between the six junctions, in corridor order. |
 | `live` | Whether it can move the binding term here. |
@@ -351,16 +359,19 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `n_corridor` | Corridor approaches. |
 | `n_cross` | Cross-street approaches. |
 | `n_daily_veh` | Daily vehicles, scaled 0 to 1 across the six junctions. |
+| `n_direct` | Movements the scheme leaves alone: the left turns and the corridor through movement. |
 | `n_exposure_change_pct` | Exposure change, scaled 0 to 1. |
 | `n_fail` | Bays failing a criterion. |
 | `n_features` | Dimensions in that representation. |
 | `n_junctions` | Junctions surveyed. |
 | `n_peak_veh` | Peak-hour vehicles, scaled 0 to 1. |
+| `n_rerouted` | Movements the scheme bans at the junction. |
 | `n_turning_share_pct` | Turning share, scaled 0 to 1. |
 | `n_unconfirmed` | How many change a word, not a letter. |
 | `n_undecided` | Bays with no verdict because a criterion could not be evaluated. |
 | `n_uturn_demand` | U-turn demand, scaled 0 to 1. |
 | `n_worst_vc` | Worst approach v/c, scaled 0 to 1. |
+| `naming_note` | That a bay is named by the side it sits on, not by the direction its traffic leaves in. Conflating the two put every detour on the wrong side of the road. |
 | `nearest_junction` | Closest junction to this opening. |
 | `nearest_label` | Nearest text label in the drawing. |
 | `nearest_label_m` | Distance to it, metres. |
@@ -375,7 +386,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `northbound_out` | Northbound flow leaving the southern junction. |
 | `northing` | Northing, EPSG:32643. |
 | `note` | Free-text qualifier. |
-| `numbering_note` | Why there are two numberings and which is which. The survey workbooks run the other way and their codes stay beside every figure, because that is what it traces back to. |
+| `numbering_note` | Why the corridor carries two junction numbers and which is which. The survey workbooks run the other way and their codes stay beside every figure, because that is what it traces back to. |
 | `observed_vs_planning_ratio` | Counted flow divided by the planning-stage assumption. |
 | `of` | Approaches assessed. |
 | `ok` | Approaches under capacity in that combination. |
@@ -413,6 +424,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `pedestrian_column_present` | Whether the survey counts pedestrians at all. It does not. |
 | `pedestrian_row_filled` | Whether the survey filled it. It did not. |
 | `pedestrian_row_in_sp41_table_3_1` | Whether the proforma this survey was written from carries a pedestrian row. It does. |
+| `permitted` | Whether this movement survives the scheme (direct), is banned and re-routed through a median opening, or was never surveyed. |
 | `phf` | Peak hour factor: peak hour over four times the busiest 15 minutes. |
 | `phf_applied` | Whether a peak hour factor was applied. |
 | `pier_radius_m` | Half-footprint used when testing a pier position, metres. |
@@ -440,6 +452,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `rediscovered` | How many of them the screen re-found without being told. |
 | `ref_errors` | #REF! errors found in the flow-diagram sheets. |
 | `registration` | Whether JDA's KML centreline and JDA's CAD drawing agree about where the road is. Consistency between two sources, not ground truth. |
+| `rejoins` | The direction a driver leaves the bay travelling, which is the opposite of the side it sits on, and therefore the through movement they cross. |
 | `relief` | What an elevated through-carriageway returns to each approach. |
 | `residual_pcu` | What remains at grade once the through movement is elevated. |
 | `resolved_by` | The field measurement that would settle it. |
@@ -464,6 +477,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `saturation_flow_reference` | [low, high] saturation flow those are compared against. |
 | `saving_min_per_trip` | Delay avoided by a through trip on an elevated carriageway. |
 | `scenarios` | Pre-computed cells of the assumption grid the scenario tool walks. |
+| `scheme` | Scheme-test results. |
 | `scheme_crossing_exposure` | The same measure under the signal-free scheme, including the U-turn openings the removed right turns move to. |
 | `scheme_junction_points` | Conflict points remaining after the right turn is removed. |
 | `scheme_label` | The same as J1 to J6. |
@@ -471,9 +485,11 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `score` | Sum of the six normalised indicators, 0 to 6. |
 | `series` | Movement-class series compared between the two survey days. |
 | `series_available` | Per-bin series split into a separate file and fetched on demand. |
+| `serves` | The movements this bay carries. Six of the twelve are re-routed by the scheme and each bay takes three. |
 | `share` | That class's share of the stream. |
 | `share_pct` | That class's share of the stream, %. |
 | `shy_distance_m` | Kerb and median clearance deducted, metres. |
+| `side` | north or south of the junction. |
 | `signal_cluster` | Cluster id this junction was matched to. |
 | `signal_data` | Whether the survey contains signal timings. It does not. |
 | `signal_heads` | Signal heads counted in that cluster. |
@@ -530,6 +546,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `through_pct_mean` | Mean through share across junctions, %. |
 | `through_pct_range` | [min, max] through share, %. |
 | `time_space` | Why a time-space diagram is deliberately absent. |
+| `to_arm` | Arm it leaves by. |
 | `to_next_m` | Distance to the next, metres. |
 | `to_previous_m` | Distance to the previous junction, metres. |
 | `today_crossing_exposure` | Crossing exposure today: the product of each conflicting pair's flows, summed. Meaningful only as a ratio. |
@@ -541,6 +558,7 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `transects_by_step` | Usable transects on the whole corridor at each spacing. |
 | `transects_total` | Usable transects at the published spacing. |
 | `truck` | PCU factor for trucks. |
+| `turn` | Left, Straight, Right or U-turn, by signed delta bearing under left-hand traffic. The left turn is the next arm clockwise. |
 | `turning_share_pct` | Share of traffic not going straight through. |
 | `two wheeler` | PCU factor for two-wheelers in the cited document. |
 | `two_wheeler_gap_basis` | Source for the two-wheeler critical gap actually used. |
@@ -607,6 +625,12 @@ Generated 2026-08-26 from the files in `out/data`. The field list is read from t
 | `zebra_ceiling_pcu_dir` | IRC:103 draft: above this, pedestrian delay passes 45 s and a zebra crossing shall not be provided. |
 | `zebra_over` | Approaches above that ceiling. |
 | `zebra_total` | Approaches assessed for it. |
+
+## Undocumented fields
+
+Present in the data and not described above. This list should be empty; anything here is a gap in this document, not in the data.
+
+- `numberings`
 
 ## Reading the bands
 

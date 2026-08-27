@@ -40,7 +40,8 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from src.analyse import NORTH, SOUTH, through_vs_turning
-from src.config import CHAINAGE_FROM, JUNCTION_COORDS, OUT_DATA
+from src.config import CHAINAGE_FROM, JUNCTIONS, JUNCTION_COORDS, OUT_DATA
+from src.routes import bay_movements, conflicting_direction
 from src.pcu import SURVEYED, factor_band
 from src.tmc_parse import parse_all
 
@@ -396,25 +397,40 @@ def peak_window(series):
 #
 # Which cross arm is "east" is derived from the data rather than assumed: the arm whose
 # right turn lands on the north arm is the east side.
-FEEDS_BAY = "right turns from all four arms, plus the cross-street through movement"
+FEEDS_BAY = ("right turns from all four arms, plus the cross-street through movement; "
+             "see routes.py for the full enumeration")
 
 
-def bay_demand(pk, cross_east, cross_west):
+def bay_demand(pk, arms, full_mut=True):
     """
-    (northbound bay demand, southbound bay demand) for one peak window.
+    {side: demand} for one peak window, where side is which end of the junction the bay
+    sits on.
 
-    Returns the SUM over every movement that has to use each bay, because they queue
-    for the same gap in the same opposing stream.
+    Every movement that has to use a bay is summed, because they queue for the same gap
+    in the same opposing stream. WHICH movements those are is read from routes.py rather
+    than restated here - restating it is how the demand ended up on the right bay under
+    the wrong name.
+
+    `arms` is the junction's clockwise (N, E, S, W) tuple, so an arm index maps straight
+    to the name the survey uses. The previous version worked the cross arms out by
+    checking where their right turn landed; that heuristic is unnecessary once the
+    clockwise ordering is trusted, and it is trusted - the audit checks it against the
+    Direction From/To header on all 144 movement sheets.
     """
-    def n(frm, mvt):
-        return float(pk[(pk.arm_from == frm) & (pk.movement == mvt)]["count"].sum())
-    north = n(NORTH, "Right")                      # corridor right turn
-    south = n(SOUTH, "Right")
-    if cross_east is not None:
-        north += n(cross_east, "Right") + n(cross_east, "Straight")
-    if cross_west is not None:
-        south += n(cross_west, "Right") + n(cross_west, "Straight")
-    return north, south
+    from src.routes import ARM_NAME, bay_movements
+    name = {ARM_NAME[i]: arms[i] for i in range(4)}
+    out = {}
+    for side in ("south", "north"):
+        total = 0.0
+        for r in bay_movements(side):
+            # full_mut=False reproduces the original corridor-right-turns-only reading
+            if not full_mut and not (r["turn"] == "Right"
+                                     and r["from_arm"] in ("north", "south")):
+                continue
+            frm, to = name[r["from_arm"]], name[r["to_arm"]]
+            total += float(pk[(pk.arm_from == frm) & (pk.arm_to == to)]["count"].sum())
+        out[side] = total
+    return out
 
 
 def analyse(bins, day, full_mut=True):
@@ -438,63 +454,60 @@ def analyse(bins, day, full_mut=True):
         window = tot.index[list(tot.index).index(start):][:4]
         pk = g[g.bin_start.isin(window)]
 
-        # identify the cross arms by where their right turn lands, not by assuming
-        cross_east = cross_west = None
-        for a in pk.arm_from.unique():
-            if a in (NORTH, SOUTH):
+        arms = JUNCTIONS[code]
+        demand = bay_demand(pk, arms, full_mut)
+
+        # WHICH THROUGH MOVEMENT EACH BAY HAS TO CROSS, read off the routes rather than
+        # reasoned about here. A driver leaving the bay SOUTH of the junction is rejoining
+        # northbound, so what they cross is the northbound through stream - the traffic
+        # entering from the south arm and going straight.
+        thru = {
+            "northbound": float(pk[(pk.arm_from == SOUTH)
+                                   & (pk.movement == "Straight")]["count"].sum()),
+            "southbound": float(pk[(pk.arm_from == NORTH)
+                                   & (pk.movement == "Straight")]["count"].sum()),
+        }
+
+        for side in ("south", "north"):
+            d = demand[side]
+            if d <= 0:
                 continue
-            to = pk[(pk.arm_from == a) & (pk.movement == "Right")]["arm_to"]
-            if len(to) and to.iloc[0] == NORTH:
-                cross_east = a
-            elif len(to) and to.iloc[0] == SOUTH:
-                cross_west = a
-
-        if full_mut:
-            d_north, d_south = bay_demand(pk, cross_east, cross_west)
-        else:
-            d_north, d_south = bay_demand(pk, None, None)
-
-        # a bay merging INTO the northbound stream conflicts with northbound through,
-        # which is the traffic arriving from the south arm and going straight
-        thru_north = float(pk[(pk.arm_from == SOUTH) & (pk.movement == "Straight")]["count"].sum())
-        thru_south = float(pk[(pk.arm_from == NORTH) & (pk.movement == "Straight")]["count"].sum())
-
-        for arm, demand, thru, bay in ((NORTH, d_north, thru_north, "northbound"),
-                                       (SOUTH, d_south, thru_south, "southbound")):
-            if demand <= 0:
-                continue
-            cap_lo = gap_capacity(thru, tc_hi, FOLLOW_UP_S[1])   # conservative
-            cap_hi = gap_capacity(thru, tc_lo, FOLLOW_UP_S[0])   # optimistic
+            rejoins = conflicting_direction(side)
+            q_c = thru[rejoins]
+            cap_lo = gap_capacity(q_c, tc_hi, FOLLOW_UP_S[1])   # conservative
+            cap_hi = gap_capacity(q_c, tc_lo, FOLLOW_UP_S[0])   # optimistic
             rows.append(dict(
-                junction=code, approach=arm, bay=bay,
+                junction=code, approach=NORTH if side == "south" else SOUTH,
+                bay=side, bay_side=side, rejoins=rejoins,
+                serves=[f"{r['from_arm']} -> {r['to_arm']}"
+                        for r in bay_movements(side)],
                 jda_name=JUNCTION_COORDS[code][2],
-                uturn_demand=demand, conflicting_flow=thru,
+                uturn_demand=d, conflicting_flow=q_c,
                 t_c_lo=round(tc_lo, 2), t_c_hi=round(tc_hi, 2),
                 cap_conservative=cap_lo, cap_optimistic=cap_hi,
-                vc_conservative=demand / cap_lo if cap_lo else float("inf"),
-                vc_optimistic=demand / cap_hi if cap_hi else float("inf"),
+                vc_conservative=d / cap_lo if cap_lo else float("inf"),
+                vc_optimistic=d / cap_hi if cap_hi else float("inf"),
                 peak_start=str(start)[11:16]))
     return pd.DataFrame(rows)
 
 
-def openings_toward(direction, chainage, ops, chainage_from=None):
+def openings_toward(side, chainage, ops, chainage_from=None):
     """
-    The openings a driver heading `direction` from `chainage` will actually reach.
+    The openings physically on `side` of a junction at `chainage`, nearest first.
 
-    Module level and pure so the relationship can be tested, because getting it wrong is
-    silent. It WAS wrong: the rule was written as "northbound means higher chainage",
-    which was a bare fact about the file rather than about the road. Chainage used to
-    start at the northern end, so higher chainage meant further SOUTH and every bay was
-    matched to an opening on the wrong side of its junction. The numbers looked entirely
-    reasonable.
+    Takes a SIDE - "north" or "south" - not a travel direction, and that is the whole
+    point. It used to take the bay name, and the bay name meant the direction a driver
+    LEAVES in. A bay serving northbound traffic sits SOUTH of the junction, so every
+    detour was measured to the opening on the wrong side of the road. Nothing threw; the
+    distances were simply to the wrong place.
 
-    The sign now comes from the convention. If JDA chains from the north, CHAINAGE_FROM
-    flips and this still returns openings that are physically north of a northbound
-    driver.
+    The sign still comes from the chainage convention, because "north" is higher chainage
+    only when the corridor is chained from the south.
     """
-    north_is_up = (chainage_from or CHAINAGE_FROM) == "south"
-    wants_higher = (direction == "northbound") == north_is_up
-    return sorted(o for o in ops if (o > chainage) == wants_higher and o != chainage)
+    north_is_higher = (chainage_from or CHAINAGE_FROM) == "south"
+    wants_higher = (side == "north") == north_is_higher
+    return sorted((o for o in ops if (o > chainage) == wants_higher and o != chainage),
+                  key=lambda o: abs(o - chainage))
 
 
 def uturn_detour(uturns):
@@ -558,8 +571,8 @@ def uturn_detour(uturns):
     out = []
     for r in jrows:
         c = r["chainage_m"]
-        for bay, cand in (("northbound", openings_toward("northbound", c, ops)),
-                          ("southbound", openings_toward("southbound", c, ops))):
+        for bay, cand in (("south", openings_toward("south", c, ops)),
+                          ("north", openings_toward("north", c, ops))):
             d = demand.get((r["junction"], bay))
             if d is None:
                 continue
@@ -664,7 +677,10 @@ if __name__ == "__main__":
             v, vc = "marginal", f"{r.vc_conservative:>6.2f}"
         else:
             v, vc = "ok", f"{r.vc_conservative:>6.2f}"
-        ap = r.approach.replace("Mansarover Metro", "from N").replace("Sanganer Stadium", "from S")
+        # Named by the SIDE the bay sits on and the direction its traffic rejoins in.
+        # This column used to read "from N" / "from S", which named ONE of the three
+        # movements the bay carries and implied it was the only one.
+        ap = f"{r.bay_side} bay -> {r.rejoins}"
         print(f"  {r.junction:<9}{r.jda_name:<13}{ap:<20}{r.uturn_demand:>8,.0f}"
               f"{r.conflicting_flow:>10,.0f}{r.t_c_hi:>7.1f}{r.cap_conservative:>8,.0f}"
               f"{vc:>7}  {v}")
