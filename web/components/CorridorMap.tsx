@@ -272,28 +272,35 @@ export default function CorridorMap({
             "circle-stroke-color": "#1B3A6B",
             "circle-stroke-width": ["case", ["get", "major"], 1.8, 1.1],
           } });
-        // Labels as DOM markers, not a symbol layer.
-        //
-        // A symbol layer needs a glyph endpoint, and this style deliberately has no
-        // sources at all - the basemap is our own GeoJSON so the page makes zero
-        // cross-origin requests. Adding text-field here would silently render nothing
-        // and reintroduce the remote dependency the basemap was rewritten to remove.
-        for (const f of (data.features ?? [])) {
-          if (!f.properties?.major) continue;
-          const lab = document.createElement("div");
-          // "1 km" sat a centimetre from a scale bar also reading "1 km", which is two
-          // different quantities wearing the same label. Prefixed, so a station reads as
-          // a station.
-          lab.textContent = `ch ${f.properties.km.toFixed(1)}`;
-          lab.style.cssText =
-            "transform:translateY(-14px);font:600 9px/1 'IBM Plex Mono',monospace;" +
-            "color:#1B3A6B;background:rgba(250,251,248,.92);padding:1px 4px;" +
-            "border-radius:2px;white-space:nowrap;pointer-events:none";
-          new maplibregl.Marker({ element: lab, anchor: "bottom" })
-            .setLngLat(f.geometry.coordinates as [number, number])
-            .addTo(m);
-        }
-      }).catch(() => { /* the corridor reads without stations */ });
+        // Labels as DOM markers, not a symbol layer (no glyph endpoint in this style) -
+        // and attached on the map's IDLE event, not immediately. On a warm load the
+        // cached fetch resolves inside React's streaming/hydration window, and markers
+        // appended there were reconciled away: the trace showed "labels added" followed
+        // by an empty DOM. The junction markers survive because the effect adds them
+        // synchronously after commit; these were landing mid-hydration. idle fires when
+        // the map has fully settled, which is after that window on every load.
+        m.once("idle", () => {
+          if (!map.current) return;
+          for (const f of (data.features ?? [])) {
+            if (!f.properties?.major) continue;
+            const lab = document.createElement("div");
+            // "1 km" sat beside a scale bar also reading "1 km" - two quantities, one
+            // label. Prefixed so a station reads as a station.
+            lab.textContent = `ch ${f.properties.km.toFixed(1)}`;
+            lab.style.cssText =
+              "font:600 9px/1 'IBM Plex Mono',monospace;" +
+              "color:#1B3A6B;background:rgba(250,251,248,.92);padding:1px 4px;" +
+              "border-radius:2px;white-space:nowrap;pointer-events:none";
+            new maplibregl.Marker({ element: lab, anchor: "bottom", offset: [0, -8] })
+              .setLngLat(f.geometry.coordinates as [number, number])
+              .addTo(m);
+          }
+        });
+      }).catch((e) => {
+        // The corridor still reads without stations - but never swallow this silently:
+        // a silent catch here hid the hydration wipe for a full debugging round.
+        console.error("chainage layer failed:", e);
+      });
 
       // Median openings: where a U-turn is physically possible today.
       //
