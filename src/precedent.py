@@ -245,17 +245,21 @@ INDIA = [
       bearing="Left-then-U-turn is the same route our routes.py publishes for every "
               "banned cross-street movement. Independent confirmation the enumeration "
               "matches how the design is actually operated."),
-    P("Named by the reviewer", "Noida, Amaltas Marg",
-      "JDA's reviewer names Amaltas Marg as a second Noida road running this design, "
-      "alongside Dadri Road. Amaltash Marg exists in Noida's Sectors 4 and 10, but no "
-      "public record of a signal-free U-turn scheme on it could be opened.",
-      "onefivenine street listing (existence of the road only)",
+    P("Confirmed by the reviewer", "Noida, Amaltas Marg near the Sector 50 crossing",
+      "JDA's reviewer confirms Amaltas Marg, near the Sector 50 crossing, as a second "
+      "Noida road running this U-turn design alongside Dadri Road. The road exists in "
+      "the public record; the scheme on it does not - targeted searches for the Sector "
+      "50 crossing, Sector 50/51 closures and Noida Authority U-turn notices returned "
+      "no openable page describing it.",
+      "Reviewer's direct knowledge; road existence from street listings",
       "https://www.onefivenine.com/india/villages/North-East-Delhi/North-East-Delhi/Amaltash-Marg-Block-A",
       verified=False,
-      bearing="Recorded as the reviewer's statement, not confirmed. A landmark or news "
-              "reference from the reviewer would let it be verified the way Dadri Road "
-              "was. Dadri Road itself IS confirmed: it is the D of the "
-              "Dadri-Surajpur-Chhalera (DSC) Road."),
+      bearing="A first-hand account from a reviewer who knows the site is evidence - but "
+              "this register's verified flag means a page we opened, and none exists, "
+              "which is itself worth knowing: not every operating scheme leaves a press "
+              "trail. Dadri Road, the pair to this one, IS independently confirmed as "
+              "the D of the Dadri-Surajpur-Chhalera (DSC) Road. A photo of the Amaltas "
+              "bay or a Noida Authority work order would close this."),
     P("What Noida reports", "Noida",
       "ThePrint documents the costs of the same design in service: peak-hour bottlenecks "
       "at the bays, drivers taking U-turns from the wrong side to avoid the longer "
