@@ -327,6 +327,22 @@ def build():
             f"available, so every figure is a lower bound.", BODY)]))
 
     # ---- 3. capacity -------------------------------------------------------
+    F.append(KeepTogether([
+        Paragraph("Where this exact design is running, and what it reports", H3),
+        Paragraph(
+            "Noida operates the same back-to-back arrangement today: the Dadri "
+            "(Dadri-Surajpur-Chhalera) Road and the MP-3 road are signal-free, "
+            "intersections closed by median with paired U-turn bays, operating rule "
+            "left-then-U-turn - movement for movement what our route enumeration "
+            "publishes. The reviewer additionally confirms Amaltas Marg near the Sector "
+            "50 crossing. What Noida reports in service maps onto this analysis one for "
+            "one: peak-hour bottlenecks at the bays (our gap-capacity finding), drivers "
+            "U-turning from the wrong side (our forced-movement finding), and a "
+            "narrow-road bay that blocked buses until redesign (our storage criterion). "
+            "Bengaluru is the counter-precedent: a signal-free corridor stopped after "
+            "construction began, on consultation and land-use grounds. Full sources in "
+            "the accompanying Precedent Review.", BODY)]))
+
     F.append(Paragraph("3 &nbsp; Capacity, and the one number that decides it", H2))
     F.append(kpis([
         (f"{sum(1 for j in cap['junctions'] if j['vc_pt'] >= 1.0)}/{len(cap['junctions'])}",
