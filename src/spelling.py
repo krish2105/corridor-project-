@@ -134,6 +134,7 @@ ALLOW = {
     "bengaluru", "chennai", "ahmedabad", "trivandrum", "koramangala", "agara", "sirsi",
     "iskcon", "kd", "sg", "bda", "dda", "uttipec", "uttipec's", "indot", "txdot",
     "deccan", "deshgujarat", "mdpi", "arxiv", "asce", "skywalk", "mut", "mutis",
+    "mappls", "wikipedia", "vatika", "vihar", "aatish",
     "offside", "criticised", "rationalised", "summarise", "sustainability", "ft",
     "civ", "eng",
     # standards, codes and bodies

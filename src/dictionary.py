@@ -596,6 +596,12 @@ FIELDS.update({
 
 # --- the precedent review -----------------------------------------------------
 FIELDS.update({
+    "corridor_identity": "The check that this is the right road: independently published "
+                         "landmarks measured against our geometry in EPSG:32643.",
+    "landmark": "The published place being measured.",
+    "against": "The part of our geometry it should sit on or near.",
+    "metres": "Distance between the two, computed in EPSG:32643 and never in degrees.",
+    "why": "Why this landmark is a test of the identification rather than decoration.",
     "compiled": "Date the precedent review was assembled.",
     "n_claims": "Claims in the review.",
     "n_verified": "Of those, how many were read on a page we actually opened.",

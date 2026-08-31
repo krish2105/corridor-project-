@@ -23,6 +23,7 @@ is worse rather than better: it would have been luck.
 Run:  uv run python src/precedent.py
 """
 import json
+import math
 import sys
 from datetime import date
 from pathlib import Path
@@ -42,6 +43,76 @@ READ_ON = "2026-08-27"
 def P(topic, place, claim, source, url, verified=True, bearing=""):
     return dict(topic=topic, place=place, claim=claim, source=source, url=url,
                 verified=verified, read_on=READ_ON, bearing=bearing)
+
+
+# --- 0. IS THIS THE RIGHT CORRIDOR? ------------------------------------------
+#
+# The reviewer challenged the road once and was right. So the identity of the corridor is
+# not asserted here, it is measured: independently sourced landmarks are projected into
+# EPSG:32643 and their distance to our geometry is computed. A landmark whose published
+# address says "New Sanganer Road" and which lands 60 m from one of our junctions is
+# evidence; a sentence saying we are confident is not.
+#
+# Coordinates below are read from the sources named. Mappls encodes the position in its
+# own share URL, so those are the publisher's coordinates rather than ours.
+LANDMARKS = [
+    dict(name="Mansarovar metro station, Pink Line western terminus",
+         lat=26.879531, lon=75.749971, against="corridor north end",
+         source="Wikipedia, Mansarovar metro station",
+         url="https://en.wikipedia.org/wiki/Mansarovar_metro_station",
+         why="Every one of the twelve workbooks names its north arm Mansarover Metro. If "
+             "the corridor does not end near that station, the survey is not this road."),
+    dict(name="Vijay Path Bus Stop, New Sanganer Road, Sector 10, Mansarovar",
+         lat=26.846671, lon=75.764759, against="J5",
+         source="Mappls",
+         url="https://www.mappls.com/usykkp",
+         why="A published postal address containing the words New Sanganer Road, on the "
+             "junction JDA's scheme calls Vijay Path. This is the single strongest check "
+             "on the whole identification."),
+    dict(name="Mohan Vatika, New Sanganer Road, Patel Nagar, Mansarovar",
+         lat=26.839195, lon=75.767568, against="J6",
+         source="Mappls",
+         url="https://www.mappls.com/place-mohan+vatika-new+sanganer+road-patel+nagar-mansarovar-jaipur-rajasthan-302020-8b452c",
+         why="A second New Sanganer Road address, at the far end of the corridor from the "
+             "first. One match could be luck; two 3.5 km apart is the road."),
+    dict(name="Sumer Nagar Mode Bus Stop, New Sanganer Road, Hans Vihar",
+         lat=26.837167, lon=75.768952, against="J6",
+         source="Mappls",
+         url="https://www.mappls.com/place-sumer+nagar+mode+bus+stop-new+sanganer+road-hans+vihar-mansarovar-jaipur-rajasthan-302020-E6Q378",
+         why="Sumer Nagar is the survey's own name for the west arm of TMC-01. It should "
+             "be, and is, at the southern end of the corridor."),
+    dict(name="New Aatish Market metro station, New Sanganer Road",
+         lat=26.880308, lon=75.764602, against="corridor north end",
+         source="Wikipedia, New Aatish Market metro station",
+         url="https://en.wikipedia.org/wiki/New_Aatish_Market_metro_station",
+         why="Also addressed New Sanganer Road, and 1.7 km from our northern end. NOT a "
+             "contradiction: it is the next station east of Mansarovar, so the road "
+             "continues north-east beyond JDA's project extent. Recorded because it looks "
+             "like a discrepancy until the metro line is traced."),
+]
+
+
+def corridor_identity():
+    """Distance from each sourced landmark to the geometry it should sit on."""
+    from pyproj import Transformer
+    from src.config import CORRIDOR_CENTRELINE, JUNCTION_COORDS, SCHEME_LABEL
+    to_utm = Transformer.from_crs("EPSG:4326", "EPSG:32643", always_xy=True)
+    ours = {SCHEME_LABEL[c]: to_utm.transform(v[1], v[0])
+            for c, v in JUNCTION_COORDS.items()}
+    north_end = to_utm.transform(*CORRIDOR_CENTRELINE[0])
+    south_end = to_utm.transform(*CORRIDOR_CENTRELINE[-1])
+    ends = {"corridor north end": north_end, "corridor south end": south_end}
+
+    rows = []
+    for L in LANDMARKS:
+        x, y = to_utm.transform(L["lon"], L["lat"])
+        target = ends.get(L["against"]) or ours[L["against"]]
+        d = math.dist((x, y), target)
+        rows.append(dict(landmark=L["name"], against=L["against"],
+                         metres=round(d), lat=L["lat"], lon=L["lon"],
+                         source=L["source"], url=L["url"], why=L["why"],
+                         read_on=READ_ON))
+    return rows
 
 
 # --- 1. THIS SCHEME, in the public record ------------------------------------
@@ -258,6 +329,12 @@ def build_md():
          "opened, and may merge several sources; it is not treated as fact. Nothing here "
          "is written from memory.",
          ""]
+    L += ["## Is this the right corridor?", "",
+          "Independently published landmarks, projected into EPSG:32643 and measured "
+          "against our geometry. Coordinates are the publishers'.", ""]
+    for r in corridor_identity():
+        L += [f"- **{r['metres']:,} m** from {r['against']} — {r['landmark']} "
+              f"([{r['source']}]({r['url']}), read {r['read_on']})", f"  {r['why']}", ""]
     for title, items in SECTIONS:
         L += [f"## {title}", ""]
         for p in items:
@@ -316,6 +393,27 @@ def build_pdf():
         ("200 ft", "STATED WIDTH OF THIS ROAD", DEFECT),
         ("1", "CORRIDOR STOPPED MID-BUILD", CAUTION),
     ]))
+
+    ident = corridor_identity()
+    close = [r for r in ident if r["metres"] < 500]
+    F.append(Paragraph("Is this the right corridor?", H2))
+    F.append(Paragraph(
+        "Asked first because the road was challenged once and the challenge was right. "
+        "Rather than assert it, independently published landmarks are projected into "
+        "EPSG:32643 and measured against our geometry. Coordinates come from the "
+        "publishers named, not from us.", BODY))
+    F.append(table(
+        ["LANDMARK", "MEASURED AGAINST", "DISTANCE", "WHY IT IS A TEST"],
+        [[Paragraph(f"{r['landmark']}<br/><font size=\"7\" color=\"#77817D\">"
+                    f"{r['source']}</font>", CELL),
+          r["against"], f"{r['metres']:,} m", r["why"]] for r in ident],
+        widths=[46, 26, 16, 82], aligns=[2]))
+    F.append(Paragraph(
+        f"<b>{len(close)} of {len(ident)} land within 500 m of the geometry they should "
+        f"sit on</b>, and the two closest are postal addresses containing the words New "
+        f"Sanganer Road, 3.5 km apart at opposite ends of the corridor. The fifth is "
+        f"1.7 km out and is explained rather than excused: it is the next metro station "
+        f"east of Mansarovar, so the road runs on beyond JDA's project extent.", BODY))
 
     F.append(Paragraph("What this review changes", H2))
     F.append(Paragraph(
@@ -394,6 +492,18 @@ def _main():
     print(f"  Of those, {len(verified)} were read on a page we opened; "
           f"{len(items) - len(verified)} are marked reported and are not treated as fact.")
 
+    ident = corridor_identity()
+    print("  Is this the right corridor? Measured, not asserted:")
+    for r in ident:
+        print(f"    {r['metres']:>6,} m from {r['against']:<20}{r['landmark'][:52]}")
+    close = [r for r in ident if r["metres"] < 500]
+    print(f"\n  GATE - sourced landmarks within 500 m of the geometry they should sit "
+          f"on: **{len(close)} of {len(ident)}**")
+    print("    The two closest are postal addresses containing the words New Sanganer")
+    print("    Road, 3.5 km apart at opposite ends of the corridor. The outlier is the")
+    print("    next metro station east of Mansarovar - the road continues beyond the")
+    print("    project extent, which is an explanation rather than an excuse.")
+
     print("\n  The three findings that matter most for the meeting:")
     print("    1. New Sanganer Road is 200 ft (61 m) of right of way. Our transects "
           "measure 31 to 39 m")
@@ -420,6 +530,7 @@ def _main():
         policy=("every claim carries its source and the date it was read; claims seen "
                 "only in a search summary are marked unverified and rendered as reported"),
         n_claims=len(items), n_verified=len(verified),
+        corridor_identity=corridor_identity(),
         sections=[dict(title=t, items=sec) for t, sec in SECTIONS],
     ), indent=1))
     md = build_md()

@@ -1,7 +1,7 @@
 # Data dictionary
 ### Every field in every published dataset
 
-Generated 2026-08-27 from the files in `out/data`. The field list is read from the data itself, so a field added to the pipeline and not described here is reported below as undocumented rather than quietly omitted.
+Generated 2026-08-31 from the files in `out/data`. The field list is read from the data itself, so a field added to the pipeline and not described here is reported below as undocumented rather than quietly omitted.
 
 **All spatial data is EPSG:32643 (UTM zone 43N, metres).** GeoJSON is written in EPSG:4326 because the format requires it, and is converted at that boundary only.
 
@@ -44,6 +44,7 @@ Generated 2026-08-27 from the files in `out/data`. The field list is read from t
 | `MAV` | PCU factor for multi-axle vehicles. |
 | `above_wide_threshold` | Whether the width exceeds the point at which a service road and five running lanes look the same from above. |
 | `after_grade_separation` | Approach state once the through movement is elevated. |
+| `against` | The part of our geometry it should sit on or near. |
 | `alignment_km` | Length of the surveyed alignment. |
 | `alternatives` | The ladder of what to do instead, ordered by cost. |
 | `analysis_date` | Survey day the figures come from. Day two is derived; see the audit. |
@@ -144,6 +145,7 @@ Generated 2026-08-27 from the files in `out/data`. The field list is read from t
 | `corrections` | One entry per label this project prints differently from the survey. |
 | `corridor` | Corridor-level aggregates. |
 | `corridor_arms_pcu` | Peak PCU on the two corridor approaches. A FLOOR on all-arm volume: the cross-street arms are counted but unmeasured. |
+| `corridor_identity` | The check that this is the right road: independently published landmarks measured against our geometry in EPSG:32643. |
 | `corridor_km` | Length of the surveyed alignment between the end junctions. |
 | `corridor_mean` | Mean share on the twelve corridor arms. |
 | `corridor_order` | Junction order along the alignment, from chainage. |
@@ -294,6 +296,7 @@ Generated 2026-08-27 from the files in `out/data`. The field list is read from t
 | `known_defects` | Defects the audit proved independently of this screen. |
 | `label` | Human-readable name. |
 | `label_as_received` | The survey's own spelling of this class label. |
+| `landmark` | The published place being measured. |
 | `lane_cap` | Lane capacity tested, PCU per lane. |
 | `lane_capacity_pcu` | Lane capacity tested, PCU per lane. |
 | `lane_model_applicable` | Whether lane-based capacity describes this stream at all. |
@@ -339,6 +342,7 @@ Generated 2026-08-27 from the files in `out/data`. The field list is read from t
 | `median_openings` | Median gaps found. |
 | `merging` | Points where two streams join. |
 | `method` | How the figure was produced. |
+| `metres` | Distance between the two, computed in EPSG:32643 and never in degrees. |
 | `metres_from_junction` | How far it is from that junction's centre. |
 | `midblock` | Openings that are genuinely between junctions. |
 | `midblock_detail` | The same for the mid-block ones. |
@@ -454,6 +458,7 @@ Generated 2026-08-27 from the files in `out/data`. The field list is read from t
 | `queue_vehicles` | That queue converted to vehicles using the observed composition. |
 | `radii_note` | That the design-vehicle radii are a policy input, banded, and that the governing IRC clause must be confirmed before design. |
 | `rank` | Position on that score. Ties share the lower rank. |
+| `read_on` | Date we read it. |
 | `rediscovered` | How many of them the screen re-found without being told. |
 | `ref_errors` | #REF! errors found in the flow-diagram sheets. |
 | `registration` | Whether JDA's KML centreline and JDA's CAD drawing agree about where the road is. Consistency between two sources, not ground truth. |
@@ -581,6 +586,7 @@ Generated 2026-08-27 from the files in `out/data`. The field list is read from t
 | `uplift_floor_pct` | Minimum PCU correction, %. The floor, not the estimate. |
 | `uplift_pct` | PCU correction for one junction, %. |
 | `upstream` | The junction that gets blocked. |
+| `url` | Where to read it. |
 | `used_for` | Which published results depend on it. |
 | `uturn_analogue` | Which manoeuvre the U-turn is modelled as. Load-bearing: a merge into the opposing stream needs a smaller gap than a crossing of it. |
 | `uturn_crossing_exposure` | The share of that arising at the mid-block U-turn openings. |
@@ -609,6 +615,7 @@ Generated 2026-08-27 from the files in `out/data`. The field list is read from t
 | `weave_per_lane_m` | Metres needed to cross one lane after re-entering. |
 | `weaving` | Is there room to cross to the left before the next junction? |
 | `wholly_identical` | Series identical to the previous day across all live bins. |
+| `why` | Why this landmark is a test of the identification rather than decoration. |
 | `wide_threshold_m` | That threshold, metres per direction. |
 | `wide_transect_pct` | Share of transects above it. Published as a share because the count moves with the spacing. |
 | `wide_transect_range_m` | Low and high of the flagged transects, metres per direction. |
