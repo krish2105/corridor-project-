@@ -61,52 +61,119 @@ THIN = Border(bottom=Side(style="thin", color="D5D9D4"))
 GROUPS = [("Left", "L"), ("Straight", "S"), ("Right", "R")]
 
 
-def diagram(arms, fi, ti, turn, path):
+def diagram(arms, fi, ti, turn, path, r, bays, width_m):
     """
-    The movement drawn the way the dashboard draws it: tangent-derived, left-hand
-    traffic, entry on the left of its arm, exit on the left of the exit arm.
+    The movement in its full context, dimensioned — not a lone arrow.
+
+    Every diagram now carries: the measured carriageway width on the corridor; BOTH
+    U-turn bays with their measured one-way distance from the junction (or "beyond
+    drawing" where the CAD ends); and, for a movement the scheme bans, the complete
+    re-route drawn leg by leg in amber beside the direct movement it replaces. A single
+    arrow answered "which movement is this?"; a reviewer's question is "what does a
+    driver DO?", and that needs the whole picture with numbers on it.
+
+    Distances are the published ones from scheme_test - real chainage differences, never
+    invented - and the schematic is not to scale, so every distance is written on it.
     """
     import math
-    fig, ax = plt.subplots(figsize=(3.4, 3.4), dpi=120)
-    ax.set_xlim(-1.3, 1.3); ax.set_ylim(-1.3, 1.3)
+    fig, ax = plt.subplots(figsize=(4.6, 4.6), dpi=120)
+    ax.set_xlim(-1.55, 1.55); ax.set_ylim(-1.62, 1.5)
     ax.set_aspect("equal"); ax.axis("off")
-    LANE = 0.16
+    LANE = 0.14
+
     for i in range(4):
-        t = math.pi / 2 * i
-        ox, oy = math.sin(t), math.cos(t)
-        ax.plot([ox * .12, ox * 1.05], [oy * .12, oy * 1.05],
-                color="#E2E4DF", lw=26, solid_capstyle="butt", zorder=1)
-        ax.text(ox * 1.18, oy * 1.18, spell(arms[i]), ha="center", va="center",
-                fontsize=7, color="#5C6663")
+        th = math.pi / 2 * i
+        ox, oy = math.sin(th), math.cos(th)
+        wide = 30 if i in (0, 2) else 22          # corridor drawn wider than cross
+        ax.plot([ox * .12, ox * 1.28], [oy * .12, oy * 1.28],
+                color="#E2E4DF", lw=wide, solid_capstyle="butt", zorder=1)
+        ax.text(ox * 1.42, oy * 1.4 - (0.03 if i in (1, 3) else 0),
+                spell(arms[i]), ha="center", va="center", fontsize=7, color="#5C6663")
+    # median line on the corridor
+    ax.plot([0, 0], [-1.28, 1.28], color="#C9CDC6", lw=1.1, ls=(0, (4, 3)), zorder=2)
 
     def node(i, entering):
-        t = math.pi / 2 * i
-        ox, oy = math.sin(t), math.cos(t)
-        px, py = math.cos(t), -math.sin(t)
+        th = math.pi / 2 * i
+        ox, oy = math.sin(th), math.cos(th)
+        px, py = math.cos(th), -math.sin(th)
         s = 1 if entering else -1
-        return (ox * .55 + px * s * LANE, oy * .55 + py * s * LANE)
+        return (ox * .5 + px * s * LANE, oy * .5 + py * s * LANE)
 
-    x1, y1 = node(fi, True); x2, y2 = node(ti, False)
-    if turn == "Straight":
-        verts = [(x1, y1), (x2, y2)]; codes = [MplPath.MOVETO, MplPath.LINETO]
+    def bez(fi_, ti_, colour, lw, dashed=False):
+        x1, y1 = node(fi_, True); x2, y2 = node(ti_, False)
+        off = (ti_ - fi_) % 4
+        if off == 2:
+            pth = MplPath([(x1, y1), (x2, y2)], [MplPath.MOVETO, MplPath.LINETO])
+        else:
+            ta = math.pi / 2 * fi_; tb = math.pi / 2 * ti_
+            ax_, ay_ = -math.sin(ta), -math.cos(ta)
+            bx_, by_ = math.sin(tb), math.cos(tb)
+            det = ax_ * -by_ - ay_ * -bx_
+            tt = ((x2 - x1) * -by_ - (y2 - y1) * -bx_) / det
+            pth = MplPath([(x1, y1), (x1 + tt * ax_, y1 + tt * ay_), (x2, y2)],
+                          [MplPath.MOVETO, MplPath.CURVE3, MplPath.CURVE3])
+        ax.add_patch(mpatches.FancyArrowPatch(
+            path=pth, arrowstyle="-|>", mutation_scale=13, lw=lw, color=colour,
+            linestyle=(0, (5, 3)) if dashed else "solid", zorder=4))
+
+    # BOTH bays, always: the back-to-back context every sheet was missing
+    for side, ybay in (("north", 1.06), ("south", -1.06)):
+        b = bays.get(side)
+        ax.add_patch(mpatches.FancyArrowPatch(
+            (LANE, ybay), (-LANE, ybay),
+            connectionstyle=f"arc3,rad={-0.9 if side == 'north' else 0.9}",
+            arrowstyle="-|>", mutation_scale=9, lw=1.6, color="#82600F", zorder=3))
+        lab = ("beyond drawing" if not b or b.get("one_way_m") is None
+               else f"{b['one_way_m']:,} m out")
+        ax.text(0.30, ybay, f"U-bay {side}\n{lab}", fontsize=6.2,
+                color="#82600F", va="center")
+
+    amber = "#B8860B"
+    if r["permitted"] == "re-routed":
+        # ghost of the banned direct movement, then the real route in amber
+        bez(fi, ti, TURN_HEX[turn], 1.4, dashed=True)
+        corridor = fi in (0, 2)
+        headI = (fi + 2) % 4 if corridor else (fi + 1) % 4
+        # after the U-turn the driver re-enters the junction FROM the arm they ran out
+        # toward - they went out toward headI, turned, and come back in on that same arm
+        ybay = 1.06 if headI == 0 else -1.06
+        sgn = 1 if headI == 0 else -1
+        if not corridor:
+            bez(fi, headI, amber, 2.6)                 # the forced left
+        hx, hy = node(headI, False)
+        if corridor:
+            x1, y1 = node(fi, True)
+            ax.plot([x1, hx], [y1, hy], color=amber, lw=2.6, zorder=4)
+        ax.plot([hx, hx], [hy, ybay * .97], color=amber, lw=2.6, zorder=4)
+        ax.add_patch(mpatches.FancyArrowPatch(
+            (hx, ybay * .97), (-hx, ybay * .97),
+            connectionstyle=f"arc3,rad={sgn * 0.9}",
+            arrowstyle="-", lw=2.6, color=amber, zorder=4))
+        bx2, by2 = node(headI, True)
+        ax.plot([-hx, bx2], [ybay * .97, by2], color=amber, lw=2.6, zorder=4)
+        bez(headI, ti, amber, 2.6)
+        b = bays.get("north" if headI == 0 else "south") or {}
+        note = ("route: no opening within the drawing on this side"
+                if b.get("one_way_m") is None else
+                f"route: {b['one_way_m']:,} m to the bay, "
+                f"{b['detour_m']:,} m round trip")
+        ax.text(0, -1.55, note, ha="center", fontsize=7, color=amber)
     else:
-        # control point at the intersection of the entry/exit tangents (see VolumeFlow)
-        ta = math.pi / 2 * fi; tb = math.pi / 2 * ti
-        ax_, ay_ = -math.sin(ta), -math.cos(ta)     # inward along entry arm
-        bx_, by_ = math.sin(tb), math.cos(tb)       # outward along exit arm
-        det = ax_ * -by_ - ay_ * -bx_
-        tt = ((x2 - x1) * -by_ - (y2 - y1) * -bx_) / det
-        cx, cy = x1 + tt * ax_, y1 + tt * ay_
-        verts = [(x1, y1), (cx, cy), (x2, y2)]
-        codes = [MplPath.MOVETO, MplPath.CURVE3, MplPath.CURVE3]
-    ax.add_patch(mpatches.FancyArrowPatch(path=MplPath(verts, codes),
-                 arrowstyle="-|>", mutation_scale=16, lw=3.2,
-                 color=TURN_HEX[turn], zorder=3))
+        bez(fi, ti, TURN_HEX[turn], 3.0)
+        ax.text(0, -1.55, "permitted at the junction — unaffected by the scheme",
+                ha="center", fontsize=7, color="#2C6249")
+
+    # measured carriageway dimension, provisional
+    if width_m:
+        ax.text(-1.5, 1.42, f"carriageway {2 * width_m:.1f} m both directions\n"
+                            f"({width_m:.1f} m/dir · CAD-derived, provisional)",
+                ha="left", va="top", fontsize=6.4, color="#5C6663")
+
     fig.savefig(path, bbox_inches="tight", facecolor="white")
     plt.close(fig)
 
 
-def sheet_for(wb, code, arms, fi, ti, turn, day_mv, day_label, derived, img_path):
+def sheet_for(wb, code, arms, fi, ti, turn, day_mv, day_label, derived, img_path, bays):
     frm, to = arms[fi], arms[ti]
     title = f"{turn[0]}{fi + 1} {spell(frm)[:14]}"
     ws = wb.create_sheet(title[:31])
@@ -118,9 +185,17 @@ def sheet_for(wb, code, arms, fi, ti, turn, day_mv, day_label, derived, img_path
     ws["A2"] = (f"Survey sheet {code} · movement V_{fi * 3 + [g for g, _ in GROUPS].index(turn) + 1} "
                 f"· India drives on the left; the left turn is the next arm clockwise")
     ws["A2"].font = SUBF
-    ws["A3"] = ("Under the signal-free scheme: "
-                + (" → ".join(r["legs"]) if r["permitted"] == "re-routed"
-                   else "unaffected — " + r["legs"][0]))
+    if r["permitted"] == "re-routed":
+        b = bays.get(r["bay"]) or {}
+        dist = ("no opening within the drawing on this side"
+                if b.get("one_way_m") is None else
+                f"{b['one_way_m']:,} m to the bay, {b['detour_m']:,} m round trip"
+                + (" — and that opening is a junction mouth"
+                   if b.get("bay_is_junction_mouth") else ""))
+        ws["A3"] = ("BANNED at the junction under the signal-free scheme. Route: "
+                    + " → ".join(r["legs"]) + f".  Measured: {dist}.")
+    else:
+        ws["A3"] = ("Under the signal-free scheme: unaffected — " + r["legs"][0])
     ws["A3"].font = Font(size=9, italic=True,
                          color=DEFECT if r["permitted"] == "re-routed" else OKC)
 
@@ -210,7 +285,8 @@ def uturn_sheet(wb, code):
         rows = [u for u in json.loads(p.read_text())["uturns"]
                 if u["junction"] == code]
     hdr = 4
-    heads = ["Bay side", "Rejoins", "Movements it serves", "Demand veh/h",
+    heads = ["Bay side", "Rejoins", "Movements it serves", "Bay distance m (one-way)",
+             "Detour m (round trip)", "Demand veh/h",
              "Conflicting flow veh/h", "Critical gap s", "Capacity veh/h", "Verdict"]
     for j, htxt in enumerate(heads, start=1):
         c = ws.cell(hdr, j, htxt); c.font = TH; c.fill = FILL
@@ -221,14 +297,20 @@ def uturn_sheet(wb, code):
         vc = u["vc_optimistic"]
         verdict = ("no viable gaps" if vc >= 3.0 else
                    f"fails, v/c {vc:.1f}" if vc >= 1.0 else f"ok, v/c {vc:.2f}")
+        d = json.loads((OUT / "data" / "scheme_test.json").read_text())
+        drow = next((x for x in d.get("uturn_detour", [])
+                     if x["junction"] == code and x["bay"] == side), {})
+        one_way = drow.get("one_way_m")
         vals = [f"{side} of junction", conflicting_direction(side), serves,
+                one_way if one_way is not None else "beyond drawing",
+                drow.get("detour_m") if drow.get("detour_m") is not None else "—",
                 round(u["uturn_demand"]), round(u["conflicting_flow"]),
                 f"{u['t_c_lo']:.1f}–{u['t_c_hi']:.1f}",
                 round(u["cap_optimistic"]), verdict]
         for j, v in enumerate(vals, start=1):
             c = ws.cell(i, j, v); c.font = Font(size=9)
             c.alignment = Alignment(wrap_text=True, vertical="top")
-        ws.cell(i, 8).font = Font(size=9, bold=True,
+        ws.cell(i, 10).font = Font(size=9, bold=True,
                                   color=DEFECT if vc >= 1.0 else OKC)
     n = ws.cell(hdr + len(rows) + 2, 1,
                 "Ceiling: a single opening passes at most 1,800 veh/h with NO opposing "
@@ -236,17 +318,25 @@ def uturn_sheet(wb, code):
                 "by any bay, metered or not. Gap analysis: HCM form, composition-weighted "
                 "critical gap; see scheme_test.json and the dashboard for the full basis.")
     n.font = SUBF
-    widths = [14, 12, 44, 12, 14, 12, 12, 16]
+    widths = [14, 12, 40, 13, 13, 12, 14, 12, 12, 16]
     for j, w in enumerate(widths, start=1):
         ws.column_dimensions[get_column_letter(j)].width = w
 
 
 def build():
+    import json
     bins, _ = parse_all()
     mvall = bins[bins.kind == "movement"]
     days = sorted(mvall.date.unique())
     BOOKS.mkdir(parents=True, exist_ok=True)
     IMGS.mkdir(exist_ok=True)
+
+    # published measurements: bay distances and carriageway widths, never re-derived here
+    sch = json.loads((OUT / "data" / "scheme_test.json").read_text())
+    det = {}
+    for u in sch.get("uturn_detour", []):
+        det.setdefault(u["junction"], {})[u["bay"]] = u
+    cap = json.loads((OUT / "data" / "capacity.json").read_text())["widths"]
 
     made, checks = [], []
     for code in sorted(JUNCTIONS, key=lambda c: SCHEME_LABEL[c]):
@@ -263,9 +353,11 @@ def build():
                     ti = (fi + off) % 4
                     img = IMGS / f"{code}_{turn[0]}{fi}.png"
                     if not img.exists():
-                        diagram(arms, fi, ti, turn, img)
+                        diagram(arms, fi, ti, turn, img, scheme_route(fi, ti),
+                                det.get(code, {}), cap.get(code, {}).get("width_m"))
                     book_total += sheet_for(wb, code, arms, fi, ti, turn,
-                                            day_mv, str(day), derived, img)
+                                            day_mv, str(day), derived, img,
+                                            det.get(code, {}))
             uturn_sheet(wb, code)
             parsed = int(day_mv["count"].sum())
             checks.append((code, di, book_total, parsed))
