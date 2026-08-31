@@ -166,7 +166,7 @@ function mutPath(j: J, m: Move) {
       {/* Parked in the top-left rather than on the heading arm. On the arm it landed on
           top of the carriageway dimension whenever the route ran south, and two captions
           fighting for the same 40 px is how a drawing stops being readable. */}
-      <text x={14} y={20} fontSize={9} fill="var(--caution)"
+      <text x={10} y={SIZE - 30} fontSize={9} fill="var(--caution)"
             fontFamily="IBM Plex Mono, monospace">
         {d?.beyond || !d
           ? "no opening on this side within the drawing"
@@ -174,7 +174,7 @@ function mutPath(j: J, m: Move) {
             `${(d.detour_m ?? 0).toLocaleString("en-US")} m round trip`}
       </text>
       {d && !d.beyond && d.at_junction_mouth && (
-        <text x={14} y={32} fontSize={8.5} fill="var(--defect)"
+        <text x={10} y={SIZE - 18} fontSize={8.5} fill="var(--defect)"
               fontFamily="IBM Plex Mono, monospace">
           and that opening is a junction mouth
         </text>
