@@ -223,6 +223,40 @@ INDIA = [
               "stopped after construction had begun, on process and land-use grounds "
               "rather than on traffic engineering. Consultation and route choice killed "
               "it, not capacity."),
+    P("The working example of THIS design", "Noida, DSC Road and MP-3",
+      "Noida Authority has made the Dadri-Surajpur-Chhalera (DSC) Road and the MP-3 road "
+      "(Okhla Barrage via the City Centre / Sector 71-72 intersection) signal-free using "
+      "U-turns, with intersections closed by median and paired U-turn bays on both sides "
+      "carrying the turning traffic - the back-to-back arrangement.",
+      "ThePrint, Noida is now a city of U-turns; Hindustan Times, Green Valley crossing",
+      "https://theprint.in/feature/around-town/noida-is-now-a-city-of-u-turns-its-not-the-only-way-to-fix-traffic-jams/2085723/",
+      bearing="This is the design in JDA's reference photo and animation, running today. "
+              "It is also exactly what our scheme test models: two bays per junction, one "
+              "each side, each fed by three movements. The physics does not change with "
+              "the city - what changes is whether the opposing flow leaves gaps, and "
+              "Noida's U-turns sit on roads where it does."),
+    P("How Noida does it", "Noida, Green Valley crossing",
+      "The crossing is made signal-free by SHUTTING two arms: a driver from City Centre "
+      "toward Sector 48 turns left, then takes a U-turn; the return trip mirrors it. Two "
+      "U-turns already existed on DSC Road and a third was added near the Sector 49 "
+      "police station.",
+      "Hindustan Times ST Noida, 22 September 2019",
+      "https://www.pressreader.com/india/hindustan-times-st-noida/20190922/281827170482512",
+      bearing="Left-then-U-turn is the same route our routes.py publishes for every "
+              "banned cross-street movement. Independent confirmation the enumeration "
+              "matches how the design is actually operated."),
+    P("What Noida reports", "Noida",
+      "ThePrint documents the costs of the same design in service: peak-hour bottlenecks "
+      "at the bays, drivers taking U-turns from the wrong side to avoid the longer "
+      "route, a Rs 1 crore single U-turn questioned publicly, and a Sector 78 bay on a "
+      "narrow road that blocked buses and trucks until it was redesigned. Roundabouts at "
+      "Sectors 37 and 62 were removed for U-turns.",
+      "ThePrint, Noida is now a city of U-turns",
+      "https://theprint.in/feature/around-town/noida-is-now-a-city-of-u-turns-its-not-the-only-way-to-fix-traffic-jams/2085723/",
+      bearing="Every failure mode Noida reports is one our analysis predicts here: the "
+              "bottleneck is our gap-capacity finding, the wrong-side U-turn is our "
+              "forced-movement finding, and the narrow-road bay is our storage criterion "
+              "- the one that is never reached because gap capacity binds first."),
     P("Where it was stopped", "Bengaluru",
       "Residents of Koramangala protested the same corridor and the High Court directed "
       "the government to consider all stakeholders, after which a sub-committee "

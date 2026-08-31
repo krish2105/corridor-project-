@@ -135,6 +135,8 @@ ALLOW = {
     "iskcon", "kd", "sg", "bda", "dda", "uttipec", "uttipec's", "indot", "txdot",
     "deccan", "deshgujarat", "mdpi", "arxiv", "asce", "skywalk", "mut", "mutis",
     "mappls", "wikipedia", "vatika", "vihar", "aatish",
+    "noida", "noida's", "dsc", "dadri-surajpur-chhalera", "okhla", "mp",
+    "hindustan", "theprint",
     "offside", "criticised", "rationalised", "summarise", "sustainability", "ft",
     "civ", "eng",
     # standards, codes and bodies

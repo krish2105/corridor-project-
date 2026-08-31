@@ -59,6 +59,9 @@ DELIVERABLES = [
     # what makes that visible.
     ("D11", "Phase 6 field plan", "Camera positions, schedule, GCP capture list",
      "T3", OUT / "phase6_field_plan.md", "awaiting the field day"),
+    ("D17", "Junction turning-movement workbooks",
+     "6 editable Excels, 12 movement sheets each (4-4-4), diagram + class distribution",
+     "T1", OUT / "junction_books" / "J1_TMC-06_Turning_Movements.xlsx"),
     ("D16", "Precedent review",
      "4-page PDF: where this has been built in India, how it went, 18 sources",
      "T1", OUT / "Precedent_Review.pdf"),
@@ -259,6 +262,7 @@ PIPELINE_ORDER = [
     ("dictionary",   "-> docs/data_dictionary.md"),
     ("export",       "-> web/public/   (pass 2: publishes the documents above)"),
     ("masterdb",     "-> out/Six_Junction_Master_Database.xlsx"),
+    ("junction_books", "-> out/junction_books/: 12 turning-movement sheets per junction"),
     ("service_docs", "-> out/service/ and README.md"),
     ("build_page",   "-> out/corridor_audit.html"),
     ("build_pitch",  "-> out/corridor_pitch.html"),
