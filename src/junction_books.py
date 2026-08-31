@@ -165,7 +165,7 @@ def diagram(arms, fi, ti, turn, path, r, bays, width_m):
 
     # measured carriageway dimension, provisional
     if width_m:
-        ax.text(-1.5, 1.42, f"carriageway {2 * width_m:.1f} m both directions\n"
+        ax.text(-1.5, 1.18, f"carriageway {2 * width_m:.1f} m both directions\n"
                             f"({width_m:.1f} m/dir · CAD-derived, provisional)",
                 ha="left", va="top", fontsize=6.4, color="#5C6663")
 

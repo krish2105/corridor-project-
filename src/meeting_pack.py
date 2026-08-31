@@ -24,6 +24,7 @@ import sys
 from datetime import date
 from pathlib import Path
 
+from reportlab.lib.units import mm
 from reportlab.platypus import KeepTogether, Paragraph
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
@@ -285,6 +286,37 @@ def build():
             + " veh/hour. Those are not badly sited bays. They are the wrong instrument "
               "for the demand, and no metering, median widening or opposing-flow relief "
               "reaches them.", BODY)]))
+    # The movement diagrams, as shipped in the junction workbooks: one banned movement
+    # with its full measured re-route, one permitted movement beside it. A reviewer who
+    # has seen these needs no verbal explanation of what the scheme does to a driver.
+    from reportlab.platypus import Image as RLImage, Table as RLTable, TableStyle as RLTS
+    dg = OUT / "junction_books" / "_diagrams"
+    banned, permitted = dg / "TMC-06_R3.png", dg / "TMC-06_L1.png"
+    if banned.exists() and permitted.exists():
+        F.append(Paragraph("What the scheme does to one driver, drawn to the data", H3))
+        pair = RLTable([[RLImage(str(banned), width=80 * mm, height=76 * mm,
+                                 kind="proportional"),
+                         RLImage(str(permitted), width=80 * mm, height=76 * mm,
+                                 kind="proportional")],
+                        [Paragraph("BANNED: a cross-street right turn at J1. Dashed is "
+                                   "the movement today; amber is the route the scheme "
+                                   "leaves - forced left, run to the bay, U-turn, back "
+                                   "through the junction. Distances are measured, and "
+                                   "this bay falls beyond the drawing.", NOTE),
+                         Paragraph("PERMITTED: a left turn at the same junction - "
+                                   "unaffected, like all four left turns and the "
+                                   "corridor through movement. Six of twelve movements "
+                                   "survive; six take the amber route.", NOTE)]],
+                       colWidths=[85 * mm, 85 * mm])
+        pair.setStyle(RLTS([("VALIGN", (0, 0), (-1, -1), "TOP"),
+                            ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                            ("RIGHTPADDING", (0, 0), (-1, -1), 5)]))
+        F.append(pair)
+        F.append(Paragraph(
+            "Every one of the 144 movement sheets in the accompanying junction workbooks "
+            "carries its own diagram in this form: both bays with measured distances, the "
+            "carriageway width, and the full re-route where the movement is banned.", NOTE))
+
     F.append(Paragraph("The decision ladder: which constraint binds, bay by bay", H3))
     F.append(Paragraph(
         "Five criteria evaluated in order, first failure binding. A criterion below the "
