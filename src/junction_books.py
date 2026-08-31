@@ -1,5 +1,15 @@
 """
-junction_books.py — one editable Excel per junction: 12 turning-movement sheets, 4-4-4.
+junction_books.py — twelve editable Excels: 6 junctions x 2 days, 12 movement sheets each.
+
+The issued survey is twelve workbooks - six junctions counted on two days - and the
+deliverable mirrors that one for one, so a reviewer can lay our J3 Day-1 book beside the
+issued 04_TMC (11-05-2026) file and reconcile cell against cell. Day-2 books carry the
+audit's warning on every sheet: 396 of 555 series reproduce day 1 exactly, so that day is
+derived, not independently observed.
+
+Each book also carries a U-TURN BAYS sheet - the updated movement set under the signal-free
+scheme: which three movements feed each bay, the demand, the conflicting flow, and the
+gap-acceptance verdict, straight from scheme_test.
 
 WHAT THE REVIEWER ASKED FOR
 Per junction, every one of the twelve surveyed movements on its own sheet, grouped the
@@ -9,10 +19,6 @@ distribution (96 fifteen-minute bins by ten classes, exactly as parsed from the 
 workbook), the class totals with shares, and an editable chart. Nothing synthetic: every
 number is re-derived from the source cells, and the gate below reconciles each sheet's
 total against the parse.
-
-Day 2 is shown as a per-class daily total beside day 1, with the identical-to-day-1 flag,
-rather than a second 96-row block - the audit showed day 2 is derived, and repeating it
-row by row would present a copy as observation.
 
 Run:  uv run python src/junction_books.py
 """
@@ -100,7 +106,7 @@ def diagram(arms, fi, ti, turn, path):
     plt.close(fig)
 
 
-def sheet_for(wb, code, arms, fi, ti, turn, mv, img_path):
+def sheet_for(wb, code, arms, fi, ti, turn, day_mv, day_label, derived, img_path):
     frm, to = arms[fi], arms[ti]
     title = f"{turn[0]}{fi + 1} {spell(frm)[:14]}"
     ws = wb.create_sheet(title[:31])
@@ -121,10 +127,13 @@ def sheet_for(wb, code, arms, fi, ti, turn, mv, img_path):
     img = XLImage(str(img_path)); img.anchor = "L1"
     ws.add_image(img)
 
-    # data block: 96 bins x classes, day 1, plus day-2 daily totals with the flag
-    g = mv[(mv.arm_from == frm) & (mv.arm_to == to)]
-    days = sorted(g.date.unique())
-    d1 = g[g.date == days[0]]
+    if derived:
+        ws["A4"] = ("CAUTION: the audit found this day is derived from day 1 on most "
+                    "series, not independently observed. Treat as a copy check, not data.")
+        ws["A4"].font = Font(size=9, bold=True, color=DEFECT)
+
+    # data block: 96 bins x classes for THIS day
+    d1 = day_mv[(day_mv.arm_from == frm) & (day_mv.arm_to == to)]
     piv = d1.pivot_table(index="bin_label", columns="veh_class",
                          values="count", aggfunc="sum").fillna(0)
     classes = [c for c in CLASS_LABELS if c in piv.columns]
@@ -147,7 +156,7 @@ def sheet_for(wb, code, arms, fi, ti, turn, mv, img_path):
         ws.cell(i, len(classes) + 2, f"=SUM(B{i}:{last}{i})").font = Font(size=9)
 
     tot_r = hdr + len(piv) + 1
-    ws.cell(tot_r, 1, f"Day 1 total ({days[0]})").font = BOLD
+    ws.cell(tot_r, 1, f"Total ({day_label})").font = BOLD
     for j in range(2, len(classes) + 3):
         col = get_column_letter(j)
         c = ws.cell(tot_r, j, f"=SUM({col}{hdr + 1}:{col}{tot_r - 1})")
@@ -160,19 +169,7 @@ def sheet_for(wb, code, arms, fi, ti, turn, mv, img_path):
         ws.cell(tot_r + 1, j,
                 round(100 * day1.get(c, 0) / grand, 2) if grand else 0).font = Font(size=9)
 
-    if len(days) > 1:
-        d2 = g[g.date == days[1]].groupby("veh_class")["count"].sum()
-        ws.cell(tot_r + 2, 1, f"Day 2 total ({days[1]})").font = TH
-        for j, c in enumerate(classes, start=2):
-            ws.cell(tot_r + 2, j, int(d2.get(c, 0))).font = Font(size=9)
-        same = sum(1 for c in classes
-                   if day1.get(c, 0) > 0 or d2.get(c, 0) > 0
-                   if day1.get(c, 0) == d2.get(c, 0))
-        live = sum(1 for c in classes if day1.get(c, 0) > 0 or d2.get(c, 0) > 0)
-        ws.cell(tot_r + 2, len(classes) + 2,
-                f"{same} of {live} classes identical to day 1").font = SUBF
-
-    ch = BarChart(); ch.type = "col"; ch.title = "Vehicle-wise distribution, day 1"
+    ch = BarChart(); ch.type = "col"; ch.title = f"Vehicle-wise distribution, {day_label}"
     ch.height, ch.width = 7, 16; ch.legend = None
     ch.add_data(Reference(ws, min_col=2, max_col=len(classes) + 1,
                           min_row=hdr, max_row=tot_r), from_rows=False, titles_from_data=True)
@@ -191,49 +188,105 @@ def sheet_for(wb, code, arms, fi, ti, turn, mv, img_path):
     return int(grand)
 
 
+def uturn_sheet(wb, code):
+    """
+    The updated movement set under the signal-free scheme, for this junction.
+
+    Read from scheme_test's published output rather than recomputed, so the workbook and
+    the dashboard cannot disagree about a verdict.
+    """
+    import json
+    from src.routes import bay_movements, conflicting_direction
+    p = OUT / "data" / "scheme_test.json"
+    ws = wb.create_sheet("U-Turn Bays")
+    ws.sheet_view.showGridLines = False
+    ws["A1"] = f"{SCHEME_LABEL[code]} — U-turn bays under the signal-free scheme"
+    ws["A1"].font = H
+    ws["A2"] = ("Back-to-back arrangement: one bay each side of the junction, as run on "
+                "Noida's Dadri (DSC) Road. Each bay is fed by THREE movements, not one.")
+    ws["A2"].font = SUBF
+    rows = []
+    if p.exists():
+        rows = [u for u in json.loads(p.read_text())["uturns"]
+                if u["junction"] == code]
+    hdr = 4
+    heads = ["Bay side", "Rejoins", "Movements it serves", "Demand veh/h",
+             "Conflicting flow veh/h", "Critical gap s", "Capacity veh/h", "Verdict"]
+    for j, htxt in enumerate(heads, start=1):
+        c = ws.cell(hdr, j, htxt); c.font = TH; c.fill = FILL
+        c.alignment = Alignment(wrap_text=True, vertical="top")
+    for i, u in enumerate(sorted(rows, key=lambda x: x["bay"]), start=hdr + 1):
+        side = u["bay"]
+        serves = ", ".join(f"{m['from_arm']}→{m['to_arm']}" for m in bay_movements(side))
+        vc = u["vc_optimistic"]
+        verdict = ("no viable gaps" if vc >= 3.0 else
+                   f"fails, v/c {vc:.1f}" if vc >= 1.0 else f"ok, v/c {vc:.2f}")
+        vals = [f"{side} of junction", conflicting_direction(side), serves,
+                round(u["uturn_demand"]), round(u["conflicting_flow"]),
+                f"{u['t_c_lo']:.1f}–{u['t_c_hi']:.1f}",
+                round(u["cap_optimistic"]), verdict]
+        for j, v in enumerate(vals, start=1):
+            c = ws.cell(i, j, v); c.font = Font(size=9)
+            c.alignment = Alignment(wrap_text=True, vertical="top")
+        ws.cell(i, 8).font = Font(size=9, bold=True,
+                                  color=DEFECT if vc >= 1.0 else OKC)
+    n = ws.cell(hdr + len(rows) + 2, 1,
+                "Ceiling: a single opening passes at most 1,800 veh/h with NO opposing "
+                "traffic (3600 / follow-up headway). Demand above that cannot be served "
+                "by any bay, metered or not. Gap analysis: HCM form, composition-weighted "
+                "critical gap; see scheme_test.json and the dashboard for the full basis.")
+    n.font = SUBF
+    widths = [14, 12, 44, 12, 14, 12, 12, 16]
+    for j, w in enumerate(widths, start=1):
+        ws.column_dimensions[get_column_letter(j)].width = w
+
+
 def build():
     bins, _ = parse_all()
     mvall = bins[bins.kind == "movement"]
+    days = sorted(mvall.date.unique())
     BOOKS.mkdir(parents=True, exist_ok=True)
     IMGS.mkdir(exist_ok=True)
 
     made, checks = [], []
     for code in sorted(JUNCTIONS, key=lambda c: SCHEME_LABEL[c]):
         arms = JUNCTIONS[code]
-        mv = mvall[mvall.junction == code]
-        wb = Workbook(); wb.remove(wb.active)
-        book_total = 0
-        for turn, _tag in GROUPS:                       # 4-4-4: L, L, L, L, S ... R
-            off = {"Left": 1, "Straight": 2, "Right": 3}[turn]
-            for fi in range(4):
-                ti = (fi + off) % 4
-                img = IMGS / f"{code}_{turn[0]}{fi}.png"
-                if not img.exists():
-                    diagram(arms, fi, ti, turn, img)
-                book_total += sheet_for(wb, code, arms, fi, ti, turn, mv, img)
-        # GATE per book: the 12 sheets' day-1 totals must equal the parse's day-1 total
-        days = sorted(mv.date.unique())
-        parsed = int(mv[mv.date == days[0]]["count"].sum())
-        checks.append((code, book_total, parsed))
-        name = f"{SCHEME_LABEL[code]}_{code}_Turning_Movements.xlsx"
-        wb.save(BOOKS / name)
-        made.append(name)
+        jmv = mvall[mvall.junction == code]
+        for di, day in enumerate(days, start=1):
+            day_mv = jmv[jmv.date == day]
+            derived = di == 2                 # audit finding F: day 2 is derived
+            wb = Workbook(); wb.remove(wb.active)
+            book_total = 0
+            for turn, _tag in GROUPS:         # 4-4-4: L x4, S x4, R x4
+                off = {"Left": 1, "Straight": 2, "Right": 3}[turn]
+                for fi in range(4):
+                    ti = (fi + off) % 4
+                    img = IMGS / f"{code}_{turn[0]}{fi}.png"
+                    if not img.exists():
+                        diagram(arms, fi, ti, turn, img)
+                    book_total += sheet_for(wb, code, arms, fi, ti, turn,
+                                            day_mv, str(day), derived, img)
+            uturn_sheet(wb, code)
+            parsed = int(day_mv["count"].sum())
+            checks.append((code, di, book_total, parsed))
+            name = f"{SCHEME_LABEL[code]}_{code}_Day{di}_{day}.xlsx"
+            wb.save(BOOKS / name)
+            made.append(name)
     return made, checks
 
 
 if __name__ == "__main__":
     made, checks = build()
     print("=== Junction turning-movement workbooks ===")
-    print("  12 sheets per junction, grouped 4-4-4: Left x4 arms, Straight x4, Right x4.")
-    print("  Every figure re-derived from the issued workbooks; nothing synthetic.\n")
+    print("  12 books, mirroring the 12 issued: 6 junctions x 2 days. 12 movement")
+    print("  sheets each (4-4-4) plus a U-Turn Bays sheet. Nothing synthetic.\n")
     ok = 0
-    for code, got, want in checks:
+    for code, di, got, want in checks:
         match = got == want
         ok += match
-        print(f"  {SCHEME_LABEL[code]}  {code}  12 sheets  "
-              f"day-1 vehicles {got:>8,}  parse {want:>8,}  "
-              f"{'OK' if match else 'MISMATCH'}")
-    print(f"\n  GATE - books whose 12 sheets reconcile exactly with the parse: "
+        print(f"  {SCHEME_LABEL[code]} {code} day {di}  "
+              f"vehicles {got:>8,}  parse {want:>8,}  {'OK' if match else 'MISMATCH'}")
+    print(f"\n  GATE - books reconciling exactly with the parse: "
           f"**{ok} of {len(checks)}**")
     if ok != len(checks):
         raise SystemExit("a book does not reconcile with the parsed source")

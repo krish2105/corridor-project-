@@ -223,7 +223,7 @@ INDIA = [
               "stopped after construction had begun, on process and land-use grounds "
               "rather than on traffic engineering. Consultation and route choice killed "
               "it, not capacity."),
-    P("The working example of THIS design", "Noida, DSC Road and MP-3",
+    P("The working example of THIS design", "Noida, Dadri (DSC) Road and MP-3",
       "Noida Authority has made the Dadri-Surajpur-Chhalera (DSC) Road and the MP-3 road "
       "(Okhla Barrage via the City Centre / Sector 71-72 intersection) signal-free using "
       "U-turns, with intersections closed by median and paired U-turn bays on both sides "
@@ -245,6 +245,17 @@ INDIA = [
       bearing="Left-then-U-turn is the same route our routes.py publishes for every "
               "banned cross-street movement. Independent confirmation the enumeration "
               "matches how the design is actually operated."),
+    P("Named by the reviewer", "Noida, Amaltas Marg",
+      "JDA's reviewer names Amaltas Marg as a second Noida road running this design, "
+      "alongside Dadri Road. Amaltash Marg exists in Noida's Sectors 4 and 10, but no "
+      "public record of a signal-free U-turn scheme on it could be opened.",
+      "onefivenine street listing (existence of the road only)",
+      "https://www.onefivenine.com/india/villages/North-East-Delhi/North-East-Delhi/Amaltash-Marg-Block-A",
+      verified=False,
+      bearing="Recorded as the reviewer's statement, not confirmed. A landmark or news "
+              "reference from the reviewer would let it be verified the way Dadri Road "
+              "was. Dadri Road itself IS confirmed: it is the D of the "
+              "Dadri-Surajpur-Chhalera (DSC) Road."),
     P("What Noida reports", "Noida",
       "ThePrint documents the costs of the same design in service: peak-hour bottlenecks "
       "at the bays, drivers taking U-turns from the wrong side to avoid the longer "

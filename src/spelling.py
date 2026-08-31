@@ -136,7 +136,8 @@ ALLOW = {
     "deccan", "deshgujarat", "mdpi", "arxiv", "asce", "skywalk", "mut", "mutis",
     "mappls", "wikipedia", "vatika", "vihar", "aatish",
     "noida", "noida's", "dsc", "dadri-surajpur-chhalera", "okhla", "mp",
-    "hindustan", "theprint",
+    "hindustan", "theprint", "amaltas", "amaltash", "dadri", "onefivenine",
+    "surajpur", "chhalera",
     "offside", "criticised", "rationalised", "summarise", "sustainability", "ft",
     "civ", "eng",
     # standards, codes and bodies
